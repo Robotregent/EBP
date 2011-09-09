@@ -5,3 +5,7 @@
 TEMPLATE = subdirs
 
 # Directories
+
+SUBDIRS += \
+    AdminDialog
+
