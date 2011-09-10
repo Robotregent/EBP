@@ -1,2 +1,2 @@
 #!/bin/sh
-LD_LIBRARY_PATH="../drkv/lib/" ./test
+LD_LIBRARY_PATH="../drkv" ./test

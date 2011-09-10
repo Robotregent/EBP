@@ -2,7 +2,7 @@ TEMPLATE = app
 TARGET = 
 DEPENDPATH += . ..
 INCLUDEPATH += . ..
-unix:LIBS += -L../drkv/lib -ldrkv
+unix:LIBS += -L../drkv -ldrkv
 #win32:LIBS += 
 
 CODECFORTR = UTF-8
