@@ -20,34 +20,34 @@ namespace drkv
 	#pragma db object
 	class Wohngruppe
 	{
-		public:
-			Wohngruppe
-			(
-				QList< QLazyWeakPointer<Mitarbeiter> > mitarbeiter,
-				const QString & name
-			) :
-				mitarbeiter_(mitarbeiter),
-				name_(name)
-			{
-			}
+	public:
+		Wohngruppe
+		(
+			QList< QLazyWeakPointer<Mitarbeiter> > mitarbeiter,
+			const QString & name
+		) :
+			mitarbeiter_(mitarbeiter),
+			name_(name)
+		{
+		}
 
-			const QList< QLazyWeakPointer<Mitarbeiter> > & mitarbeiter() const { return mitarbeiter_; }
-			void mitarbeiter( QList< QLazyWeakPointer<Mitarbeiter> > mitarbeiter ) { mitarbeiter_ = mitarbeiter; }
+		const QList< QLazyWeakPointer<Mitarbeiter> > & mitarbeiter() const { return mitarbeiter_; }
+		void mitarbeiter( QList< QLazyWeakPointer<Mitarbeiter> > mitarbeiter ) { mitarbeiter_ = mitarbeiter; }
 
-			const QString & name() const { return name_; }
-			void name( QString name ) { name_ = name; }
+		const QString & name() const { return name_; }
+		void name( QString name ) { name_ = name; }
 
-		private:
-			friend class odb::access;
-			Wohngruppe() {}
+	private:
+		friend class odb::access;
+		Wohngruppe() {}
 
-			#pragma db id auto
-			unsigned long id_;
+		#pragma db id auto
+		unsigned long id_;
 
-			#pragma db unordered inverse(wohngruppe_)
-			QList< QLazyWeakPointer<Mitarbeiter> > mitarbeiter_;
+		#pragma db unordered inverse(wohngruppe_)
+		QList< QLazyWeakPointer<Mitarbeiter> > mitarbeiter_;
 
-			QString name_;
+		QString name_;
 	};
 }
 
