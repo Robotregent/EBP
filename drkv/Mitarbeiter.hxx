@@ -8,34 +8,44 @@
 #include <QSharedPointer>
 
 #include <odb/core.hxx>
+#include <odb/qt/lazy-ptr.hxx>
 
 
 namespace drkv
 {
+	// forward declarations - in case of mutual inclusions
+	class Wohngruppe;
+
 	#pragma db object
 	class Mitarbeiter
 	{
 		public:
-			Mitarbeiter( const QString & login,
-					bool istBezugsbetreuer,
-					QSharedPointer<Wohngruppe> wohngruppe,
-					const QString & name,
-					const QString & email,
-					const QString & telefon )
-				: login_(login),
-					istBezugsbetreuer_(istBezugsbetreuer),
-					wohngruppe_(wohngruppe),
-					name_(name),
-					email_(email),
-					telefon_(telefon)
+			Mitarbeiter
+			(
+				const QString & login,
+				bool istBezugsbetreuer,
+				QLazyWeakPointer<Wohngruppe> wohngruppe,
+				const QString & name,
+				const QString & email,
+				const QString & telefon
+			) :
+				login_(login),
+				istBezugsbetreuer_(istBezugsbetreuer),
+				wohngruppe_(wohngruppe),
+				name_(name),
+				email_(email),
+				telefon_(telefon)
 			{
 			}
+
+			const QString & login() const { return login_; }
+			void login( QString login ) { login_ = login; }
 
 			const bool istBezugsbetreuer() const { return istBezugsbetreuer_; }
 			void istBezugsbetreuer( bool istBezugsbetreuer ) { istBezugsbetreuer_ = istBezugsbetreuer; }
 
-			const QSharedPointer<Wohngruppe> & wohngruppe() const { return wohngruppe_; }
-			void wohngruppe( QSharedPointer<Wohngruppe> wohngruppe ) { wohngruppe_ = wohngruppe; }
+			const QLazyWeakPointer<Wohngruppe> & wohngruppe() const { return wohngruppe_; }
+			void wohngruppe( QLazyWeakPointer<Wohngruppe> wohngruppe ) { wohngruppe_ = wohngruppe; }
 
 			const QString & name() const { return name_; }
 			void name( QString name ) { name_ = name; }
@@ -47,19 +57,19 @@ namespace drkv
 			void telefon( QString telefon ) { telefon_ = telefon; }
 
 		private:
-			Mitarbeiter() {}
 			friend class odb::access;
+			Mitarbeiter() {}
 
 			#pragma db id auto
 			unsigned long id_;
 
-			#pragma db not_null
+			#pragma db not_null type("VARCHAR(128)") options("UNIQUE")
 			QString login_;
 
 			#pragma db not_null
 			bool istBezugsbetreuer_;
 
-			QSharedPointer<Wohngruppe> wohngruppe_;
+			QLazyWeakPointer<Wohngruppe> wohngruppe_;
 
 			QString name_;
 
