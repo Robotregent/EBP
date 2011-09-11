@@ -17,7 +17,7 @@ namespace drkv
 {
 	class database : public odb::mysql::database
 	{
-		Q_DECLARE_TR_FUNCTIONS(database)
+		Q_DECLARE_TR_FUNCTIONS( database )
 	public:
 		database
 		(
@@ -30,14 +30,15 @@ namespace drkv
 
 		unsigned long long execute( const QString & statement ) { return odb::database::execute( statement.toStdString() ); }
 
-		bool addUser( drkv::Mitarbeiter & mitarbeiter, QString password );
-		bool removeUser( drkv::Mitarbeiter & mitarbeiter );
-		bool removeUser( const QString & login );
-		QList< QSharedPointer<drkv::Mitarbeiter> > getUsers();
+		void executeCreateUser( Mitarbeiter & mitarbeiter, const QString & from, const QString & password );
+		void executeCreateUser( Mitarbeiter & mitarbeiter, const QString & password );
+		void executeDropUser( Mitarbeiter & mitarbeiter, const QString & from );
+		void executeDropUser( Mitarbeiter & mitarbeiter );
+		void executeSetPassword( Mitarbeiter & mitarbeiter, const QString & from, const QString & password );
+		void executeSetPassword( Mitarbeiter & mitarbeiter, const QString & password );
 
 	private:
-		void executeCreateUser( Mitarbeiter & mitarbeiter, const QString & from, const QString & password );
-		void executeDropUser( Mitarbeiter & mitarbeiter, const QString & from );
+		QSharedPointer<Mitarbeiter> connectedUser;
 	};
 }
 

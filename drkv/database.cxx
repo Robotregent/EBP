@@ -1,5 +1,4 @@
 #include "database.hxx"
-
 #include "Mitarbeiter-odb.hxx"
 
 #include <odb/core.hxx>
@@ -32,6 +31,20 @@ database::database
 		port
 	)
 {
+	try
+	{
+		odb::transaction t( begin() );
+		odb::result<Mitarbeiter> r( query<Mitarbeiter>( odb::query<Mitarbeiter>::login == odb::query<Mitarbeiter>::_ref(user) ) );
+		if( r.begin() != r.end() )
+			connectedUser = QSharedPointer<Mitarbeiter>( r.begin().load() );
+		else
+			qWarning() << tr("Der verwendete Datenbankbenutzer ist nicht als Mitarbeiter registriert.");
+		t.commit();
+	}
+	catch( const odb::exception & e )
+	{
+		qCritical() << e.what();
+	}
 }
 
 
@@ -48,96 +61,32 @@ void database::executeDropUser( Mitarbeiter & mitarbeiter, const QString & from 
 }
 
 
-bool database::addUser( drkv::Mitarbeiter & mitarbeiter, QString password )
+void database::executeCreateUser( Mitarbeiter & mitarbeiter, const QString & password )
 {
-	if( mitarbeiter.login().isNull() || mitarbeiter.login()=="" )
-	{
-		qCritical() << tr("Kann keinen neuen Benutzer ohne Login-Namen erstellen");
-		return false;
-	}
-	if( password.isNull() || password=="" )
-	{
-		qCritical() << tr("Kann keinen neuen Benutzer ohne Passwort erstellen");
-		return false;
-	}
-
-	try
-	{
-		odb::transaction t( begin() );
-		executeCreateUser( mitarbeiter, "localhost", password );
-		executeCreateUser( mitarbeiter, "%", password );
-		persist( mitarbeiter );
-		t.commit();
-	}
-	catch( const odb::exception & e )
-	{
-		qCritical() << e.what();
-		return false;
-	}
-	return true;
+	executeCreateUser( mitarbeiter, "localhost", password );
+	executeCreateUser( mitarbeiter, "%", password );
 }
 
 
-bool database::removeUser( drkv::Mitarbeiter & mitarbeiter )
+void database::executeDropUser( Mitarbeiter & mitarbeiter )
 {
-	try
-	{
-		odb::transaction t( begin() );
-		executeDropUser( mitarbeiter, "localhost" );
-		executeDropUser( mitarbeiter, "%" );
-		erase( mitarbeiter );
-		t.commit();
-	}
-	catch( const odb::exception & e )
-	{
-		qCritical() << e.what();
-		return false;
-	}
-	return true;
+	executeDropUser( mitarbeiter, "localhost" );
+	executeDropUser( mitarbeiter, "%" );
 }
 
 
-bool database::removeUser( const QString & login )
+void database::executeSetPassword( Mitarbeiter & mitarbeiter, const QString & from, const QString & password )
 {
-	try
-	{
-		odb::transaction t( begin() );
-		odb::result<Mitarbeiter> r( query<Mitarbeiter>( odb::query<Mitarbeiter>::login == odb::query<Mitarbeiter>::_ref(login) ) );
-		for( odb::result<Mitarbeiter>::iterator i( r.begin() ); i != r.end(); ++i )
-		{
-			executeDropUser( *i, "localhost" );
-			executeDropUser( *i, "%" );
-			erase( *i );
-		}
-		t.commit();
-	}
-	catch( const odb::exception & e )
-	{
-		qCritical() << e.what();
-		return false;
-	}
-	return true;
+	// if the current user should be updated, don't use the FOR clause, so everyone can set its own password
+	if( QString( user() ) == mitarbeiter.login() )
+		execute( "SET PASSWORD = PASSWORD('"+password+"');" );
+	else
+		execute( "SET PASSWORD FOR '"+mitarbeiter.login()+"'@'"+from+"' = PASSWORD('"+password+"');" );
 }
 
 
-QList< QSharedPointer<drkv::Mitarbeiter> > database::getUsers()
+void database::executeSetPassword( Mitarbeiter & mitarbeiter, const QString & password )
 {
-	QList< QSharedPointer<drkv::Mitarbeiter> > list;
-	try
-	{
-		odb::transaction t( begin() );
-		odb::result<Mitarbeiter> r( query<Mitarbeiter>() );
-		for( odb::result<Mitarbeiter>::iterator i( r.begin() ); i != r.end(); ++i )
-		{
-			qDebug() << i->login();
-			list.push_back( i.load() );
-		}
-		t.commit();
-	}
-	catch( const odb::exception & e )
-	{
-		qCritical() << e.what();
-		return QList< QSharedPointer<drkv::Mitarbeiter> >();
-	}
-	return list;
+	executeSetPassword( mitarbeiter, "localhost", password );
+	executeSetPassword( mitarbeiter, "%", password );
 }

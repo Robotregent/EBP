@@ -4,6 +4,7 @@
 
 #include "Wohngruppe.hxx"
 
+#include <QCoreApplication>
 #include <QString>
 #include <QSharedPointer>
 
@@ -13,12 +14,13 @@
 
 namespace drkv
 {
-	// forward declarations - in case of mutual inclusions
 	class Wohngruppe;
+	class database;
 
 	#pragma db object
 	class Mitarbeiter
 	{
+		Q_DECLARE_TR_FUNCTIONS( Mitarbeiter )
 	public:
 		Mitarbeiter
 		(
@@ -39,7 +41,7 @@ namespace drkv
 		}
 
 		const QString & login() const { return login_; }
-		void login( QString login ) { login_ = login; }
+//		void login( QString login ) { login_ = login; }		// don't change login names for existing objects - this will break the mapping to the database user
 
 		const bool istBezugsbetreuer() const { return istBezugsbetreuer_; }
 		void istBezugsbetreuer( bool istBezugsbetreuer ) { istBezugsbetreuer_ = istBezugsbetreuer; }
@@ -55,6 +57,12 @@ namespace drkv
 
 		const QString & telefon() const { return telefon_; }
 		void telefon( QString telefon ) { telefon_ = telefon; }
+
+		bool create( QSharedPointer<drkv::database> db, const QString & password );
+		bool remove( QSharedPointer<drkv::database> db );
+		bool update( QSharedPointer<drkv::database> db );
+		bool updatePassword( QSharedPointer<drkv::database> db, const QString & password );
+		static QList< QSharedPointer<Mitarbeiter> > getAll( QSharedPointer<drkv::database> db );
 
 	private:
 		friend class odb::access;

@@ -14,7 +14,6 @@
 
 namespace drkv
 {
-	// forward declarations - in case of mutual inclusions
 	class Mitarbeiter;
 
 	#pragma db object
