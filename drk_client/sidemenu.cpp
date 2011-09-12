@@ -1,6 +1,6 @@
 #include "sidemenu.h"
 
-SideMenu::SideMenu(QObject *parent) :
+SideMenu::SideMenu(QWidget *parent) :
     QTabWidget(parent)
 {
 }

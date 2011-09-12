@@ -11,6 +11,10 @@ SOURCES += \
     sidemenu.cpp \
     groupmenu.cpp
 
+RESOURCES += \
+    images.qrc
+
+
 
 
 

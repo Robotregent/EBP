@@ -6,6 +6,9 @@
 class ClientMenu : public QTreeWidget
 {
     Q_OBJECT
+private:
+    QTreeWidgetItem* person;
+
 public:
     explicit ClientMenu(QWidget *parent = 0);
 

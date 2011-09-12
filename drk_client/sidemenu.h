@@ -7,7 +7,7 @@ class SideMenu : public QTabWidget
 {
     Q_OBJECT
 public:
-    explicit SideMenu(QObject *parent = 0);
+    explicit SideMenu(QWidget *parent = 0);
 
 signals:
 
