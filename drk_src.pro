@@ -7,5 +7,7 @@ TEMPLATE = subdirs
 # Directories
 
 SUBDIRS += \
-    AdminDialog
+    AdminDialog \
+    drk_client
+
 
