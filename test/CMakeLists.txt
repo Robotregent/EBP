@@ -26,9 +26,6 @@ set( test_library_dirs
 set( test_libraries
 	${QT_LIBRARIES}
 	drkv
-#	odb
-#	odb-mysql
-#	odb-qt
 )
 
 
