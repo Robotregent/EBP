@@ -1,5 +1,6 @@
 #include "admindialog.h"
 #include "ui_admindialog.h"
+//#include "../drkv/database.hxx"
 
 AdminDialog::AdminDialog(QWidget *parent) :
     QDialog(parent),
@@ -16,5 +17,5 @@ AdminDialog::~AdminDialog()
 }
 void AdminDialog::init()
 {
-
+    this->db = new database("root","","drk");
 }

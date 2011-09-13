@@ -6,6 +6,8 @@
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+private:
+    void create_sidemenu();
 public:
     explicit MainWindow(QWidget *parent = 0);
 

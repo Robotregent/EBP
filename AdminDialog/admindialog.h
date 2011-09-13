@@ -2,6 +2,10 @@
 #define ADMINDIALOG_H
 
 #include <QDialog>
+#include "../drkv/Mitarbeiter.hxx"
+#include "../drkv/database.hxx"
+
+using namespace drkv;
 
 namespace Ui {
     class AdminDialog;
@@ -18,6 +22,7 @@ public:
 private:
     Ui::AdminDialog *ui;
     void init();
+    database *db;
 };
 
 #endif // ADMINDIALOG_H
