@@ -16,10 +16,10 @@ using namespace drkv;
 
 database::database
 (
-	QString user,
-	QString password,
-	QString database,
-	QString host,
+	const QString & user,
+	const QString & password,
+	const QString & database,
+	const QString & host,
 	unsigned int port
 ) :
 	odb::mysql::database
@@ -48,34 +48,34 @@ database::database
 }
 
 
-void database::executeCreateUser( Mitarbeiter & mitarbeiter, const QString & from, const QString & password )
+void database::executeCreateUser( const Mitarbeiter & mitarbeiter, const QString & from, const QString & password )
 {
 	execute( "CREATE USER '"+mitarbeiter.login()+"'@'"+from+"' IDENTIFIED BY '"+password+"';" );
 	execute( "GRANT SELECT ON "+QString(db())+".* TO '"+mitarbeiter.login()+"'@'"+from+"';" );
 }
 
 
-void database::executeDropUser( Mitarbeiter & mitarbeiter, const QString & from )
+void database::executeDropUser( const Mitarbeiter & mitarbeiter, const QString & from )
 {
 	execute( "DROP USER '"+mitarbeiter.login()+"'@'"+from+"';" );
 }
 
 
-void database::executeCreateUser( Mitarbeiter & mitarbeiter, const QString & password )
+void database::executeCreateUser( const Mitarbeiter & mitarbeiter, const QString & password )
 {
 	executeCreateUser( mitarbeiter, "localhost", password );
 	executeCreateUser( mitarbeiter, "%", password );
 }
 
 
-void database::executeDropUser( Mitarbeiter & mitarbeiter )
+void database::executeDropUser( const Mitarbeiter & mitarbeiter )
 {
 	executeDropUser( mitarbeiter, "localhost" );
 	executeDropUser( mitarbeiter, "%" );
 }
 
 
-void database::executeSetPassword( Mitarbeiter & mitarbeiter, const QString & from, const QString & password )
+void database::executeSetPassword( const Mitarbeiter & mitarbeiter, const QString & from, const QString & password )
 {
 	// if the current user should be updated, don't use the FOR clause, so everyone can set its own password
 	if( QString( user() ) == mitarbeiter.login() )
@@ -85,7 +85,7 @@ void database::executeSetPassword( Mitarbeiter & mitarbeiter, const QString & fr
 }
 
 
-void database::executeSetPassword( Mitarbeiter & mitarbeiter, const QString & password )
+void database::executeSetPassword( const Mitarbeiter & mitarbeiter, const QString & password )
 {
 	executeSetPassword( mitarbeiter, "localhost", password );
 	executeSetPassword( mitarbeiter, "%", password );

@@ -8,7 +8,9 @@ include( ${QT_USE_FILE} )
 set( libdrkv_headers
 	database.hxx
 	Mitarbeiter.hxx
+	Bewohner.hxx
 	Wohngruppe.hxx
+	Projekt.hxx
 )
 
 set( libdrkv_sources

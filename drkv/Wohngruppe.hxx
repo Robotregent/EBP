@@ -5,8 +5,8 @@
 #include "Mitarbeiter.hxx"
 
 #include <QString>
-#include <QSharedPointer>
 #include <QList>
+#include <QSharedPointer>
 
 #include <odb/core.hxx>
 #include <odb/qt/lazy-ptr.hxx>
@@ -15,6 +15,7 @@
 namespace drkv
 {
 	class Mitarbeiter;
+	class database;
 
 	#pragma db object
 	class Wohngruppe
@@ -22,19 +23,19 @@ namespace drkv
 	public:
 		Wohngruppe
 		(
-			QList< QLazyWeakPointer<Mitarbeiter> > mitarbeiter,
-			const QString & name
+			const QString & name,
+			QList< QLazyWeakPointer<Mitarbeiter> > mitarbeiter
 		) :
-			mitarbeiter_(mitarbeiter),
-			name_(name)
+			name_(name),
+			mitarbeiter_(mitarbeiter)
 		{
 		}
 
-		const QList< QLazyWeakPointer<Mitarbeiter> > & mitarbeiter() const { return mitarbeiter_; }
-		void mitarbeiter( QList< QLazyWeakPointer<Mitarbeiter> > mitarbeiter ) { mitarbeiter_ = mitarbeiter; }
-
 		const QString & name() const { return name_; }
-		void name( QString name ) { name_ = name; }
+		void name( const QString & name ) { name_ = name; }
+
+		const QList< QLazyWeakPointer<Mitarbeiter> > & mitarbeiter() const { return mitarbeiter_; }
+		void mitarbeiter( const QList< QLazyWeakPointer<Mitarbeiter> > & mitarbeiter ) { mitarbeiter_ = mitarbeiter; }
 
 	private:
 		friend class odb::access;
@@ -43,10 +44,10 @@ namespace drkv
 		#pragma db id auto
 		unsigned long id_;
 
+		QString name_;
+
 		#pragma db unordered inverse(wohngruppe_)
 		QList< QLazyWeakPointer<Mitarbeiter> > mitarbeiter_;
-
-		QString name_;
 	};
 }
 

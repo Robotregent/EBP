@@ -8,7 +8,7 @@
 using namespace drkv;
 
 
-bool Mitarbeiter::create( QSharedPointer<drkv::database> db, const QString & password )
+bool Mitarbeiter::create( const QSharedPointer<drkv::database> & db, const QString & password )
 {
 	if( login().isNull() || login()=="" )
 	{
@@ -37,7 +37,7 @@ bool Mitarbeiter::create( QSharedPointer<drkv::database> db, const QString & pas
 }
 
 
-bool Mitarbeiter::remove( QSharedPointer<drkv::database> db )
+bool Mitarbeiter::remove( const QSharedPointer<drkv::database> & db )
 {
 	try
 	{
@@ -55,7 +55,7 @@ bool Mitarbeiter::remove( QSharedPointer<drkv::database> db )
 }
 
 
-bool Mitarbeiter::update( QSharedPointer<drkv::database> db )
+bool Mitarbeiter::update( const QSharedPointer<drkv::database> & db )
 {
 	try
 	{
@@ -72,7 +72,7 @@ bool Mitarbeiter::update( QSharedPointer<drkv::database> db )
 }
 
 
-bool Mitarbeiter::updatePassword( QSharedPointer<drkv::database> db, const QString & password )
+bool Mitarbeiter::updatePassword( const QSharedPointer<drkv::database> & db, const QString & password )
 {
 	try
 	{
@@ -89,7 +89,7 @@ bool Mitarbeiter::updatePassword( QSharedPointer<drkv::database> db, const QStri
 }
 
 
-QList< QSharedPointer<Mitarbeiter> > Mitarbeiter::getAll( QSharedPointer<drkv::database> db )
+QList< QSharedPointer<Mitarbeiter> > Mitarbeiter::getAll( const QSharedPointer<drkv::database> & db )
 {
 	QList< QSharedPointer<Mitarbeiter> > list;
 	try

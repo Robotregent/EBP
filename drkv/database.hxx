@@ -21,21 +21,21 @@ namespace drkv
 	public:
 		database
 		(
-			QString user,
-			QString password,
-			QString database,
-			QString host = "localhost",
+			const QString & user,
+			const QString & password,
+			const QString & database,
+			const QString & host = "localhost",
 			unsigned int port = 3306
 		);
 
 		unsigned long long execute( const QString & statement ) { return odb::database::execute( statement.toStdString() ); }
 
-		void executeCreateUser( Mitarbeiter & mitarbeiter, const QString & from, const QString & password );
-		void executeCreateUser( Mitarbeiter & mitarbeiter, const QString & password );
-		void executeDropUser( Mitarbeiter & mitarbeiter, const QString & from );
-		void executeDropUser( Mitarbeiter & mitarbeiter );
-		void executeSetPassword( Mitarbeiter & mitarbeiter, const QString & from, const QString & password );
-		void executeSetPassword( Mitarbeiter & mitarbeiter, const QString & password );
+		void executeCreateUser( const Mitarbeiter & mitarbeiter, const QString & from, const QString & password );
+		void executeCreateUser( const Mitarbeiter & mitarbeiter, const QString & password );
+		void executeDropUser( const Mitarbeiter & mitarbeiter, const QString & from );
+		void executeDropUser( const Mitarbeiter & mitarbeiter );
+		void executeSetPassword( const Mitarbeiter & mitarbeiter, const QString & from, const QString & password );
+		void executeSetPassword( const Mitarbeiter & mitarbeiter, const QString & password );
 
 	private:
 		QSharedPointer<Mitarbeiter> connectedUser;
