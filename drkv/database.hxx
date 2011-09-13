@@ -1,4 +1,4 @@
-#ifndef DBCONNECTION_HXX
+    #ifndef DBCONNECTION_HXX
 #define DBCONNECTION_HXX
 
 
