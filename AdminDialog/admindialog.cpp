@@ -6,9 +6,15 @@ AdminDialog::AdminDialog(QWidget *parent) :
     ui(new Ui::AdminDialog)
 {
     ui->setupUi(this);
+    this->init();
+
 }
 
 AdminDialog::~AdminDialog()
 {
     delete ui;
+}
+void AdminDialog::init()
+{
+
 }

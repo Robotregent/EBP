@@ -17,6 +17,7 @@ public:
 
 private:
     Ui::AdminDialog *ui;
+    void init();
 };
 
 #endif // ADMINDIALOG_H
