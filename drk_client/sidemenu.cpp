@@ -26,11 +26,11 @@ SideMenu::SideMenu(QWidget *parent) :
     this->groupMenu= new GroupMenu(this->group);
 
     this->groupMenu->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Expanding);
-    this->groupMenu->setSpacing(5);
+    //this->groupMenu->setSpacing(5);
 
     this->groupLay->addLayout(this->groupBG);
     this->groupLay->addWidget(this->groupMenu);
-    this->groupLay->setLayout(this->groupLay);
+    this->group->setLayout(this->groupLay);
 
 
     //Build Kunde Widget
@@ -39,15 +39,15 @@ SideMenu::SideMenu(QWidget *parent) :
 
     this->clientBG = new QHBoxLayout(this);
 
-    tmp=new QPushButton(QIcon(":/img/arrow-left.png"),"");
+    tmp=new QPushButton(QIcon(":/costumer/arrow-left.png"),"");
     tmp->setToolTip("Vorheriger Kunde");
     this->clientBG->addWidget(tmp);
 
-    tmp=new QPushButton(QIcon(":/img/arrow-right.png"),"");
+    tmp=new QPushButton(QIcon(":/costumer/arrow-right.png"),"");
     tmp->setToolTip("Nächster Kunde");
     this->clientBG->addWidget(tmp);
 
-    tmp=new QPushButton(QIcon(":/img/lupe.png"),"");
+    tmp=new QPushButton(QIcon(":/costumer/lupe.png"),"");
     tmp->setToolTip("Suche Kunde");
     this->clientBG->addWidget(tmp);
     this->clientBG->setSpacing(0);
@@ -55,7 +55,7 @@ SideMenu::SideMenu(QWidget *parent) :
     this->clientMenu= new ClientMenu(this->client);
 
     this->clientMenu->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Expanding);
-    this->clientMenu->setSpacing(5);
+    //this->clientMenu->setSpacing(5);
 
     this->clientLay->addLayout(this->clientBG);
     this->clientLay->addWidget(this->clientMenu);
