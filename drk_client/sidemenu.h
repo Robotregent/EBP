@@ -9,16 +9,15 @@
 class SideMenu : public QTabWidget
 {
     Q_OBJECT
-    QWidget *group;
-    QWidget *client;
-    GroupMenu *groupMenu;
-    ClientMenu *clientMenu;
-    QVBoxLayout *groupLay;
-    QVBoxLayout *clientLay;
-    QHBoxLayout *groupBG;
-    QHBoxLayout *clientBG;
+
+    GroupMenu *Group;
+    ClientMenu *Client;
+
 public:
     explicit SideMenu(QWidget *parent = 0);
+    ClientMenu *getClientMenu() { return Client; }
+    GroupMenu *getGroupMenu() { return Group; }
+    ~SideMenu();
 
 signals:
 
