@@ -46,7 +46,7 @@ namespace drkv
 
 		QString name_;
 
-		#pragma db unordered inverse(wohngruppe_)
+		#pragma db unordered
 		QList< QLazyWeakPointer<Mitarbeiter> > mitarbeiter_;
 	};
 }

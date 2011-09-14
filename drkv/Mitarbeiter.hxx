@@ -33,14 +33,14 @@ namespace drkv
 			const QString & email,
 			const QString & telefon,
 			bool istBezugsbetreuer,
-			QLazyWeakPointer<Wohngruppe> wohngruppe
+			QList< QLazyWeakPointer<Wohngruppe> > wohngruppen
 		) :
 			login_(login),
 			name_(name),
 			email_(email),
 			telefon_(telefon),
 			istBezugsbetreuer_(istBezugsbetreuer),
-			wohngruppe_(wohngruppe)
+			wohngruppen_(wohngruppen)
 		{
 		}
 
@@ -59,8 +59,8 @@ namespace drkv
 		const bool istBezugsbetreuer() const { return istBezugsbetreuer_; }
 		void istBezugsbetreuer( bool istBezugsbetreuer ) { istBezugsbetreuer_ = istBezugsbetreuer; }
 
-		const QLazyWeakPointer<Wohngruppe> & wohngruppe() const { return wohngruppe_; }
-		void wohngruppe( QLazyWeakPointer<Wohngruppe> & wohngruppe ) { wohngruppe_ = wohngruppe; }
+		const QList<QLazyWeakPointer<Wohngruppe> > & wohngruppen() const { return wohngruppen_; }
+		void wohngruppen( QList< QLazyWeakPointer<Wohngruppe> > & wohngruppen ) { wohngruppen_ = wohngruppen; }
 
 		bool create( const QSharedPointer<drkv::database> & db, const QString & password );
 		bool remove( const QSharedPointer<drkv::database> & db );
@@ -87,7 +87,8 @@ namespace drkv
 		#pragma db not_null
 		bool istBezugsbetreuer_;
 
-		QLazyWeakPointer<Wohngruppe> wohngruppe_;
+		#pragma db unordered inverse(mitarbeiter_)
+		QList< QLazyWeakPointer<Wohngruppe> > wohngruppen_;
 
 		#pragma db unordered inverse(verantwortliche_)
 		QList< QLazyWeakPointer<Projekt> > projekte_;

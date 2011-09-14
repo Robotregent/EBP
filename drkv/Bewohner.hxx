@@ -3,9 +3,11 @@
 
 
 #include "Wohngruppe.hxx"
+#include "Projekt.hxx"
 
 #include <QCoreApplication>
 #include <QString>
+#include <QList>
 #include <QDate>
 #include <QSharedPointer>
 
@@ -16,6 +18,7 @@
 namespace drkv
 {
 	class Wohngruppe;
+	class Projekt;
 	class database;
 
 	#pragma db object
@@ -31,14 +34,16 @@ namespace drkv
 			const QString & krankenkasse,
 			const QString & email,
 			const QString & telefon,
-			const QLazyWeakPointer<Wohngruppe> & wohngruppe
+			const QLazyWeakPointer<Wohngruppe> & wohngruppe,
+			const QList< QLazyWeakPointer<Projekt> > & projekte
 		) :
 			nummer_(nummer),
 			name_(name),
 			krankenkasse_(krankenkasse),
 			email_(email),
 			telefon_(telefon),
-			wohngruppe_(wohngruppe)
+			wohngruppe_(wohngruppe),
+			projekte_(projekte)
 		{
 		}
 
@@ -56,6 +61,9 @@ namespace drkv
 
 		const QLazyWeakPointer<Wohngruppe> & wohngruppe() const { return wohngruppe_; }
 		void wohngruppe( const QLazyWeakPointer<Wohngruppe> & wohngruppe ) { wohngruppe_ = wohngruppe; }
+
+		const QList< QLazyWeakPointer<Projekt> > & projekte() const { return projekte_; }
+		void projekte( const QList< QLazyWeakPointer<Projekt> > & projekte ) { projekte_ = projekte; }
 
 		bool create( QSharedPointer<drkv::database> db );
 		bool remove( QSharedPointer<drkv::database> db );
@@ -82,6 +90,9 @@ namespace drkv
 		QString telefon_;
 
 		QLazyWeakPointer<Wohngruppe> wohngruppe_;
+
+		#pragma db unordered inverse(bewohner_)
+		QList< QLazyWeakPointer<Projekt> > projekte_;
 	};
 }
 

@@ -3,6 +3,7 @@
 
 
 #include "Mitarbeiter.hxx"
+#include "Bewohner.hxx"
 
 #include <QCoreApplication>
 #include <QString>
@@ -17,6 +18,7 @@
 namespace drkv
 {
 	class Mitarbeiter;
+	class Bewohner;
 	class database;
 
 	#pragma db object
@@ -25,28 +27,20 @@ namespace drkv
 		Q_DECLARE_TR_FUNCTIONS( Projekt )
 
 	public:
-		enum Typen
-		{
-			typ1,
-			typ2,
-			typ3,
-			typ4
-		};
-
 		Projekt
 		(
 			const QString & name,
 			const QString & beschreibung,
+			const QString & typ,
 			const QDate & beginn,
 			const QDate & ende,
-			const Typen & typ,
 			const QList< QLazyWeakPointer<Mitarbeiter> > & verantwortliche
 		) :
 			name_(name),
 			beschreibung_(beschreibung),
+			typ_(typ),
 			beginn_(beginn),
 			ende_(ende),
-			typ_(typ),
 			verantwortliche_(verantwortliche)
 		{
 		}
@@ -57,14 +51,14 @@ namespace drkv
 		const QString & beschreibung() const { return beschreibung_; }
 		void beschreibung( const QString & beschreibung ) { beschreibung_ = beschreibung; }
 
+		const QString & typ() const { return typ_; }
+		void typ( const QString & typ ) { typ_ = typ; }
+
 		const QDate & beginn() const { return beginn_; }
 		void beginn( const QDate & beginn ) { beginn_ = beginn; }
 
 		const QDate & ende() const { return ende_; }
 		void ende( const QDate & ende ) { ende_ = ende; }
-
-		const Typen typ() const { return typ_; }
-		void typ( const Typen & typ ) { typ_ = typ; }
 
 		const QList< QLazyWeakPointer<Mitarbeiter> > & verantwortliche() const { return verantwortliche_; }
 		void verantwortliche( const QList< QLazyWeakPointer<Mitarbeiter> > & verantwortliche ) { verantwortliche_ = verantwortliche; }
@@ -80,14 +74,16 @@ namespace drkv
 
 		QString beschreibung_;
 
+		QString typ_;
+
 		QDate beginn_;
 
 		QDate ende_;
 
-		Typen typ_;
-
 		#pragma db unordered
 		QList< QLazyWeakPointer<Mitarbeiter> > verantwortliche_;
+
+		QLazyWeakPointer<Bewohner> bewohner_;
 	};
 }
 
