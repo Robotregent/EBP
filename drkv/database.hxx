@@ -1,4 +1,4 @@
-    #ifndef DBCONNECTION_HXX
+#ifndef DBCONNECTION_HXX
 #define DBCONNECTION_HXX
 
 
@@ -18,6 +18,7 @@ namespace drkv
 	class database : public odb::mysql::database
 	{
 		Q_DECLARE_TR_FUNCTIONS( database )
+
 	public:
 		database
 		(

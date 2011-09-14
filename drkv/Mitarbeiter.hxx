@@ -32,15 +32,17 @@ namespace drkv
 			const QString & name,
 			const QString & email,
 			const QString & telefon,
-			bool istBezugsbetreuer,
-			QList< QLazyWeakPointer<Wohngruppe> > wohngruppen
+			QList< QLazyWeakPointer<Wohngruppe> > wohngruppen,
+			QList< QLazyWeakPointer<Projekt> > projekte,
+			QLazyWeakPointer<Wohngruppe> bezugsbetreuer
 		) :
 			login_(login),
 			name_(name),
 			email_(email),
 			telefon_(telefon),
-			istBezugsbetreuer_(istBezugsbetreuer),
-			wohngruppen_(wohngruppen)
+			wohngruppen_(wohngruppen),
+			projekte_(projekte),
+			bezugsbetreuer_(bezugsbetreuer)
 		{
 		}
 
@@ -56,11 +58,14 @@ namespace drkv
 		const QString & telefon() const { return telefon_; }
 		void telefon( const QString & telefon ) { telefon_ = telefon; }
 
-		const bool istBezugsbetreuer() const { return istBezugsbetreuer_; }
-		void istBezugsbetreuer( bool istBezugsbetreuer ) { istBezugsbetreuer_ = istBezugsbetreuer; }
-
-		const QList<QLazyWeakPointer<Wohngruppe> > & wohngruppen() const { return wohngruppen_; }
+		const QList< QLazyWeakPointer<Wohngruppe> > & wohngruppen() const { return wohngruppen_; }
 		void wohngruppen( QList< QLazyWeakPointer<Wohngruppe> > & wohngruppen ) { wohngruppen_ = wohngruppen; }
+
+		const QList< QLazyWeakPointer<Projekt> > & projekte() const { return projekte_; }
+		void projekte( QList< QLazyWeakPointer<Projekt> > & projekte ) { projekte_ = projekte; }
+
+		const QLazyWeakPointer<Wohngruppe> & bezugsbetreuer() const { return bezugsbetreuer_; }
+		void bezugsbetreuer( QLazyWeakPointer<Wohngruppe> & wohngruppe ) { bezugsbetreuer_ = wohngruppe; }
 
 		bool create( const QSharedPointer<drkv::database> & db, const QString & password );
 		bool remove( const QSharedPointer<drkv::database> & db );
@@ -84,14 +89,14 @@ namespace drkv
 
 		QString telefon_;
 
-		#pragma db not_null
-		bool istBezugsbetreuer_;
-
 		#pragma db unordered inverse(mitarbeiter_)
 		QList< QLazyWeakPointer<Wohngruppe> > wohngruppen_;
 
 		#pragma db unordered inverse(verantwortliche_)
 		QList< QLazyWeakPointer<Projekt> > projekte_;
+
+		#pragma db inverse(bezugsbetreuer_)
+		QLazyWeakPointer<Wohngruppe> bezugsbetreuer_;
 	};
 }
 

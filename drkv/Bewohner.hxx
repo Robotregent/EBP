@@ -31,6 +31,7 @@ namespace drkv
 		(
 			const unsigned long & nummer,
 			const QString & name,
+			const QDate & geburtsdatum,
 			const QString & krankenkasse,
 			const QString & email,
 			const QString & telefon,
@@ -39,6 +40,7 @@ namespace drkv
 		) :
 			nummer_(nummer),
 			name_(name),
+			geburtsdatum_(geburtsdatum),
 			krankenkasse_(krankenkasse),
 			email_(email),
 			telefon_(telefon),
@@ -53,6 +55,9 @@ namespace drkv
 		const QString & name() const { return name_; }
 		void name( const QString & name ) { name_ = name; }
 
+		const QDate & geburtsdatum() const { return geburtsdatum_; }
+		void geburtsdatum( const QDate & geburtsdatum ) { geburtsdatum_ = geburtsdatum; }
+
 		const QString & email() const { return email_; }
 		void email( const QString & email ) { email_ = email; }
 
@@ -65,9 +70,10 @@ namespace drkv
 		const QList< QLazyWeakPointer<Projekt> > & projekte() const { return projekte_; }
 		void projekte( const QList< QLazyWeakPointer<Projekt> > & projekte ) { projekte_ = projekte; }
 
-		bool create( QSharedPointer<drkv::database> db );
-		bool remove( QSharedPointer<drkv::database> db );
-		bool update( QSharedPointer<drkv::database> db );
+		bool create( const QSharedPointer<drkv::database> & db );
+		bool remove( const QSharedPointer<drkv::database> & db );
+		bool update( const QSharedPointer<drkv::database> & db );
+		static QList< QSharedPointer<Bewohner> > getAll( const QSharedPointer<drkv::database> & db );
 
 	private:
 		friend class odb::access;
@@ -79,9 +85,9 @@ namespace drkv
 		#pragma db not_null options("UNIQUE")
 		unsigned long nummer_;
 
-		QDate geburtsdatum_;
-
 		QString name_;
+
+		QDate geburtsdatum_;
 
 		QString krankenkasse_;
 
@@ -89,6 +95,7 @@ namespace drkv
 
 		QString telefon_;
 
+		#pragma db inverse(bewohner_)
 		QLazyWeakPointer<Wohngruppe> wohngruppe_;
 
 		#pragma db unordered inverse(bewohner_)

@@ -11,11 +11,13 @@ set( libdrkv_headers
 	Bewohner.hxx
 	Wohngruppe.hxx
 	Projekt.hxx
+	Protokoll.hxx
 )
 
 set( libdrkv_sources
 	database.cxx
 	Mitarbeiter.cxx
+	Bewohner.cxx
 )
 
 set( drkv_include_dirs

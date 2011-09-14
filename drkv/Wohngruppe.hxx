@@ -3,6 +3,7 @@
 
 
 #include "Mitarbeiter.hxx"
+#include "Bewohner.hxx"
 
 #include <QString>
 #include <QList>
@@ -15,11 +16,14 @@
 namespace drkv
 {
 	class Mitarbeiter;
+	class Bewohner;
 	class database;
 
 	#pragma db object
 	class Wohngruppe
 	{
+		Q_DECLARE_TR_FUNCTIONS( Wohngruppe )
+
 	public:
 		Wohngruppe
 		(
@@ -46,8 +50,13 @@ namespace drkv
 
 		QString name_;
 
+		QLazyWeakPointer<Mitarbeiter> bezugsbetreuer_;
+
 		#pragma db unordered
 		QList< QLazyWeakPointer<Mitarbeiter> > mitarbeiter_;
+
+		#pragma db unordered
+		QList< QLazyWeakPointer<Bewohner> > bewohner_;
 	};
 }
 
