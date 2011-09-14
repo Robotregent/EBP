@@ -5,8 +5,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     this->showMaximized();
     this->create_sidemenu();
-    QLabel *tmp= new QLabel("Hallo",this);
+    person *tmp= new person(this);
     tmp->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
+
     this->setCentralWidget(tmp);
 
 }

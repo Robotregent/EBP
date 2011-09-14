@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QDockWidget>
 #include "sidemenu.h"
+#include "person.h"
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
