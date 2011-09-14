@@ -11,8 +11,14 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        admindialog.cpp
+        admindialog.cpp \
+    chooseemployee.cpp
 
-HEADERS  += admindialog.h
+HEADERS  += admindialog.h \
+    chooseemployee.h
 
-FORMS    += admindialog.ui
+FORMS    += admindialog.ui \
+    chooseemployee.ui
+
+
+
