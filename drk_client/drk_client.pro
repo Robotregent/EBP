@@ -3,7 +3,8 @@ HEADERS += \
     clientmenu.h \
     sidemenu.h \
     groupmenu.h \
-    person.h
+    person.h \
+    decree.h
 
 SOURCES += \
     mainwindow.cpp \
@@ -11,10 +12,13 @@ SOURCES += \
     clientmenu.cpp \
     sidemenu.cpp \
     groupmenu.cpp \
-    person.cpp
+    person.cpp \
+    decree.cpp
 
 RESOURCES += \
     images.qrc
+
+
 
 
 

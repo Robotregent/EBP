@@ -14,6 +14,9 @@ SideMenu::SideMenu(QWidget *parent) :
     this->addTab(this->Client,tr("Bewohner"));
     this->addTab(this->Group,tr("Wohngruppe"));
 
+    this->setMaximumWidth(250);
+    this->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Expanding);
+
 
 }
 SideMenu::~SideMenu()

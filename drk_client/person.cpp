@@ -1,39 +1,62 @@
 #include "person.h"
 #include <QFormLayout>
+#include <QHBoxLayout>
 #include <QLabel>
 #include <QLineEdit>
 #include <QTextEdit>
+#include <QDateEdit>
 person::person(QWidget *parent) :
     QWidget(parent)
 {
-    QFormLayout *Layout = new QFormLayout(this);
+    QHBoxLayout *hLayout = new QHBoxLayout();
+    hLayout->setSpacing(20);
+    QFormLayout *LayoutLeft = new QFormLayout();
+    LayoutLeft->setSpacing(15);
+    QFormLayout *LayoutRight = new QFormLayout();
+    LayoutRight->setSpacing(15);
 
     for (int i = 0 ; i<person::countOfLineEdits ; i++)
     {
-	if((i == person::comments)||(i == person::formerAddress))
-	{
-	    this->person_edit.append( new QTextEdit(this));
-	}
-	else
-	{
-	    this->person_edit.append( new QLineEdit(this));
-	}
+	this->person_edit.append(this->CreatePersonEdit(i));
     }
 
-    Layout->addRow(tr("Anrede"),this->person_edit.at(person::title));
-    Layout->addRow(tr("Vorname"),this->person_edit.at(person::forename));
-    Layout->addRow(tr("Nachname"),this->person_edit.at(person::name));
-    Layout->addRow(tr("Geburtsdatum"),this->person_edit.at(person::dateOfBirth));
-    Layout->addRow(tr("Alter"),this->person_edit.at(person::age));
-    Layout->addRow(tr("Geburtsort"),this->person_edit.at(person::birthplace));
-    Layout->addRow(tr("Staatsbürgerschaft"),this->person_edit.at(person::citizenship));
-    Layout->addRow(tr("Konfession"),this->person_edit.at(person::confession));
-    Layout->addRow(tr("Familienstatus"),this->person_edit.at(person::familyState));
-    Layout->addRow(tr("bisherige Anschrift"),this->person_edit.at(person::formerAddress));
-    Layout->addRow(tr("Aufenthalt hier seit"),this->person_edit.at(person::residence));
-    Layout->addRow(tr("Anmerkung"),this->person_edit.at(person::comments));
+    LayoutLeft->addRow(tr("Anrede"),this->person_edit.at(person::title));
+    LayoutLeft->addRow(tr("Vorname"),this->person_edit.at(person::forename));
+    LayoutLeft->addRow(tr("Nachname"),this->person_edit.at(person::name));
+    LayoutLeft->addRow(tr("Geburtsdatum"),this->person_edit.at(person::dateOfBirth));
+    LayoutLeft->addRow(tr("Alter"),this->person_edit.at(person::age));
+    LayoutLeft->addRow(tr("Geburtsort"),this->person_edit.at(person::birthplace));
+    LayoutLeft->addRow(tr("Staatsbürgerschaft"),this->person_edit.at(person::citizenship));
+    LayoutLeft->addRow(tr("Konfession"),this->person_edit.at(person::confession));
+    LayoutLeft->addRow(tr("Familienstatus"),this->person_edit.at(person::familyState));
+    LayoutLeft->addRow(tr("Aufenthalt hier seit"),this->person_edit.at(person::residence));
 
+    LayoutRight->addRow(tr("bisherige Anschrift"),this->person_edit.at(person::formerAddress));
+    LayoutRight->addRow(tr("Anmerkung"),this->person_edit.at(person::comments));
 
-    this->setLayout(Layout);
+    hLayout->addLayout(LayoutLeft,1);
+    hLayout->addLayout(LayoutRight,2);
+    this->setLayout(hLayout);
+    this->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
+}
+
+QWidget *person::CreatePersonEdit(int type)
+{
+    QWidget *result;
+    switch (type)
+    {
+    case person::comments:
+    case person::formerAddress:
+	result = new QTextEdit(this);
+	break;
+    case person::dateOfBirth:
+    case person::residence:
+	result = new QDateEdit(this);
+	break;
+    default:
+	result = new QLineEdit(this);
+	break;
+    }
+    return result;
 }

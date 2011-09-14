@@ -17,5 +17,5 @@ AdminDialog::~AdminDialog()
 }
 void AdminDialog::init()
 {
-    this->db = new database("root","","drk");
+    this->db = new database("drk_admin","drk","drk");
 }

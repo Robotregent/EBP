@@ -9,6 +9,7 @@ class person : public QWidget
 {
     Q_OBJECT
     QList <QWidget *> person_edit;
+    QWidget *CreatePersonEdit(int type);
 public:
     explicit person(QWidget *parent = 0);
     enum PersonSlots{title=0, forename=1, name=2, dateOfBirth=3, age=4, birthplace=5, citizenship=6,
