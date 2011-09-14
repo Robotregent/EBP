@@ -8,6 +8,9 @@ class ClientMenu : public QTreeWidget
     Q_OBJECT
 private:
     QTreeWidgetItem* person;
+    QTreeWidgetItem* protocol;
+    QTreeWidgetItem* project;
+    QTreeWidgetItem* documentation;
 
 public:
     explicit ClientMenu(QWidget *parent = 0);
