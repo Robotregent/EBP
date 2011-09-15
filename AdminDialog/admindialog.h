@@ -17,10 +17,15 @@ class AdminDialog : public QDialog
 
 public:
     explicit AdminDialog(QWidget *parent = 0);
+    QSharedPointer<database> dbPointer() { return this->PointerToDB; }
     ~AdminDialog();
 
 private slots:
     void on_button_MA_suchen_clicked();
+
+    void on_button_MA_speichern_clicked();
+
+    void on_button_abbrechen_clicked();
 
 private:
     Ui::AdminDialog *ui;

@@ -9,7 +9,7 @@ EmployeeTableModel::EmployeeTableModel(QList<QSharedPointer<Mitarbeiter> > emplo
 int EmployeeTableModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    return 1;
+    return 2;
 }
 int EmployeeTableModel::rowCount(const QModelIndex &parent) const
 {
@@ -29,7 +29,11 @@ QVariant EmployeeTableModel::data(const QModelIndex &index, int role) const
     if (role == Qt::DisplayRole)
     {
 	if (index.column() == 0)
+	    return EmployeeList.at(index.row())->login();
+	else if (index.column()==1)
 	    return EmployeeList.at(index.row())->name();
+	else
+	    return QVariant();
 
     }
     else
@@ -50,8 +54,10 @@ QVariant EmployeeTableModel::headerData(int section, Qt::Orientation orientation
 	    switch (section)
 	    {
 	    case 0:
-		result= tr("Mitarbeiter");
+		result= tr("login");
 		break;
+	    case 1:
+		result= tr("Name");
 	    default:
 		break;
 	    }

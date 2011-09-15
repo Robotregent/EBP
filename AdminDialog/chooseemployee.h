@@ -2,6 +2,7 @@
 #define CHOOSEEMPLOYEE_H
 
 #include <QDialog>
+#include "admindialog.h"
 #include "employeelistmodel.h"
 namespace Ui {
     class ChooseEmployee;
@@ -17,9 +18,14 @@ public:
 
 private slots:
 
+    void on_ButtonAbort_clicked();
+
+    void on_ButtonErase_clicked();
+
 private:
     Ui::ChooseEmployee *ui;
     EmployeeTableModel *model;
+    AdminDialog *parent_;
 };
 
 #endif // CHOOSEEMPLOYEE_H
