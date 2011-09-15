@@ -2,6 +2,7 @@
 #define MITARBEITER_HXX
 
 
+#include "Bewohner.hxx"
 #include "Wohngruppe.hxx"
 #include "Projekt.hxx"
 
@@ -28,10 +29,10 @@ namespace drkv
 	public:
 		enum Berechtigungen
 		{
-			Admin,
-			Verbund,
-			Heim,
-			Gruppe
+			AdminRecht,
+			WohnverbundRecht,
+			WohnheimRecht,
+			WohngruppenRecht
 		};
 
 		Mitarbeiter
@@ -43,7 +44,7 @@ namespace drkv
 			const QString & telefon,
 			const QList< QLazyWeakPointer<Wohngruppe> > & wohngruppen,
 			const QList< QLazyWeakPointer<Projekt> > & projekte,
-			const QLazyWeakPointer<Wohngruppe> & bezugsbetreuer
+			const QList< QLazyWeakPointer<Bewohner> > & bezugsbetreuer
 		) :
 			login_(login),
 			berechtigung_(berechtigung),
@@ -77,8 +78,8 @@ namespace drkv
 		const QList< QLazyWeakPointer<Projekt> > & projekte() const { return projekte_; }
 		void projekte( const QList< QLazyWeakPointer<Projekt> > & projekte ) { projekte_ = projekte; }
 
-		const QLazyWeakPointer<Wohngruppe> & bezugsbetreuer() const { return bezugsbetreuer_; }
-		void bezugsbetreuer( const QLazyWeakPointer<Wohngruppe> & wohngruppe ) { bezugsbetreuer_ = wohngruppe; }
+		const QList< QLazyWeakPointer<Bewohner> > & bezugsbetreuer() const { return bezugsbetreuer_; }
+		void bezugsbetreuer( const QList< QLazyWeakPointer<Bewohner> > & wohngruppe ) { bezugsbetreuer_ = wohngruppe; }
 
 		bool create( const QSharedPointer<drkv::database> & db, const QString & password );
 		bool remove( const QSharedPointer<drkv::database> & db );
@@ -111,7 +112,7 @@ namespace drkv
 		QList< QLazyWeakPointer<Projekt> > projekte_;
 
 		#pragma db inverse(bezugsbetreuer_)
-		QLazyWeakPointer<Wohngruppe> bezugsbetreuer_;
+		QList< QLazyWeakPointer<Bewohner> > bezugsbetreuer_;
 	};
 }
 
