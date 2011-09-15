@@ -26,17 +26,27 @@ namespace drkv
 		Q_DECLARE_TR_FUNCTIONS( Mitarbeiter )
 
 	public:
+		enum Berechtigungen
+		{
+			Admin,
+			Verbund,
+			Heim,
+			Gruppe
+		};
+
 		Mitarbeiter
 		(
 			const QString & login,
+			const Berechtigungen & berechtigung,
 			const QString & name,
 			const QString & email,
 			const QString & telefon,
-			QList< QLazyWeakPointer<Wohngruppe> > wohngruppen,
-			QList< QLazyWeakPointer<Projekt> > projekte,
-			QLazyWeakPointer<Wohngruppe> bezugsbetreuer
+			const QList< QLazyWeakPointer<Wohngruppe> > & wohngruppen,
+			const QList< QLazyWeakPointer<Projekt> > & projekte,
+			const QLazyWeakPointer<Wohngruppe> & bezugsbetreuer
 		) :
 			login_(login),
+			berechtigung_(berechtigung),
 			name_(name),
 			email_(email),
 			telefon_(telefon),
@@ -52,6 +62,9 @@ namespace drkv
 		const QString & name() const { return name_; }
 		void name( const QString & name ) { name_ = name; }
 
+		const Berechtigungen & berechtigung() const { return berechtigung_; }
+		void berechtigung( const Berechtigungen & berechtigung ) { berechtigung_ = berechtigung; }
+
 		const QString & email() const { return email_; }
 		void email( const QString & email ) { email_ = email; }
 
@@ -59,13 +72,13 @@ namespace drkv
 		void telefon( const QString & telefon ) { telefon_ = telefon; }
 
 		const QList< QLazyWeakPointer<Wohngruppe> > & wohngruppen() const { return wohngruppen_; }
-		void wohngruppen( QList< QLazyWeakPointer<Wohngruppe> > & wohngruppen ) { wohngruppen_ = wohngruppen; }
+		void wohngruppen( const QList< QLazyWeakPointer<Wohngruppe> > & wohngruppen ) { wohngruppen_ = wohngruppen; }
 
 		const QList< QLazyWeakPointer<Projekt> > & projekte() const { return projekte_; }
-		void projekte( QList< QLazyWeakPointer<Projekt> > & projekte ) { projekte_ = projekte; }
+		void projekte( const QList< QLazyWeakPointer<Projekt> > & projekte ) { projekte_ = projekte; }
 
 		const QLazyWeakPointer<Wohngruppe> & bezugsbetreuer() const { return bezugsbetreuer_; }
-		void bezugsbetreuer( QLazyWeakPointer<Wohngruppe> & wohngruppe ) { bezugsbetreuer_ = wohngruppe; }
+		void bezugsbetreuer( const QLazyWeakPointer<Wohngruppe> & wohngruppe ) { bezugsbetreuer_ = wohngruppe; }
 
 		bool create( const QSharedPointer<drkv::database> & db, const QString & password );
 		bool remove( const QSharedPointer<drkv::database> & db );
@@ -82,6 +95,8 @@ namespace drkv
 
 		#pragma db not_null type("VARCHAR(128)") options("UNIQUE")
 		QString login_;
+
+		Berechtigungen berechtigung_;
 
 		QString name_;
 
