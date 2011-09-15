@@ -19,10 +19,14 @@ public:
     explicit AdminDialog(QWidget *parent = 0);
     ~AdminDialog();
 
+private slots:
+    void on_button_MA_suchen_clicked();
+
 private:
     Ui::AdminDialog *ui;
     void init();
     database *db;
+    QStringList
 };
 
 #endif // ADMINDIALOG_H

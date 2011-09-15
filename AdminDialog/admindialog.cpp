@@ -19,3 +19,8 @@ void AdminDialog::init()
 {
     this->db = new database("drk_admin","drk","drk");
 }
+
+void AdminDialog::on_button_MA_suchen_clicked()
+{
+
+}

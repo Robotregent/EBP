@@ -15,6 +15,9 @@ public:
     explicit ChooseEmployee(QWidget *parent = 0);
     ~ChooseEmployee();
 
+private slots:
+    void on_buttonBox_accepted();
+
 private:
     Ui::ChooseEmployee *ui;
 };
