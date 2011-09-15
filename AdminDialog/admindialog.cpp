@@ -11,6 +11,8 @@ AdminDialog::AdminDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     this->init();
+    this->PointerToDB  = QSharedPointer<database>(db);
+    this->model = new EmployeeTableModel(Mitarbeiter::getAll(this->PointerToDB));
 
 }
 
@@ -25,7 +27,7 @@ void AdminDialog::init()
 
 void AdminDialog::on_button_MA_suchen_clicked()
 {
-    QSharedPointer<database> tmpDB = QSharedPointer<database>(db);
-    EmployeeTableModel *model = new EmployeeTableModel(Mitarbeiter::getAll(tmpDB));
-    new ChooseEmployee(model,this);
+    ChooseEmployee *e=new ChooseEmployee(this->model,this);
+    e->setModal(true);
+    e->setVisible(true);
 }

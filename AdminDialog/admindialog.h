@@ -4,7 +4,7 @@
 #include <QDialog>
 
 #include "../drkv/database.hxx"
-
+#include "employeelistmodel.h"
 using namespace drkv;
 
 namespace Ui {
@@ -26,6 +26,8 @@ private:
     Ui::AdminDialog *ui;
     void init();
     database *db;
+    QSharedPointer<database> PointerToDB;
+    EmployeeTableModel *model;
 
 };
 

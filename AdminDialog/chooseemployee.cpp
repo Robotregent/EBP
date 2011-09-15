@@ -12,5 +12,6 @@ ChooseEmployee::ChooseEmployee(EmployeeTableModel *_model,QWidget *parent) :
 
 ChooseEmployee::~ChooseEmployee()
 {
+    //delete model;
     delete ui;
 }
