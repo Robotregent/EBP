@@ -111,7 +111,7 @@ namespace drkv
 		#pragma db unordered inverse(verantwortliche_)
 		QList< QLazyWeakPointer<Projekt> > projekte_;
 
-		#pragma db inverse(bezugsbetreuer_)
+		#pragma db unordered inverse(bezugsbetreuer_)
 		QList< QLazyWeakPointer<Bewohner> > bezugsbetreuer_;
 	};
 }

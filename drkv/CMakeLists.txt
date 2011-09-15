@@ -10,6 +10,7 @@ set( libdrkv_headers
 	Mitarbeiter.hxx
 	Bewohner.hxx
 	Wohngruppe.hxx
+	Wohngruppenereignis.hxx
 	Projekt.hxx
 	Protokoll.hxx
 )

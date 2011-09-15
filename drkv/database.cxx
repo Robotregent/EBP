@@ -51,7 +51,18 @@ database::database
 void database::executeCreateUser( const Mitarbeiter & mitarbeiter, const QString & from, const QString & password )
 {
 	execute( "CREATE USER '"+mitarbeiter.login()+"'@'"+from+"' IDENTIFIED BY '"+password+"';" );
-	execute( "GRANT SELECT ON "+QString(db())+".* TO '"+mitarbeiter.login()+"'@'"+from+"';" );
+	switch( mitarbeiter.berechtigung() )
+	{
+		case Mitarbeiter::AdminRecht:
+			execute( "GRANT ALL PRIVILEGES ON "+QString(db())+".* TO '"+mitarbeiter.login()+"'@'"+from+"' WITH GRANT OPTION;" );
+			break;
+		case Mitarbeiter::WohnverbundRecht:
+		case Mitarbeiter::WohnheimRecht:
+		case Mitarbeiter::WohngruppenRecht:
+			execute( "GRANT SELECT ON "+QString(db())+".* TO '"+mitarbeiter.login()+"'@'"+from+"';" );
+		default:
+			break;
+	}
 }
 
 

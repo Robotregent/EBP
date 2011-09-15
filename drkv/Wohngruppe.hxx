@@ -4,6 +4,7 @@
 
 #include "Mitarbeiter.hxx"
 #include "Bewohner.hxx"
+#include "Wohngruppenereignis.hxx"
 
 #include <QCoreApplication>
 #include <QString>
@@ -18,6 +19,7 @@ namespace drkv
 {
 	class Mitarbeiter;
 	class Bewohner;
+	class Wohngruppenereignis;
 	class database;
 
 	#pragma db object
@@ -30,11 +32,13 @@ namespace drkv
 		(
 			const QString & name,
 			const QList< QLazyWeakPointer<Mitarbeiter> > & mitarbeiter,
-			const QList< QLazyWeakPointer<Bewohner> > & bewohner
+			const QList< QLazyWeakPointer<Bewohner> > & bewohner,
+			const QList< QLazyWeakPointer<Wohngruppenereignis> > & ereignisse
 		) :
 			name_(name),
 			mitarbeiter_(mitarbeiter),
-			bewohner_(bewohner)
+			bewohner_(bewohner),
+			ereignisse_(ereignisse)
 		{
 		}
 
@@ -46,6 +50,9 @@ namespace drkv
 
 		const QList< QLazyWeakPointer<Bewohner> > & bewohner() const { return bewohner_; }
 		void bewohner( const QList< QLazyWeakPointer<Bewohner> > & bewohner ) { bewohner_ = bewohner; }
+
+		const QList< QLazyWeakPointer<Wohngruppenereignis> > & ereignisse() const { return ereignisse_; }
+		void ereignisse( const QList< QLazyWeakPointer<Wohngruppenereignis> > & ereignisse ) { ereignisse_ = ereignisse; }
 
 	private:
 		friend class odb::access;
@@ -61,6 +68,9 @@ namespace drkv
 
 		#pragma db unordered
 		QList< QLazyWeakPointer<Bewohner> > bewohner_;
+
+		#pragma db unordered inverse(wohngruppe_)
+		QList< QLazyWeakPointer<Wohngruppenereignis> > ereignisse_;
 	};
 }
 
