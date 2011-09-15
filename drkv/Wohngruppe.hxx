@@ -5,6 +5,7 @@
 #include "Mitarbeiter.hxx"
 #include "Bewohner.hxx"
 
+#include <QCoreApplication>
 #include <QString>
 #include <QList>
 #include <QSharedPointer>
@@ -28,10 +29,12 @@ namespace drkv
 		Wohngruppe
 		(
 			const QString & name,
-			QList< QLazyWeakPointer<Mitarbeiter> > mitarbeiter
+			const QList< QLazyWeakPointer<Mitarbeiter> > & mitarbeiter,
+			const QList< QLazyWeakPointer<Bewohner> > & bewohner
 		) :
 			name_(name),
-			mitarbeiter_(mitarbeiter)
+			mitarbeiter_(mitarbeiter),
+			bewohner_(bewohner)
 		{
 		}
 
@@ -41,6 +44,9 @@ namespace drkv
 		const QList< QLazyWeakPointer<Mitarbeiter> > & mitarbeiter() const { return mitarbeiter_; }
 		void mitarbeiter( const QList< QLazyWeakPointer<Mitarbeiter> > & mitarbeiter ) { mitarbeiter_ = mitarbeiter; }
 
+		const QList< QLazyWeakPointer<Bewohner> > & bewohner() const { return bewohner_; }
+		void bewohner( const QList< QLazyWeakPointer<Bewohner> > & bewohner ) { bewohner_ = bewohner; }
+
 	private:
 		friend class odb::access;
 		Wohngruppe() {}
@@ -49,8 +55,6 @@ namespace drkv
 		unsigned long id_;
 
 		QString name_;
-
-		QLazyWeakPointer<Mitarbeiter> bezugsbetreuer_;
 
 		#pragma db unordered
 		QList< QLazyWeakPointer<Mitarbeiter> > mitarbeiter_;

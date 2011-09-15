@@ -55,16 +55,16 @@ void database::executeCreateUser( const Mitarbeiter & mitarbeiter, const QString
 }
 
 
-void database::executeDropUser( const Mitarbeiter & mitarbeiter, const QString & from )
-{
-	execute( "DROP USER '"+mitarbeiter.login()+"'@'"+from+"';" );
-}
-
-
 void database::executeCreateUser( const Mitarbeiter & mitarbeiter, const QString & password )
 {
 	executeCreateUser( mitarbeiter, "localhost", password );
 	executeCreateUser( mitarbeiter, "%", password );
+}
+
+
+void database::executeDropUser( const Mitarbeiter & mitarbeiter, const QString & from )
+{
+	execute( "DROP USER '"+mitarbeiter.login()+"'@'"+from+"';" );
 }
 
 

@@ -35,6 +35,7 @@ namespace drkv
 			const QString & krankenkasse,
 			const QString & email,
 			const QString & telefon,
+			const QLazyWeakPointer<Mitarbeiter> & bezugsbetreuer,
 			const QLazyWeakPointer<Wohngruppe> & wohngruppe,
 			const QList< QLazyWeakPointer<Projekt> > & projekte
 		) :
@@ -44,6 +45,7 @@ namespace drkv
 			krankenkasse_(krankenkasse),
 			email_(email),
 			telefon_(telefon),
+			bezugsbetreuer_(bezugsbetreuer),
 			wohngruppe_(wohngruppe),
 			projekte_(projekte)
 		{
@@ -63,6 +65,9 @@ namespace drkv
 
 		const QString & telefon() const { return telefon_; }
 		void telefon( const QString & telefon ) { telefon_ = telefon; }
+
+		const QLazyWeakPointer<Mitarbeiter> & bezugsbetreuer() const { return bezugsbetreuer_; }
+		void bezugsbetreuer( const QLazyWeakPointer<Mitarbeiter> & bezugsbetreuer ) { bezugsbetreuer_ = bezugsbetreuer; }
 
 		const QLazyWeakPointer<Wohngruppe> & wohngruppe() const { return wohngruppe_; }
 		void wohngruppe( const QLazyWeakPointer<Wohngruppe> & wohngruppe ) { wohngruppe_ = wohngruppe; }
@@ -94,6 +99,8 @@ namespace drkv
 		QString email_;
 
 		QString telefon_;
+
+		QLazyWeakPointer<Mitarbeiter> bezugsbetreuer_;
 
 		#pragma db inverse(bewohner_)
 		QLazyWeakPointer<Wohngruppe> wohngruppe_;
