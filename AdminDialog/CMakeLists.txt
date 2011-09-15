@@ -7,12 +7,16 @@ PROJECT(AdminDialog)
 # here we define SAMPLE_SRCS variable that contains a list of all .cpp files
 SET( SAMPLE_SRCS
        admindialog.cpp
+	   chooseemployee.cpp
+	   employeelistmodel.cpp
        main.cpp
 )
   
 # another list, this time it includes all header files that should be treated with moc
 SET( SAMPLE_MOC_HDRS
        admindialog.h
+	   chooseemployee.h
+	   employeelistmodel.h
 )
 #lib directories
 SET(AdminDialog_library_dirs
@@ -32,6 +36,7 @@ SET(AdminDialog_libraries
 # some .ui files
 SET( SAMPLE_UIS
 	admindialog.ui
+	chooseemployee.ui
 )
 # and finally an resource file
 # SET( SAMPLE_RCS

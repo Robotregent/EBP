@@ -2,7 +2,7 @@
 #define ADMINDIALOG_H
 
 #include <QDialog>
-#include "../drkv/Mitarbeiter.hxx"
+
 #include "../drkv/database.hxx"
 
 using namespace drkv;
@@ -26,7 +26,7 @@ private:
     Ui::AdminDialog *ui;
     void init();
     database *db;
-    QStringList
+
 };
 
 #endif // ADMINDIALOG_H

@@ -1,22 +1,16 @@
 #include "chooseemployee.h"
 #include "ui_chooseemployee.h"
 #include "../drkv/Mitarbeiter.hxx"
-
-ChooseEmployee::ChooseEmployee(QWidget *parent) :
+ChooseEmployee::ChooseEmployee(EmployeeTableModel *_model,QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::ChooseEmployee)
+    ui(new Ui::ChooseEmployee),
+    model(_model)
 {
     ui->setupUi(this);
-    this->ui->EmployeeList->addItem;
+    this->ui->listView->setModel(this->model);
 }
 
 ChooseEmployee::~ChooseEmployee()
 {
     delete ui;
-}
-
-void ChooseEmployee::on_buttonBox_accepted()
-{
-
-    this->deleteLater();
 }

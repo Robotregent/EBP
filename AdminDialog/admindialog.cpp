@@ -1,5 +1,8 @@
 #include "admindialog.h"
 #include "ui_admindialog.h"
+#include "chooseemployee.h"
+#include "employeelistmodel.h"
+#include "../drkv/Mitarbeiter.hxx"
 //#include "../drkv/database.hxx"
 
 AdminDialog::AdminDialog(QWidget *parent) :
@@ -22,5 +25,7 @@ void AdminDialog::init()
 
 void AdminDialog::on_button_MA_suchen_clicked()
 {
-
+    QSharedPointer<database> tmpDB = QSharedPointer<database>(db);
+    EmployeeTableModel *model = new EmployeeTableModel(Mitarbeiter::getAll(tmpDB));
+    new ChooseEmployee(model,this);
 }
