@@ -20,7 +20,7 @@ namespace drkv
 	class Mitarbeiter;
 	class Bewohner;
 	class Wohngruppenereignis;
-	class database;
+	class connection;
 
 	#pragma db object
 	class Wohngruppe

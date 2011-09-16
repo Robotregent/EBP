@@ -6,9 +6,10 @@ include( ${QT_USE_FILE} )
 
 
 set( libdrkv_headers
-	database.hxx
+	connection.hxx
 	Mitarbeiter.hxx
 	Bewohner.hxx
+	Bewohnerereignis.hxx
 	Wohngruppe.hxx
 	Wohngruppenereignis.hxx
 	Projekt.hxx
@@ -16,7 +17,7 @@ set( libdrkv_headers
 )
 
 set( libdrkv_sources
-	database.cxx
+	connection.cxx
 	Mitarbeiter.cxx
 	Bewohner.cxx
 )

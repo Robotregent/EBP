@@ -1,6 +1,6 @@
 #include "Bewohner.hxx"
 #include "Bewohner-odb.hxx"
-#include "database.hxx"
+#include "connection.hxx"
 
 #include <QDebug>
 
@@ -8,12 +8,12 @@
 using namespace drkv;
 
 
-bool Bewohner::create( const QSharedPointer<drkv::database> & db )
+bool Bewohner::create( const QSharedPointer<drkv::connection> & connection )
 {
 	try
 	{
-		odb::transaction t( db->begin() );
-		db->persist( *this );
+		odb::transaction t( connection->getDB()->begin() );
+		connection->getDB()->persist( *this );
 		t.commit();
 	}
 	catch( const odb::exception & e )
@@ -25,12 +25,12 @@ bool Bewohner::create( const QSharedPointer<drkv::database> & db )
 }
 
 
-bool Bewohner::remove( const QSharedPointer<drkv::database> & db )
+bool Bewohner::remove( const QSharedPointer<drkv::connection> & connection )
 {
 	try
 	{
-		odb::transaction t( db->begin() );
-		db->erase( *this );
+		odb::transaction t( connection->getDB()->begin() );
+		connection->getDB()->erase( *this );
 		t.commit();
 	}
 	catch( const odb::exception & e )
@@ -42,12 +42,12 @@ bool Bewohner::remove( const QSharedPointer<drkv::database> & db )
 }
 
 
-bool Bewohner::update( const QSharedPointer<drkv::database> & db )
+bool Bewohner::update( const QSharedPointer<drkv::connection> & connection )
 {
 	try
 	{
-		odb::transaction t( db->begin() );
-		db->update( *this );
+		odb::transaction t( connection->getDB()->begin() );
+		connection->getDB()->update( *this );
 		t.commit();
 	}
 	catch( const odb::exception & e )
@@ -59,13 +59,13 @@ bool Bewohner::update( const QSharedPointer<drkv::database> & db )
 }
 
 
-QList< QSharedPointer<Bewohner> > Bewohner::getAll( const QSharedPointer<drkv::database> & db )
+QList< QSharedPointer<Bewohner> > Bewohner::getAll( const QSharedPointer<drkv::connection> & connection )
 {
 	QList< QSharedPointer<Bewohner> > list;
 	try
 	{
-		odb::transaction t( db->begin() );
-		odb::result<Bewohner> r( db->query<Bewohner>() );
+		odb::transaction t( connection->getDB()->begin() );
+		odb::result<Bewohner> r( connection->getDB()->query<Bewohner>() );
 		for( odb::result<Bewohner>::iterator i( r.begin() ); i != r.end(); ++i )
 		{
 			list.push_back( i.load() );

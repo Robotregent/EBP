@@ -1,5 +1,5 @@
-#ifndef DBCONNECTION_HXX
-#define DBCONNECTION_HXX
+#ifndef CONNECTION_HXX
+#define CONNECTION_HXX
 
 
 #include "Mitarbeiter.hxx"
@@ -15,22 +15,23 @@
 
 namespace drkv
 {
-	class database : public odb::mysql::database
+	class connection
 	{
-		Q_DECLARE_TR_FUNCTIONS( database )
+		Q_DECLARE_TR_FUNCTIONS( connection )
 
 	public:
-		database
+		connection
 		(
 			const QString & user,
-			const QString & password,
 			const QString & database,
 			const QString & host = "localhost",
 			unsigned int port = 3306
 		);
 
-		unsigned long long execute( const QString & statement ) { return odb::database::execute( statement.toStdString() ); }
-
+		bool establish( const QString & password );
+		bool isEstablished() const { return db; }
+		odb::mysql::database * getDB() const { return db; }
+		unsigned long long execute( const QString & statement ) { return db->execute( statement.toStdString() ); }
 		void executeCreateUser( const Mitarbeiter & mitarbeiter, const QString & from, const QString & password );
 		void executeCreateUser( const Mitarbeiter & mitarbeiter, const QString & password );
 		void executeDropUser( const Mitarbeiter & mitarbeiter, const QString & from );
@@ -39,9 +40,15 @@ namespace drkv
 		void executeSetPassword( const Mitarbeiter & mitarbeiter, const QString & password );
 
 	private:
+		
+		QString dbUser;
+		QString dbDatabase;
+		QString dbHost;
+		unsigned int dbPort;
+		odb::mysql::database * db;
 		QSharedPointer<Mitarbeiter> connectedUser;
 	};
 }
 
 
-#endif // DBCONNECTION_HXX
+#endif // CONNECTION_HXX

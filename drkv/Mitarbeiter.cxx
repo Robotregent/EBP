@@ -1,6 +1,6 @@
 #include "Mitarbeiter.hxx"
 #include "Mitarbeiter-odb.hxx"
-#include "database.hxx"
+#include "connection.hxx"
 
 #include <QDebug>
 
@@ -8,7 +8,7 @@
 using namespace drkv;
 
 
-bool Mitarbeiter::create( const QSharedPointer<drkv::database> & db, const QString & password )
+bool Mitarbeiter::create( const QSharedPointer<drkv::connection> & connection, const QString & password )
 {
 	if( login().isNull() || login()=="" )
 	{
@@ -23,9 +23,9 @@ bool Mitarbeiter::create( const QSharedPointer<drkv::database> & db, const QStri
 
 	try
 	{
-		odb::transaction t( db->begin() );
-		db->executeCreateUser( *this, password );
-		db->persist( *this );
+		odb::transaction t( connection->getDB()->begin() );
+		connection->executeCreateUser( *this, password );
+		connection->getDB()->persist( *this );
 		t.commit();
 	}
 	catch( const odb::exception & e )
@@ -37,13 +37,13 @@ bool Mitarbeiter::create( const QSharedPointer<drkv::database> & db, const QStri
 }
 
 
-bool Mitarbeiter::remove( const QSharedPointer<drkv::database> & db )
+bool Mitarbeiter::remove( const QSharedPointer<drkv::connection> & connection )
 {
 	try
 	{
-		odb::transaction t( db->begin() );
-		db->executeDropUser( *this );
-		db->erase( *this );
+		odb::transaction t( connection->getDB()->begin() );
+		connection->executeDropUser( *this );
+		connection->getDB()->erase( *this );
 		t.commit();
 	}
 	catch( const odb::exception & e )
@@ -55,12 +55,12 @@ bool Mitarbeiter::remove( const QSharedPointer<drkv::database> & db )
 }
 
 
-bool Mitarbeiter::update( const QSharedPointer<drkv::database> & db )
+bool Mitarbeiter::update( const QSharedPointer<drkv::connection> & connection )
 {
 	try
 	{
-		odb::transaction t( db->begin() );
-		db->update( *this );
+		odb::transaction t( connection->getDB()->begin() );
+		connection->getDB()->update( *this );
 		t.commit();
 	}
 	catch( const odb::exception & e )
@@ -72,12 +72,12 @@ bool Mitarbeiter::update( const QSharedPointer<drkv::database> & db )
 }
 
 
-bool Mitarbeiter::updatePassword( const QSharedPointer<drkv::database> & db, const QString & password )
+bool Mitarbeiter::updatePassword( const QSharedPointer<drkv::connection> & connection, const QString & password )
 {
 	try
 	{
-		odb::transaction t( db->begin() );
-		db->executeSetPassword( *this, password );
+		odb::transaction t( connection->getDB()->begin() );
+		connection->executeSetPassword( *this, password );
 		t.commit();
 	}
 	catch( const odb::exception & e )
@@ -89,13 +89,13 @@ bool Mitarbeiter::updatePassword( const QSharedPointer<drkv::database> & db, con
 }
 
 
-QList< QSharedPointer<Mitarbeiter> > Mitarbeiter::getAll( const QSharedPointer<drkv::database> & db )
+QList< QSharedPointer<Mitarbeiter> > Mitarbeiter::getAll( const QSharedPointer<drkv::connection> & connection )
 {
 	QList< QSharedPointer<Mitarbeiter> > list;
 	try
 	{
-		odb::transaction t( db->begin() );
-		odb::result<Mitarbeiter> r( db->query<Mitarbeiter>() );
+		odb::transaction t( connection->getDB()->begin() );
+		odb::result<Mitarbeiter> r( connection->getDB()->query<Mitarbeiter>() );
 		for( odb::result<Mitarbeiter>::iterator i( r.begin() ); i != r.end(); ++i )
 		{
 			list.push_back( i.load() );

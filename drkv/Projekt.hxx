@@ -19,7 +19,7 @@ namespace drkv
 {
 	class Mitarbeiter;
 	class Bewohner;
-	class database;
+	class connection;
 
 	#pragma db object
 	class Projekt

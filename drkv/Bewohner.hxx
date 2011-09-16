@@ -19,7 +19,7 @@ namespace drkv
 {
 	class Wohngruppe;
 	class Projekt;
-	class database;
+	class connection;
 
 	#pragma db object
 	class Bewohner
@@ -75,10 +75,10 @@ namespace drkv
 		const QList< QLazyWeakPointer<Projekt> > & projekte() const { return projekte_; }
 		void projekte( const QList< QLazyWeakPointer<Projekt> > & projekte ) { projekte_ = projekte; }
 
-		bool create( const QSharedPointer<drkv::database> & db );
-		bool remove( const QSharedPointer<drkv::database> & db );
-		bool update( const QSharedPointer<drkv::database> & db );
-		static QList< QSharedPointer<Bewohner> > getAll( const QSharedPointer<drkv::database> & db );
+		bool create( const QSharedPointer<drkv::connection> & connection );
+		bool remove( const QSharedPointer<drkv::connection> & connection );
+		bool update( const QSharedPointer<drkv::connection> & connection );
+		static QList< QSharedPointer<Bewohner> > getAll( const QSharedPointer<drkv::connection> & connection );
 
 	private:
 		friend class odb::access;

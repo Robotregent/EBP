@@ -19,7 +19,7 @@ namespace drkv
 {
 	class Bewohner;
 	class Mitarbeiter;
-	class database;
+	class connection;
 
 	#pragma db object
 	class Protokoll
@@ -58,9 +58,9 @@ namespace drkv
 		const QList< QLazyWeakPointer<Mitarbeiter> > & schreiber() const { return schreiber_; }
 		void schreiber( const QList< QLazyWeakPointer<Mitarbeiter> > & schreiber ) { schreiber_ = schreiber; }
 
-		bool create( const QSharedPointer<drkv::database> & db );
-		bool remove( const QSharedPointer<drkv::database> & db );
-		bool update( const QSharedPointer<drkv::database> & db );
+		bool create( const QSharedPointer<drkv::connection> & connection );
+		bool remove( const QSharedPointer<drkv::connection> & connection );
+		bool update( const QSharedPointer<drkv::connection> & connection );
 
 	private:
 		friend class odb::access;

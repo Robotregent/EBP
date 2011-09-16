@@ -1,9 +1,9 @@
-#ifndef WOHNGRUPPENEREIGNIS_HXX
-#define WOHNGRUPPENEREIGNIS_HXX
+#ifndef BEWOHNEREREIGNIS_HXX
+#define BEWOHNEREREIGNIS_HXX
 
 
 #include "Mitarbeiter.hxx"
-#include "Wohngruppe.hxx"
+#include "Bewohner.hxx"
 
 #include <QCoreApplication>
 #include <QString>
@@ -18,26 +18,26 @@
 namespace drkv
 {
 	class Mitarbeiter;
-	class Wohngruppe;
+	class Bewohner;
 	class connection;
 
 	#pragma db object
-	class Wohngruppenereignis
+	class Bewohnerereignis
 	{
-		Q_DECLARE_TR_FUNCTIONS( Wohngruppenereignis )
+		Q_DECLARE_TR_FUNCTIONS( Bewohnerereignis )
 
 	public:
-		Wohngruppenereignis
+		Bewohnerereignis
 		(
 			const QDateTime & zeitpunkt,
 			const QString & text,
 			const QList< QLazyWeakPointer<Mitarbeiter> > & schreiber,
-			const QLazyWeakPointer<Wohngruppe> & wohngruppe
+			const QLazyWeakPointer<Bewohner> & bewohner
 		) :
 			zeitpunkt_(zeitpunkt),
 			text_(text),
 			schreiber_(schreiber),
-			wohngruppe_(wohngruppe)
+			bewohner_(bewohner)
 		{
 		}
 
@@ -50,12 +50,12 @@ namespace drkv
 		const QList< QLazyWeakPointer<Mitarbeiter> > & schreiber() const { return schreiber_; }
 		void schreiber( const QList< QLazyWeakPointer<Mitarbeiter> > & schreiber ) { schreiber_ = schreiber; }
 
-		const QLazyWeakPointer<Wohngruppe> & wohngruppe() const { return wohngruppe_; }
-		void wohngruppe( const QLazyWeakPointer<Wohngruppe> & wohngruppe ) { wohngruppe_ = wohngruppe; }
+		const QLazyWeakPointer<Bewohner> & bewohner() const { return bewohner_; }
+		void bewohner( const QLazyWeakPointer<Bewohner> & bewohner ) { bewohner_ = bewohner; }
 
 	private:
 		friend class odb::access;
-		Wohngruppenereignis() {}
+		Bewohnerereignis() {}
 
 		#pragma db id auto
 		unsigned long id_;
@@ -67,9 +67,9 @@ namespace drkv
 		#pragma db unordered
 		QList< QLazyWeakPointer<Mitarbeiter> > schreiber_;
 
-		QLazyWeakPointer<Wohngruppe> wohngruppe_;
+		QLazyWeakPointer<Bewohner> bewohner_;
 	};
 }
 
 
-#endif // WOHNGRUPPENEREIGNIS_HXX
+#endif // BEWOHNEREREIGNIS_HXX
