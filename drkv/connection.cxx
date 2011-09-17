@@ -64,6 +64,7 @@ void connection::executeCreateUser( const Mitarbeiter & mitarbeiter, const QStri
 	{
 		case Mitarbeiter::AdminRecht:
 			execute( "GRANT ALL PRIVILEGES ON "+dbDatabase+".* TO '"+mitarbeiter.login()+"'@'"+from+"' WITH GRANT OPTION;" );
+			execute( "GRANT CREATE USER ON *.* TO '"+mitarbeiter.login()+"'@'"+from+"' WITH GRANT OPTION;" );
 			break;
 		case Mitarbeiter::WohnverbundRecht:
 		case Mitarbeiter::WohnheimRecht:
