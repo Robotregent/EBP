@@ -20,6 +20,11 @@ set( libdrkv_sources
 	connection.cxx
 	Mitarbeiter.cxx
 	Bewohner.cxx
+	Bewohnerereignis.cxx
+	Wohngruppe.cxx
+	Wohngruppenereignis.cxx
+	Projekt.cxx
+	Protokoll.cxx
 )
 
 set( drkv_include_dirs

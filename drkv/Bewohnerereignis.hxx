@@ -53,6 +53,10 @@ namespace drkv
 		const QLazyWeakPointer<Bewohner> & bewohner() const { return bewohner_; }
 		void bewohner( const QLazyWeakPointer<Bewohner> & bewohner ) { bewohner_ = bewohner; }
 
+		bool create( const QSharedPointer<drkv::connection> & connection );
+		bool remove( const QSharedPointer<drkv::connection> & connection );
+		bool update( const QSharedPointer<drkv::connection> & connection );
+
 	private:
 		friend class odb::access;
 		Bewohnerereignis() {}

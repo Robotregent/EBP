@@ -54,6 +54,10 @@ namespace drkv
 		const QList< QLazyWeakPointer<Wohngruppenereignis> > & ereignisse() const { return ereignisse_; }
 		void ereignisse( const QList< QLazyWeakPointer<Wohngruppenereignis> > & ereignisse ) { ereignisse_ = ereignisse; }
 
+		bool create( const QSharedPointer<drkv::connection> & connection );
+		bool remove( const QSharedPointer<drkv::connection> & connection );
+		bool update( const QSharedPointer<drkv::connection> & connection );
+
 	private:
 		friend class odb::access;
 		Wohngruppe() {}
