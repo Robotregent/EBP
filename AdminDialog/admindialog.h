@@ -43,6 +43,7 @@ private:
     void removeTabWidgets();
     QList<int> TabPages;
     bool isPasswordValid();
+    Mitarbeiter::Berechtigungen setBerechtigung();
 
 };
 

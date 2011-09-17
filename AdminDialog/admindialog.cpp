@@ -25,6 +25,12 @@ void AdminDialog::init()
     this->ui->passwortLineEdit->setEchoMode(QLineEdit::Password);
     this->ui->passwortWiederholenLineEdit->setEchoMode(QLineEdit::Password);
     this->ui->passwortLineEdit_2->setEchoMode(QLineEdit::Password);
+    this->ui->berechtigungComboBox->addItems(QStringList()
+					     <<tr("WohngruppenRecht")
+					     <<tr("WohnheimRecht")
+					     <<tr("WohnverbundRecht")
+					     <<tr("AdminRecht"));
+
     this->setLogin();
 
 }
@@ -45,7 +51,7 @@ void AdminDialog::on_button_MA_speichern_clicked()
 	QList<QLazyWeakPointer<Bewohner> > b = QList<QLazyWeakPointer<Bewohner> >();
 
 	Mitarbeiter ma(this->ui->loginNameLineEdit_2->text(),
-		       Mitarbeiter::WohnheimRecht,
+		       this->setBerechtigung(),
 		       this->ui->nameLineEdit->text(),
 		       this->ui->eMailLineEdit->text(),
 		       this->ui->telefonLineEdit->text(),
@@ -53,7 +59,16 @@ void AdminDialog::on_button_MA_speichern_clicked()
 		       p,
 		       b);
 
-	ma.create(this->PointerToConnection,this->ui->passwortLineEdit_2->text());
+	if (ma.create(this->PointerToConnection,this->ui->passwortLineEdit_2->text()))
+	{
+	    QMessageBox::information(this,tr("Mitarbeiter erfolgreich angelegt"),tr("Mitarbeiter erfolgreich angelegt"));
+	}
+	else
+	{
+	    QMessageBox::critical(this,tr("Fehler"),tr("Mitarbeiter konnte nicht angelegt werden"));
+	}
+	this->on_button_MA_eingabeloeschen_clicked();
+	//QMessageBox::information(this,tr("Mitarbeiter erfolgreich angelegt"),tr("Mitarbeiter erfolgreich angelegt"));
     }
     else
     {
@@ -142,4 +157,27 @@ void AdminDialog::on_button_MA_eingabeloeschen_clicked()
     this->ui->nameLineEdit->clear();
     this->ui->telefonLineEdit->clear();
     this->ui->eMailLineEdit->clear();
+}
+Mitarbeiter::Berechtigungen AdminDialog::setBerechtigung()
+{
+    Mitarbeiter::Berechtigungen res = Mitarbeiter::WohngruppenRecht;
+    switch (this->ui->berechtigungComboBox->currentIndex())
+    {
+    case 0:
+	res = Mitarbeiter::WohngruppenRecht;
+	break;
+    case 1:
+	res = Mitarbeiter::WohnheimRecht;
+	break;
+    case 2:
+	res = Mitarbeiter::WohnverbundRecht;
+	break;
+    case 3:
+	res = Mitarbeiter::AdminRecht;
+	break;
+    default:
+	break;
+    }
+
+    return res;
 }
