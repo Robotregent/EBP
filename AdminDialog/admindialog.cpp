@@ -3,16 +3,16 @@
 #include "chooseemployee.h"
 #include "employeelistmodel.h"
 #include "../drkv/Mitarbeiter.hxx"
-//#include "../drkv/database.hxx"
 #include <QList>
+#include <QMessageBox>
 AdminDialog::AdminDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AdminDialog)
 {
     ui->setupUi(this);
     this->init();
-    this->PointerToDB  = QSharedPointer<database>(db);
-    this->model = new EmployeeTableModel(Mitarbeiter::getAll(this->PointerToDB));
+
+
 
 }
 
@@ -22,7 +22,11 @@ AdminDialog::~AdminDialog()
 }
 void AdminDialog::init()
 {
-    this->db = new database("drk_admin","drk","drk");
+    this->ui->passwortLineEdit->setEchoMode(QLineEdit::Password);
+    this->ui->passwortWiederholenLineEdit->setEchoMode(QLineEdit::Password);
+    this->ui->passwortLineEdit_2->setEchoMode(QLineEdit::Password);
+    this->setLogin();
+
 }
 
 void AdminDialog::on_button_MA_suchen_clicked()
@@ -34,14 +38,108 @@ void AdminDialog::on_button_MA_suchen_clicked()
 
 void AdminDialog::on_button_MA_speichern_clicked()
 {
-    QList < QLazyWeakPointer < Wohngruppe> > w;
-    QList < QLazyWeakPointer < Projekt> > p ;
-    QList < QLazyWeakPointer < Bewohner> > b ;
-    Mitarbeiter ma(this->ui->lineEdit_MA_vorname->text(),Mitarbeiter::WohnheimRecht,this->ui->lineEdit_MA_nachname->text()," "," " ,w,p,b);
-    ma.create(this->PointerToDB,"blabla");
+    if(this->isPasswordValid())
+    {
+	QList<QLazyWeakPointer<Wohngruppe> > w = QList<QLazyWeakPointer<Wohngruppe> >();
+	QList<QLazyWeakPointer<Projekt> > p = QList<QLazyWeakPointer<Projekt> >();
+	QList<QLazyWeakPointer<Bewohner> > b = QList<QLazyWeakPointer<Bewohner> >();
+
+	Mitarbeiter ma(this->ui->loginNameLineEdit_2->text(),
+		       Mitarbeiter::WohnheimRecht,
+		       this->ui->nameLineEdit->text(),
+		       this->ui->eMailLineEdit->text(),
+		       this->ui->telefonLineEdit->text(),
+		       w,
+		       p,
+		       b);
+
+	ma.create(this->PointerToConnection,this->ui->passwortLineEdit_2->text());
+    }
+    else
+    {
+	this->ui->passwortLineEdit_2->clear();
+	this->ui->passwortWiederholenLineEdit->clear();
+    }
 }
 
 void AdminDialog::on_button_abbrechen_clicked()
 {
     this->close();
+}
+
+void AdminDialog::setLogin()
+{
+    this->ui->tabWidget->setCurrentWidget(this->ui->tab_login);
+    this->ui->tab_login->setEnabled(true);
+    this->ui->tab_Bewohner->setEnabled(false);
+    this->ui->tab_Mitarbeiter->setEnabled(false);
+    this->ui->tab_Organisationseinheiten->setEnabled(false);
+
+}
+void AdminDialog::setContent()
+{
+    this->ui->tabWidget->setCurrentWidget(this->ui->tab_Mitarbeiter);
+    this->ui->tab_login->setEnabled(false);
+    this->ui->tab_Bewohner->setEnabled(true);
+    this->ui->tab_Mitarbeiter->setEnabled(true);
+    this->ui->tab_Organisationseinheiten->setEnabled(true);
+}
+
+void AdminDialog::on_ButtonLogin_clicked()
+{
+    this->con=new connection(this->ui->loginNameLineEdit->text(),"drk");
+    if (this->con->establish(this->ui->passwortLineEdit->text()))
+    {
+	this->setContent();
+
+	this->PointerToConnection = QSharedPointer<connection>(this->con);
+	this->model = new EmployeeTableModel(Mitarbeiter::getAll(this->PointerToConnection));
+    }
+    else
+    {
+	QMessageBox::critical(this,tr("Fehlerhafter Login"),tr("Es konnte keine Veerbindung zur Datenbank hergestellt werden. Überprüfen Sie bitte ihre Logindaten"));
+    }
+    this->clearLogin();
+}
+void AdminDialog::clearLogin()
+{
+    this->ui->loginNameLineEdit->clear();
+    this->ui->passwortLineEdit->clear();
+}
+void AdminDialog::removeTabWidgets()
+{
+    foreach (const int &toRemove , TabPages)
+    {
+	this->ui->tabWidget->removeTab(toRemove);
+    }
+    TabPages.clear();
+}
+ bool AdminDialog::isPasswordValid()
+ {
+     bool res = true;
+     QString p1, p2;
+     p1 = this->ui->passwortLineEdit_2->text();
+     p2 = this->ui->passwortWiederholenLineEdit->text();
+     if(p1.isEmpty() || p2.isEmpty()||(p1 == " ")||(p2 == " "))
+     {
+	 QMessageBox::critical(this,tr("Leeres Passwort"),tr("Bitte Passwort eingeben"));
+	 res = false;
+     }
+
+     else if (p1!=p2)
+     {
+	 QMessageBox::critical(this,tr("Passwörter stimmen nicht überein"),tr("Bitte zweimal das gleiche Passwort eingeben"));
+	 res = false;
+     }
+     return res;
+ }
+
+void AdminDialog::on_button_MA_eingabeloeschen_clicked()
+{
+    this->ui->loginNameLineEdit_2->clear();
+    this->ui->passwortLineEdit_2->clear();
+    this->ui->passwortWiederholenLineEdit->clear();
+    this->ui->nameLineEdit->clear();
+    this->ui->telefonLineEdit->clear();
+    this->ui->eMailLineEdit->clear();
 }
