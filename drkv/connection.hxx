@@ -2,11 +2,10 @@
 #define CONNECTION_HXX
 
 
-#include "Mitarbeiter.hxx"
-
 #include <QCoreApplication>
 #include <QString>
 #include <QList>
+#include <QSharedPointer>
 
 #include <odb/core.hxx>
 #include <odb/database.hxx>
@@ -15,6 +14,8 @@
 
 namespace drkv
 {
+	class Mitarbeiter;
+
 	class connection
 	{
 		Q_DECLARE_TR_FUNCTIONS( connection )
@@ -40,7 +41,6 @@ namespace drkv
 		void executeSetPassword( const Mitarbeiter & mitarbeiter, const QString & password );
 
 	private:
-		
 		QString dbUser;
 		QString dbDatabase;
 		QString dbHost;

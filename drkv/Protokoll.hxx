@@ -4,6 +4,7 @@
 
 #include "Bewohner.hxx"
 #include "Mitarbeiter.hxx"
+#include "databaseObject.hxx"
 
 #include <QCoreApplication>
 #include <QString>
@@ -22,7 +23,7 @@ namespace drkv
 	class connection;
 
 	#pragma db object
-	class Protokoll
+	class Protokoll : public databaseObject<Protokoll>
 	{
 		Q_DECLARE_TR_FUNCTIONS( Protokoll )
 
@@ -57,10 +58,6 @@ namespace drkv
 
 		const QList< QLazyWeakPointer<Mitarbeiter> > & schreiber() const { return schreiber_; }
 		void schreiber( const QList< QLazyWeakPointer<Mitarbeiter> > & schreiber ) { schreiber_ = schreiber; }
-
-		bool create( const QSharedPointer<drkv::connection> & connection );
-		bool remove( const QSharedPointer<drkv::connection> & connection );
-		bool update( const QSharedPointer<drkv::connection> & connection );
 
 	private:
 		friend class odb::access;

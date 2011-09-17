@@ -5,6 +5,10 @@
 #include <QDebug>
 
 
+#include "databaseObject.ixx"
+template class drkv::databaseObject<drkv::Mitarbeiter>;
+
+
 using namespace drkv;
 
 
@@ -37,6 +41,13 @@ bool Mitarbeiter::create( const QSharedPointer<drkv::connection> & connection, c
 }
 
 
+bool Mitarbeiter::create( const QSharedPointer<drkv::connection> & connection )
+{
+	qWarning() << tr("Erstelle Benutzer ohne Passwort.");
+	return create( connection, "" );
+}
+
+
 bool Mitarbeiter::remove( const QSharedPointer<drkv::connection> & connection )
 {
 	try
@@ -44,23 +55,6 @@ bool Mitarbeiter::remove( const QSharedPointer<drkv::connection> & connection )
 		odb::transaction t( connection->getDB()->begin() );
 		connection->executeDropUser( *this );
 		connection->getDB()->erase( *this );
-		t.commit();
-	}
-	catch( const odb::exception & e )
-	{
-		qCritical() << e.what();
-		return false;
-	}
-	return true;
-}
-
-
-bool Mitarbeiter::update( const QSharedPointer<drkv::connection> & connection )
-{
-	try
-	{
-		odb::transaction t( connection->getDB()->begin() );
-		connection->getDB()->update( *this );
 		t.commit();
 	}
 	catch( const odb::exception & e )
@@ -86,26 +80,4 @@ bool Mitarbeiter::updatePassword( const QSharedPointer<drkv::connection> & conne
 		return false;
 	}
 	return true;
-}
-
-
-QList< QSharedPointer<Mitarbeiter> > Mitarbeiter::getAll( const QSharedPointer<drkv::connection> & connection )
-{
-	QList< QSharedPointer<Mitarbeiter> > list;
-	try
-	{
-		odb::transaction t( connection->getDB()->begin() );
-		odb::result<Mitarbeiter> r( connection->getDB()->query<Mitarbeiter>() );
-		for( odb::result<Mitarbeiter>::iterator i( r.begin() ); i != r.end(); ++i )
-		{
-			list.push_back( i.load() );
-		}
-		t.commit();
-	}
-	catch( const odb::exception & e )
-	{
-		qCritical() << e.what();
-		return QList< QSharedPointer<Mitarbeiter> >();
-	}
-	return list;
 }
