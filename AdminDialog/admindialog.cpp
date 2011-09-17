@@ -11,9 +11,6 @@ AdminDialog::AdminDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     this->init();
-
-
-
 }
 
 AdminDialog::~AdminDialog()
@@ -22,6 +19,7 @@ AdminDialog::~AdminDialog()
 }
 void AdminDialog::init()
 {
+    this->con = NULL;
     this->ui->passwortLineEdit->setEchoMode(QLineEdit::Password);
     this->ui->passwortWiederholenLineEdit->setEchoMode(QLineEdit::Password);
     this->ui->passwortLineEdit_2->setEchoMode(QLineEdit::Password);
@@ -180,4 +178,11 @@ Mitarbeiter::Berechtigungen AdminDialog::setBerechtigung()
     }
 
     return res;
+}
+
+void AdminDialog::on_ButtonAusloggen_clicked()
+{
+    if (this->con!=NULL)
+	delete this->con;
+    this->setLogin();
 }

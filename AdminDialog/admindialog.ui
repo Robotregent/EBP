@@ -673,16 +673,16 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="button_ok">
+      <widget class="QPushButton" name="ButtonAusloggen">
        <property name="text">
-        <string>Ok</string>
+        <string>Ausloggen</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="button_abbrechen">
        <property name="text">
-        <string>Abbrechen</string>
+        <string>Beenden</string>
        </property>
       </widget>
      </item>
@@ -691,6 +691,41 @@
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>MAHinzufuegen</tabstop>
+  <tabstop>loginNameLineEdit_2</tabstop>
+  <tabstop>passwortLineEdit_2</tabstop>
+  <tabstop>passwortWiederholenLineEdit</tabstop>
+  <tabstop>nameLineEdit</tabstop>
+  <tabstop>telefonLineEdit</tabstop>
+  <tabstop>eMailLineEdit</tabstop>
+  <tabstop>berechtigungComboBox</tabstop>
+  <tabstop>button_MA_speichern</tabstop>
+  <tabstop>button_MA_eingabeloeschen</tabstop>
+  <tabstop>pushButton</tabstop>
+  <tabstop>pushButton_2</tabstop>
+  <tabstop>button_MA_suchen</tabstop>
+  <tabstop>loginNameLineEdit</tabstop>
+  <tabstop>passwortLineEdit</tabstop>
+  <tabstop>ButtonLogin</tabstop>
+  <tabstop>lineEdit_B_nummer</tabstop>
+  <tabstop>box_B_wohnverbund</tabstop>
+  <tabstop>box_B_wohnheim</tabstop>
+  <tabstop>box_B_wohngruppe</tabstop>
+  <tabstop>button_B_speichern</tabstop>
+  <tabstop>button_B_eingabeloeschen</tabstop>
+  <tabstop>button_B_waelen</tabstop>
+  <tabstop>lineEdit_O_name</tabstop>
+  <tabstop>box_O_kategorie</tabstop>
+  <tabstop>button_O_speichern</tabstop>
+  <tabstop>button_O_eingabeloeschen</tabstop>
+  <tabstop>button_O_waehlen</tabstop>
+  <tabstop>treeView</tabstop>
+  <tabstop>listView</tabstop>
+  <tabstop>ButtonAusloggen</tabstop>
+  <tabstop>button_abbrechen</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
