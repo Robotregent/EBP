@@ -57,3 +57,25 @@ bool Wohngruppe::update( const QSharedPointer<drkv::connection> & connection )
 	}
 	return true;
 }
+
+
+QList< QSharedPointer<Wohngruppe> > Wohngruppe::getAll( const QSharedPointer<drkv::connection> & connection )
+{
+	QList< QSharedPointer<Wohngruppe> > list;
+	try
+	{
+		odb::transaction t( connection->getDB()->begin() );
+		odb::result<Wohngruppe> r( connection->getDB()->query<Wohngruppe>() );
+		for( odb::result<Wohngruppe>::iterator i( r.begin() ); i != r.end(); ++i )
+		{
+			list.push_back( i.load() );
+		}
+		t.commit();
+	}
+	catch( const odb::exception & e )
+	{
+		qCritical() << e.what();
+		return QList< QSharedPointer<Wohngruppe> >();
+	}
+	return list;
+}
