@@ -3,7 +3,7 @@
 
 #include <QDialog>
 
-#include "../drkv/database.hxx"
+#include "../drkv/connection.hxx"
 #include "employeelistmodel.h"
 using namespace drkv;
 
@@ -17,7 +17,7 @@ class AdminDialog : public QDialog
 
 public:
     explicit AdminDialog(QWidget *parent = 0);
-    QSharedPointer<database> dbPointer() { return this->PointerToDB; }
+    QSharedPointer<connection> dbPointer() { return this->PointerToConnection; }
     ~AdminDialog();
 
 private slots:
@@ -27,12 +27,22 @@ private slots:
 
     void on_button_abbrechen_clicked();
 
+    void on_ButtonLogin_clicked();
+
+    void on_button_MA_eingabeloeschen_clicked();
+
 private:
     Ui::AdminDialog *ui;
     void init();
-    database *db;
-    QSharedPointer<database> PointerToDB;
+    connection *con;
+    QSharedPointer<connection> PointerToConnection;
     EmployeeTableModel *model;
+    void setLogin();
+    void setContent();
+    void clearLogin();
+    void removeTabWidgets();
+    QList<int> TabPages;
+    bool isPasswordValid();
 
 };
 
