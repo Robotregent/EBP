@@ -69,8 +69,8 @@ void connection::executeCreateUser( const Mitarbeiter & mitarbeiter, const QStri
 		case Mitarbeiter::WohnheimRecht:
 		case Mitarbeiter::WohngruppenRecht:
 			execute( "GRANT SELECT ON "+dbDatabase+".* TO '"+mitarbeiter.login()+"'@'"+from+"';" );
+			break;
 		default:
-			qCritical() << tr("Ungültige Berechtigung!");
 			break;
 	}
 }
