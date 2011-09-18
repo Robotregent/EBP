@@ -10,6 +10,7 @@ SET( SAMPLE_SRCS
 	   chooseemployee.cpp
 	   employeelistmodel.cpp
        main.cpp
+	   oelistwidgetitem.cpp
 )
   
 # another list, this time it includes all header files that should be treated with moc
@@ -17,6 +18,7 @@ SET( SAMPLE_MOC_HDRS
        admindialog.h
 	   chooseemployee.h
 	   employeelistmodel.h
+	   oelistwidgetitem.h
 )
 #lib directories
 SET(AdminDialog_library_dirs

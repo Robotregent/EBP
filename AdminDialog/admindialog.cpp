@@ -3,6 +3,7 @@
 #include "chooseemployee.h"
 #include "employeelistmodel.h"
 #include "../drkv/Mitarbeiter.hxx"
+#include "../drkv/Wohngruppe.hxx"
 #include <QList>
 #include <QMessageBox>
 AdminDialog::AdminDialog(QWidget *parent) :
@@ -19,7 +20,6 @@ AdminDialog::~AdminDialog()
 }
 void AdminDialog::init()
 {
-    this->con = NULL;
     this->ui->passwortLineEdit->setEchoMode(QLineEdit::Password);
     this->ui->passwortWiederholenLineEdit->setEchoMode(QLineEdit::Password);
     this->ui->passwortLineEdit_2->setEchoMode(QLineEdit::Password);
@@ -66,7 +66,6 @@ void AdminDialog::on_button_MA_speichern_clicked()
 	    QMessageBox::critical(this,tr("Fehler"),tr("Mitarbeiter konnte nicht angelegt werden"));
 	}
 	this->on_button_MA_eingabeloeschen_clicked();
-	//QMessageBox::information(this,tr("Mitarbeiter erfolgreich angelegt"),tr("Mitarbeiter erfolgreich angelegt"));
     }
     else
     {
@@ -100,12 +99,10 @@ void AdminDialog::setContent()
 
 void AdminDialog::on_ButtonLogin_clicked()
 {
-    this->con=new connection(this->ui->loginNameLineEdit->text(),"drk");
-    if (this->con->establish(this->ui->passwortLineEdit->text()))
+    this->PointerToConnection = QSharedPointer<connection>(new connection(this->ui->loginNameLineEdit->text(),"drk"));
+    if (this->PointerToConnection->establish(this->ui->passwortLineEdit->text()))
     {
 	this->setContent();
-
-	this->PointerToConnection = QSharedPointer<connection>(this->con);
 	this->model = new EmployeeTableModel(Mitarbeiter::getAll(this->PointerToConnection));
     }
     else
@@ -113,20 +110,15 @@ void AdminDialog::on_ButtonLogin_clicked()
 	QMessageBox::critical(this,tr("Fehlerhafter Login"),tr("Es konnte keine Veerbindung zur Datenbank hergestellt werden. Überprüfen Sie bitte ihre Logindaten"));
     }
     this->clearLogin();
+    this->setOEWidget();
+
 }
 void AdminDialog::clearLogin()
 {
     this->ui->loginNameLineEdit->clear();
     this->ui->passwortLineEdit->clear();
 }
-void AdminDialog::removeTabWidgets()
-{
-    foreach (const int &toRemove , TabPages)
-    {
-	this->ui->tabWidget->removeTab(toRemove);
-    }
-    TabPages.clear();
-}
+
  bool AdminDialog::isPasswordValid()
  {
      bool res = true;
@@ -182,7 +174,22 @@ Mitarbeiter::Berechtigungen AdminDialog::setBerechtigung()
 
 void AdminDialog::on_ButtonAusloggen_clicked()
 {
-    if (this->con!=NULL)
-	delete this->con;
     this->setLogin();
+}
+
+void AdminDialog::setOEWidget()
+{
+
+    QList < QSharedPointer<Wohngruppe> > wgList = Wohngruppe::getAll(this->PointerToConnection);
+    this->OEWidgets.clear();
+
+    foreach (QSharedPointer<Wohngruppe> wg, wgList )
+    {
+	this->OEWidgets.append(new OEListWidgetItem(wg,this->ui->O_list));
+    }
+    foreach (OEListWidgetItem *i,this->OEWidgets)
+    {
+
+	this->ui->O_list->addItem(i);
+    }
 }

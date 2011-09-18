@@ -13,14 +13,18 @@ TEMPLATE = app
 SOURCES += main.cpp\
         admindialog.cpp \
     chooseemployee.cpp \
-    employeelistmodel.cpp
+    employeelistmodel.cpp \
+    oelistwidgetitem.cpp
 
 HEADERS  += admindialog.h \
     chooseemployee.h \
-    employeelistmodel.h
+    employeelistmodel.h \
+    oelistwidgetitem.h
 
 FORMS    += admindialog.ui \
     chooseemployee.ui
+
+
 
 
 
