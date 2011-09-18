@@ -31,6 +31,12 @@ connection::connection
 }
 
 
+connection::~connection()
+{
+	delete db;
+}
+
+
 bool connection::establish( const QString & password )
 {
 	try
