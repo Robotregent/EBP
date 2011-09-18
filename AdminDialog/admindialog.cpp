@@ -6,6 +6,7 @@
 #include "../drkv/Wohngruppe.hxx"
 #include <QList>
 #include <QMessageBox>
+#include <QDebug>
 AdminDialog::AdminDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AdminDialog)
@@ -16,6 +17,14 @@ AdminDialog::AdminDialog(QWidget *parent) :
 
 AdminDialog::~AdminDialog()
 {
+    if(!this->OEWidgets.isEmpty())
+    {
+	foreach (OEListWidgetItem *i,this->OEWidgets)
+	{
+	    this->ui->O_list->removeItemWidget(i);
+	    delete i;
+	}
+    }
     delete ui;
 }
 void AdminDialog::init()
@@ -45,6 +54,16 @@ void AdminDialog::on_button_MA_speichern_clicked()
     if(this->isPasswordValid())
     {
 	QList<QLazyWeakPointer<Wohngruppe> > w = QList<QLazyWeakPointer<Wohngruppe> >();
+
+	for (int i = 0; i < this->ui->O_list->count(); i++)
+	{
+	    if(this->ui->O_list->item(i)->checkState()==Qt::Checked)
+	    {
+		QSharedPointer<Wohngruppe> wg = ((OEListWidgetItem *)this->ui->O_list->item(i))->getWG();
+		w.append(wg);
+		qDebug()<<wg->name();
+	    }
+	}
 	QList<QLazyWeakPointer<Projekt> > p = QList<QLazyWeakPointer<Projekt> >();
 	QList<QLazyWeakPointer<Bewohner> > b = QList<QLazyWeakPointer<Bewohner> >();
 
@@ -179,7 +198,15 @@ void AdminDialog::on_ButtonAusloggen_clicked()
 
 void AdminDialog::setOEWidget()
 {
-
+    if(!this->OEWidgets.isEmpty())
+    {
+	foreach (OEListWidgetItem *i,this->OEWidgets)
+	{
+	    this->ui->O_list->removeItemWidget(i);
+	    delete i;
+	}
+	this->OEWidgets.clear();
+    }
     QList < QSharedPointer<Wohngruppe> > wgList = Wohngruppe::getAll(this->PointerToConnection);
     this->OEWidgets.clear();
 
@@ -189,7 +216,8 @@ void AdminDialog::setOEWidget()
     }
     foreach (OEListWidgetItem *i,this->OEWidgets)
     {
-
+	i->setFlags(i->flags()|Qt::ItemIsUserCheckable);
+	i->setCheckState(Qt::Unchecked);
 	this->ui->O_list->addItem(i);
     }
 }
