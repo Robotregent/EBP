@@ -14,11 +14,5 @@ int main( int argc, char * argv[] )
 	if( !c->establish("drk_pass") )
 		return 1;
 
-	QList< QSharedPointer<Mitarbeiter> > mitarbeiter = Mitarbeiter::getAll( c );
-	foreach( const QSharedPointer<Mitarbeiter> & m, mitarbeiter )
-	{
-		qDebug() << m->login();
-	}
-
 	return 0;
 }

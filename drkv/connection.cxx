@@ -1,4 +1,5 @@
 #include "connection.hxx"
+#include "Mitarbeiter.hxx"
 #include "Mitarbeiter-odb.hxx"
 
 #include <odb/core.hxx>

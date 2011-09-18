@@ -5,6 +5,7 @@
 #include "Mitarbeiter.hxx"
 #include "Bewohner.hxx"
 #include "Wohngruppenereignis.hxx"
+#include "databaseObject.hxx"
 
 #include <QCoreApplication>
 #include <QString>
@@ -23,7 +24,7 @@ namespace drkv
 	class connection;
 
 	#pragma db object
-	class Wohngruppe
+	class Wohngruppe : public databaseObject<Wohngruppe>
 	{
 		Q_DECLARE_TR_FUNCTIONS( Wohngruppe )
 
@@ -53,11 +54,6 @@ namespace drkv
 
 		const QList< QLazyWeakPointer<Wohngruppenereignis> > & ereignisse() const { return ereignisse_; }
 		void ereignisse( const QList< QLazyWeakPointer<Wohngruppenereignis> > & ereignisse ) { ereignisse_ = ereignisse; }
-
-		bool create( const QSharedPointer<drkv::connection> & connection );
-		bool remove( const QSharedPointer<drkv::connection> & connection );
-		bool update( const QSharedPointer<drkv::connection> & connection );
-		static QList< QSharedPointer<Wohngruppe> > getAll( const QSharedPointer<drkv::connection> & connection );
 
 	private:
 		friend class odb::access;
