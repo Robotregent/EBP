@@ -55,15 +55,7 @@ void AdminDialog::on_button_MA_speichern_clicked()
     {
 	QList<QLazyWeakPointer<Wohngruppe> > w = QList<QLazyWeakPointer<Wohngruppe> >();
 
-	for (int i = 0; i < this->ui->O_list->count(); i++)
-	{
-	    if(this->ui->O_list->item(i)->checkState()==Qt::Checked)
-	    {
-		QSharedPointer<Wohngruppe> wg = ((OEListWidgetItem *)this->ui->O_list->item(i))->getWG();
-		w.append(wg);
-		qDebug()<<wg->name();
-	    }
-	}
+
 	QList<QLazyWeakPointer<Projekt> > p = QList<QLazyWeakPointer<Projekt> >();
 	QList<QLazyWeakPointer<Bewohner> > b = QList<QLazyWeakPointer<Bewohner> >();
 
@@ -78,6 +70,17 @@ void AdminDialog::on_button_MA_speichern_clicked()
 
 	if (ma.create(this->PointerToConnection,this->ui->passwortLineEdit_2->text()))
 	{
+	    for (int i = 0; i < this->ui->O_list->count(); i++)
+	    {
+		if(this->ui->O_list->item(i)->checkState()==Qt::Checked)
+		{
+		    QSharedPointer<Wohngruppe> wg = ((OEListWidgetItem *)this->ui->O_list->item(i))->getWG();
+		    w.append(wg);
+		    qDebug()<<wg->name();
+		}
+	    }
+	    ma.wohngruppen(w);
+	    ma.update(this->PointerToConnection);
 	    QMessageBox::information(this,tr("Mitarbeiter erfolgreich angelegt"),tr("Mitarbeiter erfolgreich angelegt"));
 	}
 	else
