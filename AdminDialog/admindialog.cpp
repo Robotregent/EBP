@@ -25,10 +25,13 @@ AdminDialog::~AdminDialog()
 	    delete i;
 	}
     }
+    if(model!=NULL)
+	delete model;
     delete ui;
 }
 void AdminDialog::init()
 {
+    this->model=NULL;
     this->ui->passwortLineEdit->setEchoMode(QLineEdit::Password);
     this->ui->passwortWiederholenLineEdit->setEchoMode(QLineEdit::Password);
     this->ui->passwortLineEdit_2->setEchoMode(QLineEdit::Password);
