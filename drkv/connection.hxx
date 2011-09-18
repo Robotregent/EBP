@@ -28,9 +28,14 @@ namespace drkv
 			const QString & host = "localhost",
 			unsigned int port = 3306
 		);
+		~connection();
 
 		bool establish( const QString & password );
 		bool isEstablished() const { return db; }
+		const QString & user() const { return dbUser; }
+		const QString & database() const { return dbDatabase; }
+		const QString & host() const { return dbHost; }
+		unsigned int port() const { return dbPort; }
 		odb::mysql::database * getDB() const { return db; }
 		unsigned long long execute( const QString & statement ) { return db->execute( statement.toStdString() ); }
 		void executeCreateUser( const Mitarbeiter & mitarbeiter, const QString & from, const QString & password );
