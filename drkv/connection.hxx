@@ -32,6 +32,7 @@ namespace drkv
 
 		bool establish( const QString & password );
 		bool isEstablished() const { return db; }
+		void flushCache();
 		const QString & user() const { return dbUser; }
 		const QString & database() const { return dbDatabase; }
 		const QString & host() const { return dbHost; }
@@ -51,6 +52,7 @@ namespace drkv
 		QString dbHost;
 		unsigned int dbPort;
 		odb::mysql::database * db;
+		odb::session * s;
 		QSharedPointer<Mitarbeiter> connectedUser;
 	};
 }

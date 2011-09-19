@@ -42,19 +42,13 @@ namespace drkv
 			const Berechtigungen & berechtigung,
 			const QString & name,
 			const QString & email,
-			const QString & telefon,
-			const QList< QLazyWeakPointer<Wohngruppe> > & wohngruppen,
-			const QList< QLazyWeakPointer<Projekt> > & projekte,
-			const QList< QLazyWeakPointer<Bewohner> > & bezugsbetreuer
+			const QString & telefon
 		) :
 			login_(login),
 			berechtigung_(berechtigung),
 			name_(name),
 			email_(email),
-			telefon_(telefon),
-			wohngruppen_(wohngruppen),
-			projekte_(projekte),
-			bezugsbetreuer_(bezugsbetreuer)
+			telefon_(telefon)
 		{
 		}
 
@@ -73,14 +67,14 @@ namespace drkv
 		const QString & telefon() const { return telefon_; }
 		void telefon( const QString & telefon ) { telefon_ = telefon; }
 
-		const QList< QLazyWeakPointer<Wohngruppe> > & wohngruppen() const { return wohngruppen_; }
-		void wohngruppen( const QList< QLazyWeakPointer<Wohngruppe> > & wohngruppen ) { wohngruppen_ = wohngruppen; }
+		QList< QSharedPointer<Wohngruppe> > loadWohngruppen( const QSharedPointer<drkv::connection> & connection ) const;
+		DATABASEOBJECT_DECLARE_LINK_INVERSE( Mitarbeiter, Wohngruppe, Wohngruppe )
 
-		const QList< QLazyWeakPointer<Projekt> > & projekte() const { return projekte_; }
-		void projekte( const QList< QLazyWeakPointer<Projekt> > & projekte ) { projekte_ = projekte; }
+		QList< QSharedPointer<Projekt> > loadProjekte( const QSharedPointer<drkv::connection> & connection ) const;
+		DATABASEOBJECT_DECLARE_LINK_INVERSE( Mitarbeiter, Projekt, Projekt )
 
-		const QList< QLazyWeakPointer<Bewohner> > & bezugsbetreuer() const { return bezugsbetreuer_; }
-		void bezugsbetreuer( const QList< QLazyWeakPointer<Bewohner> > & wohngruppe ) { bezugsbetreuer_ = wohngruppe; }
+		QList< QSharedPointer<Bewohner> > loadBezugsbetreuer( const QSharedPointer<drkv::connection> & connection ) const;
+		DATABASEOBJECT_DECLARE_LINK( Mitarbeiter, Bezugsbetreuer, Bewohner )
 
 		bool create( const QSharedPointer<drkv::connection> & connection, const QString & password );
 		bool create( const QSharedPointer<drkv::connection> & connection );
@@ -89,6 +83,8 @@ namespace drkv
 
 	private:
 		friend class odb::access;
+		friend class Wohngruppe;
+		friend class Projekt;
 		Mitarbeiter() {}
 
 		#pragma db id auto
@@ -111,7 +107,7 @@ namespace drkv
 		#pragma db unordered inverse(verantwortliche_)
 		QList< QLazyWeakPointer<Projekt> > projekte_;
 
-		#pragma db unordered inverse(bezugsbetreuer_)
+		#pragma db unordered
 		QList< QLazyWeakPointer<Bewohner> > bezugsbetreuer_;
 	};
 }

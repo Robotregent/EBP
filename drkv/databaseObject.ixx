@@ -65,7 +65,7 @@ namespace drkv
 	}
 
 
-	template< class T > QList< QSharedPointer<T> > databaseObject<T>::getAll( const QSharedPointer<drkv::connection> & connection )
+	template< class T > QList< QSharedPointer<T> > databaseObject<T>::loadAll( const QSharedPointer<drkv::connection> & connection )
 	{
 		QList< QSharedPointer<T> > list;
 		try
