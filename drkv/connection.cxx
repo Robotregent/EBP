@@ -28,11 +28,13 @@ connection::connection
 	dbPort(port)
 {
 	db = NULL;
+	s = NULL;
 }
 
 
 connection::~connection()
 {
+	delete s;
 	delete db;
 }
 
@@ -42,11 +44,7 @@ bool connection::establish( const QString & password )
 	try
 	{
 		db = new odb::mysql::database( dbUser.toStdString(), password.toStdString(), dbDatabase.toStdString(), dbHost.toStdString(), dbPort );
-		if( !db )
-		{
-			qCritical() << tr("Verbindung von \"%1\" zu Host\"%2:%3\" auf \"%4\" konnte nicht hergestellt werden!").arg(dbUser).arg(dbHost).arg(dbPort).arg(dbDatabase);
-			return false;
-		}
+		s = new odb::session();
 		odb::transaction t( db->begin() );
 		odb::result<Mitarbeiter> r( db->query<Mitarbeiter>( odb::query<Mitarbeiter>::login == odb::query<Mitarbeiter>::_ref(dbUser) ) );
 		if( r.begin() != r.end() )
@@ -61,6 +59,13 @@ bool connection::establish( const QString & password )
 		return false;
 	}
 	return true;
+}
+
+
+void connection::flushCache()
+{
+	delete s;
+	s = new odb::session();
 }
 
 

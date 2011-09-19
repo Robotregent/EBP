@@ -36,9 +36,7 @@ namespace drkv
 			const QString & krankenkasse,
 			const QString & email,
 			const QString & telefon,
-			const QLazyWeakPointer<Mitarbeiter> & bezugsbetreuer,
-			const QLazyWeakPointer<Wohngruppe> & wohngruppe,
-			const QList< QLazyWeakPointer<Projekt> > & projekte
+			const QSharedPointer<Wohngruppe> & wohngruppe
 		) :
 			nummer_(nummer),
 			name_(name),
@@ -46,9 +44,7 @@ namespace drkv
 			krankenkasse_(krankenkasse),
 			email_(email),
 			telefon_(telefon),
-			bezugsbetreuer_(bezugsbetreuer),
-			wohngruppe_(wohngruppe),
-			projekte_(projekte)
+			wohngruppe_(wohngruppe)
 		{
 		}
 
@@ -67,17 +63,21 @@ namespace drkv
 		const QString & telefon() const { return telefon_; }
 		void telefon( const QString & telefon ) { telefon_ = telefon; }
 
-		const QLazyWeakPointer<Mitarbeiter> & bezugsbetreuer() const { return bezugsbetreuer_; }
-		void bezugsbetreuer( const QLazyWeakPointer<Mitarbeiter> & bezugsbetreuer ) { bezugsbetreuer_ = bezugsbetreuer; }
+		const QSharedPointer<Mitarbeiter> & bezugsbetreuer( const QSharedPointer<drkv::connection> & connection ) const { return bezugsbetreuer_; }
+		QSharedPointer<Mitarbeiter> & bezugsbetreuer( const QSharedPointer<drkv::connection> & connection ) { return bezugsbetreuer_; }
+		DATABASEOBJECT_DECLARE_LINK_INVERSE( Bewohner, Bezugsbetreuer, Mitarbeiter )
 
-		const QLazyWeakPointer<Wohngruppe> & wohngruppe() const { return wohngruppe_; }
-		void wohngruppe( const QLazyWeakPointer<Wohngruppe> & wohngruppe ) { wohngruppe_ = wohngruppe; }
+		const QSharedPointer<Wohngruppe> & wohngruppe( const QSharedPointer<drkv::connection> & connection ) const { return wohngruppe_; }
+		QSharedPointer<Wohngruppe> & wohngruppe( const QSharedPointer<drkv::connection> & connection ) { return wohngruppe_; }
+		DATABASEOBJECT_DECLARE_LINK_INVERSE( Bewohner, Wohngruppe, Wohngruppe )
 
-		const QList< QLazyWeakPointer<Projekt> > & projekte() const { return projekte_; }
-		void projekte( const QList< QLazyWeakPointer<Projekt> > & projekte ) { projekte_ = projekte; }
+		QList< QSharedPointer<Projekt> > loadProjekte( const QSharedPointer<drkv::connection> & connection ) const;
+		DATABASEOBJECT_DECLARE_LINK( Bewohner, Projekt, Projekt )
 
 	private:
 		friend class odb::access;
+		friend class Mitarbeiter;
+		friend class Wohngruppe;
 		Bewohner() {}
 
 		#pragma db id auto
@@ -96,12 +96,13 @@ namespace drkv
 
 		QString telefon_;
 
-		QLazyWeakPointer<Mitarbeiter> bezugsbetreuer_;
+		#pragma db inverse(bezugsbetreuer_)
+		QSharedPointer<Mitarbeiter> bezugsbetreuer_;
 
 		#pragma db inverse(bewohner_)
-		QLazyWeakPointer<Wohngruppe> wohngruppe_;
+		QSharedPointer<Wohngruppe> wohngruppe_;
 
-		#pragma db unordered inverse(bewohner_)
+		#pragma db unordered
 		QList< QLazyWeakPointer<Projekt> > projekte_;
 	};
 }

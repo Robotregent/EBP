@@ -31,29 +31,22 @@ namespace drkv
 	public:
 		Wohngruppe
 		(
-			const QString & name,
-			const QList< QLazyWeakPointer<Mitarbeiter> > & mitarbeiter,
-			const QList< QLazyWeakPointer<Bewohner> > & bewohner,
-			const QList< QLazyWeakPointer<Wohngruppenereignis> > & ereignisse
+			const QString & name
 		) :
-			name_(name),
-			mitarbeiter_(mitarbeiter),
-			bewohner_(bewohner),
-			ereignisse_(ereignisse)
+			name_(name)
 		{
 		}
 
 		const QString & name() const { return name_; }
-		void name( const QString & name ) { name_ = name; }
+		QString & name() { return name_; }
 
-		const QList< QLazyWeakPointer<Mitarbeiter> > & mitarbeiter() const { return mitarbeiter_; }
-		void mitarbeiter( const QList< QLazyWeakPointer<Mitarbeiter> > & mitarbeiter ) { mitarbeiter_ = mitarbeiter; }
+		QList< QSharedPointer<Mitarbeiter> > loadMitarbeiter( const QSharedPointer<drkv::connection> & connection ) const;
+		DATABASEOBJECT_DECLARE_LINK( Wohngruppe, Mitarbeiter, Mitarbeiter )
 
-		const QList< QLazyWeakPointer<Bewohner> > & bewohner() const { return bewohner_; }
-		void bewohner( const QList< QLazyWeakPointer<Bewohner> > & bewohner ) { bewohner_ = bewohner; }
+		QList< QSharedPointer<Bewohner> > loadBewohner( const QSharedPointer<drkv::connection> & connection ) const;
+		DATABASEOBJECT_DECLARE_LINK( Wohngruppe, Bewohner, Bewohner )
 
-		const QList< QLazyWeakPointer<Wohngruppenereignis> > & ereignisse() const { return ereignisse_; }
-		void ereignisse( const QList< QLazyWeakPointer<Wohngruppenereignis> > & ereignisse ) { ereignisse_ = ereignisse; }
+		QList< QSharedPointer<Wohngruppenereignis> > loadEreignisse( const QSharedPointer<drkv::connection> & connection ) const;
 
 	private:
 		friend class odb::access;
@@ -70,7 +63,7 @@ namespace drkv
 		#pragma db unordered
 		QList< QLazyWeakPointer<Bewohner> > bewohner_;
 
-		#pragma db unordered inverse(wohngruppe_)
+		#pragma db unordered
 		QList< QLazyWeakPointer<Wohngruppenereignis> > ereignisse_;
 	};
 }

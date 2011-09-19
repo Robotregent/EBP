@@ -32,15 +32,11 @@ namespace drkv
 		(
 			const QString & inhalt,
 			const QDate & datum,
-			const QLazyWeakPointer<Bewohner> & bewohner,
-			const QList< QLazyWeakPointer<Mitarbeiter> > & teilnehmer,
-			const QList< QLazyWeakPointer<Mitarbeiter> > & schreiber
+			const QSharedPointer<Bewohner> & bewohner
 		) :
 			inhalt_(inhalt),
 			datum_(datum),
-			bewohner_(bewohner),
-			teilnehmer_(teilnehmer),
-			schreiber_(schreiber)
+			bewohner_(bewohner)
 		{
 		}
 
@@ -49,15 +45,6 @@ namespace drkv
 
 		const QDate & datum() const { return datum_; }
 		void datum( const QDate & datum ) { datum_ = datum; }
-
-		const QLazyWeakPointer<Bewohner> & bewohner() const { return bewohner_; }
-		void bewohner( const QLazyWeakPointer<Bewohner> & bewohner ) { bewohner_ = bewohner; }
-
-		const QList< QLazyWeakPointer<Mitarbeiter> > & teilnehmer() const { return teilnehmer_; }
-		void teilnehmer( const QList< QLazyWeakPointer<Mitarbeiter> > & teilnehmer ) { teilnehmer_ = teilnehmer; }
-
-		const QList< QLazyWeakPointer<Mitarbeiter> > & schreiber() const { return schreiber_; }
-		void schreiber( const QList< QLazyWeakPointer<Mitarbeiter> > & schreiber ) { schreiber_ = schreiber; }
 
 	private:
 		friend class odb::access;
@@ -70,7 +57,7 @@ namespace drkv
 
 		QDate datum_;
 
-		QLazyWeakPointer<Bewohner> bewohner_;
+		QSharedPointer<Bewohner> bewohner_;
 
 		#pragma db unordered
 		QList< QLazyWeakPointer<Mitarbeiter> > teilnehmer_;
