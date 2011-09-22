@@ -6,6 +6,7 @@
 #include "../drkv/connection.hxx"
 #include "oelistwidgetitem.h"
 #include "employeelistmodel.h"
+#include "costumlistwidget.h"
 using namespace drkv;
 
 namespace Ui {
@@ -39,6 +40,7 @@ private:
     void clearLogin();
     void setOEWidget();
     QList<OEListWidgetItem *> OEWidgets;
+    QList< CostumListWidget < Wohngruppe > *> WohngruppenItems;
     bool isPasswordValid();
     Mitarbeiter::Berechtigungen setBerechtigung();
 

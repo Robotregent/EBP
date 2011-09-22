@@ -26,13 +26,10 @@ void ChooseEmployee::on_ButtonAbort_clicked()
 void ChooseEmployee::on_ButtonErase_clicked()
 {
     EmployeeTableModel *tmp = ( EmployeeTableModel *)this->ui->listView->model();
-    QList < QLazyWeakPointer < Wohngruppe> > w;
-    QList < QLazyWeakPointer < Projekt> > p ;
-    QList < QLazyWeakPointer < Bewohner> > b ;
 
     int row = this->ui->listView->currentIndex().row();
 
-    Mitarbeiter ma(tmp->login(row),Mitarbeiter::WohnheimRecht,tmp->name(row)," "," " ,w,p,b);
+    Mitarbeiter ma(tmp->login(row),Mitarbeiter::WohnheimRecht,tmp->name(row)," "," ");
 
     ma.remove(this->parent_->dbPointer());
     this->close();

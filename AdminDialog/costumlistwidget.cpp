@@ -1,6 +1,6 @@
 #include "costumlistwidget.h"
-
-CostumListWidget::CostumListWidget(QSharedPointer<t> _citem, QListWidget *parent) :
+template <typename t>
+CostumListWidget<t>::CostumListWidget(QSharedPointer<t> _citem, QListWidget *parent) :
     QListWidgetItem(parent,5000)
 {
     this->citem=_citem;

@@ -138,7 +138,7 @@ void AdminDialog::on_ButtonLogin_clicked()
     if (this->PointerToConnection->establish(this->ui->passwortLineEdit->text()))
     {
 	this->setContent();
-	this->model = new EmployeeTableModel(Mitarbeiter::getAll(this->PointerToConnection));
+	this->model = new EmployeeTableModel(Mitarbeiter::loadAll(this->PointerToConnection));
     }
     else
     {
@@ -223,7 +223,7 @@ void AdminDialog::setOEWidget()
 	}
 	this->OEWidgets.clear();
     }
-    QList < QSharedPointer<Wohngruppe> > wgList = Wohngruppe::getAll(this->PointerToConnection);
+    QList < QSharedPointer<Wohngruppe> > wgList = Wohngruppe::loadAll(this->PointerToConnection);
     this->OEWidgets.clear();
 
     foreach (QSharedPointer<Wohngruppe> wg, wgList )
@@ -237,3 +237,30 @@ void AdminDialog::setOEWidget()
 	this->ui->O_list->addItem(i);
     }
 }
+/*
+void AdminDialog::setOEWidget()
+{
+    if(!this->WohngruppenItems.isEmpty())
+    {
+	foreach (CostumListWidget<Wohngruppe> *i,this->WohngruppenItems)
+	{
+	    this->ui->O_list->removeItemWidget(i);
+	    delete i;
+	}
+	this->OEWidgets.clear();
+    }
+    QList < QSharedPointer<Wohngruppe> > wgList = Wohngruppe::loadAll(this->PointerToConnection);
+    this->WohngruppenItems.clear();
+
+    foreach (QSharedPointer<Wohngruppe> wg, wgList )
+    {
+	this->WohngruppenItems.append(new CostumListWidget<Wohngruppe>(wg,this->ui->O_list));
+    }
+    foreach (CostumListWidget<Wohngruppe> *i,this->WohngruppenItems)
+    {
+	i->setFlags(i->flags()|Qt::ItemIsUserCheckable);
+	i->setCheckState(Qt::Unchecked);
+	this->ui->O_list->addItem(i);
+    }
+}
+*/

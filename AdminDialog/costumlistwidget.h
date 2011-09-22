@@ -6,11 +6,11 @@ template <typename t>
 class CostumListWidget : public QListWidgetItem
 {
 private:
-    QSharedPointer<t> item;
+    QSharedPointer<t> citem;
 public:
-    CostumListWidget(QSharedPointer<t> _item, QListWidget *parent = 0);
-    void setItem(QSharedPointer<t> _item) { this->item = _item; }
-    QSharedPointer<t> getItem() { return item; }
+    CostumListWidget(QSharedPointer<t> _citem, QListWidget *parent = 0);
+    void setCitem(QSharedPointer<t> _citem) { this->citem = _citem; }
+    QSharedPointer<t> getCitem() { return citem; }
 };
 
 #endif // COSTUMLISTWIDGET_H
