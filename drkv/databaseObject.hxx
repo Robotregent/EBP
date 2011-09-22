@@ -24,36 +24,42 @@
 #define DATABASEOBJECT_IMPLEMENT_LINK_MANYTOMANY( FROM, FROM_NAME, FROM_MEMBER, TO, TO_NAME, TO_MEMBER ) \
 void FROM::link##FROM_NAME( QSharedPointer<FROM> & from, QSharedPointer<TO> & to ) \
 { \
-	for( QList< QLazyWeakPointer<TO> >::const_iterator i = from->FROM_MEMBER.begin(); i != from->FROM_MEMBER.end(); ++i ) \
+	if( from && to ) \
 	{ \
-		if( (*i).objectId<TO>() == to->id_ ) \
-			goto otherSide; \
+		for( QList< QLazyWeakPointer<TO> >::const_iterator i = from->FROM_MEMBER.begin(); i != from->FROM_MEMBER.end(); ++i ) \
+		{ \
+			if( (*i).objectId<TO>() == to->id_ ) \
+				goto otherSide; \
+		} \
+		from->FROM_MEMBER.push_back( to ); \
+	otherSide: \
+		for( QList< QLazyWeakPointer<FROM> >::const_iterator i = to->TO_MEMBER.begin(); i != to->TO_MEMBER.end(); ++i ) \
+		{ \
+			if( (*i).objectId<FROM>() == from->id_ ) \
+				return; \
+		} \
+		to->TO_MEMBER.push_back( from ); \
 	} \
-	from->FROM_MEMBER.push_back( to ); \
-otherSide: \
-	for( QList< QLazyWeakPointer<FROM> >::const_iterator i = to->TO_MEMBER.begin(); i != to->TO_MEMBER.end(); ++i ) \
-	{ \
-		if( (*i).objectId<FROM>() == from->id_ ) \
-			return; \
-	} \
-	to->TO_MEMBER.push_back( from ); \
 } \
 void FROM::unlink##FROM_NAME( QSharedPointer<FROM> & from, QSharedPointer<TO> & to ) \
 { \
-	for( QList< QLazyWeakPointer<TO> >::const_iterator i = from->FROM_MEMBER.begin(); i != from->FROM_MEMBER.end(); ++i ) \
+	if( from && to ) \
 	{ \
-		if( (*i).objectId<TO>() == to->id_ ) \
+		for( QList< QLazyWeakPointer<TO> >::const_iterator i = from->FROM_MEMBER.begin(); i != from->FROM_MEMBER.end(); ++i ) \
 		{ \
-			from->FROM_MEMBER.removeAll( (*i) ); \
-			i = from->FROM_MEMBER.begin(); \
+			if( (*i).objectId<TO>() == to->id_ ) \
+			{ \
+				from->FROM_MEMBER.removeAll( (*i) ); \
+				break; \
+			} \
 		} \
-	} \
-	for( QList< QLazyWeakPointer<FROM> >::const_iterator i = to->TO_MEMBER.begin(); i != to->TO_MEMBER.end(); ++i ) \
-	{ \
-		if( (*i).objectId<FROM>() == from->id_ ) \
+		for( QList< QLazyWeakPointer<FROM> >::const_iterator i = to->TO_MEMBER.begin(); i != to->TO_MEMBER.end(); ++i ) \
 		{ \
-			to->TO_MEMBER.removeAll( (*i) ); \
-			i = to->TO_MEMBER.begin(); \
+			if( (*i).objectId<FROM>() == from->id_ ) \
+			{ \
+				to->TO_MEMBER.removeAll( (*i) ); \
+				break; \
+			} \
 		} \
 	} \
 } \
@@ -61,50 +67,62 @@ void FROM::unlink##FROM_NAME( QSharedPointer<FROM> & from, QSharedPointer<TO> & 
 #define DATABASEOBJECT_IMPLEMENT_LINK_MANYTOONE( FROM, FROM_NAME, FROM_MEMBER, TO, TO_NAME, TO_MEMBER ) \
 void FROM::link##FROM_NAME( QSharedPointer<FROM> & from, QSharedPointer<TO> & to ) \
 { \
-	if( to->TO_MEMBER ) \
-	{\
-		FROM::unlink##FROM_NAME( to->TO_MEMBER, to );\
-	}\
-	for( QList< QLazyWeakPointer<TO> >::const_iterator i = from->FROM_MEMBER.begin(); i != from->FROM_MEMBER.end(); ++i ) \
+	if( from && to ) \
 	{ \
-		if( (*i).objectId<TO>() == to->id_ ) \
-			goto otherSide; \
+		if( to->TO_MEMBER ) \
+		{ \
+			FROM::unlink##FROM_NAME( to->TO_MEMBER, to ); \
+		} \
+		for( QList< QLazyWeakPointer<TO> >::const_iterator i = from->FROM_MEMBER.begin(); i != from->FROM_MEMBER.end(); ++i ) \
+		{ \
+			if( (*i).objectId<TO>() == to->id_ ) \
+				goto otherSide; \
+		} \
+		from->FROM_MEMBER.push_back( to ); \
+	otherSide: \
+		to->TO_MEMBER = from; \
 	} \
-	from->FROM_MEMBER.push_back( to ); \
-otherSide: \
-	to->TO_MEMBER = from; \
 } \
 void FROM::unlink##FROM_NAME( QSharedPointer<FROM> & from, QSharedPointer<TO> & to ) \
 { \
-	for( QList< QLazyWeakPointer<TO> >::const_iterator i = from->FROM_MEMBER.begin(); i != from->FROM_MEMBER.end(); ++i ) \
+	if( from && to ) \
 	{ \
-		if( (*i).objectId<TO>() == to->id_ ) \
+		for( QList< QLazyWeakPointer<TO> >::const_iterator i = from->FROM_MEMBER.begin(); i != from->FROM_MEMBER.end(); ++i ) \
 		{ \
-			from->FROM_MEMBER.removeAll( (*i) ); \
-			i = from->FROM_MEMBER.begin(); \
+			if( (*i).objectId<TO>() == to->id_ ) \
+			{ \
+				from->FROM_MEMBER.removeAll( (*i) ); \
+				break; \
+			} \
 		} \
+		to->TO_MEMBER = QSharedPointer<FROM>(); \
 	} \
-	to->TO_MEMBER = QSharedPointer<FROM>(); \
 } \
 
 #define DATABASEOBJECT_IMPLEMENT_LINK_ONETOONE( FROM, FROM_NAME, FROM_MEMBER, TO, TO_NAME, TO_MEMBER ) \
 void FROM::link##FROM_NAME( QSharedPointer<FROM> & from, QSharedPointer<TO> & to ) \
 { \
-	if( to->TO_MEMBER ) \
-	{\
-		FROM::unlink##FROM_NAME( to->TO_MEMBER, to );\
-	}\
-	if( from->FROM_MEMBER ) \
-	{\
-		FROM::unlink##FROM_NAME( from, from->FROM_MEMBER );\
-	}\
-	from->FROM_MEMBER = to; \
-	to->TO_MEMBER = from; \
+	if( from && to ) \
+	{ \
+		if( to->TO_MEMBER ) \
+		{\
+			FROM::unlink##FROM_NAME( to->TO_MEMBER, to );\
+		}\
+		if( from->FROM_MEMBER ) \
+		{\
+			FROM::unlink##FROM_NAME( from, from->FROM_MEMBER );\
+		}\
+		from->FROM_MEMBER = to; \
+		to->TO_MEMBER = from; \
+	} \
 } \
 void FROM::unlink##FROM_NAME( QSharedPointer<FROM> & from, QSharedPointer<TO> & to ) \
 { \
-	from->FROM_MEMBER = QSharedPointer<TO>(); \
-	to->TO_MEMBER = QSharedPointer<FROM>(); \
+	if( from && to ) \
+	{ \
+		from->FROM_MEMBER = QSharedPointer<TO>(); \
+		to->TO_MEMBER = QSharedPointer<FROM>(); \
+	} \
 } \
 
 

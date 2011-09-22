@@ -72,40 +72,31 @@ int main( int argc, char * argv[] )
 	ma2->create( c, "test" );
 */
 /*
-	QList< QLazyWeakPointer<Wohngruppe> > wgList1;
-	wgList1.push_back( wg1 );
-	wgList1.push_back( wg2 );
-
-	QList< QLazyWeakPointer<Wohngruppe> > wgList2;
-	wgList2.push_back( wg2 );
-	wgList2.push_back( wg3 );
-
-	ma1->wohngruppen( wgList1 );
-	ma1->update( c );
-
-	ma2->wohngruppen( wgList2 );
-	ma2->update( c );
-
-	QList< QLazyWeakPointer<Mitarbeiter> > maList1;
-	maList1.push_back( ma1 );
-
-	QList< QLazyWeakPointer<Mitarbeiter> > maList2;
-	maList2.push_back( ma1 );
-	maList2.push_back( ma2 );
-
-	QList< QLazyWeakPointer<Mitarbeiter> > maList3;
-	maList3.push_back( ma2 );
-
-	wg1->mitarbeiter( maList1 );
-	wg1->update( c );
-
-	wg2->mitarbeiter( maList2 );
-	wg2->update( c );
-
-	wg3->mitarbeiter( maList3 );
-	wg3->update( c );
+	QSharedPointer<Bewohner> bw1
+	(
+		new Bewohner
+		(
+			1,
+			"bw1",
+			QDate(),
+			"",
+			"",
+			""
+		)
+	);
+	bw1->create( c );
 */
 
+	{
+		QList< QSharedPointer<Bewohner> > bwList = Bewohner::loadAll( c );
+		QList< QSharedPointer<Mitarbeiter> > maList = Mitarbeiter::loadAll( c );
+		Mitarbeiter::linkBezugsbetreuer( maList[0], bwList[0] );
+//		Mitarbeiter::linkBezugsbetreuer( maList[0], bwList[0] );
+//		Mitarbeiter::linkBezugsbetreuer( maList[0], bwList[1] );
+		maList[0]->update(c);
+	}
+
+/*
 	{
 		QList< QSharedPointer<Wohngruppe> > wgList = Wohngruppe::loadAll( c );
 		QList< QSharedPointer<Mitarbeiter> > maList = Mitarbeiter::loadAll( c );
@@ -119,7 +110,12 @@ int main( int argc, char * argv[] )
 		wgList[1]->update(c);
 		wgList[2]->update(c);
 	}
-
+*/
+/*
+	{
+		QList< QSharedPointer<Mitarbeiter> > maList = Mitarbeiter::loadAll( c );
+	}
+*/
 	cout << "---" << endl;
 
 	{

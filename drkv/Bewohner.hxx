@@ -35,16 +35,14 @@ namespace drkv
 			const QDate & geburtsdatum,
 			const QString & krankenkasse,
 			const QString & email,
-			const QString & telefon,
-			const QSharedPointer<Wohngruppe> & wohngruppe
+			const QString & telefon
 		) :
 			nummer_(nummer),
 			name_(name),
 			geburtsdatum_(geburtsdatum),
 			krankenkasse_(krankenkasse),
 			email_(email),
-			telefon_(telefon),
-			wohngruppe_(wohngruppe)
+			telefon_(telefon)
 		{
 		}
 
