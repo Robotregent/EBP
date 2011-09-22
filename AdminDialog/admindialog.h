@@ -39,8 +39,10 @@ private:
     void setContent();
     void clearLogin();
     void setOEWidget();
-    QList<OEListWidgetItem *> OEWidgets;
+    void setBWidget();
+    //QList<OEListWidgetItem *> OEWidgets;
     QList< CostumListWidget < Wohngruppe > *> WohngruppenItems;
+    QList< CostumListWidget < Bewohner > *> BewohnerItems;
     bool isPasswordValid();
     Mitarbeiter::Berechtigungen setBerechtigung();
 

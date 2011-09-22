@@ -8,7 +8,15 @@ class CostumListWidget : public QListWidgetItem
 private:
     QSharedPointer<t> citem;
 public:
-    CostumListWidget(QSharedPointer<t> _citem, QListWidget *parent = 0);
+    inline CostumListWidget(QSharedPointer<t> _citem, QListWidget *parent = 0) :
+	QListWidgetItem(parent,5000)
+
+    {
+	this->citem=_citem;
+	this->setText(this->citem->name());
+    }
+
+
     void setCitem(QSharedPointer<t> _citem) { this->citem = _citem; }
     QSharedPointer<t> getCitem() { return citem; }
 };

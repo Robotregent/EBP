@@ -17,9 +17,9 @@ AdminDialog::AdminDialog(QWidget *parent) :
 
 AdminDialog::~AdminDialog()
 {
-    if(!this->OEWidgets.isEmpty())
+    if(!this->WohngruppenItems.isEmpty())
     {
-	foreach (OEListWidgetItem *i,this->OEWidgets)
+	foreach (CostumListWidget<Wohngruppe> *i,this->WohngruppenItems)
 	{
 	    this->ui->O_list->removeItemWidget(i);
 	    delete i;
@@ -60,7 +60,7 @@ void AdminDialog::on_button_MA_speichern_clicked()
 
 
 	//QList<QSharedPointer<Projekt> > p = QList<QSharedPointer<Projekt> >();
-	//QList<QSharedPointer<Bewohner> > b = QList<QSharedPointer<Bewohner> >();
+	QList<QSharedPointer<Bewohner> > b = QList<QSharedPointer<Bewohner> >();
 
 	QSharedPointer<Mitarbeiter> ma
 	(
@@ -81,7 +81,7 @@ void AdminDialog::on_button_MA_speichern_clicked()
 	    {
 		if(this->ui->O_list->item(i)->checkState()==Qt::Checked)
 		{
-		    QSharedPointer<Wohngruppe> wg = ((OEListWidgetItem *)this->ui->O_list->item(i))->getWG();
+		    QSharedPointer<Wohngruppe> wg = ((CostumListWidget<Wohngruppe> *)this->ui->O_list->item(i))->getCitem();
 		    w.append(wg);
 		    qDebug()<<wg->name();
 		}
@@ -92,6 +92,24 @@ void AdminDialog::on_button_MA_speichern_clicked()
 		Wohngruppe::linkMitarbeiter(wg,ma);
 		Mitarbeiter::linkWohngruppe(ma,wg);
 		wg->update(this->PointerToConnection);
+	    }
+	    //Bezugsbetreuuer auslesen
+	    for (int i = 0; i < this->ui->B_list->count(); i++)
+	    {
+		if(this->ui->B_list->item(i)->checkState()==Qt::Checked)
+		{
+		    QSharedPointer<Bewohner> bg = ((CostumListWidget<Bewohner> *)this->ui->B_list->item(i))->getCitem();
+		    b.append(bg);
+		    qDebug()<<bg->name();
+		}
+	    }
+	    //Bezugsbetreuuer verknüpfen
+	    foreach(QSharedPointer<Bewohner> bg, b)
+	    {
+		Bewohner::linkBezugsbetreuer(bg,ma);
+		//Mitarbeiter::linkBezugsbetreuer(ma,bg);
+
+		bg->update(this->PointerToConnection);
 	    }
 	    ma->update(this->PointerToConnection);
 	    QMessageBox::information(this,tr("Mitarbeiter erfolgreich angelegt"),tr("Mitarbeiter erfolgreich angelegt"));
@@ -146,7 +164,7 @@ void AdminDialog::on_ButtonLogin_clicked()
     }
     this->clearLogin();
     this->setOEWidget();
-
+    this->setBWidget();
 }
 void AdminDialog::clearLogin()
 {
@@ -182,6 +200,15 @@ void AdminDialog::on_button_MA_eingabeloeschen_clicked()
     this->ui->nameLineEdit->clear();
     this->ui->telefonLineEdit->clear();
     this->ui->eMailLineEdit->clear();
+
+    for (int i = 0; i < this->ui->O_list->count();i++)
+    {
+	this->ui->O_list->itemAt(i,0)->setCheckState(Qt::Unchecked);
+    }
+    for (int i = 0; i < this->ui->B_list->count();i++)
+    {
+	this->ui->B_list->itemAt(i,0)->setCheckState(Qt::Unchecked);
+    }
 }
 Mitarbeiter::Berechtigungen AdminDialog::setBerechtigung()
 {
@@ -214,32 +241,6 @@ void AdminDialog::on_ButtonAusloggen_clicked()
 
 void AdminDialog::setOEWidget()
 {
-    if(!this->OEWidgets.isEmpty())
-    {
-	foreach (OEListWidgetItem *i,this->OEWidgets)
-	{
-	    this->ui->O_list->removeItemWidget(i);
-	    delete i;
-	}
-	this->OEWidgets.clear();
-    }
-    QList < QSharedPointer<Wohngruppe> > wgList = Wohngruppe::loadAll(this->PointerToConnection);
-    this->OEWidgets.clear();
-
-    foreach (QSharedPointer<Wohngruppe> wg, wgList )
-    {
-	this->OEWidgets.append(new OEListWidgetItem(wg,this->ui->O_list));
-    }
-    foreach (OEListWidgetItem *i,this->OEWidgets)
-    {
-	i->setFlags(i->flags()|Qt::ItemIsUserCheckable);
-	i->setCheckState(Qt::Unchecked);
-	this->ui->O_list->addItem(i);
-    }
-}
-/*
-void AdminDialog::setOEWidget()
-{
     if(!this->WohngruppenItems.isEmpty())
     {
 	foreach (CostumListWidget<Wohngruppe> *i,this->WohngruppenItems)
@@ -247,7 +248,7 @@ void AdminDialog::setOEWidget()
 	    this->ui->O_list->removeItemWidget(i);
 	    delete i;
 	}
-	this->OEWidgets.clear();
+	this->WohngruppenItems.clear();
     }
     QList < QSharedPointer<Wohngruppe> > wgList = Wohngruppe::loadAll(this->PointerToConnection);
     this->WohngruppenItems.clear();
@@ -263,4 +264,29 @@ void AdminDialog::setOEWidget()
 	this->ui->O_list->addItem(i);
     }
 }
-*/
+
+void AdminDialog::setBWidget()
+{
+    if(!this->BewohnerItems.isEmpty())
+    {
+	foreach (CostumListWidget<Bewohner> *i,this->BewohnerItems)
+	{
+	    this->ui->B_list->removeItemWidget(i);
+	    delete i;
+	}
+	this->BewohnerItems.clear();
+    }
+    QList < QSharedPointer<Bewohner> > bList = Bewohner::loadAll(this->PointerToConnection);
+    this->BewohnerItems.clear();
+
+    foreach (QSharedPointer<Bewohner> b, bList )
+    {
+	this->BewohnerItems.append(new CostumListWidget<Bewohner>(b,this->ui->B_list));
+    }
+    foreach (CostumListWidget<Bewohner> *i,this->BewohnerItems)
+    {
+	i->setFlags(i->flags()|Qt::ItemIsUserCheckable);
+	i->setCheckState(Qt::Unchecked);
+	this->ui->B_list->addItem(i);
+    }
+}

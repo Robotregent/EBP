@@ -11,7 +11,7 @@ SET( SAMPLE_SRCS
 	   employeelistmodel.cpp
        main.cpp
 	   oelistwidgetitem.cpp
-	   costumlistwidget.cpp
+#	   costumlistwidget.cpp
 )
   
 # another list, this time it includes all header files that should be treated with moc

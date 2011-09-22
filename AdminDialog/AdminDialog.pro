@@ -14,8 +14,7 @@ SOURCES += main.cpp\
         admindialog.cpp \
     chooseemployee.cpp \
     employeelistmodel.cpp \
-    oelistwidgetitem.cpp \
-    costumlistwidget.cpp
+    oelistwidgetitem.cpp
 
 HEADERS  += admindialog.h \
     chooseemployee.h \
@@ -25,6 +24,7 @@ HEADERS  += admindialog.h \
 
 FORMS    += admindialog.ui \
     chooseemployee.ui
+
 
 
 
