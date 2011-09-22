@@ -25,7 +25,7 @@
      <item>
       <widget class="QTabWidget" name="tabWidget">
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="tab_login">
         <attribute name="title">
@@ -619,7 +619,23 @@
                  <widget class="QLineEdit" name="lineEdit_O_name"/>
                 </item>
                 <item>
-                 <widget class="QComboBox" name="box_O_kategorie"/>
+                 <widget class="QComboBox" name="box_O_kategorie">
+                  <item>
+                   <property name="text">
+                    <string>Wohngruppe</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Wohnheim</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Wohnverbund</string>
+                   </property>
+                  </item>
+                 </widget>
                 </item>
                </layout>
               </item>

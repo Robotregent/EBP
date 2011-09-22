@@ -290,3 +290,9 @@ void AdminDialog::setBWidget()
 	this->ui->B_list->addItem(i);
     }
 }
+
+
+void AdminDialog::on_passwortLineEdit_returnPressed()
+{
+    this->ui->ButtonLogin->setFocus();
+}

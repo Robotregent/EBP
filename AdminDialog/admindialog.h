@@ -30,6 +30,8 @@ private slots:
     void on_button_MA_eingabeloeschen_clicked();
     void on_ButtonAusloggen_clicked();
 
+    void on_passwortLineEdit_returnPressed();
+
 private:
     Ui::AdminDialog *ui;
     void init();
