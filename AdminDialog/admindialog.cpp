@@ -56,23 +56,27 @@ void AdminDialog::on_button_MA_speichern_clicked()
 {
     if(this->isPasswordValid())
     {
-	QList<QLazyWeakPointer<Wohngruppe> > w = QList<QLazyWeakPointer<Wohngruppe> >();
+	QList<QSharedPointer<Wohngruppe> > w = QList<QSharedPointer<Wohngruppe> >();
 
 
-	QList<QLazyWeakPointer<Projekt> > p = QList<QLazyWeakPointer<Projekt> >();
-	QList<QLazyWeakPointer<Bewohner> > b = QList<QLazyWeakPointer<Bewohner> >();
+	//QList<QSharedPointer<Projekt> > p = QList<QSharedPointer<Projekt> >();
+	//QList<QSharedPointer<Bewohner> > b = QList<QSharedPointer<Bewohner> >();
 
-	Mitarbeiter ma(this->ui->loginNameLineEdit_2->text(),
-		       this->setBerechtigung(),
-		       this->ui->nameLineEdit->text(),
-		       this->ui->eMailLineEdit->text(),
-		       this->ui->telefonLineEdit->text(),
-		       w,
-		       p,
-		       b);
+	QSharedPointer<Mitarbeiter> ma
+	(
+		    new Mitarbeiter
+		    (
+			this->ui->loginNameLineEdit_2->text(),
+			this->setBerechtigung(),
+			this->ui->nameLineEdit->text(),
+			this->ui->eMailLineEdit->text(),
+			this->ui->telefonLineEdit->text()
+		     )
+	);
 
-	if (ma.create(this->PointerToConnection,this->ui->passwortLineEdit_2->text()))
+	if (ma->create(this->PointerToConnection,this->ui->passwortLineEdit_2->text()))
 	{
+	    //Alle WG die mit dem MA assoziiert werden sollen auslesen
 	    for (int i = 0; i < this->ui->O_list->count(); i++)
 	    {
 		if(this->ui->O_list->item(i)->checkState()==Qt::Checked)
@@ -82,8 +86,14 @@ void AdminDialog::on_button_MA_speichern_clicked()
 		    qDebug()<<wg->name();
 		}
 	    }
-	    ma.wohngruppen(w);
-	    ma.update(this->PointerToConnection);
+	    //WG mit MA verknüpfen
+	    foreach(QSharedPointer<Wohngruppe> wg, w)
+	    {
+		Wohngruppe::linkMitarbeiter(wg,ma);
+		Mitarbeiter::linkWohngruppe(ma,wg);
+		wg->update(this->PointerToConnection);
+	    }
+	    ma->update(this->PointerToConnection);
 	    QMessageBox::information(this,tr("Mitarbeiter erfolgreich angelegt"),tr("Mitarbeiter erfolgreich angelegt"));
 	}
 	else

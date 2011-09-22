@@ -14,15 +14,19 @@ SOURCES += main.cpp\
         admindialog.cpp \
     chooseemployee.cpp \
     employeelistmodel.cpp \
-    oelistwidgetitem.cpp
+    oelistwidgetitem.cpp \
+    costumlistwidget.cpp
 
 HEADERS  += admindialog.h \
     chooseemployee.h \
     employeelistmodel.h \
-    oelistwidgetitem.h
+    oelistwidgetitem.h \
+    costumlistwidget.h
 
 FORMS    += admindialog.ui \
     chooseemployee.ui
+
+
 
 
 
