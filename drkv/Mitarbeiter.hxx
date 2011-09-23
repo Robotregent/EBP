@@ -3,8 +3,11 @@
 
 
 #include "Bewohner.hxx"
+#include "Bewohnerereignis.hxx"
 #include "Wohngruppe.hxx"
+#include "Wohngruppenereignis.hxx"
 #include "Projekt.hxx"
+#include "Protokoll.hxx"
 #include "databaseObject.hxx"
 
 #include <QCoreApplication>
@@ -19,7 +22,11 @@
 namespace drkv
 {
 	class Wohngruppe;
+	class Wohngruppenereignis;
+	class Bewohner;
+	class Bewohnerereignis;
 	class Projekt;
+	class Protokoll;
 	class connection;
 
 	#pragma db object
@@ -73,8 +80,20 @@ namespace drkv
 		QList< QSharedPointer<Projekt> > loadProjekte( const QSharedPointer<drkv::connection> & connection ) const;
 		DATABASEOBJECT_DECLARE_LINK_INVERSE( Mitarbeiter, Projekt, Projekt )
 
+		QList< QSharedPointer<Bewohnerereignis> > loadBewohnerereignisse( const QSharedPointer<drkv::connection> & connection ) const;
+		DATABASEOBJECT_DECLARE_LINK_INVERSE( Mitarbeiter, Bewohnerereignis, Bewohnerereignis )
+
+		QList< QSharedPointer<Wohngruppenereignis> > loadWohngruppenereignisse( const QSharedPointer<drkv::connection> & connection ) const;
+		DATABASEOBJECT_DECLARE_LINK_INVERSE( Mitarbeiter, Wohngruppenereignis, Wohngruppenereignis )
+
+		QList< QSharedPointer<Protokoll> > loadProtokollTeilnehmer( const QSharedPointer<drkv::connection> & connection ) const;
+		DATABASEOBJECT_DECLARE_LINK_INVERSE( Mitarbeiter, ProtokollTeilnehmer, Protokoll )
+
+		QList< QSharedPointer<Protokoll> > loadProtokollSchreiber( const QSharedPointer<drkv::connection> & connection ) const;
+		DATABASEOBJECT_DECLARE_LINK_INVERSE( Mitarbeiter, ProtokollSchreiber, Protokoll )
+
 		QList< QSharedPointer<Bewohner> > loadBezugsbetreuer( const QSharedPointer<drkv::connection> & connection ) const;
-		DATABASEOBJECT_DECLARE_LINK( Mitarbeiter, Bezugsbetreuer, Bewohner )
+		DATABASEOBJECT_DECLARE_LINK_INVERSE( Mitarbeiter, Bezugsbetreuer, Bewohner )
 
 		bool create( const QSharedPointer<drkv::connection> & connection, const QString & password );
 		bool create( const QSharedPointer<drkv::connection> & connection );
@@ -84,7 +103,11 @@ namespace drkv
 	private:
 		friend class odb::access;
 		friend class Wohngruppe;
+		friend class Wohngruppenereignis;
+		friend class Bewohner;
+		friend class Bewohnerereignis;
 		friend class Projekt;
+		friend class Protokoll;
 		Mitarbeiter() {}
 
 		#pragma db id auto
@@ -107,7 +130,19 @@ namespace drkv
 		#pragma db unordered inverse(verantwortliche_)
 		QList< QLazyWeakPointer<Projekt> > projekte_;
 
-		#pragma db unordered
+		#pragma db unordered inverse(schreiber_)
+		QList< QLazyWeakPointer<Bewohnerereignis> > bewohnerereignisse_;
+
+		#pragma db unordered inverse(schreiber_)
+		QList< QLazyWeakPointer<Wohngruppenereignis> > wohngruppenereignisse_;
+
+		#pragma db unordered inverse(teilnehmer_)
+		QList< QLazyWeakPointer<Protokoll> > protokollTeilnehmer_;
+
+		#pragma db unordered inverse(schreiber_)
+		QList< QLazyWeakPointer<Protokoll> > protokollSchreiber_;
+
+		#pragma db unordered inverse(bezugsbetreuer_)
 		QList< QLazyWeakPointer<Bewohner> > bezugsbetreuer_;
 	};
 }

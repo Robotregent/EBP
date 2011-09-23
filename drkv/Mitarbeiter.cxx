@@ -1,7 +1,9 @@
 #include "Mitarbeiter.hxx"
 #include "Mitarbeiter-odb.hxx"
 #include "Bewohner-odb.hxx"
+#include "Bewohnerereignis-odb.hxx"
 #include "Wohngruppe-odb.hxx"
+#include "Wohngruppenereignis-odb.hxx"
 #include "connection.hxx"
 
 #include <QDebug>
@@ -16,7 +18,11 @@ using namespace drkv;
 
 DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( Mitarbeiter, Wohngruppe, Wohngruppe, Mitarbeiter )
 DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( Mitarbeiter, Projekt, Projekt, Verantwortlicher )
-DATABASEOBJECT_IMPLEMENT_LINK_MANYTOONE( Mitarbeiter, Bezugsbetreuer, bezugsbetreuer_, Bewohner, Bezugsbetreuer, bezugsbetreuer_ )
+DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( Mitarbeiter, Bewohnerereignis, Bewohnerereignis, Schreiber )
+DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( Mitarbeiter, Wohngruppenereignis, Wohngruppenereignis, Schreiber )
+DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( Mitarbeiter, ProtokollTeilnehmer, Protokoll, Teilnehmer )
+DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( Mitarbeiter, ProtokollSchreiber, Protokoll, Schreiber )
+DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( Mitarbeiter, Bezugsbetreuer, Bewohner, Bezugsbetreuer )
 
 
 QList< QSharedPointer<Wohngruppe> > Mitarbeiter::loadWohngruppen( const QSharedPointer<drkv::connection> & connection ) const

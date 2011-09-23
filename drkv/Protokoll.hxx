@@ -31,12 +31,10 @@ namespace drkv
 		Protokoll
 		(
 			const QString & inhalt,
-			const QDate & datum,
-			const QSharedPointer<Bewohner> & bewohner
+			const QDate & datum
 		) :
 			inhalt_(inhalt),
-			datum_(datum),
-			bewohner_(bewohner)
+			datum_(datum)
 		{
 		}
 
@@ -45,6 +43,15 @@ namespace drkv
 
 		const QDate & datum() const { return datum_; }
 		void datum( const QDate & datum ) { datum_ = datum; }
+
+		const QSharedPointer<Bewohner> & bewohner() const { return bewohner_; }
+		DATABASEOBJECT_DECLARE_LINK( Protokoll, Bewohner, Bewohner )
+
+		QList< QSharedPointer<Mitarbeiter> > loadTeilnehmer( const QSharedPointer<drkv::connection> & connection ) const;
+		DATABASEOBJECT_DECLARE_LINK( Protokoll, Teilnehmer, Mitarbeiter )
+
+		QList< QSharedPointer<Mitarbeiter> > loadSchreiber( const QSharedPointer<drkv::connection> & connection ) const;
+		DATABASEOBJECT_DECLARE_LINK( Protokoll, Schreiber, Mitarbeiter )
 
 	private:
 		friend class odb::access;

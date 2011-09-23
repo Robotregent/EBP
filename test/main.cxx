@@ -70,8 +70,7 @@ int main( int argc, char * argv[] )
 		)
 	);
 	ma2->create( c, "test" );
-*/
-/*
+
 	QSharedPointer<Bewohner> bw1
 	(
 		new Bewohner
@@ -85,18 +84,45 @@ int main( int argc, char * argv[] )
 		)
 	);
 	bw1->create( c );
+
+	QSharedPointer<Bewohner> bw2
+	(
+		new Bewohner
+		(
+			2,
+			"bw2",
+			QDate(),
+			"",
+			"",
+			""
+		)
+	);
+	bw2->create( c );
+
+	QSharedPointer<Bewohner> bw3
+	(
+		new Bewohner
+		(
+			3,
+			"bw3",
+			QDate(),
+			"",
+			"",
+			""
+		)
+	);
+	bw3->create( c );
 */
 
 	{
 		QList< QSharedPointer<Bewohner> > bwList = Bewohner::loadAll( c );
 		QList< QSharedPointer<Mitarbeiter> > maList = Mitarbeiter::loadAll( c );
-		Mitarbeiter::linkBezugsbetreuer( maList[0], bwList[0] );
-//		Mitarbeiter::linkBezugsbetreuer( maList[0], bwList[0] );
-//		Mitarbeiter::linkBezugsbetreuer( maList[0], bwList[1] );
-		maList[0]->update(c);
+		Bewohner::linkBezugsbetreuer( bwList[0], maList[0] );
+		Bewohner::linkBezugsbetreuer( bwList[0], maList[0] );
+		Bewohner::linkBezugsbetreuer( bwList[0], maList[1] );
+		bwList[0]->update(c);
 	}
 
-/*
 	{
 		QList< QSharedPointer<Wohngruppe> > wgList = Wohngruppe::loadAll( c );
 		QList< QSharedPointer<Mitarbeiter> > maList = Mitarbeiter::loadAll( c );
@@ -110,12 +136,7 @@ int main( int argc, char * argv[] )
 		wgList[1]->update(c);
 		wgList[2]->update(c);
 	}
-*/
-/*
-	{
-		QList< QSharedPointer<Mitarbeiter> > maList = Mitarbeiter::loadAll( c );
-	}
-*/
+
 	cout << "---" << endl;
 
 	{

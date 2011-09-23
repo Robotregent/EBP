@@ -9,19 +9,27 @@
 #include <QSharedPointer>
 
 
+#if DATABASEOBJECT_ENABLE_INVERSE
+
+#	define DATABASEOBJECT_DECLARE_LINK_INVERSE( FROM, FROM_NAME, TO ) \
+		static void link##FROM_NAME( QSharedPointer<FROM> & from, QSharedPointer<TO> & to ); \
+		static void unlink##FROM_NAME( QSharedPointer<FROM> & from, QSharedPointer<TO> & to ); \
+
+#	define DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( FROM, FROM_NAME, TO, TO_NAME ) \
+		void FROM::link##FROM_NAME( QSharedPointer<FROM> & from, QSharedPointer<TO> & to ) { TO::link##TO_NAME( to, from ); } \
+		void FROM::unlink##FROM_NAME( QSharedPointer<FROM> & from, QSharedPointer<TO> & to ) { TO::unlink##TO_NAME( to, from ); } \
+
+#else
+#	define DATABASEOBJECT_DECLARE_LINK_INVERSE( FROM, FROM_NAME, TO )
+#	define DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( FROM, FROM_NAME, TO, TO_NAME )
+#endif // DATABASEOBJECT_ENABLE_INVERSE
+
+
 #define DATABASEOBJECT_DECLARE_LINK( FROM, FROM_NAME, TO ) \
 	static void link##FROM_NAME( QSharedPointer<FROM> & from, QSharedPointer<TO> & to ); \
 	static void unlink##FROM_NAME( QSharedPointer<FROM> & from, QSharedPointer<TO> & to ); \
 
-#define DATABASEOBJECT_DECLARE_LINK_INVERSE( FROM, FROM_NAME, TO ) \
-	static void link##FROM_NAME( QSharedPointer<FROM> & from, QSharedPointer<TO> & to ); \
-	static void unlink##FROM_NAME( QSharedPointer<FROM> & from, QSharedPointer<TO> & to ); \
-
-#define DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( FROM, FROM_NAME, TO, TO_NAME ) \
-	void FROM::link##FROM_NAME( QSharedPointer<FROM> & from, QSharedPointer<TO> & to ) { TO::link##TO_NAME( to, from ); } \
-	void FROM::unlink##FROM_NAME( QSharedPointer<FROM> & from, QSharedPointer<TO> & to ) { TO::unlink##TO_NAME( to, from ); } \
-
-#define DATABASEOBJECT_IMPLEMENT_LINK_MANYTOMANY( FROM, FROM_NAME, FROM_MEMBER, TO, TO_NAME, TO_MEMBER ) \
+#define DATABASEOBJECT_IMPLEMENT_LINK_MANYMANY( FROM, FROM_NAME, FROM_MEMBER, TO, TO_NAME, TO_MEMBER ) \
 void FROM::link##FROM_NAME( QSharedPointer<FROM> & from, QSharedPointer<TO> & to ) \
 { \
 	if( from && to ) \
@@ -64,42 +72,42 @@ void FROM::unlink##FROM_NAME( QSharedPointer<FROM> & from, QSharedPointer<TO> & 
 	} \
 } \
 
-#define DATABASEOBJECT_IMPLEMENT_LINK_MANYTOONE( FROM, FROM_NAME, FROM_MEMBER, TO, TO_NAME, TO_MEMBER ) \
+#define DATABASEOBJECT_IMPLEMENT_LINK_ONEMANY( FROM, FROM_NAME, FROM_MEMBER, TO, TO_NAME, TO_MEMBER ) \
 void FROM::link##FROM_NAME( QSharedPointer<FROM> & from, QSharedPointer<TO> & to ) \
 { \
 	if( from && to ) \
 	{ \
-		if( to->TO_MEMBER ) \
+		if( from->FROM_MEMBER ) \
 		{ \
-			FROM::unlink##FROM_NAME( to->TO_MEMBER, to ); \
+			FROM::unlink##FROM_NAME( from, from->FROM_MEMBER ); \
 		} \
-		for( QList< QLazyWeakPointer<TO> >::const_iterator i = from->FROM_MEMBER.begin(); i != from->FROM_MEMBER.end(); ++i ) \
+		for( QList< QLazyWeakPointer<FROM> >::const_iterator i = to->TO_MEMBER.begin(); i != to->TO_MEMBER.end(); ++i ) \
 		{ \
-			if( (*i).objectId<TO>() == to->id_ ) \
+			if( (*i).objectId<FROM>() == from->id_ ) \
 				goto otherSide; \
 		} \
-		from->FROM_MEMBER.push_back( to ); \
+		to->TO_MEMBER.push_back( from ); \
 	otherSide: \
-		to->TO_MEMBER = from; \
+		from->FROM_MEMBER = to; \
 	} \
 } \
 void FROM::unlink##FROM_NAME( QSharedPointer<FROM> & from, QSharedPointer<TO> & to ) \
 { \
 	if( from && to ) \
 	{ \
-		for( QList< QLazyWeakPointer<TO> >::const_iterator i = from->FROM_MEMBER.begin(); i != from->FROM_MEMBER.end(); ++i ) \
+		for( QList< QLazyWeakPointer<FROM> >::const_iterator i = to->TO_MEMBER.begin(); i != to->TO_MEMBER.end(); ++i ) \
 		{ \
-			if( (*i).objectId<TO>() == to->id_ ) \
+			if( (*i).objectId<FROM>() == from->id_ ) \
 			{ \
-				from->FROM_MEMBER.removeAll( (*i) ); \
+				to->TO_MEMBER.removeAll( (*i) ); \
 				break; \
 			} \
 		} \
-		to->TO_MEMBER = QSharedPointer<FROM>(); \
+		from->FROM_MEMBER = QSharedPointer<TO>(); \
 	} \
 } \
 
-#define DATABASEOBJECT_IMPLEMENT_LINK_ONETOONE( FROM, FROM_NAME, FROM_MEMBER, TO, TO_NAME, TO_MEMBER ) \
+#define DATABASEOBJECT_IMPLEMENT_LINK_ONEONE( FROM, FROM_NAME, FROM_MEMBER, TO, TO_NAME, TO_MEMBER ) \
 void FROM::link##FROM_NAME( QSharedPointer<FROM> & from, QSharedPointer<TO> & to ) \
 { \
 	if( from && to ) \

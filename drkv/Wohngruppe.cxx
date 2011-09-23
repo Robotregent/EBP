@@ -1,5 +1,6 @@
 #include "Wohngruppe.hxx"
 #include "Wohngruppe-odb.hxx"
+#include "Wohngruppenereignis-odb.hxx"
 #include "Mitarbeiter-odb.hxx"
 #include "connection.hxx"
 
@@ -13,8 +14,9 @@ template class drkv::databaseObject<drkv::Wohngruppe>;
 using namespace drkv;
 
 
-DATABASEOBJECT_IMPLEMENT_LINK_MANYTOMANY( Wohngruppe, Mitarbeiter, mitarbeiter_, Mitarbeiter, Wohngruppe, wohngruppen_ )
-DATABASEOBJECT_IMPLEMENT_LINK_MANYTOONE( Wohngruppe, Bewohner, bewohner_, Bewohner, Wohngruppe, wohngruppe_ )
+DATABASEOBJECT_IMPLEMENT_LINK_MANYMANY( Wohngruppe, Mitarbeiter, mitarbeiter_, Mitarbeiter, Wohngruppe, wohngruppen_ )
+DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( Wohngruppe, Bewohner, Bewohner, Wohngruppe )
+DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( Wohngruppe, Ereignis, Wohngruppenereignis, Wohngruppe )
 
 
 QList< QSharedPointer<Mitarbeiter> > Wohngruppe::loadMitarbeiter( const QSharedPointer<drkv::connection> & connection ) const

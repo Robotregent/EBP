@@ -44,12 +44,15 @@ namespace drkv
 		DATABASEOBJECT_DECLARE_LINK( Wohngruppe, Mitarbeiter, Mitarbeiter )
 
 		QList< QSharedPointer<Bewohner> > loadBewohner( const QSharedPointer<drkv::connection> & connection ) const;
-		DATABASEOBJECT_DECLARE_LINK( Wohngruppe, Bewohner, Bewohner )
+		DATABASEOBJECT_DECLARE_LINK_INVERSE( Wohngruppe, Bewohner, Bewohner )
 
 		QList< QSharedPointer<Wohngruppenereignis> > loadEreignisse( const QSharedPointer<drkv::connection> & connection ) const;
+		DATABASEOBJECT_DECLARE_LINK_INVERSE( Wohngruppe, Ereignis, Wohngruppenereignis )
 
 	private:
 		friend class odb::access;
+		friend class Bewohner;
+		friend class Wohngruppenereignis;
 		Wohngruppe() {}
 
 		#pragma db id auto
@@ -60,10 +63,10 @@ namespace drkv
 		#pragma db unordered
 		QList< QLazyWeakPointer<Mitarbeiter> > mitarbeiter_;
 
-		#pragma db unordered
+		#pragma db unordered inverse(wohngruppe_)
 		QList< QLazyWeakPointer<Bewohner> > bewohner_;
 
-		#pragma db unordered
+		#pragma db unordered inverse(wohngruppe_)
 		QList< QLazyWeakPointer<Wohngruppenereignis> > ereignisse_;
 	};
 }
