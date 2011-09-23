@@ -14,6 +14,7 @@ template class drkv::databaseObject<drkv::Wohngruppe>;
 using namespace drkv;
 
 
+DATABASEOBJECT_IMPLEMENT_LINK_ONEMANY( Wohngruppe, Wohnheim, wohnheim_, Wohnheim, Wohngruppe, wohngruppen_ )
 DATABASEOBJECT_IMPLEMENT_LINK_MANYMANY( Wohngruppe, Mitarbeiter, mitarbeiter_, Mitarbeiter, Wohngruppe, wohngruppen_ )
 DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( Wohngruppe, Bewohner, Bewohner, Wohngruppe )
 DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( Wohngruppe, Ereignis, Wohngruppenereignis, Wohngruppe )

@@ -5,6 +5,7 @@
 #include "Mitarbeiter.hxx"
 #include "Bewohner.hxx"
 #include "Wohngruppenereignis.hxx"
+#include "Wohnheim.hxx"
 #include "databaseObject.hxx"
 
 #include <QCoreApplication>
@@ -21,6 +22,7 @@ namespace drkv
 	class Mitarbeiter;
 	class Bewohner;
 	class Wohngruppenereignis;
+	class Wohnheim;
 	class connection;
 
 	#pragma db object
@@ -39,6 +41,9 @@ namespace drkv
 
 		const QString & name() const { return name_; }
 		QString & name() { return name_; }
+
+		const QSharedPointer<Wohnheim> & wohnheim() const;
+		DATABASEOBJECT_DECLARE_LINK( Wohngruppe, Wohnheim, Wohnheim )
 
 		QList< QSharedPointer<Mitarbeiter> > loadMitarbeiter( const QSharedPointer<drkv::connection> & connection ) const;
 		DATABASEOBJECT_DECLARE_LINK( Wohngruppe, Mitarbeiter, Mitarbeiter )
@@ -59,6 +64,9 @@ namespace drkv
 		unsigned long id_;
 
 		QString name_;
+
+		#pragma db unordered
+		QSharedPointer<Wohnheim> wohnheim_;
 
 		#pragma db unordered
 		QList< QLazyWeakPointer<Mitarbeiter> > mitarbeiter_;
