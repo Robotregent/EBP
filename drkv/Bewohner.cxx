@@ -1,5 +1,7 @@
 #include "Bewohner.hxx"
 #include "Bewohner-odb.hxx"
+#include "Bewohnerereignis-odb.hxx"
+#include "Protokoll-odb.hxx"
 #include "connection.hxx"
 
 #include <QDebug>
@@ -12,6 +14,9 @@ template class drkv::databaseObject<drkv::Bewohner>;
 using namespace drkv;
 
 
-DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( Bewohner, Bezugsbetreuer, Mitarbeiter, Bezugsbetreuer )
-DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( Bewohner, Wohngruppe, Wohngruppe, Bewohner )
-DATABASEOBJECT_IMPLEMENT_LINK_MANYTOONE( Bewohner, Projekt, projekte_, Projekt, Bewohner, bewohner_ )
+DATABASEOBJECT_IMPLEMENT_LINK_ONEMANY( Bewohner, Bezugsbetreuer, bezugsbetreuer_, Mitarbeiter, Bezugsbetreuer, bezugsbetreuer_ )
+DATABASEOBJECT_IMPLEMENT_LINK_ONEMANY( Bewohner, Wohngruppe, wohngruppe_, Wohngruppe, Bewohner, bewohner_ )
+
+DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( Bewohner, Projekt, Projekt, Bewohner )
+DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( Bewohner, Protokoll, Protokoll, Bewohner )
+DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( Bewohner, Ereignis, Bewohnerereignis, Bewohner )

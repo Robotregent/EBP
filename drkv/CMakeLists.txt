@@ -12,6 +12,7 @@ set( libdrkv_headers
 	Bewohnerereignis.hxx
 	Wohngruppe.hxx
 	Wohngruppenereignis.hxx
+	Wohnheim.hxx
 	Projekt.hxx
 	Protokoll.hxx
 )
@@ -23,6 +24,7 @@ set( libdrkv_sources
 	Bewohnerereignis.cxx
 	Wohngruppe.cxx
 	Wohngruppenereignis.cxx
+	Wohnheim.cxx
 	Projekt.cxx
 	Protokoll.cxx
 )

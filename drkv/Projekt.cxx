@@ -11,5 +11,6 @@ template class drkv::databaseObject<drkv::Projekt>;
 
 using namespace drkv;
 
-DATABASEOBJECT_IMPLEMENT_LINK_MANYTOMANY( Projekt, Verantwortlicher, verantwortliche_, Mitarbeiter, Projekt, projekte_ )
-DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( Projekt, Bewohner, Bewohner, Projekt )
+
+DATABASEOBJECT_IMPLEMENT_LINK_ONEMANY( Projekt, Bewohner, bewohner_, Bewohner, Projekt, projekte_ )
+DATABASEOBJECT_IMPLEMENT_LINK_MANYMANY( Projekt, Verantwortlicher, verantwortliche_, Mitarbeiter, Projekt, projekte_ )

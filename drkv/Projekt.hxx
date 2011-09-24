@@ -34,15 +34,13 @@ namespace drkv
 			const QString & beschreibung,
 			const QString & typ,
 			const QDate & beginn,
-			const QDate & ende,
-			const QSharedPointer<Bewohner> & bewohner
+			const QDate & ende
 		) :
 			name_(name),
 			beschreibung_(beschreibung),
 			typ_(typ),
 			beginn_(beginn),
-			ende_(ende),
-			bewohner_(bewohner)
+			ende_(ende)
 		{
 		}
 
@@ -62,15 +60,13 @@ namespace drkv
 		void ende( const QDate & ende ) { ende_ = ende; }
 
 		const QSharedPointer<Bewohner> & bewohner( const QSharedPointer<drkv::connection> & connection ) const;
-		QSharedPointer<Bewohner> & bewohner( const QSharedPointer<drkv::connection> & connection );
-		DATABASEOBJECT_DECLARE_LINK_INVERSE( Projekt, Bewohner, Bewohner )
+		DATABASEOBJECT_DECLARE_LINK( Projekt, Bewohner, Bewohner )
 
 		QList< QSharedPointer<Mitarbeiter> > loadVerantwortliche( const QSharedPointer<drkv::connection> & connection ) const;
 		DATABASEOBJECT_DECLARE_LINK( Projekt, Verantwortlicher, Mitarbeiter )
 
 	private:
 		friend class odb::access;
-		friend class Bewohner;
 		Projekt() {}
 
 		#pragma db id auto
@@ -86,7 +82,6 @@ namespace drkv
 
 		QDate ende_;
 
-		#pragma db inverse(projekte_)
 		QSharedPointer<Bewohner> bewohner_;
 
 		#pragma db unordered

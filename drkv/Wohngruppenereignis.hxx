@@ -31,14 +31,10 @@ namespace drkv
 		Wohngruppenereignis
 		(
 			const QDateTime & zeitpunkt,
-			const QString & text,
-			const QList< QLazyWeakPointer<Mitarbeiter> > & schreiber,
-			const QLazyWeakPointer<Wohngruppe> & wohngruppe
+			const QString & text
 		) :
 			zeitpunkt_(zeitpunkt),
-			text_(text),
-			schreiber_(schreiber),
-			wohngruppe_(wohngruppe)
+			text_(text)
 		{
 		}
 
@@ -48,11 +44,11 @@ namespace drkv
 		const QString & text() const { return text_; }
 		void text( const QString & text ) { text_ = text; }
 
-		const QList< QLazyWeakPointer<Mitarbeiter> > & schreiber() const { return schreiber_; }
-		void schreiber( const QList< QLazyWeakPointer<Mitarbeiter> > & schreiber ) { schreiber_ = schreiber; }
+		const QSharedPointer<Wohngruppe> & wohngruppe() const { return wohngruppe_; }
+		DATABASEOBJECT_DECLARE_LINK( Wohngruppenereignis, Wohngruppe, Wohngruppe )
 
-		const QLazyWeakPointer<Wohngruppe> & wohngruppe() const { return wohngruppe_; }
-		void wohngruppe( const QLazyWeakPointer<Wohngruppe> & wohngruppe ) { wohngruppe_ = wohngruppe; }
+		const QList< QSharedPointer<Mitarbeiter> > & loadSchreiber( const QSharedPointer<drkv::connection> & connection ) const;
+		DATABASEOBJECT_DECLARE_LINK( Wohngruppenereignis, Schreiber, Mitarbeiter )
 
 	private:
 		friend class odb::access;
@@ -65,11 +61,10 @@ namespace drkv
 
 		QString text_;
 
+		QSharedPointer<Wohngruppe> wohngruppe_;
+
 		#pragma db unordered
 		QList< QLazyWeakPointer<Mitarbeiter> > schreiber_;
-
-		#pragma db inverse(ereignisse_)
-		QLazyWeakPointer<Wohngruppe> wohngruppe_;
 	};
 }
 

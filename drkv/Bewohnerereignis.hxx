@@ -31,12 +31,10 @@ namespace drkv
 		Bewohnerereignis
 		(
 			const QDateTime & zeitpunkt,
-			const QString & text,
-			const QSharedPointer<Bewohner> & bewohner
+			const QString & text
 		) :
 			zeitpunkt_(zeitpunkt),
-			text_(text),
-			bewohner_(bewohner)
+			text_(text)
 		{
 		}
 
@@ -45,6 +43,12 @@ namespace drkv
 
 		const QString & text() const { return text_; }
 		void text( const QString & text ) { text_ = text; }
+
+		const QSharedPointer<Bewohner> bewohner() const { return bewohner_; }
+		DATABASEOBJECT_DECLARE_LINK( Bewohnerereignis, Bewohner, Bewohner )
+
+		QList< QSharedPointer<Mitarbeiter> > loadSchreiber( const QSharedPointer<drkv::connection> & connection ) const;
+		DATABASEOBJECT_DECLARE_LINK( Bewohnerereignis, Schreiber, Mitarbeiter )
 
 	private:
 		friend class odb::access;
