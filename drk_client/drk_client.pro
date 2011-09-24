@@ -5,7 +5,8 @@ HEADERS += \
     groupmenu.h \
     person.h \
     decree.h \
-    decreescrollarea.h
+    decreescrollarea.h \
+    loginform.h
 
 SOURCES += \
     mainwindow.cpp \
@@ -15,13 +16,18 @@ SOURCES += \
     groupmenu.cpp \
     person.cpp \
     decree.cpp \
-    decreescrollarea.cpp
+    decreescrollarea.cpp \
+    loginform.cpp
 
 RESOURCES += \
     images.qrc
 
 FORMS += \
-    decreescrollarea.ui
+    decreescrollarea.ui \
+    loginform.ui
+
+
+
 
 
 

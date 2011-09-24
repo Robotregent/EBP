@@ -90,7 +90,7 @@ void AdminDialog::on_button_MA_speichern_clicked()
 	    foreach(QSharedPointer<Wohngruppe> wg, w)
 	    {
 		Wohngruppe::linkMitarbeiter(wg,ma);
-		Mitarbeiter::linkWohngruppe(ma,wg);
+		//Mitarbeiter::linkWohngruppe(ma,wg);
 		wg->update(this->PointerToConnection);
 	    }
 	    //Bezugsbetreuuer auslesen
@@ -163,8 +163,9 @@ void AdminDialog::on_ButtonLogin_clicked()
 	QMessageBox::critical(this,tr("Fehlerhafter Login"),tr("Es konnte keine Veerbindung zur Datenbank hergestellt werden. Überprüfen Sie bitte ihre Logindaten"));
     }
     this->clearLogin();
-    this->setOEWidget();
-    this->setBWidget();
+    this->setMitarbiterVerwalten();
+    this->setBewohnerVerwalten();
+
 }
 void AdminDialog::clearLogin()
 {
@@ -295,4 +296,92 @@ void AdminDialog::setBWidget()
 void AdminDialog::on_passwortLineEdit_returnPressed()
 {
     this->ui->ButtonLogin->setFocus();
+}
+void AdminDialog::setMitarbiterVerwalten()
+{
+    this->setOEWidget();
+    this->setBWidget();
+}
+void AdminDialog::setBewohnerVerwalten()
+{
+    if(!this->WohngruppeTreeItems.isEmpty())
+    {
+	foreach (CostumTreeWidget<Wohngruppe> *i,this->WohngruppeTreeItems)
+	{
+	    this->ui->WohngruppeTree->removeItemWidget(i,0);
+	    delete i;
+	}
+	this->WohngruppeTreeItems.clear();
+    }
+    QList < QSharedPointer<Wohngruppe> > bList = Wohngruppe::loadAll(this->PointerToConnection);
+    this->WohngruppeTreeItems.clear();
+
+    foreach (QSharedPointer<Wohngruppe> b, bList )
+    {
+	this->WohngruppeTreeItems.append(new CostumTreeWidget<Wohngruppe>(b,this->ui->WohngruppeTree));
+    }
+    foreach (CostumTreeWidget<Wohngruppe> *i,this->WohngruppeTreeItems)
+    {
+	/*i->setFlags(i->flags()|Qt::ItemIsUserCheckable);
+	i->setCheckState(0,Qt::Unchecked);*/
+	this->ui->WohngruppeTree->addTopLevelItem(i);
+    }
+
+}
+
+void AdminDialog::on_button_O_speichern_clicked()
+{
+    switch (this->ui->box_O_kategorie->currentIndex())
+    {
+    case 0:
+	QSharedPointer<Wohngruppe> tmpwg
+	(
+		new Wohngruppe
+		(
+			this->ui->lineEdit_O_name->text()
+		)
+	);
+	if (tmpwg->create( this->PointerToConnection ))
+	{
+	    CostumListWidget<Wohngruppe> *newWG1 =new CostumListWidget<Wohngruppe>(tmpwg,this->ui->O_list);
+	    newWG1->setFlags(newWG1->flags()|Qt::ItemIsUserCheckable);
+	    newWG1->setCheckState(Qt::Unchecked);
+	    this->WohngruppenItems.append(newWG1);
+	    this->ui->O_list->addItem(newWG1);
+
+	    CostumTreeWidget<Wohngruppe> *newWG2 =new CostumTreeWidget<Wohngruppe>(tmpwg,this->ui->WohngruppeTree);
+	    this->WohngruppeTreeItems.append(newWG2);
+	    this->ui->WohngruppeTree->addTopLevelItem(newWG2);
+	    qDebug()<<"Erfolg!";
+	}
+	else
+	{
+	    qDebug()<<"Fehler!";
+	}
+	break;
+    }
+}
+
+void AdminDialog::on_button_B_speichern_clicked()
+{
+    QSharedPointer<Bewohner> tmpBew
+    (
+		new Bewohner (this->ui->Bewohnernummer->text().toULong(),this->ui->Bewohnernummer->text(), QDate(), " ", " ", " ")
+    );
+    if (tmpBew->create( this->PointerToConnection ))
+    {
+	CostumListWidget<Bewohner> *newBew=new CostumListWidget<Bewohner>(tmpBew,this->ui->B_list);
+	this->BewohnerItems.append(newBew);
+	newBew->setFlags(newBew->flags()|Qt::ItemIsUserCheckable);
+	newBew->setCheckState(Qt::Unchecked);
+	this->ui->B_list->addItem(newBew);
+	qDebug()<<"Erfolg!";
+    }
+    else
+    {
+	qDebug()<<"Fehler!";
+    }
+    QSharedPointer<Wohngruppe> tmpWg = this->WohngruppeTreeItems.at(this->ui->WohngruppeTree->currentIndex().row())->getCitem();
+    tmpBew->linkWohngruppe(tmpBew,tmpWg);
+    tmpBew->update(this->PointerToConnection);
 }

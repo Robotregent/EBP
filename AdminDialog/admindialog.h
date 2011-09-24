@@ -7,6 +7,7 @@
 #include "oelistwidgetitem.h"
 #include "employeelistmodel.h"
 #include "costumlistwidget.h"
+#include "costumtreewidget.h"
 using namespace drkv;
 
 namespace Ui {
@@ -32,6 +33,10 @@ private slots:
 
     void on_passwortLineEdit_returnPressed();
 
+    void on_button_O_speichern_clicked();
+
+    void on_button_B_speichern_clicked();
+
 private:
     Ui::AdminDialog *ui;
     void init();
@@ -42,11 +47,15 @@ private:
     void clearLogin();
     void setOEWidget();
     void setBWidget();
+    void setMitarbiterVerwalten();
+    void setBewohnerVerwalten();
     //QList<OEListWidgetItem *> OEWidgets;
     QList< CostumListWidget < Wohngruppe > *> WohngruppenItems;
     QList< CostumListWidget < Bewohner > *> BewohnerItems;
+    QList< CostumTreeWidget < Wohngruppe > *> WohngruppeTreeItems;
     bool isPasswordValid();
     Mitarbeiter::Berechtigungen setBerechtigung();
+    void loadData();
 
 };
 

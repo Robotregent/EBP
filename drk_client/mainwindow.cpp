@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include <QLabel>
+#include "loginform.h"
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
@@ -10,11 +11,10 @@ MainWindow::MainWindow(QWidget *parent) :
 	this->ContentWidgetList.append(NULL);
     }
 
-    this->setCentralWidget(this->getContentWidget(MainWindow::PersonWidget));
-    this->create_sidemenu();
+    this->setCentralWidget(this->getContentWidget(MainWindow::LoginWidget));
+    //this->create_sidemenu();
 
-    this->connect(this->side_menu->getClientMenu(),SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),SLOT(set_content(QTreeWidgetItem*,QTreeWidgetItem*)));
-    this->connect(this->side_menu->getGroupMenu(),SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),SLOT(set_content(QTreeWidgetItem*,QTreeWidgetItem*)));
+
 
 }
 
@@ -28,6 +28,11 @@ void MainWindow::create_sidemenu()
     this->side_menu= new SideMenu(this);
     this->dock_side_menu->setWidget(this->side_menu);
     this->addDockWidget(Qt::LeftDockWidgetArea,this->dock_side_menu);
+
+    this->connect(this->side_menu->getClientMenu(),SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),SLOT(set_content(QTreeWidgetItem*,QTreeWidgetItem*)));
+    this->connect(this->side_menu->getGroupMenu(),SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),SLOT(set_content(QTreeWidgetItem*,QTreeWidgetItem*)));
+
+    this->setCentralWidget(this->getContentWidget(MainWindow::PersonWidget));
 
 }
 
@@ -56,6 +61,9 @@ QWidget *MainWindow::getContentWidget(int ContentTyp)
 	{
 	case MainWindow::PersonWidget:
 	    result=new person(this);
+	    break;
+	case MainWindow::LoginWidget:
+	    result=new LoginForm(this);
 	    break;
 	}
     }

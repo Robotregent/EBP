@@ -25,7 +25,7 @@
      <item>
       <widget class="QTabWidget" name="tabWidget">
        <property name="currentIndex">
-        <number>0</number>
+        <number>2</number>
        </property>
        <widget class="QWidget" name="tab_login">
         <attribute name="title">
@@ -399,100 +399,32 @@
            <property name="title">
             <string>Hinzufügen</string>
            </property>
-           <layout class="QVBoxLayout" name="verticalLayout_8" stretch="1,0">
-            <property name="spacing">
-             <number>9</number>
-            </property>
-            <property name="leftMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
+           <layout class="QVBoxLayout" name="verticalLayout_8">
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_10">
-              <property name="spacing">
-               <number>9</number>
+             <widget class="QLabel" name="label_5">
+              <property name="text">
+               <string>Bewohnernummer:</string>
               </property>
-              <property name="leftMargin">
-               <number>0</number>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="Bewohnernummer"/>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_6">
+              <property name="text">
+               <string>Wohngruppe</string>
               </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_11">
-                <property name="spacing">
-                 <number>9</number>
-                </property>
-                <property name="leftMargin">
-                 <number>2</number>
-                </property>
-                <property name="rightMargin">
-                 <number>2</number>
-                </property>
-                <item>
-                 <widget class="QLabel" name="label_B_nummer">
-                  <property name="minimumSize">
-                   <size>
-                    <width>150</width>
-                    <height>0</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string>Bewohnernummer</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLabel" name="label_B_wohnverbund">
-                  <property name="text">
-                   <string>Wohnverbund</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLabel" name="label_B_wohnheim">
-                  <property name="text">
-                   <string>Wohnheim</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLabel" name="label_B_wohngruppe">
-                  <property name="text">
-                   <string>Wohngruppe</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_10">
-                <property name="spacing">
-                 <number>9</number>
-                </property>
-                <property name="leftMargin">
-                 <number>2</number>
-                </property>
-                <property name="rightMargin">
-                 <number>2</number>
-                </property>
-                <item>
-                 <widget class="QLineEdit" name="lineEdit_B_nummer"/>
-                </item>
-                <item>
-                 <widget class="QComboBox" name="box_B_wohnverbund"/>
-                </item>
-                <item>
-                 <widget class="QComboBox" name="box_B_wohnheim"/>
-                </item>
-                <item>
-                 <widget class="QComboBox" name="box_B_wohngruppe"/>
-                </item>
-               </layout>
-              </item>
-             </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QTreeWidget" name="WohngruppeTree">
+              <column>
+               <property name="text">
+                <string notr="true">1</string>
+               </property>
+              </column>
+             </widget>
             </item>
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_11">
@@ -761,10 +693,6 @@
   <tabstop>loginNameLineEdit</tabstop>
   <tabstop>passwortLineEdit</tabstop>
   <tabstop>ButtonLogin</tabstop>
-  <tabstop>lineEdit_B_nummer</tabstop>
-  <tabstop>box_B_wohnverbund</tabstop>
-  <tabstop>box_B_wohnheim</tabstop>
-  <tabstop>box_B_wohngruppe</tabstop>
   <tabstop>button_B_speichern</tabstop>
   <tabstop>button_B_eingabeloeschen</tabstop>
   <tabstop>button_B_waelen</tabstop>

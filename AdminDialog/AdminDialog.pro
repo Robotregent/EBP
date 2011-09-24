@@ -20,10 +20,12 @@ HEADERS  += admindialog.h \
     chooseemployee.h \
     employeelistmodel.h \
     oelistwidgetitem.h \
-    costumlistwidget.h
+    costumlistwidget.h \
+    costumtreewidget.h
 
 FORMS    += admindialog.ui \
     chooseemployee.ui
+
 
 
 
