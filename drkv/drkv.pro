@@ -12,6 +12,7 @@ HEADERS += connection.hxx \
 	Wohngruppenereignis.hxx \
 	Projekt.hxx \
 	Protokoll.hxx \
+	Wohnheim.hxx \
 
 SOURCES += connection.cxx \
 	Mitarbeiter.cxx \
@@ -21,3 +22,4 @@ SOURCES += connection.cxx \
 	Protokoll.cxx \
 	Wohngruppe.cxx \
 	Wohngruppenereignis.cxx \
+	Wohnheim.cxx \
