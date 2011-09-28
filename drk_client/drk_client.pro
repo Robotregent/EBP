@@ -1,3 +1,5 @@
+LIBS += -L../drkv/ -ldrkv
+
 HEADERS += \
     mainwindow.h \
     clientmenu.h \
@@ -6,7 +8,8 @@ HEADERS += \
     person.h \
     decree.h \
     decreescrollarea.h \
-    loginform.h
+    loginform.h \
+    infowidget.h
 
 SOURCES += \
     mainwindow.cpp \
@@ -17,14 +20,19 @@ SOURCES += \
     person.cpp \
     decree.cpp \
     decreescrollarea.cpp \
-    loginform.cpp
+    loginform.cpp \
+    infowidget.cpp
 
 RESOURCES += \
     images.qrc
 
 FORMS += \
     decreescrollarea.ui \
-    loginform.ui
+    loginform.ui \
+    infowidget.ui
+
+
+
 
 
 

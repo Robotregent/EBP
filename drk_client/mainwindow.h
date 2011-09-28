@@ -13,6 +13,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 private:
     void create_sidemenu();
+    void creat_InfoWidget();
     QList <QWidget *> ContentWidgetList;
     QDockWidget *dock_side_menu;
     SideMenu *side_menu;
@@ -27,6 +28,7 @@ public:
     {
 	PointerToConnection=pointer;
 	this->create_sidemenu();
+	this->creat_InfoWidget();
     }
 
 signals:

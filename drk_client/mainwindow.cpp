@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include <QLabel>
 #include "loginform.h"
+#include "infowidget.h"
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
@@ -21,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
 void MainWindow::create_sidemenu()
 {
     this->setDockOptions(QMainWindow::AnimatedDocks|QMainWindow::AllowNestedDocks|QMainWindow::AllowTabbedDocks);
-    this->setCorner(Qt::TopLeftCorner,Qt::TopDockWidgetArea);
+    this->setCorner(Qt::TopLeftCorner,Qt::LeftDockWidgetArea);
     this->setCorner(Qt::TopRightCorner,Qt::TopDockWidgetArea);
     this->dock_side_menu = new QDockWidget("&Seitenmenü",this);
     this->dock_side_menu->setAllowedAreas(Qt::AllDockWidgetAreas);
@@ -34,6 +35,13 @@ void MainWindow::create_sidemenu()
 
     this->setCentralWidget(this->getContentWidget(MainWindow::PersonWidget));
 
+}
+void MainWindow::creat_InfoWidget()
+{
+    QDockWidget *dw =new QDockWidget("",this);
+    dw->setAllowedAreas(Qt::AllDockWidgetAreas);
+    dw->setWidget(new InfoWidget(this));
+    this->addDockWidget(Qt::TopDockWidgetArea,dw);
 }
 
 void MainWindow::set_content(QTreeWidgetItem *current, QTreeWidgetItem *previous)
