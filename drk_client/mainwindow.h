@@ -22,7 +22,7 @@ private slots:
     void set_content( QTreeWidgetItem * current, QTreeWidgetItem * previous );
 public:
     explicit MainWindow(QWidget *parent = 0);
-    enum ContentWidgets { LoginWidget = 0, PersonWidget = 1 , CountOfContentWidgets = 2} ;
+    enum ContentWidgets { LoginWidget = 0, PersonWidget = 1 , DecreeScrollWidget = 2, CountOfContentWidgets = 3} ;
     QWidget *getContentWidget(int ContentTyp);
     void validLogin(QSharedPointer<connection> pointer)
     {

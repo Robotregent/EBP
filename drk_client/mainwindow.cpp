@@ -2,6 +2,7 @@
 #include <QLabel>
 #include "loginform.h"
 #include "infowidget.h"
+#include "decreescrollarea.h"
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
@@ -22,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
 void MainWindow::create_sidemenu()
 {
     this->setDockOptions(QMainWindow::AnimatedDocks|QMainWindow::AllowNestedDocks|QMainWindow::AllowTabbedDocks);
-    this->setCorner(Qt::TopLeftCorner,Qt::LeftDockWidgetArea);
+    this->setCorner(Qt::TopLeftCorner,Qt::TopDockWidgetArea);
     this->setCorner(Qt::TopRightCorner,Qt::TopDockWidgetArea);
     this->dock_side_menu = new QDockWidget("&Seitenmenü",this);
     this->dock_side_menu->setAllowedAreas(Qt::AllDockWidgetAreas);
@@ -52,6 +53,9 @@ void MainWindow::set_content(QTreeWidgetItem *current, QTreeWidgetItem *previous
     case 2000:
 	this->setCentralWidget(this->getContentWidget(MainWindow::PersonWidget));
 	break;
+    case 2002:
+	this->setCentralWidget(this->getContentWidget(MainWindow::DecreeScrollWidget));
+	break;
     }
     return;
 }
@@ -72,6 +76,9 @@ QWidget *MainWindow::getContentWidget(int ContentTyp)
 	    break;
 	case MainWindow::LoginWidget:
 	    result=new LoginForm(this);
+	    break;
+	case MainWindow::DecreeScrollWidget:
+	    result= new DecreeScrollArea(this);
 	    break;
 	}
     }
