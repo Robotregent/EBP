@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QDockWidget>
 #include <QList>
+#include <QMenu>
 #include "sidemenu.h"
 #include "person.h"
 #include "../drkv/connection.hxx"
@@ -14,10 +15,14 @@ class MainWindow : public QMainWindow
 private:
     void create_sidemenu();
     void creat_InfoWidget();
+    void create_topmenu();
+    void create_actions();
     QList <QWidget *> ContentWidgetList;
     QDockWidget *dock_side_menu;
     SideMenu *side_menu;
     QSharedPointer<connection> PointerToConnection;
+    QMenu *viewMenu;
+
 private slots:
     void set_content( QTreeWidgetItem * current, QTreeWidgetItem * previous );
 public:

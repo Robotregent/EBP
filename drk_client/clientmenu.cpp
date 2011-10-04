@@ -26,4 +26,7 @@ ClientMenu::ClientMenu(QWidget *parent) :
     this->documentation = new QTreeWidgetItem(this,2030);
     this->documentation->setText(0,tr("Betreuungsdokumentation"));
     this->documentation->setIcon(0,QIcon(":/costumer/documentation.png"));
+
+    //Hide Header
+    this->setHeaderHidden(true);
 }

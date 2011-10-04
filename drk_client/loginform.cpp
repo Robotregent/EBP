@@ -10,6 +10,7 @@ LoginForm::LoginForm(QWidget *parent) :
 {
     ui->setupUi(this);
     _parent = (MainWindow *)parent;
+    this->ui->passwortLineEdit->setEchoMode(QLineEdit::Password);
 }
 
 LoginForm::~LoginForm()
@@ -28,4 +29,9 @@ void LoginForm::on_pushButton_clicked()
     {
 	QMessageBox::critical(this,tr("Fehlerhafter Login"),tr("Es konnte keine Veerbindung zur Datenbank hergestellt werden. Überprüfen Sie bitte ihre Logindaten"));
     }
+}
+
+void LoginForm::on_passwortLineEdit_returnPressed()
+{
+    this->ui->pushButton->setFocus();
 }

@@ -19,6 +19,8 @@ public:
 private slots:
     void on_pushButton_clicked();
 
+    void on_passwortLineEdit_returnPressed();
+
 private:
     Ui::LoginForm *ui;
     MainWindow *_parent;

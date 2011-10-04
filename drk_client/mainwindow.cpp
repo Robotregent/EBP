@@ -1,8 +1,11 @@
 #include "mainwindow.h"
 #include <QLabel>
+#include <QMenuBar>
+
 #include "loginform.h"
-#include "infowidget.h"
+#include "infoframe.h"
 #include "decreescrollarea.h"
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
@@ -12,11 +15,8 @@ MainWindow::MainWindow(QWidget *parent) :
     {
 	this->ContentWidgetList.append(NULL);
     }
-
+    this->create_topmenu();
     this->setCentralWidget(this->getContentWidget(MainWindow::LoginWidget));
-    //this->create_sidemenu();
-
-
 
 }
 
@@ -25,11 +25,13 @@ void MainWindow::create_sidemenu()
     this->setDockOptions(QMainWindow::AnimatedDocks|QMainWindow::AllowNestedDocks|QMainWindow::AllowTabbedDocks);
     this->setCorner(Qt::TopLeftCorner,Qt::TopDockWidgetArea);
     this->setCorner(Qt::TopRightCorner,Qt::TopDockWidgetArea);
-    this->dock_side_menu = new QDockWidget("&Seitenmenü",this);
+    this->dock_side_menu = new QDockWidget(tr("Seitenmenü"),this);
     this->dock_side_menu->setAllowedAreas(Qt::AllDockWidgetAreas);
     this->side_menu= new SideMenu(this);
     this->dock_side_menu->setWidget(this->side_menu);
     this->addDockWidget(Qt::LeftDockWidgetArea,this->dock_side_menu);
+
+    this->viewMenu->addAction(this->dock_side_menu->toggleViewAction());
 
     this->connect(this->side_menu->getClientMenu(),SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),SLOT(set_content(QTreeWidgetItem*,QTreeWidgetItem*)));
     this->connect(this->side_menu->getGroupMenu(),SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),SLOT(set_content(QTreeWidgetItem*,QTreeWidgetItem*)));
@@ -39,10 +41,11 @@ void MainWindow::create_sidemenu()
 }
 void MainWindow::creat_InfoWidget()
 {
-    QDockWidget *dw =new QDockWidget("",this);
+    QDockWidget *dw =new QDockWidget(tr("Information zu aktueller Auswahl"),this);
     dw->setAllowedAreas(Qt::AllDockWidgetAreas);
-    dw->setWidget(new InfoWidget(this));
+    dw->setWidget(new InfoFrame(this));
     this->addDockWidget(Qt::TopDockWidgetArea,dw);
+    this->viewMenu->addAction(dw->toggleViewAction());
 }
 
 void MainWindow::set_content(QTreeWidgetItem *current, QTreeWidgetItem *previous)
@@ -83,4 +86,12 @@ QWidget *MainWindow::getContentWidget(int ContentTyp)
 	}
     }
     return result;
+}
+void MainWindow::create_topmenu()
+{
+    this->viewMenu = this->menuBar()->addMenu(tr("&Ansicht"));
+}
+void MainWindow::create_actions()
+{
+
 }
