@@ -10,7 +10,8 @@ HEADERS += \
     decreescrollarea.h \
     loginform.h \
     infowidget.h \
-    infoframe.h
+    infoframe.h \
+    ueberarbeitungframe.h
 
 SOURCES += \
     mainwindow.cpp \
@@ -23,7 +24,8 @@ SOURCES += \
     decreescrollarea.cpp \
     loginform.cpp \
     infowidget.cpp \
-    infoframe.cpp
+    infoframe.cpp \
+    ueberarbeitungframe.cpp
 
 RESOURCES += \
     images.qrc
@@ -32,4 +34,8 @@ FORMS += \
     decreescrollarea.ui \
     loginform.ui \
     infowidget.ui \
-    infoframe.ui
+    infoframe.ui \
+    ueberarbeitungframe.ui
+
+
+

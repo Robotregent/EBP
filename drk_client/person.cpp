@@ -31,11 +31,12 @@ person::person(QWidget *parent) :
     LayoutLeft->addRow(tr("Familienstatus"),this->person_edit.at(person::familyState));
     LayoutLeft->addRow(tr("Aufenthalt hier seit"),this->person_edit.at(person::residence));
 
-    LayoutRight->addRow(tr("bisherige Anschrift"),this->person_edit.at(person::formerAddress));
+    LayoutRight->addRow(tr("Bisherige Anschrift"),this->person_edit.at(person::formerAddress));
     LayoutRight->addRow(tr("Anmerkung"),this->person_edit.at(person::comments));
 
-    hLayout->addLayout(LayoutLeft,1);
-    hLayout->addLayout(LayoutRight,2);
+    hLayout->addLayout(LayoutLeft,12);
+    hLayout->addLayout(LayoutRight,20);
+    hLayout->addStretch(1);
     this->setLayout(hLayout);
     this->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
