@@ -5,8 +5,10 @@
         <file>arrow-right.png</file>
         <file>lupe.png</file>
         <file>protokoll.gif</file>
-        <file>project.jpg</file>
         <file>documentation.png</file>
+        <file>project.png</file>
+        <file alias="Teilnehmer">Teilnehmer.png</file>
+        <file>protokollf.png</file>
     </qresource>
     <qresource prefix="/group">
         <file>lupe.png</file>

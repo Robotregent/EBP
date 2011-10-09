@@ -14,7 +14,7 @@ ClientMenu::ClientMenu(QWidget *parent) :
     ///Initialize project
     this->project = new QTreeWidgetItem(this,2010);
     this->project->setText(0,tr("Projekt"));
-    this->project->setIcon(0,QIcon(":/costumer/project.jpg"));
+    this->project->setIcon(0,QIcon(":/costumer/project.png"));
 
     ///Initialize protocol
     this->protocol= new QTreeWidgetItem(this,2020);
