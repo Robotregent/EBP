@@ -19,7 +19,7 @@
   <property name="frameShadow">
    <enum>QFrame::Raised</enum>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,2,1,2,0">
+  <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,3,1,0,1,3,0">
    <property name="spacing">
     <number>2</number>
    </property>
@@ -44,15 +44,15 @@
      <property name="title">
       <string>Bewohner</string>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0" colspan="2">
        <widget class="QLabel" name="label">
         <property name="text">
          <string>Aktueller Bewohner:</string>
         </property>
        </widget>
       </item>
-      <item>
+      <item row="1" column="1">
        <widget class="QPushButton" name="pushButton">
         <property name="text">
          <string>Suche Bewohner</string>
@@ -80,19 +80,39 @@
     </spacer>
    </item>
    <item>
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <spacer name="horizontalSpacer_4">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
     <widget class="QGroupBox" name="groupBox_2">
      <property name="title">
       <string>Wohngruppe</string>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0" colspan="2">
        <widget class="QLabel" name="label_2">
         <property name="text">
          <string>Aktuelle Wohngruppe:</string>
         </property>
        </widget>
       </item>
-      <item>
+      <item row="1" column="1">
        <widget class="QPushButton" name="pushButton_2">
         <property name="text">
          <string>Suche Wohngruppe</string>

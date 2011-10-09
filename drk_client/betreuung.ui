@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Betreuung</class>
+ <widget class="QWidget" name="Betreuung">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1115</width>
+    <height>796</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_3">
+   <item>
+    <widget class="QScrollArea" name="scrollArea">
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="lineWidth">
+      <number>0</number>
+     </property>
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>-12</y>
+        <width>1081</width>
+        <height>790</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0">
+        <widget class="QGroupBox" name="groupBox">
+         <property name="title">
+          <string>Gesetzliche Betreuung</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <layout class="QFormLayout" name="formLayout">
+            <property name="fieldGrowthPolicy">
+             <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+            </property>
+            <item row="0" column="0">
+             <widget class="QLabel" name="vereinVerbandLabel">
+              <property name="text">
+               <string>Verein / Verband:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLineEdit" name="vereinVerbandLineEdit">
+              <property name="minimumSize">
+               <size>
+                <width>500</width>
+                <height>0</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="vornameLabel">
+              <property name="text">
+               <string>Vorname:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QLineEdit" name="vornameLineEdit"/>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="nameLabel">
+              <property name="text">
+               <string>Name:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QLineEdit" name="nameLineEdit"/>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="straELabel">
+              <property name="text">
+               <string>Straße:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QLineEdit" name="straELineEdit"/>
+            </item>
+            <item row="4" column="0">
+             <widget class="QLabel" name="pLZLabel">
+              <property name="text">
+               <string>PLZ:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="QLineEdit" name="pLZLineEdit"/>
+            </item>
+            <item row="5" column="0">
+             <widget class="QLabel" name="ortLabel">
+              <property name="text">
+               <string>Ort:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="1">
+             <widget class="QLineEdit" name="ortLineEdit"/>
+            </item>
+            <item row="6" column="0">
+             <widget class="QLabel" name="telefonLabel">
+              <property name="text">
+               <string>Telefon:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="1">
+             <widget class="QLineEdit" name="telefonLineEdit"/>
+            </item>
+            <item row="7" column="0">
+             <widget class="QLabel" name="faxLabel">
+              <property name="text">
+               <string>Fax:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="1">
+             <widget class="QLineEdit" name="faxLineEdit"/>
+            </item>
+            <item row="8" column="0">
+             <widget class="QLabel" name="eMailLabel">
+              <property name="text">
+               <string>E-Mail:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="8" column="1">
+             <widget class="QLineEdit" name="eMailLineEdit"/>
+            </item>
+            <item row="9" column="0">
+             <widget class="QLabel" name="gesundheitsfRsorgeLabel">
+              <property name="text">
+               <string>Gesundheitsfürsorge:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="9" column="1">
+             <widget class="QComboBox" name="gesundheitsfRsorgeComboBox">
+              <item>
+               <property name="text">
+                <string>Nein</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Ja</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="10" column="0">
+             <widget class="QLabel" name="vermGensfRsorgeLabel">
+              <property name="text">
+               <string>Vermögensfürsorge:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="10" column="1">
+             <widget class="QComboBox" name="vermGensfRsorgeComboBox">
+              <item>
+               <property name="text">
+                <string>Nein</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Ja</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="11" column="0">
+             <widget class="QLabel" name="aufentahltsbestimmungLabel">
+              <property name="text">
+               <string>Aufentahltsbestimmung:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="11" column="1">
+             <widget class="QComboBox" name="aufentahltsbestimmungComboBox">
+              <item>
+               <property name="text">
+                <string>Nein</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Ja</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QGroupBox" name="groupBox_2">
+         <property name="title">
+          <string>Bezugsbetreuung</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <layout class="QFormLayout" name="formLayout_2">
+            <property name="fieldGrowthPolicy">
+             <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+            </property>
+            <item row="0" column="0">
+             <widget class="QLabel" name="mitarbeiternrLabel">
+              <property name="minimumSize">
+               <size>
+                <width>165</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Mitarbeiternummer:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLineEdit" name="mitarbeiternummerLineEdit"/>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="vornameLabel_2">
+              <property name="text">
+               <string>Vorname:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QLineEdit" name="vornameLineEdit_2"/>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="nameLabel_2">
+              <property name="text">
+               <string>Name:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QLineEdit" name="nameLineEdit_2"/>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="mitarbeiterdetailsLabel">
+              <property name="text">
+               <string>Mitarbeiterdetails:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QPushButton" name="mitarbeiterdetailsPushButton">
+              <property name="text">
+               <string>zeigen</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0" colspan="2">
+             <widget class="Line" name="line_2">
+              <property name="frameShadow">
+               <enum>QFrame::Sunken</enum>
+              </property>
+              <property name="lineWidth">
+               <number>3</number>
+              </property>
+              <property name="midLineWidth">
+               <number>1</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="0">
+             <widget class="QLabel" name="tagesstrukturLabel">
+              <property name="text">
+               <string>Tagesstruktur:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="1">
+             <widget class="QComboBox" name="tagesstrukturComboBox">
+              <item>
+               <property name="text">
+                <string>Werkstatt für Menschen mit Behinderung (WfbM)</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Förder- und Betreuungsbereich (FuB)</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Seniorenbetreuung</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Weitere</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="6" column="0">
+             <widget class="QLabel" name="mitarbeiternummerLabel_2">
+              <property name="text">
+               <string>Mitarbeiternummer:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="1">
+             <widget class="QLineEdit" name="mitarbeiternummerLineEdit_2"/>
+            </item>
+            <item row="7" column="0">
+             <widget class="QLabel" name="vornameLabel_3">
+              <property name="text">
+               <string>Vorname:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="1">
+             <widget class="QLineEdit" name="vornameLineEdit_3"/>
+            </item>
+            <item row="8" column="0">
+             <widget class="QLabel" name="nameLabel_3">
+              <property name="text">
+               <string>Name:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="8" column="1">
+             <widget class="QLineEdit" name="nameLineEdit_3"/>
+            </item>
+            <item row="9" column="0">
+             <widget class="QLabel" name="mitarbeiterdetailsLabel_2">
+              <property name="text">
+               <string>Mitarbeiterdetails:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="9" column="1">
+             <widget class="QPushButton" name="mitarbeiterdetailsPushButton_2">
+              <property name="text">
+               <string>zeigen</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

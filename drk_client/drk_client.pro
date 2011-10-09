@@ -11,7 +11,9 @@ HEADERS += \
     loginform.h \
     infowidget.h \
     infoframe.h \
-    ueberarbeitungframe.h
+    ueberarbeitungframe.h \
+    betreuung.h \
+    bewohnerprotokoll.h
 
 SOURCES += \
     mainwindow.cpp \
@@ -25,7 +27,9 @@ SOURCES += \
     loginform.cpp \
     infowidget.cpp \
     infoframe.cpp \
-    ueberarbeitungframe.cpp
+    ueberarbeitungframe.cpp \
+    betreuung.cpp \
+    bewohnerprotokoll.cpp
 
 RESOURCES += \
     images.qrc
@@ -35,7 +39,6 @@ FORMS += \
     loginform.ui \
     infowidget.ui \
     infoframe.ui \
-    ueberarbeitungframe.ui
-
-
-
+    ueberarbeitungframe.ui \
+    betreuung.ui \
+    bewohnerprotokoll.ui

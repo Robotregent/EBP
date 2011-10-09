@@ -5,15 +5,18 @@
 #include "loginform.h"
 #include "infoframe.h"
 #include "decreescrollarea.h"
+#include "betreuung.h"
+#include "bewohnerprotokoll.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
     this->showMaximized();
 
+
     for (int i = 0; i< MainWindow::CountOfContentWidgets; i++)
     {
-	this->ContentWidgetList.append(NULL);
+        this->ContentWidgetList.append(NULL);
     }
     this->create_topmenu();
     this->setCentralWidget(this->getContentWidget(MainWindow::LoginWidget));
@@ -56,9 +59,15 @@ void MainWindow::set_content(QTreeWidgetItem *current, QTreeWidgetItem *previous
     case 2000:
 	this->setCentralWidget(this->getContentWidget(MainWindow::PersonWidget));
 	break;
+    case 2001:
+        this->setCentralWidget(this->getContentWidget(MainWindow::BetreuungWidget));
+        break;
     case 2002:
 	this->setCentralWidget(this->getContentWidget(MainWindow::DecreeScrollWidget));
 	break;
+    case 2020:
+        this->setCentralWidget(this->getContentWidget(MainWindow::BProtokollWidget));
+        break;
     }
     return;
 }
@@ -83,8 +92,15 @@ QWidget *MainWindow::getContentWidget(int ContentTyp)
 	case MainWindow::DecreeScrollWidget:
 	    result= new DecreeScrollArea(this);
 	    break;
+        case MainWindow::BetreuungWidget:
+            result = new Betreuung(this);
+            break;
+        case MainWindow::BProtokollWidget:
+            result = new BewohnerProtokoll(this);
+            break;
 	}
     }
+    //this->ContentWidgetList.replace(ContentTyp,result);
     return result;
 }
 void MainWindow::create_topmenu()
