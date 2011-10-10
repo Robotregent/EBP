@@ -15,6 +15,9 @@ public:
     explicit BewohnerProtokoll(QWidget *parent = 0);
     ~BewohnerProtokoll();
 
+private slots:
+    void on_addTeilnehmer_clicked();
+
 private:
     Ui::BewohnerProtokoll *ui;
 };

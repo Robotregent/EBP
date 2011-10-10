@@ -13,7 +13,8 @@ HEADERS += \
     infoframe.h \
     ueberarbeitungframe.h \
     betreuung.h \
-    bewohnerprotokoll.h
+    bewohnerprotokoll.h \
+    leistungstraegerbox.h
 
 SOURCES += \
     mainwindow.cpp \
@@ -29,7 +30,8 @@ SOURCES += \
     infoframe.cpp \
     ueberarbeitungframe.cpp \
     betreuung.cpp \
-    bewohnerprotokoll.cpp
+    bewohnerprotokoll.cpp \
+    leistungstraegerbox.cpp
 
 RESOURCES += \
     images.qrc
@@ -41,4 +43,8 @@ FORMS += \
     infoframe.ui \
     ueberarbeitungframe.ui \
     betreuung.ui \
-    bewohnerprotokoll.ui
+    bewohnerprotokoll.ui \
+    leistungstraegerbox.ui
+
+
+
