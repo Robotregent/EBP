@@ -7,6 +7,7 @@
 #include "decreescrollarea.h"
 #include "betreuung.h"
 #include "bewohnerprotokoll.h"
+#include "leistungstraegerarea.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -68,6 +69,9 @@ void MainWindow::set_content(QTreeWidgetItem *current, QTreeWidgetItem *previous
     case 2020:
         this->setCentralWidget(this->getContentWidget(MainWindow::BProtokollWidget));
         break;
+    case 2003:
+        this->setCentralWidget(this->getContentWidget(MainWindow::Leistungstraeger));
+        break;
     }
     return;
 }
@@ -98,6 +102,8 @@ QWidget *MainWindow::getContentWidget(int ContentTyp)
         case MainWindow::BProtokollWidget:
             result = new BewohnerProtokoll(this);
             break;
+        case MainWindow::Leistungstraeger:
+            result = new LeistungstraegerArea(this);
 	}
     }
     //this->ContentWidgetList.replace(ContentTyp,result);

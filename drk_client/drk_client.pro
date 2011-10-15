@@ -14,7 +14,8 @@ HEADERS += \
     ueberarbeitungframe.h \
     betreuung.h \
     bewohnerprotokoll.h \
-    leistungstraegerbox.h
+    leistungstraegerbox.h \
+    leistungstraegerarea.h
 
 SOURCES += \
     mainwindow.cpp \
@@ -31,7 +32,8 @@ SOURCES += \
     ueberarbeitungframe.cpp \
     betreuung.cpp \
     bewohnerprotokoll.cpp \
-    leistungstraegerbox.cpp
+    leistungstraegerbox.cpp \
+    leistungstraegerarea.cpp
 
 RESOURCES += \
     images.qrc
@@ -44,7 +46,5 @@ FORMS += \
     ueberarbeitungframe.ui \
     betreuung.ui \
     bewohnerprotokoll.ui \
-    leistungstraegerbox.ui
-
-
-
+    leistungstraegerbox.ui \
+    leistungstraegerarea.ui
