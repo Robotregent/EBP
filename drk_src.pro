@@ -8,6 +8,6 @@ TEMPLATE = subdirs
 
 SUBDIRS += \
     AdminDialog \
-    drk_client
-
-
+    drk_client \
+    drkv \
+    test
