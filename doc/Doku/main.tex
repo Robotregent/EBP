@@ -1,0 +1,116 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+\usepackage[german]{babel}
+\usepackage{fontenc}
+\usepackage{graphicx}
+\usepackage{fullpage}
+\usepackage{hyperref}
+
+\author{Sebastian Kumminger\\
+	Fabian Schneider\\
+	Tobias Himmer}
+
+\title{Dokumentation\\
+	Elektronisch Betreuungsplanung und Tagesdokumentation}
+
+\date{01.11.2011}
+
+
+\begin{document}
+
+\maketitle
+
+\section{Beschreibung}
+Ziel des Projektes ist es, eine Applikation zu entwickeln, die es Einrichtungen der Behinderten- und Altenhilfe ermöglicht, die langfristige Betreuungsplanung mit der Tagesdokumentation zu verknüpfen. Es sollen Ereignisse aus dem Tagesgeschehen, die in der Tagesdokumentation der Wohngruppe / des Pflegeheims erfasst werden, der Betreuungsplanung des bertoffenen Bewohners zugeordnet werden können. Damit soll doppelter Dokumentationsaufwand verhindert werden.
+
+\section{Funktionsumfang}
+
+\subsection{Kernfunktionen}
+
+\subsubsection{Rechteverwaltung}
+Mitarbeiter und Bewohner werden einer Wohngruppe zugeordnet. Jeder Mitarbeiter darf nur auf die Bewohner seiner Wohngruppe zugreifen.
+
+\subsubsection{Bewohnerverwaltung}
+\begin{enumerate}
+	\item Personenbezogene Informationen
+	\item Planung von Projekten
+	\begin{enumerate}
+		\item Verknüpfung zur Betreuungsplanung
+	\end{enumerate}
+	\item Protokollfunktion
+	\begin{enumerate}
+		\item Verknüpfung zur Betreuungsplanung
+	\end{enumerate}
+	\item  Betreuungsplanung
+	\begin{enumerate}
+		\item Betreuungsplanung nach einem aktuellen Standard der Alten- oder Behindertenhilfe
+		\item Übernahme von Ereignissen aus der Tagesdokumentation in die Kategorien der Betreuungsplanung
+	\end{enumerate}
+\end{enumerate}
+
+\subsubsection{Tagesdokumentation}
+\begin{enumerate}
+	\item Gruppenbuch
+	\begin{enumerate}
+		\item Gruppenbezogene Ereignisse werden mit Uhrzeit und Mitarbeiternamen erfasst
+		\item Klientenbezogene Ereignisse können in die Betreuungsplanung des entsprechenden Klienten übertragen werden.
+		\item Such- und Listenfunktion für die klientenbezogenen Ereignisse
+		\item Meldeliste für alle Bewohner
+		\begin{enumerate}
+			\item Urlaub, Krankheit, Abwesenheit mit Grund
+			\item Export der Meldeliste in einem gängigen Format (z.B. CSV, XML)
+		\end{enumerate}
+	\end{enumerate}
+\end{enumerate}
+
+
+\subsection{Zusatzfunktionen}
+
+\subsubsection{Bewohnerverwaltung}
+\begin{enumerate}
+	\item Adressverwaltung
+	\item Planung von Aufgaben
+	\item Generierung bestimmter Dokumente aus den Daten der Datenbank
+	\begin{enumerate}
+		\item Z.B. Heimvertrag
+	\end{enumerate}
+\end{enumerate}
+
+\subsubsection{Tagesdokumentation}
+\begin{enumerate}
+	\item Tagesplan / Wochenplan
+	\begin{enumerate}
+		\item Alle Aktivitäten / Aufgaben an einem bestimmten Tag / über einen bestimmten Zeitraum.
+		\item Termine können als ics Termin an einen E-Mailempfänger verschickt werden
+	\end{enumerate}
+\end{enumerate}
+
+
+\section{Technische Rahmenbedingungen}
+\begin{enumerate}
+	\item Die Software wird in C++ entwickelt.
+	\item Als Framework für die grafische Bedienoberfläche und die Datenbankanbindung kommt Qt in der aktuellen Version 4.7.4 zum Einsatz.
+	\item Als Datenbankserver wird MySql verwendet.
+	\item Als Abstraktionsebene für die Datenbankschicht soll ein Object-Relational-Mapping Framework eingesetzt werden. (ODB - \url{http://www.codesynthesis.com/products/odb/})
+\end{enumerate}
+\subsection{Object-Relational-Mapper}
+Um die Entwicklungsdauer zu verkürzen und die Wartbarkeit der Persistenzschicht zu erhöhen, wird ein Object Relational Mapper (ORM) eingesetzt. Dieser hilft die relationale Tabellenstruktur der Datenbank auf Objekte der Programmiersprache abzubilden.
+Das verwendete QT4-Toolkit enthält war eine plattformunabhängige Schnittstelle für Datenbanken (QtSql), jedoch hat diese keine ORM funktion.
+Folgende ORM-Systeme wurden in Betracht gezogen (\url{http://en.wikipedia.org/wiki/List_of_object-relational_mapping_software}):
+\begin{itemize}
+	\item LiteSQL - Datenbankschema wird mit XML Dateien beschrieben
+	\item ODB - Datenbankschema wird aus den C++ Klassen generiert
+	\item QxOrm - Benutzt QtSql; Unter Umständen müssen direkte Aufrufe von QtSql erfolgen ("QxOrm cannot resolve all problems with sql and databases, so it is sometimes necessary to use QtSql engine of Qt library to write your own sql query or stored procedure." \url{http://www.qxorm.com/qxorm_en/tutorial.html})
+\end{itemize}
+Alle Systeme bieten eine QT integration, die die Schnittstelle zwischen GUI und Persistenzschicht vereinfachen. Ebenso unterstützen alle Systeme mehrere Datenbankbackends.
+Letztendlich fiel die Entscheidung auf ODB, da diese Bibliothek (unter anderem durch Caching) die beste Performance verspricht. Ausserdem lassen sich Klassen mit geringem Aufwandt persistent machen.
+\subsection{Datenbank}
+Als Datenbank wird MySQL eingesetzt. Diese ist für nicht-kommerzielle Zwecke (im Sinne der GPL) frei erhältlich und sehr weit verbreitet. Ein Wechsel auf eine andere Datenbank (zum Beispiel PostgreSQL) sollte dank ODB ohne größere Probleme möglich sein.
+
+
+\section{Lizenzen}
+Die Software wird unter GPL lizensiert und veröffentlicht.
+
+\end{document}
