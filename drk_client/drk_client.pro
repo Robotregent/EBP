@@ -15,7 +15,8 @@ HEADERS += \
     betreuung.h \
     bewohnerprotokoll.h \
     leistungstraegerbox.h \
-    leistungstraegerarea.h
+    leistungstraegerarea.h \
+    datumdialog.h
 
 SOURCES += \
     mainwindow.cpp \
@@ -33,7 +34,8 @@ SOURCES += \
     betreuung.cpp \
     bewohnerprotokoll.cpp \
     leistungstraegerbox.cpp \
-    leistungstraegerarea.cpp
+    leistungstraegerarea.cpp \
+    datumdialog.cpp
 
 RESOURCES += \
     images.qrc
@@ -47,4 +49,5 @@ FORMS += \
     betreuung.ui \
     bewohnerprotokoll.ui \
     leistungstraegerbox.ui \
-    leistungstraegerarea.ui
+    leistungstraegerarea.ui \
+    datumdialog.ui
