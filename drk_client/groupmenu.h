@@ -6,6 +6,9 @@
 class GroupMenu : public QTreeWidget
 {
     Q_OBJECT
+private:
+    QTreeWidgetItem* meldeliste;
+    QTreeWidgetItem* gruppenbuch;
 public:
     explicit GroupMenu(QWidget *parent = 0);
 

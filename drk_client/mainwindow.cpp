@@ -8,6 +8,7 @@
 #include "betreuung.h"
 #include "bewohnerprotokoll.h"
 #include "leistungstraegerarea.h"
+#include "meldeliste.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -72,6 +73,9 @@ void MainWindow::set_content(QTreeWidgetItem *current, QTreeWidgetItem *previous
     case 2003:
         this->setCentralWidget(this->getContentWidget(MainWindow::Leistungstraeger));
         break;
+    case 3001:
+        this->setCentralWidget(this->getContentWidget(MainWindow::MeldeListeWidget));
+        break;
     }
     return;
 }
@@ -104,6 +108,10 @@ QWidget *MainWindow::getContentWidget(int ContentTyp)
             break;
         case MainWindow::Leistungstraeger:
             result = new LeistungstraegerArea(this);
+            break;
+        case MainWindow::MeldeListeWidget:
+            result = new MeldeListe(this);
+            break;
 	}
     }
     //this->ContentWidgetList.replace(ContentTyp,result);

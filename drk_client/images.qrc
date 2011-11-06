@@ -14,5 +14,7 @@
         <file>lupe.png</file>
         <file>arrow-right.png</file>
         <file>arrow-left.png</file>
+        <file>taskList.png</file>
+        <file>gruppenbuch.png</file>
     </qresource>
 </RCC>

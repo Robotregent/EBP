@@ -16,7 +16,8 @@ HEADERS += \
     bewohnerprotokoll.h \
     leistungstraegerbox.h \
     leistungstraegerarea.h \
-    datumdialog.h
+    datumdialog.h \
+    meldeliste.h
 
 SOURCES += \
     mainwindow.cpp \
@@ -35,7 +36,8 @@ SOURCES += \
     bewohnerprotokoll.cpp \
     leistungstraegerbox.cpp \
     leistungstraegerarea.cpp \
-    datumdialog.cpp
+    datumdialog.cpp \
+    meldeliste.cpp
 
 RESOURCES += \
     images.qrc
@@ -50,4 +52,5 @@ FORMS += \
     bewohnerprotokoll.ui \
     leistungstraegerbox.ui \
     leistungstraegerarea.ui \
-    datumdialog.ui
+    datumdialog.ui \
+    meldeliste.ui
