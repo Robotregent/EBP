@@ -1,5 +1,4 @@
 \documentclass[a4paper,10pt]{article}
-
 \usepackage{ucs}
 \usepackage[utf8x]{inputenc}
 \usepackage[german]{babel}
@@ -174,6 +173,15 @@ und bietet neben den grafischen Bedienelementen eine breite Auswahl an Schnittst
 Eine der Hauptfunktionen soll das Zuordnen von Tagesereignissen zu den Zielen der Betreuungsplanung sein. Diese Funktion soll über 
 kurze und intuitive Wege erreichbar sein. Die Usability dieser Funktion steht im Vordergrund.
 \subsection{Mockup}
+Abbildungen \ref{Info} und \ref{Protokoll} auf Seite \pageref{Info} / \pageref{Protokoll}  zeigen eine mögliche Darstellung der graphischen Benutzeroberfläche. 
+Die GUI besteht im wesentlichen aus drei Teilen. Auf der linken Seite befindet sich das Menü. Die einzelnen Menüpunkte sind dabei in einer Baumstruktur angeordnet. 
+Zusätlich sind die Menüpunkte für Funktionen die die Wohngruppe betreffen von den Funktionen die sich auf Bewohner beziehen getrennt. 
+Durch Registerkarten kann zwischen diesen Menüs gewechselt werden. Im oberen Teil der GUI befindet sich ein Panel, das Informationen über die aktuell selektierte Wohngruppe bzw. den aktuellen Bewohner anzeigt. 
+In der Mitte befindet sich die Hauptansicht. Dort wird der aktuelle Menüpunkt dargestellt. Seitenmenü und Informationspanel werden als Dockwidget erstellt und können 
+somit von dem User aus dem Hauptfenster gelöst werden. Auch die Platzierung an anderer Stelle ist möglich. So könnte das Menü auch auf der rechten Seite angebracht werden.
+\newline
+Abbildung \ref{Info} zeigt die Darstellung der personenbezogenen Daten. Im Menü ist zu erkennen, dass der Menüpunkt \emph{Person} noch weitere Unterpunkte hat. 
+Je nach eingestelltem Look and Feel werden die Unterpunkte auch eingerückt dargestellt.
 
 \section{Qualitätssicherung}
 \subsection{Usability}
@@ -194,5 +202,17 @@ Zusätzlich wird, um Programmierfehler frühzeitig aufzuspüren, ein Speicherdeb
 \subsection{Lizenzen}
 Die Software wird unter GPLv3 lizensiert und veröffentlicht.
 %\section{Termine}
+
+\begin{figure}
+\includegraphics[angle=90, width=\textwidth, height=\textheight]{BewohnerInfo}
+\caption{Maske für die personenbezogenen Daten der Bewohner}
+\label{Info}
+\end{figure}
+\begin{figure}
+ \includegraphics[angle=90, width=\textwidth, height=\textheight]{BewohnerProtokoll}
+\caption{Maske für die Protokollfunktion}
+\label{Protokoll}
+\end{figure}
+
 
 \end{document}
