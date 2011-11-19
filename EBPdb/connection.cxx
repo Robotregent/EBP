@@ -12,7 +12,7 @@
 #include <QDebug>
 
 
-using namespace drkv;
+using namespace ebp;
 
 
 connection::connection

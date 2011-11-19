@@ -7,16 +7,16 @@
 
 
 #include "databaseObject.ixx"
-template class drkv::databaseObject<drkv::Wohnheim>;
+template class ebp::databaseObject<ebp::Wohnheim>;
 
 
-using namespace drkv;
+using namespace ebp;
 
 
 DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( Wohnheim, Wohngruppe, Wohngruppe, Wohnheim )
 
 
-QList< QSharedPointer<Wohngruppe> > Wohnheim::loadWohngruppen( const QSharedPointer<drkv::connection> & connection ) const
+QList< QSharedPointer<Wohngruppe> > Wohnheim::loadWohngruppen( const QSharedPointer<ebp::connection> & connection ) const
 {
 	QList< QSharedPointer<Wohngruppe> > ret;
 	odb::transaction t( connection->getDB()->begin() );

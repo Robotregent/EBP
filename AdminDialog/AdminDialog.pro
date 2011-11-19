@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 #QT       += core gui
-LIBS += -L ../drkv/ -ldrkv \
+LIBS += -L ../EBPdb/ -lEBPdb \
 #TARGET = AdminDialog
 #TEMPLATE = app
 

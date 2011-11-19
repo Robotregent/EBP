@@ -19,7 +19,7 @@
 #include <odb/qt/lazy-ptr.hxx>
 
 
-namespace drkv
+namespace ebp
 {
 	class Wohngruppe;
 	class Wohngruppenereignis;
@@ -74,31 +74,31 @@ namespace drkv
 		const QString & telefon() const { return telefon_; }
 		void telefon( const QString & telefon ) { telefon_ = telefon; }
 
-		QList< QSharedPointer<Wohngruppe> > loadWohngruppen( const QSharedPointer<drkv::connection> & connection ) const;
+		QList< QSharedPointer<Wohngruppe> > loadWohngruppen( const QSharedPointer<ebp::connection> & connection ) const;
 		DATABASEOBJECT_DECLARE_LINK_INVERSE( Mitarbeiter, Wohngruppe, Wohngruppe )
 
-		QList< QSharedPointer<Projekt> > loadProjekte( const QSharedPointer<drkv::connection> & connection ) const;
+		QList< QSharedPointer<Projekt> > loadProjekte( const QSharedPointer<ebp::connection> & connection ) const;
 		DATABASEOBJECT_DECLARE_LINK_INVERSE( Mitarbeiter, Projekt, Projekt )
 
-		QList< QSharedPointer<Bewohnerereignis> > loadBewohnerereignisse( const QSharedPointer<drkv::connection> & connection ) const;
+		QList< QSharedPointer<Bewohnerereignis> > loadBewohnerereignisse( const QSharedPointer<ebp::connection> & connection ) const;
 		DATABASEOBJECT_DECLARE_LINK_INVERSE( Mitarbeiter, Bewohnerereignis, Bewohnerereignis )
 
-		QList< QSharedPointer<Wohngruppenereignis> > loadWohngruppenereignisse( const QSharedPointer<drkv::connection> & connection ) const;
+		QList< QSharedPointer<Wohngruppenereignis> > loadWohngruppenereignisse( const QSharedPointer<ebp::connection> & connection ) const;
 		DATABASEOBJECT_DECLARE_LINK_INVERSE( Mitarbeiter, Wohngruppenereignis, Wohngruppenereignis )
 
-		QList< QSharedPointer<Protokoll> > loadProtokollTeilnehmer( const QSharedPointer<drkv::connection> & connection ) const;
+		QList< QSharedPointer<Protokoll> > loadProtokollTeilnehmer( const QSharedPointer<ebp::connection> & connection ) const;
 		DATABASEOBJECT_DECLARE_LINK_INVERSE( Mitarbeiter, ProtokollTeilnehmer, Protokoll )
 
-		QList< QSharedPointer<Protokoll> > loadProtokollSchreiber( const QSharedPointer<drkv::connection> & connection ) const;
+		QList< QSharedPointer<Protokoll> > loadProtokollSchreiber( const QSharedPointer<ebp::connection> & connection ) const;
 		DATABASEOBJECT_DECLARE_LINK_INVERSE( Mitarbeiter, ProtokollSchreiber, Protokoll )
 
-		QList< QSharedPointer<Bewohner> > loadBezugsbetreuer( const QSharedPointer<drkv::connection> & connection ) const;
+		QList< QSharedPointer<Bewohner> > loadBezugsbetreuer( const QSharedPointer<ebp::connection> & connection ) const;
 		DATABASEOBJECT_DECLARE_LINK_INVERSE( Mitarbeiter, Bezugsbetreuer, Bewohner )
 
-		bool create( const QSharedPointer<drkv::connection> & connection, const QString & password );
-		bool create( const QSharedPointer<drkv::connection> & connection );
-		bool remove( const QSharedPointer<drkv::connection> & connection );
-		bool updatePassword( const QSharedPointer<drkv::connection> & connection, const QString & password );
+		bool create( const QSharedPointer<ebp::connection> & connection, const QString & password );
+		bool create( const QSharedPointer<ebp::connection> & connection );
+		bool remove( const QSharedPointer<ebp::connection> & connection );
+		bool updatePassword( const QSharedPointer<ebp::connection> & connection, const QString & password );
 
 	private:
 		friend class odb::access;

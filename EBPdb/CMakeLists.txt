@@ -1,11 +1,11 @@
 cmake_minimum_required( VERSION 2.6 )
-project( drkv )
+project( EBPdb )
 
 find_package( Qt4 REQUIRED )
 include( ${QT_USE_FILE} )
 
 
-set( libdrkv_headers
+set( EBPdb_headers
 	connection.hxx
 	Mitarbeiter.hxx
 	Bewohner.hxx
@@ -17,7 +17,7 @@ set( libdrkv_headers
 	Protokoll.hxx
 )
 
-set( libdrkv_sources
+set( EBPdb_sources
 	connection.cxx
 	Mitarbeiter.cxx
 	Bewohner.cxx
@@ -29,16 +29,16 @@ set( libdrkv_sources
 	Protokoll.cxx
 )
 
-set( drkv_include_dirs
+set( EBPdb_include_dirs
 	${QT_INCLUDE_DIR}
 	.
 	..
 )
 
-set( drkv_library_dirs
+set( EBPdb_library_dirs
 )
 
-set( drkv_libraries
+set( EBPdb_libraries
 	${QT_LIBRARIES}
 	odb
 	odb-mysql
@@ -47,14 +47,14 @@ set( drkv_libraries
 
 
 add_definitions( -Wall -Wno-unknown-pragmas )
-link_directories( ${drkv_library_dirs} )
-include_directories( ${drkv_include_dirs} )
+link_directories( ${EBPdb_library_dirs} )
+include_directories( ${EBPdb_include_dirs} )
 
-foreach( header ${libdrkv_headers} )
+foreach( header ${EBPdb_headers} )
 	file( READ ${header} headercontent )
 	if( "${headercontent}" MATCHES "#pragma[ \t]+db[ \t]+object" )
 		get_filename_component( headerbase ${header} NAME_WE )
-		set( libdrkv_sources ${libdrkv_sources} ${headerbase}-odb.cxx )
+		set( EBPdb_sources ${EBPdb_sources} ${headerbase}-odb.cxx )
 		get_directory_property( odbincludes INCLUDE_DIRECTORIES )
 		foreach( includedir ${odbincludes} )
 			set( odbincludeargs ${odbincludeargs} -I${includedir} )
@@ -65,5 +65,5 @@ foreach( header ${libdrkv_headers} )
 	endif( "${headercontent}" MATCHES "#pragma[ \t]+db[ \t]+object" )
 endforeach( header )
 
-add_library( drkv SHARED ${libdrkv_sources} )
-target_link_libraries( drkv ${drkv_libraries} )
+add_library( EBPdb SHARED ${EBPdb_sources} )
+target_link_libraries( EBPdb ${EBPdb_libraries} )

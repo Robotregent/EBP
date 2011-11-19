@@ -6,10 +6,10 @@
 
 
 #include "databaseObject.ixx"
-template class drkv::databaseObject<drkv::Projekt>;
+template class ebp::databaseObject<ebp::Projekt>;
 
 
-using namespace drkv;
+using namespace ebp;
 
 
 DATABASEOBJECT_IMPLEMENT_LINK_ONEMANY( Projekt, Bewohner, bewohner_, Bewohner, Projekt, projekte_ )

@@ -6,24 +6,24 @@ PROJECT(AdminDialog)
 # with SET() command you can change variables or define new ones
 # here we define SAMPLE_SRCS variable that contains a list of all .cpp files
 SET( SAMPLE_SRCS
-       admindialog.cpp
-	   chooseemployee.cpp
-	   employeelistmodel.cpp
-       main.cpp
-	   oelistwidgetitem.cpp
-#	   costumlistwidget.cpp
+	admindialog.cpp
+	chooseemployee.cpp
+	employeelistmodel.cpp
+	main.cpp
+#	oelistwidgetitem.cpp
+#	costumlistwidget.cpp
 )
   
 # another list, this time it includes all header files that should be treated with moc
 SET( SAMPLE_MOC_HDRS
        admindialog.h
-	   chooseemployee.h
-	   employeelistmodel.h
-	   oelistwidgetitem.h
+	chooseemployee.h
+	employeelistmodel.h
+#	oelistwidgetitem.h
 )
 #lib directories
 SET(AdminDialog_library_dirs
-	../drkv
+	../EBPdb
 )
 SET(AdminDialog_include_dirs
 	${QT_INCLUDE_DIR}
@@ -33,7 +33,7 @@ SET(AdminDialog_include_dirs
 #some libs
 SET(AdminDialog_libraries
 	${QT_LIBRARIES}
-	drkv
+	EBPdb
 )
   
 # some .ui files

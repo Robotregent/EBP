@@ -10,10 +10,10 @@
 
 
 #include "databaseObject.ixx"
-template class drkv::databaseObject<drkv::Mitarbeiter>;
+template class ebp::databaseObject<ebp::Mitarbeiter>;
 
 
-using namespace drkv;
+using namespace ebp;
 
 
 DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( Mitarbeiter, Wohngruppe, Wohngruppe, Mitarbeiter )
@@ -25,7 +25,7 @@ DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( Mitarbeiter, ProtokollSchreiber, Protokol
 DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( Mitarbeiter, Bezugsbetreuer, Bewohner, Bezugsbetreuer )
 
 
-QList< QSharedPointer<Wohngruppe> > Mitarbeiter::loadWohngruppen( const QSharedPointer<drkv::connection> & connection ) const
+QList< QSharedPointer<Wohngruppe> > Mitarbeiter::loadWohngruppen( const QSharedPointer<ebp::connection> & connection ) const
 {
 	QList< QSharedPointer<Wohngruppe> > ret;
 	odb::transaction t( connection->getDB()->begin() );
@@ -38,7 +38,7 @@ QList< QSharedPointer<Wohngruppe> > Mitarbeiter::loadWohngruppen( const QSharedP
 }
 
 
-QList< QSharedPointer<Projekt> > Mitarbeiter::loadProjekte( const QSharedPointer<drkv::connection> & connection ) const
+QList< QSharedPointer<Projekt> > Mitarbeiter::loadProjekte( const QSharedPointer<ebp::connection> & connection ) const
 {
 	QList< QSharedPointer<Projekt> > ret;
 	odb::transaction t( connection->getDB()->begin() );
@@ -51,7 +51,7 @@ QList< QSharedPointer<Projekt> > Mitarbeiter::loadProjekte( const QSharedPointer
 }
 
 
-QList< QSharedPointer<Bewohner> > Mitarbeiter::loadBezugsbetreuer( const QSharedPointer<drkv::connection> & connection ) const
+QList< QSharedPointer<Bewohner> > Mitarbeiter::loadBezugsbetreuer( const QSharedPointer<ebp::connection> & connection ) const
 {
 	QList< QSharedPointer<Bewohner> > ret;
 	odb::transaction t( connection->getDB()->begin() );
@@ -64,7 +64,7 @@ QList< QSharedPointer<Bewohner> > Mitarbeiter::loadBezugsbetreuer( const QShared
 }
 
 
-bool Mitarbeiter::create( const QSharedPointer<drkv::connection> & connection, const QString & password )
+bool Mitarbeiter::create( const QSharedPointer<ebp::connection> & connection, const QString & password )
 {
 	if( login().isNull() || login()=="" )
 	{
@@ -88,14 +88,14 @@ bool Mitarbeiter::create( const QSharedPointer<drkv::connection> & connection, c
 }
 
 
-bool Mitarbeiter::create( const QSharedPointer<drkv::connection> & connection )
+bool Mitarbeiter::create( const QSharedPointer<ebp::connection> & connection )
 {
 	qWarning() << tr("Erstelle Benutzer ohne Passwort.");
 	return create( connection, "" );
 }
 
 
-bool Mitarbeiter::remove( const QSharedPointer<drkv::connection> & connection )
+bool Mitarbeiter::remove( const QSharedPointer<ebp::connection> & connection )
 {
 	try
 	{
@@ -113,7 +113,7 @@ bool Mitarbeiter::remove( const QSharedPointer<drkv::connection> & connection )
 }
 
 
-bool Mitarbeiter::updatePassword( const QSharedPointer<drkv::connection> & connection, const QString & password )
+bool Mitarbeiter::updatePassword( const QSharedPointer<ebp::connection> & connection, const QString & password )
 {
 	try
 	{

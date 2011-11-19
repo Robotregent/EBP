@@ -3,11 +3,10 @@
 
 #include <QDialog>
 
-#include "../drkv/connection.hxx"
+#include <EBPdb/connection.hxx>
 #include "employeelistmodel.h"
 #include "costumlistwidget.h"
 #include "costumtreewidget.h"
-using namespace drkv;
 
 namespace Ui {
     class AdminDialog;
@@ -19,7 +18,7 @@ class AdminDialog : public QDialog
 
 public:
     explicit AdminDialog(QWidget *parent = 0);
-    QSharedPointer<connection> dbPointer() { return this->PointerToConnection; }
+    QSharedPointer<ebp::connection> dbPointer() { return this->PointerToConnection; }
     ~AdminDialog();
 
 private slots:
@@ -39,7 +38,7 @@ private slots:
 private:
     Ui::AdminDialog *ui;
     void init();
-    QSharedPointer<connection> PointerToConnection;
+    QSharedPointer<ebp::connection> PointerToConnection;
     EmployeeTableModel *model;
     void setLogin();
     void setContent();
@@ -49,11 +48,11 @@ private:
     void setMitarbiterVerwalten();
     void setBewohnerVerwalten();
 
-    QList< CostumListWidget < Wohngruppe > *> WohngruppenItems;
-    QList< CostumListWidget < Bewohner > *> BewohnerItems;
-    QList< CostumTreeWidget < Wohngruppe > *> WohngruppeTreeItems;
+    QList< CostumListWidget < ebp::Wohngruppe > *> WohngruppenItems;
+    QList< CostumListWidget < ebp::Bewohner > *> BewohnerItems;
+    QList< CostumTreeWidget < ebp::Wohngruppe > *> WohngruppeTreeItems;
     bool isPasswordValid();
-    Mitarbeiter::Berechtigungen setBerechtigung();
+    ebp::Mitarbeiter::Berechtigungen setBerechtigung();
     void loadData();
 
 };

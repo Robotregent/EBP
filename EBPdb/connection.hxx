@@ -12,7 +12,7 @@
 #include <odb/mysql/database.hxx>
 
 
-namespace drkv
+namespace ebp
 {
 	class Mitarbeiter;
 

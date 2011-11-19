@@ -17,7 +17,7 @@
 #include <odb/qt/lazy-ptr.hxx>
 
 
-namespace drkv
+namespace ebp
 {
 	class Mitarbeiter;
 	class Bewohner;
@@ -45,13 +45,13 @@ namespace drkv
 		const QSharedPointer<Wohnheim> & wohnheim() const;
 		DATABASEOBJECT_DECLARE_LINK( Wohngruppe, Wohnheim, Wohnheim )
 
-		QList< QSharedPointer<Mitarbeiter> > loadMitarbeiter( const QSharedPointer<drkv::connection> & connection ) const;
+		QList< QSharedPointer<Mitarbeiter> > loadMitarbeiter( const QSharedPointer<ebp::connection> & connection ) const;
 		DATABASEOBJECT_DECLARE_LINK( Wohngruppe, Mitarbeiter, Mitarbeiter )
 
-		QList< QSharedPointer<Bewohner> > loadBewohner( const QSharedPointer<drkv::connection> & connection ) const;
+		QList< QSharedPointer<Bewohner> > loadBewohner( const QSharedPointer<ebp::connection> & connection ) const;
 		DATABASEOBJECT_DECLARE_LINK_INVERSE( Wohngruppe, Bewohner, Bewohner )
 
-		QList< QSharedPointer<Wohngruppenereignis> > loadEreignisse( const QSharedPointer<drkv::connection> & connection ) const;
+		QList< QSharedPointer<Wohngruppenereignis> > loadEreignisse( const QSharedPointer<ebp::connection> & connection ) const;
 		DATABASEOBJECT_DECLARE_LINK_INVERSE( Wohngruppe, Ereignis, Wohngruppenereignis )
 
 	private:

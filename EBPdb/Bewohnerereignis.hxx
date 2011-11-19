@@ -16,7 +16,7 @@
 #include <odb/qt/lazy-ptr.hxx>
 
 
-namespace drkv
+namespace ebp
 {
 	class Mitarbeiter;
 	class Bewohner;
@@ -47,7 +47,7 @@ namespace drkv
 		const QSharedPointer<Bewohner> bewohner() const { return bewohner_; }
 		DATABASEOBJECT_DECLARE_LINK( Bewohnerereignis, Bewohner, Bewohner )
 
-		QList< QSharedPointer<Mitarbeiter> > loadSchreiber( const QSharedPointer<drkv::connection> & connection ) const;
+		QList< QSharedPointer<Mitarbeiter> > loadSchreiber( const QSharedPointer<ebp::connection> & connection ) const;
 		DATABASEOBJECT_DECLARE_LINK( Bewohnerereignis, Schreiber, Mitarbeiter )
 
 	private:

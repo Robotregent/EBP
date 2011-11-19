@@ -7,10 +7,10 @@
 
 
 #include "databaseObject.ixx"
-template class drkv::databaseObject<drkv::Protokoll>;
+template class ebp::databaseObject<ebp::Protokoll>;
 
 
-using namespace drkv;
+using namespace ebp;
 
 
 DATABASEOBJECT_IMPLEMENT_LINK_ONEMANY( Protokoll, Bewohner, bewohner_, Bewohner, Protokoll, protokolle_ )

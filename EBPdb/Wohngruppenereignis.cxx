@@ -7,10 +7,10 @@
 
 
 #include "databaseObject.ixx"
-template class drkv::databaseObject<drkv::Wohngruppenereignis>;
+template class ebp::databaseObject<ebp::Wohngruppenereignis>;
 
 
-using namespace drkv;
+using namespace ebp;
 
 
 DATABASEOBJECT_IMPLEMENT_LINK_ONEMANY( Wohngruppenereignis, Wohngruppe, wohngruppe_, Wohngruppe, Ereignis, ereignisse_ )

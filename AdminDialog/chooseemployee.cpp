@@ -1,6 +1,9 @@
 #include "chooseemployee.h"
 #include "ui_chooseemployee.h"
-#include "../drkv/Mitarbeiter.hxx"
+
+#include <EBPdb/Mitarbeiter.hxx>
+using namespace ebp;
+
 ChooseEmployee::ChooseEmployee(EmployeeTableModel *_model,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ChooseEmployee),
