@@ -11,26 +11,14 @@ LIBS += -L ../drkv/ -ldrkv \
 
 
 SOURCES += main.cpp\
-        admindialog.cpp \
-    chooseemployee.cpp \
-    employeelistmodel.cpp
+    admindialog.cpp \
+    employeelistmodel.cpp \
+    mamodel.cpp
 
 HEADERS  += admindialog.h \
-    chooseemployee.h \
     employeelistmodel.h \
     costumlistwidget.h \
-    costumtreewidget.h
+    costumtreewidget.h \
+    mamodel.h
 
-FORMS    += admindialog.ui \
-    chooseemployee.ui
-
-
-
-
-
-
-
-
-
-
-
+FORMS    += admindialog.ui
