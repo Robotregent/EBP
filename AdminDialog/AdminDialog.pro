@@ -4,22 +4,20 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
-
-TARGET = AdminDialog
-TEMPLATE = app
+#QT       += core gui
+LIBS += -L ../drkv/ -ldrkv \
+#TARGET = AdminDialog
+#TEMPLATE = app
 
 
 SOURCES += main.cpp\
         admindialog.cpp \
     chooseemployee.cpp \
-    employeelistmodel.cpp \
-    oelistwidgetitem.cpp
+    employeelistmodel.cpp
 
 HEADERS  += admindialog.h \
     chooseemployee.h \
     employeelistmodel.h \
-    oelistwidgetitem.h \
     costumlistwidget.h \
     costumtreewidget.h
 

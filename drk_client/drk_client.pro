@@ -9,14 +9,12 @@ HEADERS += \
     decree.h \
     decreescrollarea.h \
     loginform.h \
-    infowidget.h \
     infoframe.h \
     ueberarbeitungframe.h \
     betreuung.h \
     bewohnerprotokoll.h \
     leistungstraegerbox.h \
     leistungstraegerarea.h \
-    datumdialog.h \
     meldeliste.h
 
 SOURCES += \
@@ -29,14 +27,12 @@ SOURCES += \
     decree.cpp \
     decreescrollarea.cpp \
     loginform.cpp \
-    infowidget.cpp \
     infoframe.cpp \
     ueberarbeitungframe.cpp \
     betreuung.cpp \
     bewohnerprotokoll.cpp \
     leistungstraegerbox.cpp \
     leistungstraegerarea.cpp \
-    datumdialog.cpp \
     meldeliste.cpp
 
 RESOURCES += \
@@ -45,12 +41,10 @@ RESOURCES += \
 FORMS += \
     decreescrollarea.ui \
     loginform.ui \
-    infowidget.ui \
     infoframe.ui \
     ueberarbeitungframe.ui \
     betreuung.ui \
     bewohnerprotokoll.ui \
     leistungstraegerbox.ui \
     leistungstraegerarea.ui \
-    datumdialog.ui \
     meldeliste.ui

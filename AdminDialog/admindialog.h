@@ -4,7 +4,6 @@
 #include <QDialog>
 
 #include "../drkv/connection.hxx"
-#include "oelistwidgetitem.h"
 #include "employeelistmodel.h"
 #include "costumlistwidget.h"
 #include "costumtreewidget.h"
@@ -49,7 +48,7 @@ private:
     void setBWidget();
     void setMitarbiterVerwalten();
     void setBewohnerVerwalten();
-    //QList<OEListWidgetItem *> OEWidgets;
+
     QList< CostumListWidget < Wohngruppe > *> WohngruppenItems;
     QList< CostumListWidget < Bewohner > *> BewohnerItems;
     QList< CostumTreeWidget < Wohngruppe > *> WohngruppeTreeItems;
