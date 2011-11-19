@@ -14,7 +14,7 @@ AdminDialog::AdminDialog(QWidget *parent) :
     ui->setupUi(this);
     this->init();
 }
-
+//Komentar
 AdminDialog::~AdminDialog()
 {
     if(!this->WohngruppenItems.isEmpty())
