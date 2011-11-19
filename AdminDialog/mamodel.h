@@ -1,9 +1,9 @@
 #ifndef MAMODEL_H
 #define MAMODEL_H
 
-#include "../drkv/Mitarbeiter.hxx"
+#include <EBPdb/Mitarbeiter.hxx>
 #include <QAbstractTableModel>
-using namespace drkv;
+using namespace ebp;
 class MAmodel : public QAbstractTableModel
 {
     Q_OBJECT

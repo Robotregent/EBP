@@ -3,14 +3,14 @@
 
 #include <QAbstractTableModel>
 #include <QSharedPointer>
-#include "../drkv/Mitarbeiter.hxx"
-using namespace drkv;
+#include <EBPdb/Mitarbeiter.hxx>
+
 class EmployeeTableModel : public QAbstractTableModel
 {
     Q_OBJECT
-    QList < QSharedPointer < Mitarbeiter > > EmployeeList;
+    QList < QSharedPointer < ebp::Mitarbeiter > > EmployeeList;
 public:
-    explicit EmployeeTableModel(QList < QSharedPointer < Mitarbeiter> > employees,QObject *parent = 0);
+    explicit EmployeeTableModel(QList < QSharedPointer < ebp::Mitarbeiter> > employees,QObject *parent = 0);
     int rowCount(const QModelIndex &parent) const;
     int columnCount(const QModelIndex &parent) const;
     QVariant data(const QModelIndex &index, int role) const;

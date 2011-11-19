@@ -3,12 +3,11 @@
 
 #include <QDialog>
 
-#include "../drkv/connection.hxx"
+#include "../EBPdb/connection.hxx"
 #include "employeelistmodel.h"
 #include "costumlistwidget.h"
 #include "costumtreewidget.h"
-using namespace drkv;
-
+using namespace ebp;
 namespace Ui {
     class AdminDialog;
 }
@@ -19,7 +18,7 @@ class AdminDialog : public QDialog
 
 public:
     explicit AdminDialog(QWidget *parent = 0);
-    QSharedPointer<connection> dbPointer() { return this->PointerToConnection; }
+    QSharedPointer<ebp::connection> dbPointer() { return this->PointerToConnection; }
     ~AdminDialog();
 
 private slots:
@@ -34,11 +33,11 @@ private slots:
 private:
     Ui::AdminDialog *ui;
     void init();
+
     QSharedPointer<connection> PointerToConnection;
     void setLogin();
     void setContent();
     void clearLogin();
-
 
 };
 

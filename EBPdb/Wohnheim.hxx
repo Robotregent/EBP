@@ -14,7 +14,7 @@
 #include <odb/qt/lazy-ptr.hxx>
 
 
-namespace drkv
+namespace ebp
 {
 	class Wohngruppe;
 	class connection;
@@ -36,7 +36,7 @@ namespace drkv
 		const QString & name() const { return name_; }
 		QString & name() { return name_; }
 
-		QList< QSharedPointer<Wohngruppe> > loadWohngruppen( const QSharedPointer<drkv::connection> & connection ) const;
+		QList< QSharedPointer<Wohngruppe> > loadWohngruppen( const QSharedPointer<ebp::connection> & connection ) const;
 		DATABASEOBJECT_DECLARE_LINK_INVERSE( Wohnheim, Wohngruppe, Wohngruppe )
 
 	private:

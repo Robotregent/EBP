@@ -2,11 +2,14 @@
 #include "ui_admindialog.h"
 //#include "chooseemployee.h"
 #include "employeelistmodel.h"
-#include "../drkv/Mitarbeiter.hxx"
-#include "../drkv/Wohngruppe.hxx"
+#include <EBPdb/Mitarbeiter.hxx>
+#include <EBPdb/Wohngruppe.hxx>
 #include <QList>
 #include <QMessageBox>
 #include <QDebug>
+
+using namespace ebp;
+
 AdminDialog::AdminDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AdminDialog)

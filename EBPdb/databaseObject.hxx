@@ -134,25 +134,25 @@ void FROM::unlink##FROM_NAME( QSharedPointer<FROM> & from, QSharedPointer<TO> & 
 } \
 
 
-namespace drkv
+namespace ebp
 {
 	class connection;
 
 	class databaseObjectIFace
 	{
 	public:
-		virtual bool create( const QSharedPointer<drkv::connection> & connection ) = 0;
-		virtual bool remove( const QSharedPointer<drkv::connection> & connection ) = 0;
-		virtual bool update( const QSharedPointer<drkv::connection> & connection ) = 0;
+		virtual bool create( const QSharedPointer<ebp::connection> & connection ) = 0;
+		virtual bool remove( const QSharedPointer<ebp::connection> & connection ) = 0;
+		virtual bool update( const QSharedPointer<ebp::connection> & connection ) = 0;
 	};
 
 	template< class T > class databaseObject : public databaseObjectIFace
 	{
 	public:
-		virtual bool create( const QSharedPointer<drkv::connection> & connection );
-		virtual bool remove( const QSharedPointer<drkv::connection> & connection );
-		virtual bool update( const QSharedPointer<drkv::connection> & connection );
-		static QList< QSharedPointer<T> > loadAll( const QSharedPointer<drkv::connection> & connection );
+		virtual bool create( const QSharedPointer<ebp::connection> & connection );
+		virtual bool remove( const QSharedPointer<ebp::connection> & connection );
+		virtual bool update( const QSharedPointer<ebp::connection> & connection );
+		static QList< QSharedPointer<T> > loadAll( const QSharedPointer<ebp::connection> & connection );
 	};
 }
 

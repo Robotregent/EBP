@@ -3,9 +3,9 @@
 # Project created by QtCreator 2011-09-09T16:38:50
 #
 #-------------------------------------------------
-
+INCLUDEPATH += ../
 #QT       += core gui
-LIBS += -L ../drkv/ -ldrkv \
+LIBS += -L ../EBPdb/ -lEBPdb \
 #TARGET = AdminDialog
 #TEMPLATE = app
 

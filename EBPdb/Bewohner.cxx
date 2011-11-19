@@ -8,10 +8,10 @@
 
 
 #include "databaseObject.ixx"
-template class drkv::databaseObject<drkv::Bewohner>;
+template class ebp::databaseObject<ebp::Bewohner>;
 
 
-using namespace drkv;
+using namespace ebp;
 
 
 DATABASEOBJECT_IMPLEMENT_LINK_ONEMANY( Bewohner, Bezugsbetreuer, bezugsbetreuer_, Mitarbeiter, Bezugsbetreuer, bezugsbetreuer_ )

@@ -10,11 +10,11 @@
 #include <QDebug>
 
 
-namespace drkv
+namespace ebp
 {
 
 
-	template< class T > bool databaseObject<T>::create( const QSharedPointer<drkv::connection> & connection )
+	template< class T > bool databaseObject<T>::create( const QSharedPointer<ebp::connection> & connection )
 	{
 		try
 		{
@@ -31,7 +31,7 @@ namespace drkv
 	}
 
 
-	template< class T > bool databaseObject<T>::remove( const QSharedPointer<drkv::connection> & connection )
+	template< class T > bool databaseObject<T>::remove( const QSharedPointer<ebp::connection> & connection )
 	{
 		try
 		{
@@ -48,7 +48,7 @@ namespace drkv
 	}
 
 
-	template< class T > bool databaseObject<T>::update( const QSharedPointer<drkv::connection> & connection )
+	template< class T > bool databaseObject<T>::update( const QSharedPointer<ebp::connection> & connection )
 	{
 		try
 		{
@@ -65,7 +65,7 @@ namespace drkv
 	}
 
 
-	template< class T > QList< QSharedPointer<T> > databaseObject<T>::loadAll( const QSharedPointer<drkv::connection> & connection )
+	template< class T > QList< QSharedPointer<T> > databaseObject<T>::loadAll( const QSharedPointer<ebp::connection> & connection )
 	{
 		QList< QSharedPointer<T> > list;
 		try

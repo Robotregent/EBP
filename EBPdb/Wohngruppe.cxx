@@ -8,10 +8,10 @@
 
 
 #include "databaseObject.ixx"
-template class drkv::databaseObject<drkv::Wohngruppe>;
+template class ebp::databaseObject<ebp::Wohngruppe>;
 
 
-using namespace drkv;
+using namespace ebp;
 
 
 DATABASEOBJECT_IMPLEMENT_LINK_ONEMANY( Wohngruppe, Wohnheim, wohnheim_, Wohnheim, Wohngruppe, wohngruppen_ )
@@ -20,7 +20,7 @@ DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( Wohngruppe, Bewohner, Bewohner, Wohngrupp
 DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( Wohngruppe, Ereignis, Wohngruppenereignis, Wohngruppe )
 
 
-QList< QSharedPointer<Mitarbeiter> > Wohngruppe::loadMitarbeiter( const QSharedPointer<drkv::connection> & connection ) const
+QList< QSharedPointer<Mitarbeiter> > Wohngruppe::loadMitarbeiter( const QSharedPointer<ebp::connection> & connection ) const
 {
 	QList< QSharedPointer<Mitarbeiter> > ret;
 	odb::transaction t( connection->getDB()->begin() );
