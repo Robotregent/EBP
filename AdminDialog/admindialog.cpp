@@ -14,43 +14,110 @@ AdminDialog::AdminDialog(QWidget *parent) :
     ui->setupUi(this);
     this->init();
 }
-//Komentar
 AdminDialog::~AdminDialog()
 {
-    if(!this->WohngruppenItems.isEmpty())
-    {
-	foreach (CostumListWidget<Wohngruppe> *i,this->WohngruppenItems)
-	{
-	    this->ui->O_list->removeItemWidget(i);
-	    delete i;
-	}
-    }
-    if(model!=NULL)
-	delete model;
     delete ui;
 }
+
+///////////////////////////Initialisieren und Login///////////////////////////////////
 void AdminDialog::init()
 {
-    this->model=NULL;
     this->ui->passwortLineEdit->setEchoMode(QLineEdit::Password);
-    this->ui->passwortWiederholenLineEdit->setEchoMode(QLineEdit::Password);
-    this->ui->passwortLineEdit_2->setEchoMode(QLineEdit::Password);
-    this->ui->berechtigungComboBox->addItems(QStringList()
-					     <<tr("WohngruppenRecht")
-					     <<tr("WohnheimRecht")
-					     <<tr("WohnverbundRecht")
-					     <<tr("AdminRecht"));
-
     this->setLogin();
 
 }
 
-void AdminDialog::on_button_MA_suchen_clicked()
+void AdminDialog::on_button_abbrechen_clicked()
 {
-    ChooseEmployee *e=new ChooseEmployee(this->model,this);
-    e->setModal(true);
-    e->setVisible(true);
+    this->close();
 }
+
+void AdminDialog::setLogin()
+{
+    this->ui->tabWidget->setCurrentWidget(this->ui->tab_login);
+    this->ui->tab_login->setEnabled(true);
+    this->ui->tab_Bewohner->setEnabled(false);
+    this->ui->tab_Mitarbeiter->setEnabled(false);
+    this->ui->tab_Organisationseinheiten->setEnabled(false);
+
+}
+void AdminDialog::setContent()
+{
+    this->ui->tabWidget->setCurrentWidget(this->ui->tab_Mitarbeiter);
+    this->ui->tab_login->setEnabled(false);
+    this->ui->tab_Bewohner->setEnabled(true);
+    this->ui->tab_Mitarbeiter->setEnabled(true);
+    this->ui->tab_Organisationseinheiten->setEnabled(true);
+}
+
+void AdminDialog::on_ButtonLogin_clicked()
+{
+    this->PointerToConnection = QSharedPointer<connection>(new connection(this->ui->loginNameLineEdit->text(),"drk"));
+    if (this->PointerToConnection->establish(this->ui->passwortLineEdit->text()))
+    {
+        this->setContent();
+    }
+    else
+    {
+        QMessageBox::critical(this,tr("Fehlerhafter Login"),tr("Es konnte keine Veerbindung zur Datenbank hergestellt werden. Überprüfen Sie bitte ihre Logindaten"));
+    }
+    this->clearLogin();
+
+}
+void AdminDialog::clearLogin()
+{
+    this->ui->loginNameLineEdit->clear();
+    this->ui->passwortLineEdit->clear();
+}
+
+
+
+void AdminDialog::on_passwortLineEdit_returnPressed()
+{
+    this->ui->ButtonLogin->setFocus();
+}
+void AdminDialog::on_ButtonAusloggen_clicked()
+{
+    this->setLogin();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//////////////////////////Alter Code//////////////////////////////////////////////////////
+/*
+
+ bool AdminDialog::isPasswordValid()
+ {
+     bool res = true;
+     QString p1, p2;
+     p1 = this->ui->passwortLineEdit_2->text();
+     p2 = this->ui->passwortWiederholenLineEdit->text();
+     if(p1.isEmpty() || p2.isEmpty()||(p1 == " ")||(p2 == " "))
+     {
+         QMessageBox::critical(this,tr("Leeres Passwort"),tr("Bitte Passwort eingeben"));
+         res = false;
+     }
+
+     else if (p1!=p2)
+     {
+         QMessageBox::critical(this,tr("Passwörter stimmen nicht überein"),tr("Bitte zweimal das gleiche Passwort eingeben"));
+         res = false;
+     }
+     return res;
+ }
+
 
 void AdminDialog::on_button_MA_speichern_clicked()
 {
@@ -127,72 +194,11 @@ void AdminDialog::on_button_MA_speichern_clicked()
     }
 }
 
-void AdminDialog::on_button_abbrechen_clicked()
-{
-    this->close();
-}
 
-void AdminDialog::setLogin()
-{
-    this->ui->tabWidget->setCurrentWidget(this->ui->tab_login);
-    this->ui->tab_login->setEnabled(true);
-    this->ui->tab_Bewohner->setEnabled(false);
-    this->ui->tab_Mitarbeiter->setEnabled(false);
-    this->ui->tab_Organisationseinheiten->setEnabled(false);
+*/
 
-}
-void AdminDialog::setContent()
-{
-    this->ui->tabWidget->setCurrentWidget(this->ui->tab_Mitarbeiter);
-    this->ui->tab_login->setEnabled(false);
-    this->ui->tab_Bewohner->setEnabled(true);
-    this->ui->tab_Mitarbeiter->setEnabled(true);
-    this->ui->tab_Organisationseinheiten->setEnabled(true);
-}
 
-void AdminDialog::on_ButtonLogin_clicked()
-{
-    this->PointerToConnection = QSharedPointer<connection>(new connection(this->ui->loginNameLineEdit->text(),"drk"));
-    if (this->PointerToConnection->establish(this->ui->passwortLineEdit->text()))
-    {
-	this->setContent();
-	this->model = new EmployeeTableModel(Mitarbeiter::loadAll(this->PointerToConnection));
-    }
-    else
-    {
-	QMessageBox::critical(this,tr("Fehlerhafter Login"),tr("Es konnte keine Veerbindung zur Datenbank hergestellt werden. Überprüfen Sie bitte ihre Logindaten"));
-    }
-    this->clearLogin();
-    this->setMitarbiterVerwalten();
-    this->setBewohnerVerwalten();
-
-}
-void AdminDialog::clearLogin()
-{
-    this->ui->loginNameLineEdit->clear();
-    this->ui->passwortLineEdit->clear();
-}
-
- bool AdminDialog::isPasswordValid()
- {
-     bool res = true;
-     QString p1, p2;
-     p1 = this->ui->passwortLineEdit_2->text();
-     p2 = this->ui->passwortWiederholenLineEdit->text();
-     if(p1.isEmpty() || p2.isEmpty()||(p1 == " ")||(p2 == " "))
-     {
-	 QMessageBox::critical(this,tr("Leeres Passwort"),tr("Bitte Passwort eingeben"));
-	 res = false;
-     }
-
-     else if (p1!=p2)
-     {
-	 QMessageBox::critical(this,tr("Passwörter stimmen nicht überein"),tr("Bitte zweimal das gleiche Passwort eingeben"));
-	 res = false;
-     }
-     return res;
- }
-
+/*
 void AdminDialog::on_button_MA_eingabeloeschen_clicked()
 {
     this->ui->loginNameLineEdit_2->clear();
@@ -234,12 +240,9 @@ Mitarbeiter::Berechtigungen AdminDialog::setBerechtigung()
 
     return res;
 }
+*/
 
-void AdminDialog::on_ButtonAusloggen_clicked()
-{
-    this->setLogin();
-}
-
+/*
 void AdminDialog::setOEWidget()
 {
     if(!this->WohngruppenItems.isEmpty())
@@ -291,12 +294,11 @@ void AdminDialog::setBWidget()
 	this->ui->B_list->addItem(i);
     }
 }
+*/
 
 
-void AdminDialog::on_passwortLineEdit_returnPressed()
-{
-    this->ui->ButtonLogin->setFocus();
-}
+
+/*
 void AdminDialog::setMitarbiterVerwalten()
 {
     this->setOEWidget();
@@ -322,8 +324,10 @@ void AdminDialog::setBewohnerVerwalten()
     }
     foreach (CostumTreeWidget<Wohngruppe> *i,this->WohngruppeTreeItems)
     {
+    */
 	/*i->setFlags(i->flags()|Qt::ItemIsUserCheckable);
 	i->setCheckState(0,Qt::Unchecked);*/
+/*
 	this->ui->WohngruppeTree->addTopLevelItem(i);
     }
 
@@ -385,3 +389,4 @@ void AdminDialog::on_button_B_speichern_clicked()
     tmpBew->linkWohngruppe(tmpBew,tmpWg);
     tmpBew->update(this->PointerToConnection);
 }
+*/
