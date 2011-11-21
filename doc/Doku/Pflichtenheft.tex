@@ -39,8 +39,9 @@ Die Software soll vorwiegend von pädagogischen Fachkräften benutzt werden. Ent
 Einrichtungen der Behindertenhilfe ist auch eine Bedienung durch Personal auf Leitungsebene (Heimleitung) denkbar.
 \subsection{Betriebsbedingungen}
 Um eine höhere Datensicherheit zu gewährleisten, soll die Anwendung auf einem
-zentralen Server ausgeführt werden und von einem, oder mehreren externen Clients gleichzeitig bedienbar sein. Zusätzlich soll der Zugriff über eine Remotedesktopumgebung erfolgen. Dies soll eine außreichende Reaktionszeit erzielen, wenn der Zugriff von verschiedenen Standorten aus erfolgt, die nur über ein leistungsschwaches Netzwerk verbunden sind. Weiterhin unterbindet dieses vorgehen den Zugriff durch andere MySql Clients und versucht damit den gesetzlichen Verpflichtungen (Siehe \pageref{sec:dasi}) nachzukommen.
-%TODO: auch wenn das hier nich reinkommt ... irgendwo sollten wir noch sagen warum das ganze über remotedesktop ... und evtl dass das iiirgendwann überflüssig werden könnte wenn man die anwendung in einen server und client teil spaltet ...
+zentralen Server ausgeführt werden und von einem, oder mehreren externen Clients gleichzeitig bedienbar sein.
+Der Zugriff der Clients soll über eine Remotedesktopumgebung erfolgen.
+Dies unterbindet den direkten Zugriff auf die Datenbank und versucht damit den gesetzlichen Verpflichtungen (Siehe \pageref{sec:dasi}) nachzukommen.
 
 \section{Funktionsumfang}
 \subsection{Kernfunktionen}
@@ -105,6 +106,11 @@ Unterstützte Sprachen
 		\item Alle Aktivitäten / Aufgaben an einem bestimmten Tag / über einen bestimmten Zeitraum.
 		\item Termine können als ics Termin an einen E-Mailempfänger verschickt werden
 	\end{itemize}
+\end{itemize}
+\subsubsection{Sonstiges}
+\begin{itemize}
+	\item Der Zugriff von Clientrechnern kann auch über einen gesonderten \label{Serverdaemon} Serverdaemon erfolgen,
+	der den Datenfluss zwischen Client und Datenbank kontrolliert.
 \end{itemize}
 
 
