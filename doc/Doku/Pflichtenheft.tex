@@ -38,8 +38,8 @@ Standard, dem Metzler-Verfahren.
 Die Software soll vorwiegend von pädagogischen Fachkräften benutzt werden. Entsprechend den individuellen Arbeitsabläufen in den 
 Einrichtungen der Behindertenhilfe ist auch eine Bedienung durch Personal auf Leitungsebene (Heimleitung) denkbar.
 \subsection{Betriebsbedingungen}
-Um eine höhere Datensicherheit zu gewährleisten, soll die Anwendung komplett auf einem
-zentralen Server ausgeführt werden und von einem, oder mehreren externen Clients gleichzeitig bedienbar sein.
+Um eine höhere Datensicherheit zu gewährleisten, soll die Anwendung auf einem
+zentralen Server ausgeführt werden und von einem, oder mehreren externen Clients gleichzeitig bedienbar sein. Zusätzlich soll der Zugriff über eine Remotedesktopumgebung erfolgen. Dies soll eine außreichende Reaktionszeit erzielen, wenn der Zugriff von verschiedenen Standorten aus erfolgt, die nur über ein leistungsschwaches Netzwerk verbunden sind. Weiterhin unterbindet dieses vorgehen den Zugriff durch andere MySql Clients und versucht damit den gesetzlichen Verpflichtungen (Siehe \pageref{sec:dasi}) nachzukommen.
 %TODO: auch wenn das hier nich reinkommt ... irgendwo sollten wir noch sagen warum das ganze über remotedesktop ... und evtl dass das iiirgendwann überflüssig werden könnte wenn man die anwendung in einen server und client teil spaltet ...
 
 \section{Funktionsumfang}
@@ -198,7 +198,7 @@ Zusätzlich wird, um Programmierfehler frühzeitig aufzuspüren, ein Speicherdeb
 
 \section{Nichtfunktionale Anforderungen}
 %\subsection{Barrierefreiheit}
-\subsection{Datensicherheit}
+\subsection{Datensicherheit} \label{sec:dasi}
 Die personenbezogenen Daten von Bewohnern einer stationären Einrichtung der Behindertenhilfe sind im besonderen Maße zu schützen. Bei der Erhebung und Speicherung ist darauf zu achten, dass dies im Rahmen der Normen des Sozialgesetzbuches (§35 SGB I und §§ 67 SGB 10 ff) geschieht.
 \subsection{Lizenzen}
 Die Software wird unter GPLv3 lizensiert und veröffentlicht.
