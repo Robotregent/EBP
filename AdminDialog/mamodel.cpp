@@ -1,6 +1,6 @@
 #include "mamodel.h"
 
-MAmodel::MAmodel(QList<QSharedPointer<Mitarbeiter> > MA, QObject *parent) :
+MAmodel::MAmodel(QList<QSharedPointer<ebp::Mitarbeiter> > MA, QObject *parent) :
     QAbstractTableModel(parent), MAList(MA)
 {
 

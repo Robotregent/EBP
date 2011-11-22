@@ -1,9 +1,9 @@
 #include "employeelistmodel.h"
 
-using namespace ebp;
+//using namespace ebp;
 
 
-EmployeeTableModel::EmployeeTableModel(QList<QSharedPointer<Mitarbeiter> > employees, QObject *parent) :
+EmployeeTableModel::EmployeeTableModel(QList<QSharedPointer<ebp::Mitarbeiter> > employees, QObject *parent) :
     QAbstractTableModel(parent) , EmployeeList(employees)
 {
 

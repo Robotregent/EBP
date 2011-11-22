@@ -3,11 +3,11 @@
 
 #include <QDialog>
 
-#include "../EBPdb/connection.hxx"
+#include <EBPdb/connection.hxx>
 #include "employeelistmodel.h"
 #include "costumlistwidget.h"
 #include "costumtreewidget.h"
-using namespace ebp;
+
 namespace Ui {
     class AdminDialog;
 }
@@ -34,7 +34,7 @@ private:
     Ui::AdminDialog *ui;
     void init();
 
-    QSharedPointer<connection> PointerToConnection;
+    QSharedPointer<ebp::connection> PointerToConnection;
     void setLogin();
     void setContent();
     void clearLogin();
