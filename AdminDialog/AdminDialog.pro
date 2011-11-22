@@ -14,11 +14,14 @@ SOURCES += main.cpp\
     admindialog.cpp \
     employeelistmodel.cpp \
     mamodel.cpp
+    zuordnung.cpp
 
 HEADERS  += admindialog.h \
     employeelistmodel.h \
     costumlistwidget.h \
     costumtreewidget.h \
     mamodel.h
-
-FORMS    += admindialog.ui
+    zuordnung.h
+FORMS    += admindialog.ui \
+    chooseemployee.ui \
+    zuordnung.ui

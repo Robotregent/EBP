@@ -38,9 +38,10 @@ Standard, dem Metzler-Verfahren.
 Die Software soll vorwiegend von pädagogischen Fachkräften benutzt werden. Entsprechend den individuellen Arbeitsabläufen in den 
 Einrichtungen der Behindertenhilfe ist auch eine Bedienung durch Personal auf Leitungsebene (Heimleitung) denkbar.
 \subsection{Betriebsbedingungen}
-Um eine höhere Datensicherheit zu gewährleisten, soll die Anwendung komplett auf einem
+Um eine höhere Datensicherheit zu gewährleisten, soll die Anwendung auf einem
 zentralen Server ausgeführt werden und von einem, oder mehreren externen Clients gleichzeitig bedienbar sein.
-%TODO: auch wenn das hier nich reinkommt ... irgendwo sollten wir noch sagen warum das ganze über remotedesktop ... und evtl dass das iiirgendwann überflüssig werden könnte wenn man die anwendung in einen server und client teil spaltet ...
+Der Zugriff der Clients soll über eine Remotedesktopumgebung erfolgen.
+Dies unterbindet den direkten Zugriff auf die Datenbank und versucht damit den gesetzlichen Verpflichtungen (Siehe \pageref{sec:dasi}) nachzukommen.
 
 \section{Funktionsumfang}
 \subsection{Kernfunktionen}
@@ -105,6 +106,11 @@ Unterstützte Sprachen
 		\item Alle Aktivitäten / Aufgaben an einem bestimmten Tag / über einen bestimmten Zeitraum.
 		\item Termine können als ics Termin an einen E-Mailempfänger verschickt werden
 	\end{itemize}
+\end{itemize}
+\subsubsection{Sonstiges}
+\begin{itemize}
+	\item Der Zugriff von Clientrechnern kann auch über einen gesonderten \label{Serverdaemon} Serverdaemon erfolgen,
+	der den Datenfluss zwischen Client und Datenbank kontrolliert.
 \end{itemize}
 
 
@@ -174,8 +180,8 @@ Eine der Hauptfunktionen soll das Zuordnen von Tagesereignissen zu den Zielen de
 kurze und intuitive Wege erreichbar sein. Die Usability dieser Funktion steht im Vordergrund.
 \subsection{Mockup}
 Abbildungen \ref{Info} und \ref{Protokoll} auf Seite \pageref{Info} / \pageref{Protokoll}  zeigen eine mögliche Darstellung der graphischen Benutzeroberfläche. 
-Die GUI besteht im wesentlichen aus drei Teilen. Auf der linken Seite befindet sich das Menü. Die einzelnen Menüpunkte sind dabei in einer Baumstruktur angeordnet. 
-Zusätlich sind die Menüpunkte für Funktionen die die Wohngruppe betreffen von den Funktionen die sich auf Bewohner beziehen getrennt. 
+Die GUI besteht im Wesentlichen aus drei Teilen. Auf der linken Seite befindet sich das Menü. Die einzelnen Menüpunkte sind dabei in einer Baumstruktur angeordnet. 
+Zusätzlich sind die Menüpunkte für Funktionen die die Wohngruppe betreffen von den Funktionen die sich auf Bewohner beziehen getrennt. 
 Durch Registerkarten kann zwischen diesen Menüs gewechselt werden. Im oberen Teil der GUI befindet sich ein Panel, das Informationen über die aktuell selektierte Wohngruppe bzw. den aktuellen Bewohner anzeigt. 
 In der Mitte befindet sich die Hauptansicht. Dort wird der aktuelle Menüpunkt dargestellt. Seitenmenü und Informationspanel werden als Dockwidget erstellt und können 
 somit von dem User aus dem Hauptfenster gelöst werden. Auch die Platzierung an anderer Stelle ist möglich. So könnte das Menü auch auf der rechten Seite angebracht werden.
@@ -188,7 +194,7 @@ Je nach eingestelltem Look and Feel werden die Unterpunkte auch eingerückt darg
 Die Usability der grafischen Bedienoberfläche soll in zwei Stufen getestet werden.
 \begin{itemize}
 	\item Es wird ein horizontaler Prototyp erstellt,  um die grafischen Bedienelemente auf verschiedene Anwendungsfälle vorab zu testen. 
-	\item Für die funktionsfähige Anwendung wird der Alltagsgebrauch simuliert werden, um nicht erkannte Anwendungsfälle oder Fehlverhalten zu entdecken.
+	\item Für die funktionsfähige Anwendung soll der Alltagsgebrauch simuliert werden, um nicht erkannte Anwendungsfälle oder Fehlverhalten zu entdecken.
 \end{itemize}
 Die Probanden der Usability-Tests sollen aus der Zielgruppe sein, um besondere Bedürfnisse erkennen zu können.    
 \subsection{Codequalität}
@@ -198,7 +204,8 @@ Zusätzlich wird, um Programmierfehler frühzeitig aufzuspüren, ein Speicherdeb
 
 \section{Nichtfunktionale Anforderungen}
 %\subsection{Barrierefreiheit}
-\subsection{Datensicherheit}
+\subsection{Datensicherheit} \label{sec:dasi}
+Die personenbezogenen Daten von Bewohnern einer stationären Einrichtung der Behindertenhilfe sind im besonderen Maße zu schützen. Bei der Erhebung und Speicherung ist darauf zu achten, dass dies im Rahmen der Normen des Sozialgesetzbuches (§35 SGB I und §§ 67 SGB 10 ff) geschieht.
 \subsection{Lizenzen}
 Die Software wird unter GPLv3 lizensiert und veröffentlicht.
 %\section{Termine}
