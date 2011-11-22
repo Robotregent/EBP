@@ -14,7 +14,7 @@
 \title{Pflichtenheft\\
 	Elektronische Betreuungsplanung und Tagesdokumentation}
 
-\date{18.11.2011}
+\date{22.11.2011}
 
 \begin{document}
 
@@ -41,7 +41,7 @@ Einrichtungen der Behindertenhilfe ist auch eine Bedienung durch Personal auf Le
 Um eine höhere Datensicherheit zu gewährleisten, soll die Anwendung auf einem
 zentralen Server ausgeführt werden und von einem, oder mehreren externen Clients gleichzeitig bedienbar sein.
 Der Zugriff der Clients soll über eine Remotedesktopumgebung erfolgen.
-Dies unterbindet den direkten Zugriff auf die Datenbank und versucht damit den gesetzlichen Verpflichtungen (Siehe \pageref{sec:dasi}) nachzukommen.
+Dies unterbindet den direkten Zugriff auf die Datenbank und versucht damit den gesetzlichen Verpflichtungen (Siehe Kapitel \pageref{subsec:dasi}) nachzukommen.
 
 \section{Funktionsumfang}
 \subsection{Kernfunktionen}
@@ -202,9 +202,9 @@ Die Codequalität soll durch Unit Tests gewährleistet werden.
 Die Unittests werden mit Hilfe der QtTest Bibliothek und dem CUnit Framework entwickelt.
 Zusätzlich wird, um Programmierfehler frühzeitig aufzuspüren, ein Speicherdebugger (valgrind) eingesetzt.
 
-\section{Nichtfunktionale Anforderungen}
+\section{Nichtfunktionale Anforderungen} \label{sec:anf}
 %\subsection{Barrierefreiheit}
-\subsection{Datensicherheit} \label{sec:dasi}
+\subsection{Datensicherheit} \label{subsec:dasi}
 Die personenbezogenen Daten von Bewohnern einer stationären Einrichtung der Behindertenhilfe sind im besonderen Maße zu schützen. Bei der Erhebung und Speicherung ist darauf zu achten, dass dies im Rahmen der Normen des Sozialgesetzbuches (§35 SGB I und §§ 67 SGB 10 ff) geschieht.
 \subsection{Lizenzen}
 Die Software wird unter GPLv3 lizensiert und veröffentlicht.
