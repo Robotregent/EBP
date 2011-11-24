@@ -22,7 +22,6 @@ HEADERS  += admindialog.h \
     costumtreewidget.h \
     mamodel.h
     zuordnung.h
-
 FORMS    += admindialog.ui \
     chooseemployee.ui \
     zuordnung.ui
