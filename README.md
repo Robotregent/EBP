@@ -33,15 +33,15 @@ Die Anwendung besteht aus:
 ## Kompilieren & Installieren
 
 Die komplette Anwendung lässt sich mit
-	$ cmake . && make
+    $ cmake . && make
 kompilieren.
 Dies baut die Bibliothek und alle weiteren Werkzeuge.
 
 Um die Datenbank zu initialisieren befindet sich ein Shell-Script im libEBPdb Verzeichnis:
-	$ ./initDB.sh -u root -p "DATENBAKNAME"
+    $ ./initDB.sh -u root -p "DATENBAKNAME"
 
 
 ## Integration des QtCreators:
 
 Im Creator in jedem Projekt als Systemvariable angeben:
-	LD_LIBRARY_PATH ../EBPdb
+    LD_LIBRARY_PATH ../EBPdb
