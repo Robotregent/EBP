@@ -1,4 +1,4 @@
-LIBS += -L ../drkv/ -ldrkv \
+LIBS += -L ../EBPdb/ -lEBPdb \
 
 HEADERS += \
     mainwindow.h \
