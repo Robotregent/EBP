@@ -78,16 +78,16 @@ SET( SAMPLE_UIS
 	ueberarbeitungframe.ui
 )
 # and finally an resource file
-# SET( SAMPLE_RCS
-#     ./src/rc/sample.qrc
-#)
+SET( DRK_RCS
+     images.qrc
+)
 
 # enable warnings
 ADD_DEFINITIONS( -Wall -Wno-unknown-pragmas )
 
 # this command will generate rules that will run rcc on all files from SAMPLE_RCS
 # in result SAMPLE_RC_SRCS variable will contain paths to files produced by rcc
-#QT4_ADD_RESOURCES( SAMPLE_RC_SRCS ${SAMPLE_RCS} )
+QT4_ADD_RESOURCES( SAMPLE_RC_SRCS ${DRK_RCS} )
 
 # this will run uic on .ui files:
 QT4_WRAP_UI( SAMPLE_UI_HDRS ${SAMPLE_UIS} )
@@ -101,6 +101,6 @@ link_directories( ${drk_src_library_dirs} )
 # (CMAKE_BINARY_DIR holds a path to the build directory, while INCLUDE_DIRECTORIES() works just like INCLUDEPATH from qmake)
 INCLUDE_DIRECTORIES( ${CMAKE_BINARY_DIR} ${drk_src_include_dirs} )
 
-ADD_EXECUTABLE( drk_client ${SAMPLE_SRCS} ${SAMPLE_MOC_SRCS} ${SAMPLE_UI_HDRS} )
+ADD_EXECUTABLE( drk_client ${SAMPLE_SRCS} ${SAMPLE_MOC_SRCS} ${SAMPLE_UI_HDRS} ${SAMPLE_RC_SRCS})
 
 TARGET_LINK_LIBRARIES( drk_client ${drk_src_libraries} )
