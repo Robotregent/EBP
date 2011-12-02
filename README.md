@@ -38,9 +38,9 @@ Die komplette Anwendung lässt sich mit
 	$ cmake . && make
 
 kompilieren.
-Dies baut die Bibliothek und alle weiteren Werkzeuge.
+Dies baut die Bibliothek und alle weiteren Programme.
 
-Um die Datenbank zu initialisieren befindet sich ein Shell-Script im libEBPdb Verzeichnis:
+Um die Datenbank zu initialisieren befindet sich ein Shell-Script im EBPdb Verzeichnis:
 
 	$ ./initDB.sh -u root -p "DATENBAKNAME"
 
