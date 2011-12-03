@@ -13,15 +13,16 @@ LIBS += -L ../EBPdb/ -lEBPdb \
 SOURCES += main.cpp\
     admindialog.cpp \
     employeelistmodel.cpp \
-    mamodel.cpp
-    zuordnung.cpp
+    mamodel.cpp \
+    zuordnung.cpp \
+    simplema.cpp
 
 HEADERS  += admindialog.h \
     employeelistmodel.h \
     costumlistwidget.h \
     costumtreewidget.h \
-    mamodel.h
-    zuordnung.h
+    mamodel.h \
+    zuordnung.h \
+    simplema.h
 FORMS    += admindialog.ui \
-    chooseemployee.ui \
     zuordnung.ui

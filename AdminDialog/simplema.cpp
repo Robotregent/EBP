@@ -1,21 +1,20 @@
-#include "mamodel.h"
+#include "simplema.h"
 
-MAmodel::MAmodel(QList<QSharedPointer<ebp::Mitarbeiter> > MA, QObject *parent) :
+SimpleMA::SimpleMA(QList< QSharedPointer< ebp::Mitarbeiter> > MA, QObject *parent) :
     QAbstractTableModel(parent), MAList(MA)
 {
-
 }
-int MAmodel::rowCount(const QModelIndex &parent) const
+int SimpleMA::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     return this->MAList.count();
 }
-int MAmodel::columnCount(const QModelIndex &parent) const
+int SimpleMA::columnCount(const QModelIndex &parent) const
 {
     //Zwei ist nur geraten. Muss angepasst werden
-    return 5;
+    return 2;
 }
-QVariant MAmodel::data(const QModelIndex &index, int role) const
+QVariant SimpleMA::data(const QModelIndex &index, int role) const
 {
     //Abbruch, wenn kein valider Index übergeben wurde
     if (!index.isValid())
@@ -30,12 +29,6 @@ QVariant MAmodel::data(const QModelIndex &index, int role) const
             return MAList.at(index.row())->login();
         else if (index.column()==1)
             return MAList.at(index.row())->name();
-        else if (index.column()==2)
-            return MAList.at(index.row())->berechtigung();
-        else if (index.column()==3)
-            return MAList.at(index.row())->email();
-        else if (index.column()==4)
-            return MAList.at(index.row())->telefon();
         else
             return QVariant();
 
@@ -46,7 +39,7 @@ QVariant MAmodel::data(const QModelIndex &index, int role) const
     }
     return QVariant();
 }
-QVariant MAmodel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant SimpleMA::headerData(int section, Qt::Orientation orientation, int role) const
 {
 
 }

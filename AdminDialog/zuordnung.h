@@ -12,12 +12,16 @@ class Zuordnung : public QDialog
     Q_OBJECT
 
 public:
-    explicit Zuordnung(QAbstractTableModel _model,QWidget *parent = 0);
+    explicit Zuordnung(QAbstractTableModel *_model,QWidget *parent = 0);
     ~Zuordnung();
+
+
+private slots:
+    void on_pushButton_clicked();
 
 private:
     Ui::Zuordnung *ui;
-    QAbstractTableModel model;
+    QAbstractTableModel *model;
 };
 
 #endif // ZUORDNUNG_H
