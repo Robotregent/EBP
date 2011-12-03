@@ -12,15 +12,3 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-
-###Bibliothek bauen####
-#im Verzeichnis drk_src/EBPdb
-cmake .
-make
-####Datenbank initialisieren#######
-#im Verzeichnis drk_src/EBPdb
-./initDB.sh -u root -p "DATENBAKNAME"
-####Linker Pfad angeben############
-####Im Creator in jedem Projekt als Systemvariable angeben
-LD_LIBRARY_PATH		../EBPdb
