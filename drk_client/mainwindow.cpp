@@ -9,6 +9,7 @@
 #include "bewohnerprotokoll.h"
 #include "leistungstraegerarea.h"
 #include "meldeliste.h"
+#include "ereignis.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -74,6 +75,9 @@ void MainWindow::set_content(QTreeWidgetItem *current, QTreeWidgetItem *previous
         this->setCentralWidget(this->getContentWidget(MainWindow::Leistungstraeger));
         break;
     case 3001:
+        this->setCentralWidget(this->getContentWidget(MainWindow::EreignisWidget));
+        break;
+    case 3010:
         this->setCentralWidget(this->getContentWidget(MainWindow::MeldeListeWidget));
         break;
     }
@@ -112,6 +116,8 @@ QWidget *MainWindow::getContentWidget(int ContentTyp)
         case MainWindow::MeldeListeWidget:
             result = new MeldeListe(this);
             break;
+        case MainWindow::EreignisWidget:
+            result = new Ereignis(this);
 	}
     }
     //this->ContentWidgetList.replace(ContentTyp,result);

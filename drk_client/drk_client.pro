@@ -16,7 +16,7 @@ HEADERS += \
     leistungstraegerbox.h \
     leistungstraegerarea.h \
     meldeliste.h \
-    gruppenbuch.h
+    ereignis.h
 
 SOURCES += \
     mainwindow.cpp \
@@ -35,7 +35,7 @@ SOURCES += \
     leistungstraegerbox.cpp \
     leistungstraegerarea.cpp \
     meldeliste.cpp \
-    gruppenbuch.cpp
+    ereignis.cpp
 
 RESOURCES += \
     images.qrc
@@ -50,4 +50,4 @@ FORMS += \
     leistungstraegerbox.ui \
     leistungstraegerarea.ui \
     meldeliste.ui \
-    gruppenbuch.ui
+    ereignis.ui
