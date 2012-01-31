@@ -15,7 +15,8 @@ HEADERS += \
     bewohnerprotokoll.h \
     leistungstraegerbox.h \
     leistungstraegerarea.h \
-    meldeliste.h
+    meldeliste.h \
+    gruppenbuch.h
 
 SOURCES += \
     mainwindow.cpp \
@@ -33,7 +34,8 @@ SOURCES += \
     bewohnerprotokoll.cpp \
     leistungstraegerbox.cpp \
     leistungstraegerarea.cpp \
-    meldeliste.cpp
+    meldeliste.cpp \
+    gruppenbuch.cpp
 
 RESOURCES += \
     images.qrc
@@ -47,4 +49,5 @@ FORMS += \
     bewohnerprotokoll.ui \
     leistungstraegerbox.ui \
     leistungstraegerarea.ui \
-    meldeliste.ui
+    meldeliste.ui \
+    gruppenbuch.ui
