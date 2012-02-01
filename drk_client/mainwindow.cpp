@@ -10,6 +10,7 @@
 #include "leistungstraegerarea.h"
 #include "meldeliste.h"
 #include "ereignis.h"
+#include "projekt.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -68,13 +69,16 @@ void MainWindow::set_content(QTreeWidgetItem *current, QTreeWidgetItem *previous
     case 2002:
 	this->setCentralWidget(this->getContentWidget(MainWindow::DecreeScrollWidget));
 	break;
+    case 2010:
+        this->setCentralWidget(this->getContentWidget(MainWindow::ProjektWidget));
+        break;
     case 2020:
         this->setCentralWidget(this->getContentWidget(MainWindow::BProtokollWidget));
         break;
     case 2003:
         this->setCentralWidget(this->getContentWidget(MainWindow::Leistungstraeger));
         break;
-    case 3001:
+    case 3000:
         this->setCentralWidget(this->getContentWidget(MainWindow::EreignisWidget));
         break;
     case 3010:
@@ -118,6 +122,10 @@ QWidget *MainWindow::getContentWidget(int ContentTyp)
             break;
         case MainWindow::EreignisWidget:
             result = new Ereignis(this);
+            break;
+        case MainWindow::ProjektWidget:
+            result = new Projekt(this);
+            break;
 	}
     }
     //this->ContentWidgetList.replace(ContentTyp,result);

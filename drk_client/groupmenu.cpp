@@ -11,7 +11,7 @@ GroupMenu::GroupMenu(QWidget *parent) :
     this->gruppenbuch = new QTreeWidgetItem(this,3000);
     this->gruppenbuch->setText(0,tr("Gruppenbuch"));
     this->gruppenbuch->setIcon(0,QIcon(":/group/gruppenbuch.png"));
-    new QTreeWidgetItem(this->gruppenbuch,QStringList()<<tr("Eignisse"),3001);
+    //new QTreeWidgetItem(this->gruppenbuch,QStringList()<<tr("Eignisse"),3001);
     new QTreeWidgetItem(this->gruppenbuch,QStringList()<<tr("Aufgaben"),3002);
 
     ///Initialize Meldeliste

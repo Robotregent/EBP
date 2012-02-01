@@ -44,6 +44,7 @@ void BewohnerProtokoll::on_addTeilnehmer_clicked()
 {
     //qDebug()<<this->ui->tableWidget->rowCount();
     this->ui->tableWidget->insertRow(this->ui->tableWidget->rowCount());
+
     //qDebug()<<this->ui->tableWidget->rowCount();
     QTableWidgetItem *tmp = new QTableWidgetItem(tr(""));
     tmp->setFlags(tmp->flags()|Qt::ItemIsUserCheckable);
