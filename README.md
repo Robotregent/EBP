@@ -44,6 +44,13 @@ Um die Datenbank zu initialisieren befindet sich ein Shell-Script im EBPdb Verze
 
 	$ ./initDB.sh -u root -p "DATENBAKNAME"
 
+Ab Ubuntu 11.10 kann es zu Problemen mit verschiedenen Architekturen kommen. Folgender Fehler tritt häufig auf:
+
+* /usr/include/features.h:323:26: fatal error: bits/predefs.h: No such file or directory
+
+Das installieren der entsprechenden libc hilft.
+
+	$ apt-get install libc6-dev-i386
 
 ## Integration des QtCreators:
 

@@ -29,6 +29,7 @@ SET( SAMPLE_SRCS
 	person.cpp
 	sidemenu.cpp
 	ueberarbeitungframe.cpp
+        ereignis.cpp
 )
 
 # another list, this time it includes all header files that should be treated with moc
@@ -48,6 +49,7 @@ SET( SAMPLE_MOC_HDRS
 	person.h
 	sidemenu.h
 	ueberarbeitungframe.h
+        ereignis.h
 )
 
 SET(drk_src_library_dirs
@@ -76,6 +78,7 @@ SET( SAMPLE_UIS
 	loginform.ui
 	meldeliste.ui
 	ueberarbeitungframe.ui
+        ereignis.ui
 )
 # and finally an resource file
 SET( DRK_RCS
