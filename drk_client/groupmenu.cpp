@@ -20,3 +20,8 @@ GroupMenu::GroupMenu(QWidget *parent) :
     this->meldeliste->setIcon(0,QIcon(":/group/taskList.png"));
 
 }
+GroupMenu::~GroupMenu()
+{
+    delete gruppenbuch;
+    delete meldeliste;
+}

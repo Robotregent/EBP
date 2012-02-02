@@ -24,6 +24,8 @@ MainWindow::MainWindow(QWidget *parent) :
     }
     this->create_topmenu();
     this->setCentralWidget(this->getContentWidget(MainWindow::LoginWidget));
+    this->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
+    this->setMinimumSize(this->sizeHint());
 
 }
 
@@ -32,13 +34,18 @@ void MainWindow::create_sidemenu()
     this->setDockOptions(QMainWindow::AnimatedDocks|QMainWindow::AllowNestedDocks|QMainWindow::AllowTabbedDocks);
     this->setCorner(Qt::TopLeftCorner,Qt::TopDockWidgetArea);
     this->setCorner(Qt::TopRightCorner,Qt::TopDockWidgetArea);
-    this->dock_side_menu = new QDockWidget(tr("Seitenmenü"),this);
+    this->dock_side_menu = new QDockWidget(tr("Navigation"),this);
     this->dock_side_menu->setAllowedAreas(Qt::AllDockWidgetAreas);
     this->side_menu= new SideMenu(this);
     this->dock_side_menu->setWidget(this->side_menu);
     this->addDockWidget(Qt::LeftDockWidgetArea,this->dock_side_menu);
 
     this->viewMenu->addAction(this->dock_side_menu->toggleViewAction());
+
+    //Versuche Größe in Griff zu bekommen
+    //this->dock_side_menu->setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Expanding);
+    //this->dock_side_menu->setMaximumSize(this->dock_side_menu->sizeHint());
+    //this->dock_side_menu->adjustSize();
 
     this->connect(this->side_menu->getClientMenu(),SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),SLOT(set_content(QTreeWidgetItem*,QTreeWidgetItem*)));
     this->connect(this->side_menu->getGroupMenu(),SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),SLOT(set_content(QTreeWidgetItem*,QTreeWidgetItem*)));
@@ -85,6 +92,11 @@ void MainWindow::set_content(QTreeWidgetItem *current, QTreeWidgetItem *previous
         this->setCentralWidget(this->getContentWidget(MainWindow::MeldeListeWidget));
         break;
     }
+    //Versuch größe in grif zu bekommen
+    //this->centralWidget()->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
+    //this->centralWidget()->setMinimumSize(this->centralWidget()->sizeHint());
+
+    //this->centralWidget()->adjustSize();
     return;
 }
 
@@ -138,4 +150,9 @@ void MainWindow::create_topmenu()
 void MainWindow::create_actions()
 {
 
+}
+MainWindow::~MainWindow()
+{
+    //delete side_menu;
+    //delete viewMenu;
 }

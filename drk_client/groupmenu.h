@@ -11,6 +11,7 @@ private:
     QTreeWidgetItem* gruppenbuch;
 public:
     explicit GroupMenu(QWidget *parent = 0);
+    ~GroupMenu();
 
 signals:
 

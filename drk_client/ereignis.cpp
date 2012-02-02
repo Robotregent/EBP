@@ -1,5 +1,6 @@
 #include "ereignis.h"
 #include "ui_ereignis.h"
+#include <QDebug>
 
 Ereignis::Ereignis(QWidget *parent) :
     QWidget(parent),
@@ -15,6 +16,7 @@ Ereignis::Ereignis(QWidget *parent) :
 Ereignis::~Ereignis()
 {
     delete ui;
+    delete pufferLayout;
 }
 
 void Ereignis::on_pushButton_clicked()

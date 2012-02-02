@@ -14,6 +14,7 @@ private:
 
 public:
     explicit ClientMenu(QWidget *parent = 0);
+    ~ClientMenu();
 
 signals:
 
