@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include <QLabel>
 #include <QMenuBar>
+#include <QSettings>
+#include <QDebug>
 
 #include "loginform.h"
 #include "infoframe.h"
@@ -15,7 +17,7 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
-    this->showMaximized();
+    //this->showMaximized();
 
 
     for (int i = 0; i< MainWindow::CountOfContentWidgets; i++)
@@ -27,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
     this->setMinimumSize(this->sizeHint());
 
+    this->readSettings();
 }
 
 void MainWindow::create_sidemenu()
@@ -38,6 +41,7 @@ void MainWindow::create_sidemenu()
     this->dock_side_menu->setAllowedAreas(Qt::AllDockWidgetAreas);
     this->side_menu= new SideMenu(this);
     this->dock_side_menu->setWidget(this->side_menu);
+    this->dock_side_menu->setObjectName("Navigation");
     this->addDockWidget(Qt::LeftDockWidgetArea,this->dock_side_menu);
 
     this->viewMenu->addAction(this->dock_side_menu->toggleViewAction());
@@ -58,6 +62,7 @@ void MainWindow::creat_InfoWidget()
     QDockWidget *dw =new QDockWidget(tr("Information zu aktueller Auswahl"),this);
     dw->setAllowedAreas(Qt::AllDockWidgetAreas);
     dw->setWidget(new InfoFrame(this));
+    dw->setObjectName("Information");
     this->addDockWidget(Qt::TopDockWidgetArea,dw);
     this->viewMenu->addAction(dw->toggleViewAction());
 }
@@ -156,3 +161,37 @@ MainWindow::~MainWindow()
     //delete side_menu;
     //delete viewMenu;
 }
+void MainWindow::writeSettings()
+{
+    QSettings settings("EBP.ini", QSettings::IniFormat);
+    settings.setValue("pos", this->pos());
+    settings.setValue("size", this->size());
+    settings.setValue("windowState", saveState());
+}
+
+void MainWindow::readSettings()
+{
+    //Zustand wiederherstellen
+    QSettings settings("EBP.ini", QSettings::IniFormat);
+    QPoint pos = settings.value("pos", QPoint(0, 0)).toPoint();
+    QSize size = settings.value("size", QSize(1200, 800)).toSize();
+    resize(size);
+    move(pos);
+    this->restoreState(settings.value("windowState").toByteArray());
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+
+    this->writeSettings();
+    //qDebug() << QApplication::applicationDirPath();
+    QMainWindow::closeEvent(event);
+}
+
+
+
+
+
+
+
+

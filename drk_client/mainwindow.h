@@ -17,11 +17,14 @@ private:
     void creat_InfoWidget();
     void create_topmenu();
     void create_actions();
+    void writeSettings();
+    void readSettings();
     QList <QWidget *> ContentWidgetList;
     QDockWidget *dock_side_menu;
     SideMenu *side_menu;
     QSharedPointer<ebp::connection> PointerToConnection;
     QMenu *viewMenu;
+
 
 private slots:
     void set_content( QTreeWidgetItem * current, QTreeWidgetItem * previous );
@@ -37,6 +40,8 @@ public:
 	this->creat_InfoWidget();
     }
     ~MainWindow();
+    void closeEvent(QCloseEvent *event);
+
 signals:
 
 public slots:
