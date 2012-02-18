@@ -1,6 +1,6 @@
 #include "loginform.h"
 #include "ui_loginform.h"
-#include "../EBPdb/connection.hxx"
+#include <EBPdb/connection.hxx>
 #include <QMessageBox>
 
 //using namespace ebp;
