@@ -18,7 +18,8 @@ HEADERS += \
     meldeliste.h \
     ereignis.h \
     einzelereignis.h \
-    projekt.h
+    projekt.h \
+    dokumentation.h
 
 SOURCES += \
     mainwindow.cpp \
@@ -39,7 +40,8 @@ SOURCES += \
     meldeliste.cpp \
     ereignis.cpp \
     einzelereignis.cpp \
-    projekt.cpp
+    projekt.cpp \
+    dokumentation.cpp
 
 RESOURCES += \
     images.qrc
@@ -56,4 +58,5 @@ FORMS += \
     meldeliste.ui \
     ereignis.ui \
     einzelereignis.ui \
-    projekt.ui
+    projekt.ui \
+    dokumentation.ui
