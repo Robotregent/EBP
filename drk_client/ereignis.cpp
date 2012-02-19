@@ -24,10 +24,11 @@ void Ereignis::on_pushButton_clicked()
     //Widget für neue Eingabe erzeugen und befüllen
     EinzelEreignis *tmp=new EinzelEreignis(this);
     tmp->setContent(QDateTime::currentDateTime(),this->ui->MAZeichen->text(),this->ui->EreignisText->toHtml() );
-    this->EreignisListe.append(tmp);
-
+    //this->EreignisListe.append(tmp);
+    this->EreignisListe.prepend(tmp);
     //Neue Eingabe anzeigen
-    this->pufferLayout->addWidget(tmp);
+    //this->pufferLayout->addWidget(tmp);
+    this->pufferLayout->insertWidget(0,tmp);
 
     //Eingabefeld löschen
     this->ui->MAZeichen->clear();
