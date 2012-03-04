@@ -18,6 +18,9 @@ SET( SAMPLE_SRCS
 	clientmenu.cpp
 	decree.cpp
 	decreescrollarea.cpp
+	dokumentation.cpp
+	einzelereignis.cpp
+	ereignis.cpp
 	groupmenu.cpp
 	infoframe.cpp
 	leistungstraegerarea.cpp
@@ -27,9 +30,10 @@ SET( SAMPLE_SRCS
 	mainwindow.cpp
 	meldeliste.cpp
 	person.cpp
+	pleaswaitdialog.cpp	
+	projekt.cpp
 	sidemenu.cpp
 	ueberarbeitungframe.cpp
-        ereignis.cpp
 )
 
 # another list, this time it includes all header files that should be treated with moc
@@ -39,6 +43,9 @@ SET( SAMPLE_MOC_HDRS
 	clientmenu.h
 	decree.h
 	decreescrollarea.h
+	dokumentation.h
+	einzelereignis.h
+	ereignis.h
 	groupmenu.h
 	infoframe.h
 	leistungstraegerarea.h
@@ -47,9 +54,11 @@ SET( SAMPLE_MOC_HDRS
 	mainwindow.h
 	meldeliste.h
 	person.h
+	pleaswaitdialog.h
+        projekt.h
 	sidemenu.h
 	ueberarbeitungframe.h
-        ereignis.h
+	WohngruppenUndBewohnerLaden.h
 )
 
 SET(drk_src_library_dirs
@@ -72,13 +81,17 @@ SET( SAMPLE_UIS
 	betreuung.ui
 	bewohnerprotokoll.ui
 	decreescrollarea.ui
+	dokumentation.ui
+	einzelereignis.ui
+	ereignis.ui
 	infoframe.ui
 	leistungstraegerarea.ui
 	leistungstraegerbox.ui
 	loginform.ui
 	meldeliste.ui
+	pleaswaitdialog.ui
+	projekt.ui
 	ueberarbeitungframe.ui
-        ereignis.ui
 )
 # and finally an resource file
 SET( DRK_RCS
