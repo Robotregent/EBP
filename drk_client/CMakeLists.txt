@@ -58,7 +58,6 @@ SET( SAMPLE_MOC_HDRS
         projekt.h
 	sidemenu.h
 	ueberarbeitungframe.h
-	WohngruppenUndBewohnerLaden.h
 )
 
 SET(drk_src_library_dirs
