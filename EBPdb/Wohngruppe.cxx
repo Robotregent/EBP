@@ -31,3 +31,27 @@ QList< QSharedPointer<Mitarbeiter> > Wohngruppe::loadMitarbeiter( const QSharedP
 	t.commit();
 	return ret;
 }
+
+QList< QSharedPointer<Bewohner> >  Wohngruppe::loadBewohner( const QSharedPointer<ebp::connection> & connection ) const
+{
+	QList< QSharedPointer<Bewohner> > ret;
+	odb::transaction t( connection->getDB()->begin() );
+	for( QList< QLazyWeakPointer<Bewohner> >::const_iterator i = bewohner_.begin(); i != bewohner_.end(); ++i )
+	{
+		ret.push_back( (*i).load() );
+	}
+	t.commit();
+	return ret;
+}
+
+QList< QSharedPointer<Wohngruppenereignis> > Wohngruppe::loadEreignisse( const QSharedPointer<ebp::connection> & connection ) const
+{
+	QList< QSharedPointer<Wohngruppenereignis> > ret;
+	odb::transaction t( connection->getDB()->begin() );
+	for( QList< QLazyWeakPointer<Wohngruppenereignis> >::const_iterator i = ereignisse_.begin(); i != ereignisse_.end(); ++i )
+	{
+		ret.push_back( (*i).load() );
+	}
+	t.commit();
+	return ret;
+}
