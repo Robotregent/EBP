@@ -3,6 +3,7 @@
 #include <QMenuBar>
 #include <QSettings>
 #include <QDebug>
+#include <QtCore/QtConcurrentRun>
 
 #include "loginform.h"
 #include "infoframe.h"
@@ -13,7 +14,9 @@
 #include "meldeliste.h"
 #include "ereignis.h"
 #include "projekt.h"
-
+#include "WohngruppenUndBewohnerLaden.h"
+#include "pleaswaitdialog.h"
+#include "person.h"
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
@@ -30,6 +33,18 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setMinimumSize(this->sizeHint());
 
     this->readSettings();
+
+
+}
+void MainWindow::validLogin(QSharedPointer<ebp::connection> pointer)
+{
+    PointerToConnection=pointer;
+
+    this->loadWohnguppeUndBewohner();
+
+    this->create_sidemenu();
+    this->creat_InfoWidget();
+
 }
 
 void MainWindow::create_sidemenu()
@@ -61,10 +76,13 @@ void MainWindow::creat_InfoWidget()
 {
     QDockWidget *dw =new QDockWidget(tr("Information zu aktueller Auswahl"),this);
     dw->setAllowedAreas(Qt::AllDockWidgetAreas);
-    dw->setWidget(new InfoFrame(this));
+    this->_infoFrame = new InfoFrame(this);
+    dw->setWidget(this->_infoFrame);
     dw->setObjectName("Information");
     this->addDockWidget(Qt::TopDockWidgetArea,dw);
     this->viewMenu->addAction(dw->toggleViewAction());
+    //Bewohner und Wohngruppe anzeigen
+    this->setCurBewohnerAndWohngruppeInfo();
 }
 
 void MainWindow::set_content(QTreeWidgetItem *current, QTreeWidgetItem *previous)
@@ -167,6 +185,15 @@ void MainWindow::writeSettings()
     settings.setValue("pos", this->pos());
     settings.setValue("size", this->size());
     settings.setValue("windowState", saveState());
+
+    if (!this->_curBewohner.isNull())
+    {
+	settings.setValue("lastBewohner",this->_curBewohner->name());
+    }
+    if (!this->_curWohngruppe.isNull())
+    {
+	settings.setValue("lastWohngruppe",this->_curWohngruppe->name());
+    }
 }
 
 void MainWindow::readSettings()
@@ -188,6 +215,75 @@ void MainWindow::closeEvent(QCloseEvent *event)
     QMainWindow::closeEvent(event);
 }
 
+
+void MainWindow::loadWohnguppeUndBewohner()
+{
+    if(this->PointerToConnection.isNull())
+	return;
+    //asynchrones Laden aller Wohngruppen und Bewohner
+    QFuture< QList < QSharedPointer <ebp::Wohngruppe> > > allGroups = QtConcurrent::run(ebp::loadAllGroups, this->PointerToConnection);
+    QFuture< QList < QSharedPointer <ebp::Bewohner> > > allBewohner = QtConcurrent::run(ebp::loadAllBewohner, this->PointerToConnection);
+    PleasWaitDialog *pwd=new PleasWaitDialog(this);
+    pwd->show();
+    allGroups.waitForFinished();
+    allBewohner.waitForFinished();
+    this->_alleBewohnerDerAktuellenGruppe=allBewohner.result();
+    this->_AlleWohngruppen = allGroups.result();
+    pwd->close();
+
+    QSettings settings("EBP.ini", QSettings::IniFormat);
+
+    //Aktuellen Bewohner setzen
+    this->_curBewohner.isNull();
+    if (!_alleBewohnerDerAktuellenGruppe.isEmpty())
+    {
+	this->_curBewohner = _alleBewohnerDerAktuellenGruppe.first();
+	QString lastB = settings.value("lastBewohner",QVariant("NULL")).toString();
+	if (lastB != "NULL")
+	{
+	    foreach(QSharedPointer <ebp::Bewohner> bw , _alleBewohnerDerAktuellenGruppe)
+	    {
+		if (bw->name()==lastB)
+		{
+		    this->_curBewohner = bw;
+		    continue;
+		}
+	    }
+	}
+    }
+
+    //Aktuelle Wohngruppe setzen
+    this->_curWohngruppe.isNull();
+    if(!_AlleWohngruppen.isEmpty())
+    {
+	this->_curWohngruppe = _AlleWohngruppen.first();
+	QString lastW = settings.value("lastWohngruppe",QVariant("NULL")).toString();
+	if (lastW != "NULL")
+	{
+	    foreach(QSharedPointer <ebp::Wohngruppe> wg, _AlleWohngruppen )
+	    {
+		if (wg->name() == lastW)
+		{
+		    this->_curWohngruppe = wg;
+		    continue;
+		}
+	    }
+	}
+    }
+
+}
+void MainWindow::setCurBewohnerAndWohngruppeInfo()
+{
+    if (!this->_curBewohner.isNull())
+	this->_infoFrame->setCurBewohner(this->_curBewohner->name());
+    else
+	this->_infoFrame->setCurBewohner("Keine Informationen verfügbar");
+    if(!this->_curWohngruppe.isNull())
+	this->_infoFrame->setCurWohngruppe(this->_curWohngruppe->name());
+    else
+	this->_infoFrame->setCurWohngruppe("Keine Informationen verfügbar");
+
+}
 
 
 

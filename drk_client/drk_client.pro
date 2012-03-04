@@ -19,7 +19,9 @@ HEADERS += \
     ereignis.h \
     einzelereignis.h \
     projekt.h \
-    dokumentation.h
+    dokumentation.h \
+    WohngruppenUndBewohnerLaden.h \
+    pleaswaitdialog.h
 
 SOURCES += \
     mainwindow.cpp \
@@ -41,7 +43,8 @@ SOURCES += \
     ereignis.cpp \
     einzelereignis.cpp \
     projekt.cpp \
-    dokumentation.cpp
+    dokumentation.cpp \
+    pleaswaitdialog.cpp
 
 RESOURCES += \
     images.qrc
@@ -59,7 +62,8 @@ FORMS += \
     ereignis.ui \
     einzelereignis.ui \
     projekt.ui \
-    dokumentation.ui
+    dokumentation.ui \
+    pleaswaitdialog.ui
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../EBPdb/release/ -lEBPdb
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../EBPdb/debug/ -lEBPdb

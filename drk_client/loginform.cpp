@@ -34,4 +34,5 @@ void LoginForm::on_pushButton_clicked()
 void LoginForm::on_passwortLineEdit_returnPressed()
 {
     this->ui->pushButton->setFocus();
+    this->on_pushButton_clicked();
 }
