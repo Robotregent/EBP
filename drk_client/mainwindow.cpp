@@ -220,56 +220,64 @@ void MainWindow::loadWohnguppeUndBewohner()
 {
     if(this->PointerToConnection.isNull())
 	return;
-    //asynchrones Laden aller Wohngruppen und Bewohner
-    QFuture< QList < QSharedPointer <ebp::Wohngruppe> > > allGroups = QtConcurrent::run(ebp::loadAllGroups, this->PointerToConnection);
-    QFuture< QList < QSharedPointer <ebp::Bewohner> > > allBewohner = QtConcurrent::run(ebp::loadAllBewohner, this->PointerToConnection);
-    PleasWaitDialog *pwd=new PleasWaitDialog(this);
-    pwd->show();
-    allGroups.waitForFinished();
-    allBewohner.waitForFinished();
-    this->_alleBewohnerDerAktuellenGruppe=allBewohner.result();
-    this->_AlleWohngruppen = allGroups.result();
-    pwd->close();
 
     QSettings settings("EBP.ini", QSettings::IniFormat);
+    //asynchrones Laden aller Wohngruppen und Bewohner
+    QFuture< QList < QSharedPointer <ebp::Wohngruppe> > > allGroups = QtConcurrent::run(ebp::loadAllGroups, this->PointerToConnection);
+    PleasWaitDialog *pwd=new PleasWaitDialog(this);
+    pwd->show();
 
-    //Aktuellen Bewohner setzen
-    this->_curBewohner.isNull();
-    if (!_alleBewohnerDerAktuellenGruppe.isEmpty())
-    {
-	this->_curBewohner = _alleBewohnerDerAktuellenGruppe.first();
-	QString lastB = settings.value("lastBewohner",QVariant("NULL")).toString();
-	if (lastB != "NULL")
-	{
-	    foreach(QSharedPointer <ebp::Bewohner> bw , _alleBewohnerDerAktuellenGruppe)
-	    {
-		if (bw->name()==lastB)
-		{
-		    this->_curBewohner = bw;
-		    continue;
-		}
-	    }
-	}
-    }
-
+    // Wohngruppe
+    allGroups.waitForFinished();
+    this->_AlleWohngruppen = allGroups.result();
     //Aktuelle Wohngruppe setzen
     this->_curWohngruppe.isNull();
     if(!_AlleWohngruppen.isEmpty())
     {
-	this->_curWohngruppe = _AlleWohngruppen.first();
-	QString lastW = settings.value("lastWohngruppe",QVariant("NULL")).toString();
-	if (lastW != "NULL")
-	{
-	    foreach(QSharedPointer <ebp::Wohngruppe> wg, _AlleWohngruppen )
-	    {
-		if (wg->name() == lastW)
-		{
-		    this->_curWohngruppe = wg;
-		    continue;
-		}
-	    }
-	}
+        this->_curWohngruppe = _AlleWohngruppen.first();
+        QString lastW = settings.value("lastWohngruppe",QVariant("NULL")).toString();
+        if (lastW != "NULL")
+        {
+            foreach(QSharedPointer <ebp::Wohngruppe> wg, _AlleWohngruppen )
+            {
+                if (wg->name() == lastW)
+                {
+                    this->_curWohngruppe = wg;
+                    continue;
+                }
+            }
+        }
     }
+    if(!this->_curWohngruppe.isNull())
+    {
+        QFuture< QList < QSharedPointer <ebp::Bewohner> > > allBewohner = QtConcurrent::run(ebp::loadAllBewohner, this->PointerToConnection, this->_curWohngruppe);
+
+        allBewohner.waitForFinished();
+        this->_alleBewohnerDerAktuellenGruppe=allBewohner.result();
+
+        //Aktuellen Bewohner setzen
+        this->_curBewohner.isNull();
+        if (!_alleBewohnerDerAktuellenGruppe.isEmpty())
+        {
+            this->_curBewohner = _alleBewohnerDerAktuellenGruppe.first();
+            QString lastB = settings.value("lastBewohner",QVariant("NULL")).toString();
+            if (lastB != "NULL")
+            {
+                foreach(QSharedPointer <ebp::Bewohner> bw , _alleBewohnerDerAktuellenGruppe)
+                {
+                    if (bw->name()==lastB)
+                    {
+                        this->_curBewohner = bw;
+                        continue;
+                    }
+                }
+            }
+        }
+
+
+    }
+    pwd->close();
+
 
 }
 void MainWindow::setCurBewohnerAndWohngruppeInfo()
