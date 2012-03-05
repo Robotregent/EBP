@@ -2,7 +2,7 @@
 #define ADMINDIALOG_H
 
 #include <QDialog>
-
+#include <QFormLayout>
 #include <EBPdb/connection.hxx>
 #include "employeelistmodel.h"
 #include "costumlistwidget.h"
@@ -35,6 +35,9 @@ private slots:
 
     void on_button_B_speichern_clicked();
 
+    void on_button_O_eingabeloeschen_clicked();
+
+
 private:
     Ui::AdminDialog *ui;
     void init();
@@ -47,10 +50,13 @@ private:
     void setBWidget();
     void setMitarbiterVerwalten();
     void setBewohnerVerwalten();
+    //void setOEVerwalten();
+    void createWohngruppe();
 
+    //QList<QFormLayout *> OE_Formlayouts;
     QList< CostumListWidget < ebp::Wohngruppe > *> WohngruppenItems;
     QList< CostumListWidget < ebp::Bewohner > *> BewohnerItems;
-    QList< CostumTreeWidget < ebp::Wohngruppe > *> WohngruppeTreeItems;
+    QList< CostumListWidget < ebp::Wohngruppe > *> WohngruppeTreeItems;
     bool isPasswordValid();
     ebp::Mitarbeiter::Berechtigungen setBerechtigung();
     void loadData();

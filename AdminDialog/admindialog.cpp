@@ -4,6 +4,7 @@
 #include "employeelistmodel.h"
 #include <EBPdb/Mitarbeiter.hxx>
 #include <EBPdb/Wohngruppe.hxx>
+#include <EBPdb/Wohnheim.hxx>
 #include <QList>
 #include <QMessageBox>
 #include <QDebug>
@@ -305,13 +306,14 @@ void AdminDialog::setMitarbiterVerwalten()
     this->setOEWidget();
     this->setBWidget();
 }
+
 void AdminDialog::setBewohnerVerwalten()
 {
     if(!this->WohngruppeTreeItems.isEmpty())
     {
-	foreach (CostumTreeWidget<Wohngruppe> *i,this->WohngruppeTreeItems)
+	foreach (CostumListWidget<Wohngruppe> *i,this->WohngruppeTreeItems)
 	{
-	    this->ui->WohngruppeTree->removeItemWidget(i,0);
+	    this->ui->WohngruppeTree->removeItemWidget(i);
 	    delete i;
 	}
 	this->WohngruppeTreeItems.clear();
@@ -321,47 +323,50 @@ void AdminDialog::setBewohnerVerwalten()
 
     foreach (QSharedPointer<Wohngruppe> b, bList )
     {
-	this->WohngruppeTreeItems.append(new CostumTreeWidget<Wohngruppe>(b,this->ui->WohngruppeTree));
+	this->WohngruppeTreeItems.append(new CostumListWidget<Wohngruppe>(b,this->ui->WohngruppeTree));
     }
-    foreach (CostumTreeWidget<Wohngruppe> *i,this->WohngruppeTreeItems)
+    foreach (CostumListWidget<Wohngruppe> *i,this->WohngruppeTreeItems)
     {
-	/*i->setFlags(i->flags()|Qt::ItemIsUserCheckable);
-	i->setCheckState(0,Qt::Unchecked);*/
-	this->ui->WohngruppeTree->addTopLevelItem(i);
+	this->ui->WohngruppeTree->addItem(i);
     }
 
 }
 
 void AdminDialog::on_button_O_speichern_clicked()
+{ 
+	this->createWohngruppe();
+}
+void AdminDialog::createWohngruppe()
 {
-    switch (this->ui->box_O_kategorie->currentIndex())
+    if (this->ui->lineEdit_O->text().isEmpty()||this->ui->lineEdit_O->text().isNull())
+	return;
+    QSharedPointer<Wohngruppe> tmpwg
+    (
+	    new Wohngruppe
+	    (
+		    this->ui->lineEdit_O->text()
+	    )
+    );
+    if (tmpwg->create( this->PointerToConnection ))
     {
-    case 0:
-	QSharedPointer<Wohngruppe> tmpwg
-	(
-		new Wohngruppe
-		(
-			this->ui->lineEdit_O_name->text()
-		)
-	);
-	if (tmpwg->create( this->PointerToConnection ))
-	{
-	    CostumListWidget<Wohngruppe> *newWG1 =new CostumListWidget<Wohngruppe>(tmpwg,this->ui->O_list);
-	    newWG1->setFlags(newWG1->flags()|Qt::ItemIsUserCheckable);
-	    newWG1->setCheckState(Qt::Unchecked);
-	    this->WohngruppenItems.append(newWG1);
-	    this->ui->O_list->addItem(newWG1);
+	CostumListWidget<Wohngruppe> *newWG1 =new CostumListWidget<Wohngruppe>(tmpwg,this->ui->O_list);
+	newWG1->setFlags(newWG1->flags()|Qt::ItemIsUserCheckable);
+	newWG1->setCheckState(Qt::Unchecked);
+	this->WohngruppenItems.append(newWG1);
+	this->ui->O_list->addItem(newWG1);
 
-	    CostumTreeWidget<Wohngruppe> *newWG2 =new CostumTreeWidget<Wohngruppe>(tmpwg,this->ui->WohngruppeTree);
-	    this->WohngruppeTreeItems.append(newWG2);
-	    this->ui->WohngruppeTree->addTopLevelItem(newWG2);
-	    qDebug()<<"Erfolg!";
-	}
-	else
-	{
-	    qDebug()<<"Fehler!";
-	}
-	break;
+	CostumListWidget<Wohngruppe> *newWG2 =new CostumListWidget<Wohngruppe>(tmpwg,this->ui->WohngruppeTree);
+
+	this->WohngruppeTreeItems.append(newWG2);
+	this->ui->WohngruppeTree->addItem(newWG2);
+
+	//qDebug()<<"Erfolg!";
+	QMessageBox::about(this, tr("Erfolg"),tr("Wohngruppe wurde erfolgreich angeleg"));
+	this->ui->lineEdit_O->setText("");
+    }
+    else
+    {
+	QMessageBox::critical(this, tr("Warnung"),tr("Wohngruppe konnte nicht angeleg"));
     }
 }
 
@@ -388,3 +393,10 @@ void AdminDialog::on_button_B_speichern_clicked()
     tmpBew->linkWohngruppe(tmpBew,tmpWg);
     tmpBew->update(this->PointerToConnection);
 }
+
+void AdminDialog::on_button_O_eingabeloeschen_clicked()
+{
+    this->ui->lineEdit_O->text().clear();
+}
+
+
