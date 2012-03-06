@@ -20,6 +20,7 @@ public:
     explicit AdminDialog(QWidget *parent = 0);
     QSharedPointer<ebp::connection> dbPointer() { return this->PointerToConnection; }
     ~AdminDialog();
+    bool deleteWohngruppe(int index);
 
 private slots:
     void on_button_MA_suchen_clicked();
@@ -37,6 +38,8 @@ private slots:
 
     void on_button_O_eingabeloeschen_clicked();
 
+
+    void on_button_O_waehlen_clicked();
 
 private:
     Ui::AdminDialog *ui;

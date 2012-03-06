@@ -2,6 +2,8 @@
 #include "ui_admindialog.h"
 #include "chooseemployee.h"
 #include "employeelistmodel.h"
+#include "costumdeletedialog.h"
+
 #include <EBPdb/Mitarbeiter.hxx>
 #include <EBPdb/Wohngruppe.hxx>
 #include <EBPdb/Wohnheim.hxx>
@@ -400,3 +402,30 @@ void AdminDialog::on_button_O_eingabeloeschen_clicked()
 }
 
 
+
+void AdminDialog::on_button_O_waehlen_clicked()
+{
+    WohngruppenDeleteDialog *wgdd = new WohngruppenDeleteDialog(this->WohngruppenItems,this);
+    wgdd->show();
+}
+bool AdminDialog::deleteWohngruppe(int index)
+{
+    bool ret = false;
+    QSharedPointer<Wohngruppe> tmpWg= this->WohngruppenItems.at(index)->getCitem();
+    if(tmpWg->remove(this->PointerToConnection))
+    {
+	//Aus der aktuellen Ansicht löschen
+	QMessageBox::about(this,"Erfolg",tr(this->WohngruppenItems.at(index)->text() + " erfolgreich gelöscht!"));
+	delete this->ui->O_list->takeItem(index);
+	this->WohngruppenItems.removeAt(index);
+
+	delete this->ui->WohngruppeTree->takeItem(index);
+	this->WohngruppeTreeItems.removeAt(index);
+	ret = true;
+    }
+    else
+    {
+	QMessageBox::critical(this,tr("Fehlschlag","Löschen fehlgeschlagen"));
+    }
+    return ret;
+}
