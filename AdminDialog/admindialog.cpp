@@ -372,30 +372,53 @@ void AdminDialog::createWohngruppe()
     }
 }
 
+/**
+* \brief Neuen Bewohner anlegen
+**/
 void AdminDialog::on_button_B_speichern_clicked()
 {
+    //Werte testen
     if (this->ui->Bewohnernummer->text().isEmpty()||this->ui->Bewohnernummer->text().isNull())
 	return;
+    if (this->ui->vornameLineEdit->text().isEmpty()||this->ui->vornameLineEdit->text().isNull())
+	return;
+    if (this->ui->nachnameLineEdit->text().isEmpty()||this->ui->nachnameLineEdit->text().isNull())
+	return;
+    if (!this->ui->WohngruppeTree->currentIndex().isValid())
+	return;
+
+    //
     QSharedPointer<Bewohner> tmpBew
     (
-		new Bewohner (this->ui->Bewohnernummer->text().toULong(),this->ui->Bewohnernummer->text(), QDate(), " ", " ", " ")
+	new Bewohner (this->ui->Bewohnernummer->value(),this->ui->vornameLineEdit->text()+" "+this->ui->nachnameLineEdit->text(), QDate(), " ", " ", " ")
     );
     if (tmpBew->create( this->PointerToConnection ))
     {
 	CostumListWidget<Bewohner> *newBew=new CostumListWidget<Bewohner>(tmpBew,this->ui->B_list);
-	this->BewohnerItems.append(newBew);
-	newBew->setFlags(newBew->flags()|Qt::ItemIsUserCheckable);
-	newBew->setCheckState(Qt::Unchecked);
-	this->ui->B_list->addItem(newBew);
-	qDebug()<<"Erfolg!";
+	if (newBew!= NULL)
+	{
+	    this->BewohnerItems.append(newBew);
+	    newBew->setFlags(newBew->flags()|Qt::ItemIsUserCheckable);
+	    newBew->setCheckState(Qt::Unchecked);
+	    this->ui->B_list->addItem(newBew);
+	    qDebug()<<"Erfolg!";
+	}
+
+	QSharedPointer<Wohngruppe> tmpWg = this->WohngruppeTreeItems.at(this->ui->WohngruppeTree->currentIndex().row())->getCitem();
+	tmpBew->linkWohngruppe(tmpBew,tmpWg);
+	tmpBew->update(this->PointerToConnection);
+
+	//Masken leeren
+	this->ui->vornameLineEdit->clear();
+	this->ui->nachnameLineEdit->clear();
+	this->ui->Bewohnernummer->cleanText();
+	this->ui->Bewohnernummer->clear();
     }
     else
     {
 	qDebug()<<"Fehler!";
     }
-    QSharedPointer<Wohngruppe> tmpWg = this->WohngruppeTreeItems.at(this->ui->WohngruppeTree->currentIndex().row())->getCitem();
-    tmpBew->linkWohngruppe(tmpBew,tmpWg);
-    tmpBew->update(this->PointerToConnection);
+
 }
 
 void AdminDialog::on_button_O_eingabeloeschen_clicked()
@@ -430,4 +453,29 @@ bool AdminDialog::deleteWohngruppe(int index)
 	QMessageBox::critical(this,"Fehlschlag","Löschen fehlgeschlagen");
     }
     return ret;
+}
+bool AdminDialog::deleteBewohner(int index)
+{
+    bool ret = false;
+
+    QSharedPointer<ebp::Bewohner> tmpBW= this->BewohnerItems.at(index)->getCitem();
+    if(tmpBW->remove(this->PointerToConnection))
+    {
+	//Aus der aktuellen Ansicht löschen
+	QMessageBox::about(this,"Erfolg",this->BewohnerItems.at(index)->text() + " erfolgreich gelöscht!");
+	delete this->ui->B_list->takeItem(index);
+	this->BewohnerItems.removeAt(index);
+	ret = true;
+    }
+    else
+    {
+	QMessageBox::critical(this,"Fehlschlag","Löschen fehlgeschlagen");
+    }
+    return ret;
+}
+
+void AdminDialog::on_button_B_waelen_clicked()
+{
+    BewohnerDeleteDialog *bwdd = new BewohnerDeleteDialog(this->BewohnerItems,this);
+    bwdd->show();
 }

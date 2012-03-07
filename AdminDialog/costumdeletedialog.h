@@ -41,7 +41,7 @@ private slots:
     void on_pushButton_2_clicked();
 };
 
-/*
+
 class BewohnerDeleteDialog : public CostumDeleteDialog
 {
     Q_OBJECT
@@ -57,5 +57,5 @@ private:
 private slots:
     void on_pushButton_2_clicked();
 };
-*/
+
 #endif // COSTUMDELETEDIALOG_H

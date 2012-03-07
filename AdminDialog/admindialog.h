@@ -21,6 +21,7 @@ public:
     QSharedPointer<ebp::connection> dbPointer() { return this->PointerToConnection; }
     ~AdminDialog();
     bool deleteWohngruppe(int index);
+    bool deleteBewohner(int index);
 
 private slots:
     void on_button_MA_suchen_clicked();
@@ -40,6 +41,8 @@ private slots:
 
 
     void on_button_O_waehlen_clicked();
+
+    void on_button_B_waelen_clicked();
 
 private:
     Ui::AdminDialog *ui;
