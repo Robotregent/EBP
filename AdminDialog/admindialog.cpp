@@ -41,11 +41,6 @@ void AdminDialog::init()
     this->ui->passwortLineEdit->setEchoMode(QLineEdit::Password);
     this->ui->passwortWiederholenLineEdit->setEchoMode(QLineEdit::Password);
     this->ui->passwortLineEdit_2->setEchoMode(QLineEdit::Password);
-    this->ui->berechtigungComboBox->addItems(QStringList()
-					     <<tr("WohngruppenRecht")
-					     <<tr("WohnheimRecht")
-					     <<tr("WohnverbundRecht")
-					     <<tr("AdminRecht"));
 
     this->setLogin();
 
@@ -163,14 +158,15 @@ void AdminDialog::on_ButtonLogin_clicked()
     {
 	this->setContent();
 	this->model = new EmployeeTableModel(Mitarbeiter::loadAll(this->PointerToConnection));
+	this->setMitarbiterVerwalten();
+	this->setBewohnerVerwalten();
     }
     else
     {
 	QMessageBox::critical(this,tr("Fehlerhafter Login"),tr("Es konnte keine Veerbindung zur Datenbank hergestellt werden. Überprüfen Sie bitte ihre Logindaten"));
     }
     this->clearLogin();
-    this->setMitarbiterVerwalten();
-    this->setBewohnerVerwalten();
+
 
 }
 void AdminDialog::clearLogin()
@@ -219,7 +215,7 @@ void AdminDialog::on_button_MA_eingabeloeschen_clicked()
 }
 Mitarbeiter::Berechtigungen AdminDialog::setBerechtigung()
 {
-    Mitarbeiter::Berechtigungen res = Mitarbeiter::WohngruppenRecht;
+    /*Mitarbeiter::Berechtigungen res = Mitarbeiter::WohngruppenRecht;
     switch (this->ui->berechtigungComboBox->currentIndex())
     {
     case 0:
@@ -237,8 +233,8 @@ Mitarbeiter::Berechtigungen AdminDialog::setBerechtigung()
     default:
 	break;
     }
-
-    return res;
+    */
+    return Mitarbeiter::WohngruppenRecht;
 }
 
 void AdminDialog::on_ButtonAusloggen_clicked()
@@ -308,7 +304,9 @@ void AdminDialog::setMitarbiterVerwalten()
     this->setOEWidget();
     this->setBWidget();
 }
-
+/**
+  * \brief Daten für Tab Bewoner verwalten laden
+  */
 void AdminDialog::setBewohnerVerwalten()
 {
     if(!this->WohngruppeTreeItems.isEmpty())
@@ -338,6 +336,7 @@ void AdminDialog::on_button_O_speichern_clicked()
 { 
 	this->createWohngruppe();
 }
+
 void AdminDialog::createWohngruppe()
 {
     if (this->ui->lineEdit_O->text().isEmpty()||this->ui->lineEdit_O->text().isNull())
@@ -433,6 +432,7 @@ void AdminDialog::on_button_O_waehlen_clicked()
     WohngruppenDeleteDialog *wgdd = new WohngruppenDeleteDialog(this->WohngruppenItems,this);
     wgdd->show();
 }
+
 bool AdminDialog::deleteWohngruppe(int index)
 {
     bool ret = false;

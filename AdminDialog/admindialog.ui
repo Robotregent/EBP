@@ -25,7 +25,7 @@
      <item>
       <widget class="QTabWidget" name="tabWidget">
        <property name="currentIndex">
-        <number>2</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="tab_login">
         <attribute name="title">
@@ -123,165 +123,161 @@
         </attribute>
         <layout class="QVBoxLayout" name="verticalLayout_13" stretch="0,0,0,0">
          <item>
-          <widget class="QTabWidget" name="MAHinzufuegen">
-           <property name="currentIndex">
-            <number>2</number>
+          <widget class="QGroupBox" name="groupBox_4">
+           <property name="title">
+            <string>Hinzufügen</string>
            </property>
-           <widget class="QWidget" name="tab_MA_A">
-            <attribute name="title">
-             <string>Allgemeine Informationen</string>
-            </attribute>
-            <layout class="QVBoxLayout" name="verticalLayout_7" stretch="1">
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_8">
-               <property name="spacing">
-                <number>9</number>
-               </property>
-               <item>
-                <layout class="QFormLayout" name="formLayout_3">
-                 <property name="fieldGrowthPolicy">
-                  <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-                 </property>
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="loginNameLabel_2">
-                   <property name="text">
-                    <string>Login Name:</string>
-                   </property>
-                   <property name="buddy">
-                    <cstring>loginNameLineEdit_2</cstring>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="1">
-                  <widget class="QLineEdit" name="loginNameLineEdit_2"/>
-                 </item>
-                 <item row="1" column="0">
-                  <widget class="QLabel" name="passwortLabel_2">
-                   <property name="text">
-                    <string>Passwort:</string>
-                   </property>
-                   <property name="buddy">
-                    <cstring>passwortLineEdit_2</cstring>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="1">
-                  <widget class="QLineEdit" name="passwortLineEdit_2"/>
-                 </item>
-                 <item row="2" column="0">
-                  <widget class="QLabel" name="passwortWiederholenLabel">
-                   <property name="text">
-                    <string>Passwort wiederholen:</string>
-                   </property>
-                   <property name="buddy">
-                    <cstring>passwortWiederholenLineEdit</cstring>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="1">
-                  <widget class="QLineEdit" name="passwortWiederholenLineEdit"/>
-                 </item>
-                 <item row="3" column="0">
-                  <widget class="QLabel" name="nameLabel">
-                   <property name="text">
-                    <string>Name:</string>
-                   </property>
-                   <property name="buddy">
-                    <cstring>nameLineEdit</cstring>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="3" column="1">
-                  <widget class="QLineEdit" name="nameLineEdit"/>
-                 </item>
-                 <item row="4" column="0">
-                  <widget class="QLabel" name="telefonLabel">
-                   <property name="text">
-                    <string>Telefon:</string>
-                   </property>
-                   <property name="buddy">
-                    <cstring>telefonLineEdit</cstring>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="4" column="1">
-                  <widget class="QLineEdit" name="telefonLineEdit"/>
-                 </item>
-                 <item row="5" column="0">
-                  <widget class="QLabel" name="eMailLabel">
-                   <property name="text">
-                    <string>E-Mail:</string>
-                   </property>
-                   <property name="buddy">
-                    <cstring>eMailLineEdit</cstring>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="5" column="1">
-                  <widget class="QLineEdit" name="eMailLineEdit"/>
-                 </item>
-                 <item row="6" column="0">
-                  <widget class="QLabel" name="berechtigungLabel">
-                   <property name="text">
-                    <string>Berechtigung:</string>
-                   </property>
-                   <property name="buddy">
-                    <cstring>berechtigungComboBox</cstring>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="6" column="1">
-                  <widget class="QComboBox" name="berechtigungComboBox"/>
-                 </item>
-                </layout>
-               </item>
-              </layout>
-             </item>
-            </layout>
-           </widget>
-           <widget class="QWidget" name="tab_MA_O">
-            <attribute name="title">
-             <string>Organisationseinheit zuordnen</string>
-            </attribute>
-            <layout class="QVBoxLayout" name="verticalLayout_4">
-             <item>
-              <widget class="QLabel" name="label">
-               <property name="text">
-                <string>Ordnen Sie  Wohngruppen / Wohnheime / Wohnerbund dem neuen Mitarbeiter zu</string>
-               </property>
+           <layout class="QVBoxLayout" name="verticalLayout_10">
+            <item>
+             <widget class="QTabWidget" name="MAHinzufuegen">
+              <property name="currentIndex">
+               <number>0</number>
+              </property>
+              <widget class="QWidget" name="tab_MA_A">
+               <attribute name="title">
+                <string>Allgemeine Informationen</string>
+               </attribute>
+               <layout class="QVBoxLayout" name="verticalLayout_7" stretch="1">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_8">
+                  <property name="spacing">
+                   <number>9</number>
+                  </property>
+                  <item>
+                   <layout class="QFormLayout" name="formLayout_3">
+                    <property name="fieldGrowthPolicy">
+                     <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+                    </property>
+                    <item row="0" column="0">
+                     <widget class="QLabel" name="loginNameLabel_2">
+                      <property name="text">
+                       <string>Login Name:</string>
+                      </property>
+                      <property name="buddy">
+                       <cstring>loginNameLineEdit_2</cstring>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="1">
+                     <widget class="QLineEdit" name="loginNameLineEdit_2"/>
+                    </item>
+                    <item row="1" column="0">
+                     <widget class="QLabel" name="passwortLabel_2">
+                      <property name="text">
+                       <string>Passwort:</string>
+                      </property>
+                      <property name="buddy">
+                       <cstring>passwortLineEdit_2</cstring>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="1">
+                     <widget class="QLineEdit" name="passwortLineEdit_2"/>
+                    </item>
+                    <item row="2" column="0">
+                     <widget class="QLabel" name="passwortWiederholenLabel">
+                      <property name="text">
+                       <string>Passwort wiederholen:</string>
+                      </property>
+                      <property name="buddy">
+                       <cstring>passwortWiederholenLineEdit</cstring>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="2" column="1">
+                     <widget class="QLineEdit" name="passwortWiederholenLineEdit"/>
+                    </item>
+                    <item row="3" column="0">
+                     <widget class="QLabel" name="nameLabel">
+                      <property name="text">
+                       <string>Name:</string>
+                      </property>
+                      <property name="buddy">
+                       <cstring>nameLineEdit</cstring>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="3" column="1">
+                     <widget class="QLineEdit" name="nameLineEdit"/>
+                    </item>
+                    <item row="4" column="0">
+                     <widget class="QLabel" name="telefonLabel">
+                      <property name="text">
+                       <string>Telefon:</string>
+                      </property>
+                      <property name="buddy">
+                       <cstring>telefonLineEdit</cstring>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="4" column="1">
+                     <widget class="QLineEdit" name="telefonLineEdit"/>
+                    </item>
+                    <item row="5" column="0">
+                     <widget class="QLabel" name="eMailLabel">
+                      <property name="text">
+                       <string>E-Mail:</string>
+                      </property>
+                      <property name="buddy">
+                       <cstring>eMailLineEdit</cstring>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="5" column="1">
+                     <widget class="QLineEdit" name="eMailLineEdit"/>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
               </widget>
-             </item>
-             <item>
-              <widget class="QListWidget" name="O_list"/>
-             </item>
-            </layout>
-           </widget>
-           <widget class="QWidget" name="tab_MA_B">
-            <attribute name="title">
-             <string>Bezugspersonen zuordnen</string>
-            </attribute>
-            <layout class="QVBoxLayout" name="verticalLayout_5">
-             <item>
-              <widget class="QLabel" name="label_2">
-               <property name="text">
-                <string>Ordnen Sie dem neuen Mitarbeiter die Bezugspersonen zu</string>
-               </property>
+              <widget class="QWidget" name="tab_MA_O">
+               <attribute name="title">
+                <string>Organisationseinheit zuordnen</string>
+               </attribute>
+               <layout class="QVBoxLayout" name="verticalLayout_4">
+                <item>
+                 <widget class="QLabel" name="label">
+                  <property name="text">
+                   <string>Ordnen Sie  Wohngruppen / Wohnheime / Wohnerbund dem neuen Mitarbeiter zu</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QListWidget" name="O_list"/>
+                </item>
+               </layout>
               </widget>
-             </item>
-             <item>
-              <widget class="QListWidget" name="B_list"/>
-             </item>
-            </layout>
-           </widget>
+              <widget class="QWidget" name="tab_MA_B">
+               <attribute name="title">
+                <string>Bezugspersonen zuordnen</string>
+               </attribute>
+               <layout class="QVBoxLayout" name="verticalLayout_5">
+                <item>
+                 <widget class="QLabel" name="label_2">
+                  <property name="text">
+                   <string>Ordnen Sie dem neuen Mitarbeiter die Bezugspersonen zu</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QListWidget" name="B_list"/>
+                </item>
+               </layout>
+              </widget>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
          <item>
@@ -516,7 +512,7 @@
        </widget>
        <widget class="QWidget" name="tab_Organisationseinheiten">
         <attribute name="title">
-         <string>Organisationseinheiten verwalten</string>
+         <string>Wohngruppen verwalten</string>
         </attribute>
         <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,0,0">
          <item>
@@ -687,14 +683,6 @@
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
   <tabstop>tabWidget</tabstop>
-  <tabstop>MAHinzufuegen</tabstop>
-  <tabstop>loginNameLineEdit_2</tabstop>
-  <tabstop>passwortLineEdit_2</tabstop>
-  <tabstop>passwortWiederholenLineEdit</tabstop>
-  <tabstop>nameLineEdit</tabstop>
-  <tabstop>telefonLineEdit</tabstop>
-  <tabstop>eMailLineEdit</tabstop>
-  <tabstop>berechtigungComboBox</tabstop>
   <tabstop>button_MA_speichern</tabstop>
   <tabstop>button_MA_eingabeloeschen</tabstop>
   <tabstop>pushButton</tabstop>
@@ -709,7 +697,6 @@
   <tabstop>button_O_speichern</tabstop>
   <tabstop>button_O_eingabeloeschen</tabstop>
   <tabstop>button_O_waehlen</tabstop>
-  <tabstop>O_list</tabstop>
   <tabstop>ButtonAusloggen</tabstop>
   <tabstop>button_abbrechen</tabstop>
  </tabstops>
