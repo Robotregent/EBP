@@ -45,13 +45,16 @@ namespace ebp
 		const QSharedPointer<Wohnheim> & wohnheim() const;
 		DATABASEOBJECT_DECLARE_LINK( Wohngruppe, Wohnheim, Wohnheim )
 
-		QList< QSharedPointer<Mitarbeiter> > loadMitarbeiter( const QSharedPointer<ebp::connection> & connection ) const;
+//		QList< QSharedPointer<Mitarbeiter> > loadMitarbeiter( const QSharedPointer<ebp::connection> & connection ) const;
+		DATABASEOBJECT_DECLARE_LOAD( Mitarbeiter, Mitarbeiter )
 		DATABASEOBJECT_DECLARE_LINK( Wohngruppe, Mitarbeiter, Mitarbeiter )
 
-		QList< QSharedPointer<Bewohner> > loadBewohner( const QSharedPointer<ebp::connection> & connection ) const;
+//		QList< QSharedPointer<Bewohner> > loadBewohner( const QSharedPointer<ebp::connection> & connection ) const;
+		DATABASEOBJECT_DECLARE_LOAD( Bewohner, Bewohner )
 		DATABASEOBJECT_DECLARE_LINK_INVERSE( Wohngruppe, Bewohner, Bewohner )
 
-		QList< QSharedPointer<Wohngruppenereignis> > loadEreignisse( const QSharedPointer<ebp::connection> & connection ) const;
+//		QList< QSharedPointer<Wohngruppenereignis> > loadEreignisse( const QSharedPointer<ebp::connection> & connection ) const;
+		DATABASEOBJECT_DECLARE_LOAD( Ereignisse, Wohngruppenereignis )
 		DATABASEOBJECT_DECLARE_LINK_INVERSE( Wohngruppe, Ereignis, Wohngruppenereignis )
 
 	private:

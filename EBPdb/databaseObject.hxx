@@ -133,6 +133,22 @@ void FROM::unlink##FROM_NAME( QSharedPointer<FROM> & from, QSharedPointer<TO> & 
 	} \
 } \
 
+#define DATABASEOBJECT_IMPLEMENT_LOAD( CLASS, NAME, MEMBER_CLASS, MEMBER_NAME ) \
+QList< QSharedPointer<MEMBER_CLASS> > CLASS::load##NAME( const QSharedPointer<ebp::connection> & connection ) const \
+{ \
+	QList< QSharedPointer<MEMBER_CLASS> > ret; \
+	odb::transaction t( connection->getDB()->begin() ); \
+	for( QList< QLazyWeakPointer<MEMBER_CLASS> >::const_iterator i = MEMBER_NAME.begin(); i != MEMBER_NAME.end(); ++i ) \
+	{ \
+		ret.push_back( (*i).load() ); \
+	} \
+	t.commit(); \
+	return ret; \
+} \
+
+#define DATABASEOBJECT_DECLARE_LOAD( NAME, MEMBER_CLASS ) \
+QList< QSharedPointer<MEMBER_CLASS> > load##NAME( const QSharedPointer<ebp::connection> & connection ) const; \
+
 
 namespace ebp
 {
