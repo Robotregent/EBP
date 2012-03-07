@@ -3,7 +3,7 @@
 #include "chooseemployee.h"
 #include "employeelistmodel.h"
 #include "costumdeletedialog.h"
-
+//#include "wohngruppedeletedialog.h"
 #include <EBPdb/Mitarbeiter.hxx>
 #include <EBPdb/Wohngruppe.hxx>
 #include <EBPdb/Wohnheim.hxx>
@@ -363,7 +363,7 @@ void AdminDialog::createWohngruppe()
 	this->ui->WohngruppeTree->addItem(newWG2);
 
 	//qDebug()<<"Erfolg!";
-	QMessageBox::about(this, tr("Erfolg"),tr("Wohngruppe wurde erfolgreich angeleg"));
+	QMessageBox::about(this, tr("Erfolg"),tr("Wohngruppe wurde erfolgreich angelegt"));
 	this->ui->lineEdit_O->setText("");
     }
     else
@@ -374,6 +374,8 @@ void AdminDialog::createWohngruppe()
 
 void AdminDialog::on_button_B_speichern_clicked()
 {
+    if (this->ui->Bewohnernummer->text().isEmpty()||this->ui->Bewohnernummer->text().isNull())
+	return;
     QSharedPointer<Bewohner> tmpBew
     (
 		new Bewohner (this->ui->Bewohnernummer->text().toULong(),this->ui->Bewohnernummer->text(), QDate(), " ", " ", " ")
@@ -415,7 +417,7 @@ bool AdminDialog::deleteWohngruppe(int index)
     if(tmpWg->remove(this->PointerToConnection))
     {
 	//Aus der aktuellen Ansicht löschen
-	QMessageBox::about(this,"Erfolg",tr(this->WohngruppenItems.at(index)->text() + " erfolgreich gelöscht!"));
+	QMessageBox::about(this,"Erfolg",this->WohngruppenItems.at(index)->text() + " erfolgreich gelöscht!");
 	delete this->ui->O_list->takeItem(index);
 	this->WohngruppenItems.removeAt(index);
 
@@ -425,7 +427,7 @@ bool AdminDialog::deleteWohngruppe(int index)
     }
     else
     {
-	QMessageBox::critical(this,tr("Fehlschlag","Löschen fehlgeschlagen"));
+	QMessageBox::critical(this,"Fehlschlag","Löschen fehlgeschlagen");
     }
     return ret;
 }

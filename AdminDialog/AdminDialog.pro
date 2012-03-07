@@ -17,7 +17,8 @@ SOURCES += main.cpp\
     chooseemployee.cpp \
     employeelistmodel.cpp \
     zuordnung.cpp \
-    costumdeletedialog.cpp
+    costumdeletedialog.cpp \
+    wohngruppedeletedialog.cpp
 
 HEADERS  += admindialog.h \
     chooseemployee.h \
@@ -25,7 +26,8 @@ HEADERS  += admindialog.h \
     costumlistwidget.h \
     costumtreewidget.h \
     zuordnung.h \
-    costumdeletedialog.h
+    costumdeletedialog.h \
+    wohngruppedeletedialog.h
 
 FORMS    += admindialog.ui \
     chooseemployee.ui \

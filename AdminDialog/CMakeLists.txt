@@ -3,12 +3,18 @@ cmake_policy( SET CMP0015 NEW )
 # set project's name
 PROJECT(AdminDialog)
 
+
+FIND_PACKAGE( Qt4 REQUIRED )
+INCLUDE( ${QT_USE_FILE} )
+
 # with SET() command you can change variables or define new ones
 # here we define SAMPLE_SRCS variable that contains a list of all .cpp files
 SET( SAMPLE_SRCS
 	admindialog.cpp
 	chooseemployee.cpp
+	costumdeletedialog.cpp
 	employeelistmodel.cpp
+#	wohngruppedeletedialog.cpp
 	main.cpp
 #	oelistwidgetitem.cpp
 #	costumlistwidget.cpp
@@ -18,7 +24,9 @@ SET( SAMPLE_SRCS
 SET( SAMPLE_MOC_HDRS
        admindialog.h
 	chooseemployee.h
+	costumdeletedialog.h
 	employeelistmodel.h
+#	wohngruppedeletedialog.h
 #	oelistwidgetitem.h
 )
 #lib directories
@@ -40,6 +48,7 @@ SET(AdminDialog_libraries
 SET( SAMPLE_UIS
 	admindialog.ui
 	chooseemployee.ui
+	costumdeletedialog.ui
 )
 # and finally an resource file
 # SET( SAMPLE_RCS
