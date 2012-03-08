@@ -60,18 +60,20 @@ void AdminDialog::on_button_MA_speichern_clicked()
 	QList<QSharedPointer<Wohngruppe> > w = QList<QSharedPointer<Wohngruppe> >();
 
 
+
 	//QList<QSharedPointer<Projekt> > p = QList<QSharedPointer<Projekt> >();
 	QList<QSharedPointer<Bewohner> > b = QList<QSharedPointer<Bewohner> >();
 
+	//Bei leeren Feldern ein leerzeichen mitgeben
 	QSharedPointer<Mitarbeiter> ma
 	(
 		    new Mitarbeiter
 		    (
-			this->ui->loginNameLineEdit_2->text(),
+			this->ui->loginNameLineEdit_2->text().isEmpty() ? " " : this->ui->loginNameLineEdit_2->text(),
 			this->setBerechtigung(),
-			this->ui->nameLineEdit->text(),
-			this->ui->eMailLineEdit->text(),
-			this->ui->telefonLineEdit->text()
+			this->ui->nameLineEdit->text().isEmpty() ?  " " : this->ui->nameLineEdit->text(),
+			this->ui->eMailLineEdit->text().isEmpty() ?  " " : this->ui->eMailLineEdit->text(),
+			this->ui->telefonLineEdit->text().isEmpty() ? " " : this->ui->telefonLineEdit->text()
 		     )
 	);
 
@@ -113,6 +115,7 @@ void AdminDialog::on_button_MA_speichern_clicked()
 		bg->update(this->PointerToConnection);
 	    }
 	    ma->update(this->PointerToConnection);
+	    this->model->addMitarbeiter(ma);
 	    QMessageBox::information(this,tr("Mitarbeiter erfolgreich angelegt"),tr("Mitarbeiter erfolgreich angelegt"));
 	}
 	else
@@ -215,26 +218,20 @@ void AdminDialog::on_button_MA_eingabeloeschen_clicked()
 }
 Mitarbeiter::Berechtigungen AdminDialog::setBerechtigung()
 {
-    /*Mitarbeiter::Berechtigungen res = Mitarbeiter::WohngruppenRecht;
-    switch (this->ui->berechtigungComboBox->currentIndex())
+    Mitarbeiter::Berechtigungen res = Mitarbeiter::WohngruppenRecht;
+    switch (this->ui->BerechtigungenBox->currentIndex())
     {
     case 0:
 	res = Mitarbeiter::WohngruppenRecht;
 	break;
     case 1:
-	res = Mitarbeiter::WohnheimRecht;
-	break;
-    case 2:
-	res = Mitarbeiter::WohnverbundRecht;
-	break;
-    case 3:
 	res = Mitarbeiter::AdminRecht;
 	break;
     default:
 	break;
     }
-    */
-    return Mitarbeiter::WohngruppenRecht;
+
+    return res;
 }
 
 void AdminDialog::on_ButtonAusloggen_clicked()
@@ -279,7 +276,7 @@ void AdminDialog::setBWidget()
 	}
 	this->BewohnerItems.clear();
     }
-    QList < QSharedPointer<Bewohner> > bList = Bewohner::loadAll(this->PointerToConnection);
+    QList < QSharedPointer<Bewohner> > bList = ebp::Bewohner::loadAll(this->PointerToConnection);
     this->BewohnerItems.clear();
 
     foreach (QSharedPointer<Bewohner> b, bList )

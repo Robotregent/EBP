@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>802</width>
-    <height>594</height>
+    <height>597</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -235,6 +235,27 @@
                     <item row="5" column="1">
                      <widget class="QLineEdit" name="eMailLineEdit"/>
                     </item>
+                    <item row="6" column="0">
+                     <widget class="QLabel" name="berechtigungenLabel">
+                      <property name="text">
+                       <string>Berechtigungen</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="6" column="1">
+                     <widget class="QComboBox" name="BerechtigungenBox">
+                      <item>
+                       <property name="text">
+                        <string>Wohgruppen Berechtigung</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>Administrator Berechtigung</string>
+                       </property>
+                      </item>
+                     </widget>
+                    </item>
                    </layout>
                   </item>
                  </layout>
@@ -243,13 +264,13 @@
               </widget>
               <widget class="QWidget" name="tab_MA_O">
                <attribute name="title">
-                <string>Organisationseinheit zuordnen</string>
+                <string>Wohngruppen zuordnen</string>
                </attribute>
                <layout class="QVBoxLayout" name="verticalLayout_4">
                 <item>
                  <widget class="QLabel" name="label">
                   <property name="text">
-                   <string>Ordnen Sie  Wohngruppen / Wohnheime / Wohnerbund dem neuen Mitarbeiter zu</string>
+                   <string>Ordnen Sie  Wohngruppen dem neuen Mitarbeiter zu</string>
                   </property>
                  </widget>
                 </item>

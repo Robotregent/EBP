@@ -68,3 +68,14 @@ QVariant EmployeeTableModel::headerData(int section, Qt::Orientation orientation
     }
     return result;
 }
+QSharedPointer<ebp::Mitarbeiter> EmployeeTableModel::getMitarbeiter(int index)
+{
+    QSharedPointer<ebp::Mitarbeiter> res = QSharedPointer<ebp::Mitarbeiter>();
+    if (this->EmployeeList.count() >= index)
+	res = this->EmployeeList.at(index);
+    return res;
+}
+void EmployeeTableModel::addMitarbeiter(QSharedPointer<ebp::Mitarbeiter> newMA)
+{
+    this->EmployeeList.append(newMA);
+}

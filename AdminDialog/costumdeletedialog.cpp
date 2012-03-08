@@ -32,6 +32,7 @@ void CostumDeleteDialog::on_pushButton_clicked()
 WohngruppenDeleteDialog::WohngruppenDeleteDialog(QList<CostumListWidget<ebp::Wohngruppe> *> _itemList, QWidget *parent) :
     CostumDeleteDialog(parent),itemList(_itemList)
 {
+    this->setWindowTitle(tr("Wohngruppe löschen"));
     this->ui->label->setText(tr("Folgende Wohngruppe aus der Datenbank löschen:"));
     parentAdmin = (AdminDialog *) parent;
     for (int i = 0 ; i<itemList.count();i++)
@@ -70,6 +71,7 @@ void WohngruppenDeleteDialog::on_pushButton_2_clicked()
 BewohnerDeleteDialog::BewohnerDeleteDialog(QList<CostumListWidget<ebp::Bewohner> *> _itemList, QWidget *parent) :
     CostumDeleteDialog(parent),itemList(_itemList)
 {
+    this->setWindowTitle(tr("Bewohner löschen"));
     this->ui->label->setText(tr("Folgenden Bewoner aus der Datenbank löschen:"));
     parentAdmin = (AdminDialog *) parent;
     for (int i = 0 ; i<itemList.count();i++)

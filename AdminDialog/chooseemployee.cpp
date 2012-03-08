@@ -1,7 +1,8 @@
 #include "chooseemployee.h"
 #include "ui_chooseemployee.h"
-
+#include <QDebug>
 #include <EBPdb/Mitarbeiter.hxx>
+#include <QMessageBox>
 using namespace ebp;
 
 ChooseEmployee::ChooseEmployee(EmployeeTableModel *_model,QWidget *parent) :
@@ -13,7 +14,7 @@ ChooseEmployee::ChooseEmployee(EmployeeTableModel *_model,QWidget *parent) :
     this->parent_ = (AdminDialog *)parent;
     this->ui->listView->setModel(this->model);
     this->ui->listView->horizontalHeader()->setStretchLastSection(true);
-
+    this->ui->listView->setSelectionBehavior(QAbstractItemView::SelectRows);
 }
 
 ChooseEmployee::~ChooseEmployee()
@@ -26,14 +27,25 @@ void ChooseEmployee::on_ButtonAbort_clicked()
     this->close();
 }
 
+/**
+  *\brief Mitarbeiter löschen
+  */
 void ChooseEmployee::on_ButtonErase_clicked()
 {
     EmployeeTableModel *tmp = ( EmployeeTableModel *)this->ui->listView->model();
 
-    int row = this->ui->listView->currentIndex().row();
+    QSharedPointer<ebp::Mitarbeiter> ma = tmp->getMitarbeiter(this->ui->listView->currentIndex().row());
 
-    Mitarbeiter ma(tmp->login(row),Mitarbeiter::WohnheimRecht,tmp->name(row)," "," ");
-
-    ma.remove(this->parent_->dbPointer());
+    if (!ma.isNull())
+    {
+	if (ma->remove(this->parent_->dbPointer()))
+	{
+	    QMessageBox::information(this,"Erfolg",ma->name()+" erfolgreich gelöscht");
+	}
+	else
+	{
+	    QMessageBox::critical(this,"Fehlschlag",ma->name()+" konnte nicht gelöscht werden.");
+	}
+    }
     this->close();
 }

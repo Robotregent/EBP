@@ -17,6 +17,8 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
     QString login(int row) { return EmployeeList.at(row)->login(); }
     QString name(int row) { return EmployeeList.at(row)->name(); }
+    QSharedPointer < ebp::Mitarbeiter> getMitarbeiter(int index);
+    void addMitarbeiter(QSharedPointer<ebp::Mitarbeiter> newMA);
 signals:
 
 public slots:
