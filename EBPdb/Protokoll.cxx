@@ -16,3 +16,7 @@ using namespace ebp;
 DATABASEOBJECT_IMPLEMENT_LINK_ONEMANY( Protokoll, Bewohner, bewohner_, Bewohner, Protokoll, protokolle_ )
 DATABASEOBJECT_IMPLEMENT_LINK_MANYMANY( Protokoll, Teilnehmer, teilnehmer_, Mitarbeiter, ProtokollTeilnehmer, protokollTeilnehmer_ )
 DATABASEOBJECT_IMPLEMENT_LINK_MANYMANY( Protokoll, Schreiber, schreiber_, Mitarbeiter, ProtokollSchreiber, protokollSchreiber_ )
+
+
+DATABASEOBJECT_IMPLEMENT_LOAD( Protokoll, Teilnehmer, Mitarbeiter, teilnehmer_ )
+DATABASEOBJECT_IMPLEMENT_LOAD( Protokoll, Schreiber, Mitarbeiter, schreiber_ )

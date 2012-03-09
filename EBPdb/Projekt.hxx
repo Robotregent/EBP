@@ -62,7 +62,8 @@ namespace ebp
 		const QSharedPointer<Bewohner> & bewohner( const QSharedPointer<ebp::connection> & connection ) const;
 		DATABASEOBJECT_DECLARE_LINK( Projekt, Bewohner, Bewohner )
 
-		QList< QSharedPointer<Mitarbeiter> > loadVerantwortliche( const QSharedPointer<ebp::connection> & connection ) const;
+//		QList< QSharedPointer<Mitarbeiter> > loadVerantwortliche( const QSharedPointer<ebp::connection> & connection ) const;
+		DATABASEOBJECT_DECLARE_LOAD( Verantwortliche, Mitarbeiter )
 		DATABASEOBJECT_DECLARE_LINK( Projekt, Verantwortlicher, Mitarbeiter )
 
 	private:

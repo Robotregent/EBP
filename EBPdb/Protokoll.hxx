@@ -47,10 +47,12 @@ namespace ebp
 		const QSharedPointer<Bewohner> & bewohner() const { return bewohner_; }
 		DATABASEOBJECT_DECLARE_LINK( Protokoll, Bewohner, Bewohner )
 
-		QList< QSharedPointer<Mitarbeiter> > loadTeilnehmer( const QSharedPointer<ebp::connection> & connection ) const;
+//		QList< QSharedPointer<Mitarbeiter> > loadTeilnehmer( const QSharedPointer<ebp::connection> & connection ) const;
+		DATABASEOBJECT_DECLARE_LOAD( Teilnehmer, Mitarbeiter )
 		DATABASEOBJECT_DECLARE_LINK( Protokoll, Teilnehmer, Mitarbeiter )
 
-		QList< QSharedPointer<Mitarbeiter> > loadSchreiber( const QSharedPointer<ebp::connection> & connection ) const;
+//		QList< QSharedPointer<Mitarbeiter> > loadSchreiber( const QSharedPointer<ebp::connection> & connection ) const;
+		DATABASEOBJECT_DECLARE_LOAD( Schreiber, Mitarbeiter )
 		DATABASEOBJECT_DECLARE_LINK( Protokoll, Schreiber, Mitarbeiter )
 
 	private:

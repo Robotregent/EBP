@@ -16,6 +16,10 @@ using namespace ebp;
 DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( Wohnheim, Wohngruppe, Wohngruppe, Wohnheim )
 
 
+DATABASEOBJECT_IMPLEMENT_LOAD( Wohnheim, Wohngruppen, Wohngruppe, wohngruppen_ )
+
+
+/*
 QList< QSharedPointer<Wohngruppe> > Wohnheim::loadWohngruppen( const QSharedPointer<ebp::connection> & connection ) const
 {
 	QList< QSharedPointer<Wohngruppe> > ret;
@@ -27,3 +31,4 @@ QList< QSharedPointer<Wohngruppe> > Wohnheim::loadWohngruppen( const QSharedPoin
 	t.commit();
 	return ret;
 }
+*/

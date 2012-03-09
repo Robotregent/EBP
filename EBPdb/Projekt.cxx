@@ -14,3 +14,7 @@ using namespace ebp;
 
 DATABASEOBJECT_IMPLEMENT_LINK_ONEMANY( Projekt, Bewohner, bewohner_, Bewohner, Projekt, projekte_ )
 DATABASEOBJECT_IMPLEMENT_LINK_MANYMANY( Projekt, Verantwortlicher, verantwortliche_, Mitarbeiter, Projekt, projekte_ )
+
+
+
+DATABASEOBJECT_IMPLEMENT_LOAD( Projekt, Verantwortliche, Mitarbeiter, verantwortliche_ )

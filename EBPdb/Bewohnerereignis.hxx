@@ -23,7 +23,7 @@ namespace ebp
 	class connection;
 
 	#pragma db object
-	class Bewohnerereignis : databaseObject<Bewohnerereignis>
+	class Bewohnerereignis : public databaseObject<Bewohnerereignis>
 	{
 		Q_DECLARE_TR_FUNCTIONS( Bewohnerereignis )
 
@@ -47,7 +47,8 @@ namespace ebp
 		const QSharedPointer<Bewohner> bewohner() const { return bewohner_; }
 		DATABASEOBJECT_DECLARE_LINK( Bewohnerereignis, Bewohner, Bewohner )
 
-		QList< QSharedPointer<Mitarbeiter> > loadSchreiber( const QSharedPointer<ebp::connection> & connection ) const;
+//		QList< QSharedPointer<Mitarbeiter> > loadSchreiber( const QSharedPointer<ebp::connection> & connection ) const;
+		DATABASEOBJECT_DECLARE_LOAD( Schreiber, Mitarbeiter )
 		DATABASEOBJECT_DECLARE_LINK( Bewohnerereignis, Schreiber, Mitarbeiter )
 
 	private:

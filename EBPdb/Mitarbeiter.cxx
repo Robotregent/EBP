@@ -25,6 +25,16 @@ DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( Mitarbeiter, ProtokollSchreiber, Protokol
 DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( Mitarbeiter, Bezugsbetreuer, Bewohner, Bezugsbetreuer )
 
 
+DATABASEOBJECT_IMPLEMENT_LOAD( Mitarbeiter, Wohngruppen, Wohngruppe, wohngruppen_ )
+DATABASEOBJECT_IMPLEMENT_LOAD( Mitarbeiter, Projekte, Projekt, projekte_ )
+DATABASEOBJECT_IMPLEMENT_LOAD( Mitarbeiter, Bewohnerereignisse, Bewohnerereignis, bewohnerereignisse_ )
+DATABASEOBJECT_IMPLEMENT_LOAD( Mitarbeiter, Wohngruppenereignisse, Wohngruppenereignis, wohngruppenereignisse_ )
+DATABASEOBJECT_IMPLEMENT_LOAD( Mitarbeiter, ProtokollTeilnehmer, Protokoll, protokollTeilnehmer_ )
+DATABASEOBJECT_IMPLEMENT_LOAD( Mitarbeiter, ProtokollSchreiber, Protokoll, protokollSchreiber_ )
+DATABASEOBJECT_IMPLEMENT_LOAD( Mitarbeiter, Bezugsbetreuer, Bewohner, bezugsbetreuer_ )
+
+
+/*
 QList< QSharedPointer<Wohngruppe> > Mitarbeiter::loadWohngruppen( const QSharedPointer<ebp::connection> & connection ) const
 {
 	QList< QSharedPointer<Wohngruppe> > ret;
@@ -62,7 +72,7 @@ QList< QSharedPointer<Bewohner> > Mitarbeiter::loadBezugsbetreuer( const QShared
 	t.commit();
 	return ret;
 }
-
+*/
 
 bool Mitarbeiter::create( const QSharedPointer<ebp::connection> & connection, const QString & password )
 {

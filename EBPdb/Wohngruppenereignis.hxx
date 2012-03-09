@@ -47,7 +47,8 @@ namespace ebp
 		const QSharedPointer<Wohngruppe> & wohngruppe() const { return wohngruppe_; }
 		DATABASEOBJECT_DECLARE_LINK( Wohngruppenereignis, Wohngruppe, Wohngruppe )
 
-		const QList< QSharedPointer<Mitarbeiter> > & loadSchreiber( const QSharedPointer<ebp::connection> & connection ) const;
+//		const QList< QSharedPointer<Mitarbeiter> > & loadSchreiber( const QSharedPointer<ebp::connection> & connection ) const;
+		DATABASEOBJECT_DECLARE_LOAD( Schreiber, Mitarbeiter )
 		DATABASEOBJECT_DECLARE_LINK( Wohngruppenereignis, Schreiber, Mitarbeiter )
 
 	private:

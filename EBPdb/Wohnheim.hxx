@@ -36,7 +36,8 @@ namespace ebp
 		const QString & name() const { return name_; }
 		QString & name() { return name_; }
 
-		QList< QSharedPointer<Wohngruppe> > loadWohngruppen( const QSharedPointer<ebp::connection> & connection ) const;
+//		QList< QSharedPointer<Wohngruppe> > loadWohngruppen( const QSharedPointer<ebp::connection> & connection ) const;
+		DATABASEOBJECT_DECLARE_LOAD( Wohngruppen, Wohngruppe )
 		DATABASEOBJECT_DECLARE_LINK_INVERSE( Wohnheim, Wohngruppe, Wohngruppe )
 
 	private:

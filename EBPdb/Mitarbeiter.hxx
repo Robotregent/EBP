@@ -74,25 +74,32 @@ namespace ebp
 		const QString & telefon() const { return telefon_; }
 		void telefon( const QString & telefon ) { telefon_ = telefon; }
 
-		QList< QSharedPointer<Wohngruppe> > loadWohngruppen( const QSharedPointer<ebp::connection> & connection ) const;
+//		QList< QSharedPointer<Wohngruppe> > loadWohngruppen( const QSharedPointer<ebp::connection> & connection ) const;
+		DATABASEOBJECT_DECLARE_LOAD( Wohngruppen, Wohngruppe )
 		DATABASEOBJECT_DECLARE_LINK_INVERSE( Mitarbeiter, Wohngruppe, Wohngruppe )
 
-		QList< QSharedPointer<Projekt> > loadProjekte( const QSharedPointer<ebp::connection> & connection ) const;
+//		QList< QSharedPointer<Projekt> > loadProjekte( const QSharedPointer<ebp::connection> & connection ) const;
+		DATABASEOBJECT_DECLARE_LOAD( Projekte, Projekt )
 		DATABASEOBJECT_DECLARE_LINK_INVERSE( Mitarbeiter, Projekt, Projekt )
 
-		QList< QSharedPointer<Bewohnerereignis> > loadBewohnerereignisse( const QSharedPointer<ebp::connection> & connection ) const;
+//		QList< QSharedPointer<Bewohnerereignis> > loadBewohnerereignisse( const QSharedPointer<ebp::connection> & connection ) const;
+		DATABASEOBJECT_DECLARE_LOAD( Bewohnerereignisse, Bewohnerereignis )
 		DATABASEOBJECT_DECLARE_LINK_INVERSE( Mitarbeiter, Bewohnerereignis, Bewohnerereignis )
 
-		QList< QSharedPointer<Wohngruppenereignis> > loadWohngruppenereignisse( const QSharedPointer<ebp::connection> & connection ) const;
+//		QList< QSharedPointer<Wohngruppenereignis> > loadWohngruppenereignisse( const QSharedPointer<ebp::connection> & connection ) const;
+		DATABASEOBJECT_DECLARE_LOAD( Wohngruppenereignisse, Wohngruppenereignis )
 		DATABASEOBJECT_DECLARE_LINK_INVERSE( Mitarbeiter, Wohngruppenereignis, Wohngruppenereignis )
 
-		QList< QSharedPointer<Protokoll> > loadProtokollTeilnehmer( const QSharedPointer<ebp::connection> & connection ) const;
+//		QList< QSharedPointer<Protokoll> > loadProtokollTeilnehmer( const QSharedPointer<ebp::connection> & connection ) const;
+		DATABASEOBJECT_DECLARE_LOAD( ProtokollTeilnehmer, Protokoll )
 		DATABASEOBJECT_DECLARE_LINK_INVERSE( Mitarbeiter, ProtokollTeilnehmer, Protokoll )
 
-		QList< QSharedPointer<Protokoll> > loadProtokollSchreiber( const QSharedPointer<ebp::connection> & connection ) const;
+//		QList< QSharedPointer<Protokoll> > loadProtokollSchreiber( const QSharedPointer<ebp::connection> & connection ) const;
+		DATABASEOBJECT_DECLARE_LOAD( ProtokollSchreiber, Protokoll )
 		DATABASEOBJECT_DECLARE_LINK_INVERSE( Mitarbeiter, ProtokollSchreiber, Protokoll )
 
-		QList< QSharedPointer<Bewohner> > loadBezugsbetreuer( const QSharedPointer<ebp::connection> & connection ) const;
+//		QList< QSharedPointer<Bewohner> > loadBezugsbetreuer( const QSharedPointer<ebp::connection> & connection ) const;
+		DATABASEOBJECT_DECLARE_LOAD( Bezugsbetreuer, Bewohner )
 		DATABASEOBJECT_DECLARE_LINK_INVERSE( Mitarbeiter, Bezugsbetreuer, Bewohner )
 
 		bool create( const QSharedPointer<ebp::connection> & connection, const QString & password );
