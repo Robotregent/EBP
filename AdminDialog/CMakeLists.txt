@@ -14,10 +14,8 @@ SET( SAMPLE_SRCS
 	chooseemployee.cpp
 	costumdeletedialog.cpp
 	employeelistmodel.cpp
-#	wohngruppedeletedialog.cpp
+	zuordnung.cpp
 	main.cpp
-#	oelistwidgetitem.cpp
-#	costumlistwidget.cpp
 )
   
 # another list, this time it includes all header files that should be treated with moc
@@ -26,6 +24,7 @@ SET( SAMPLE_MOC_HDRS
 	chooseemployee.h
 	costumdeletedialog.h
 	employeelistmodel.h
+	zuordnung.h
 #	wohngruppedeletedialog.h
 #	oelistwidgetitem.h
 )
@@ -49,6 +48,7 @@ SET( SAMPLE_UIS
 	admindialog.ui
 	chooseemployee.ui
 	costumdeletedialog.ui
+	zuordnung.ui
 )
 # and finally an resource file
 # SET( SAMPLE_RCS

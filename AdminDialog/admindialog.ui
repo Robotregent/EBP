@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>802</width>
-    <height>597</height>
+    <height>630</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -354,19 +354,14 @@
             <item row="0" column="1">
              <widget class="QPushButton" name="pushButton">
               <property name="text">
-               <string>Mitarbeiter suchen</string>
-              </property>
-              <property name="icon">
-               <iconset>
-                <normalon>../drk_client/lupe.png</normalon>
-               </iconset>
+               <string>ändern</string>
               </property>
              </widget>
             </item>
             <item row="1" column="0">
              <widget class="QLabel" name="label_4">
               <property name="text">
-               <string>Organisationseinheit eines Mitarbeiters ändern</string>
+               <string>Wohngruppen eines Mitarbeiters ändern</string>
               </property>
               <property name="buddy">
                <cstring>pushButton_2</cstring>
@@ -376,12 +371,7 @@
             <item row="1" column="1">
              <widget class="QPushButton" name="pushButton_2">
               <property name="text">
-               <string>Mitarbeiter suchen</string>
-              </property>
-              <property name="icon">
-               <iconset>
-                <normalon>../drk_client/lupe.png</normalon>
-               </iconset>
+               <string>ändern</string>
               </property>
              </widget>
             </item>
@@ -398,6 +388,10 @@
              <widget class="QPushButton" name="button_MA_suchen">
               <property name="text">
                <string>Mitarbeiter wählen</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>../drk_client/lupe.png</normaloff>../drk_client/lupe.png</iconset>
               </property>
              </widget>
             </item>

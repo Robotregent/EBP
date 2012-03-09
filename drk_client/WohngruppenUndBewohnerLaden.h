@@ -19,7 +19,7 @@ namespace ebp
       **/
     QList < QSharedPointer <ebp::Bewohner> > loadAllBewohner(QSharedPointer<ebp::connection> aPointerToAConnection, QSharedPointer <ebp::Wohngruppe> curGroup )
     {
-        return curGroup->loadBewohner(aPointerToAConnection);
-
+	return curGroup->loadBewohner(aPointerToAConnection);
+	//return ebp::Bewohner::loadAll(aPointerToAConnection);
     }
 }

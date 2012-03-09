@@ -4,6 +4,7 @@
 #include "employeelistmodel.h"
 #include "costumdeletedialog.h"
 //#include "wohngruppedeletedialog.h"
+#include "zuordnung.h"
 #include <EBPdb/Mitarbeiter.hxx>
 #include <EBPdb/Wohngruppe.hxx>
 #include <EBPdb/Wohnheim.hxx>
@@ -473,6 +474,18 @@ bool AdminDialog::deleteBewohner(int index)
 
 void AdminDialog::on_button_B_waelen_clicked()
 {
-    BewohnerDeleteDialog *bwdd = new BewohnerDeleteDialog(this->BewohnerItems,this);
-    bwdd->show();
+    BewohnerDeleteDialog *_bewohnerDeleteDialog = new BewohnerDeleteDialog(this->BewohnerItems,this);
+    _bewohnerDeleteDialog->show();
+}
+
+void AdminDialog::on_pushButton_2_clicked()
+{
+    WohngruppenZuordnung *WohngruppenZuordnungsDialog = new WohngruppenZuordnung(this->model,this);
+    WohngruppenZuordnungsDialog->show();
+}
+
+void AdminDialog::on_pushButton_clicked()
+{
+    BezugsbetreuungZuordnung *bezugsbetreuungsZuordnungsDialog = new BezugsbetreuungZuordnung(this->model,this);
+    bezugsbetreuungsZuordnungsDialog->show();
 }
