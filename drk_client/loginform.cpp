@@ -23,7 +23,21 @@ void LoginForm::on_pushButton_clicked()
     QSharedPointer<ebp::connection> PointerToConnection = QSharedPointer<ebp::connection>(new ebp::connection(this->ui->loginLineEdit->text(),"drk"));
     if (PointerToConnection->establish(this->ui->passwortLineEdit->text()))
     {
-	this->_parent->validLogin(PointerToConnection);
+	//QList < QSharedPointer<ebp::Mitarbeiter> > allMa = ebp::Mitarbeiter::loadAll(PointerToConnection);
+	QSharedPointer<ebp::Mitarbeiter> curMa = PointerToConnection->mitarbeiter();
+	/*curMa.isNull();
+	for (int i = 0 ; i < allMa.count(); i++)
+	{
+	    if (this->ui->loginLineEdit->text() == allMa.at(i)->login())
+		curMa = allMa.at(i);
+	}*/
+	if (curMa.isNull())
+		QMessageBox::critical(this,tr("Fehlerhafter Login"),tr("Der Login stimmt mit keinem Mitarbeiter in der Datenbank überein. Bitte wenden Sie sich an Ihren Administrator."));
+	else
+	{
+	    this->_parent->setCurMitarbeiter(curMa);
+	    this->_parent->validLogin(PointerToConnection);
+	}
     }
     else
     {
