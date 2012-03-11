@@ -25,7 +25,8 @@ connection::connection
 	dbUser(user),
 	dbDatabase(database),
 	dbHost(host),
-	dbPort(port)
+	dbPort(port),
+	connectedUser()
 {
 	db = NULL;
 	s = NULL;
