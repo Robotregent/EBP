@@ -223,31 +223,33 @@ void MainWindow::loadWohnguppeUndBewohner()
 
     QSettings settings("EBP.ini", QSettings::IniFormat);
     //asynchrones Laden aller Wohngruppen und Bewohner
-    QFuture< QList < QSharedPointer <ebp::Wohngruppe> > > allGroups = QtConcurrent::run(ebp::loadAllGroups, this->PointerToConnection);
+    QFuture< QList < QSharedPointer <ebp::Wohngruppe> > > allGroups = QtConcurrent::run(ebp::loadAllGroups, this->PointerToConnection, this->_curMitarbeiter);
     PleasWaitDialog *pwd=new PleasWaitDialog(this);
     pwd->show();
 
     // Wohngruppe
     allGroups.waitForFinished();
-    this->_AlleWohngruppen = allGroups.result();
-    //Aktuelle Wohngruppe setzen
+    this->_AlleWohngruppenDesAktuellenMa = allGroups.result();
+    //Aktuelle Wohngruppe setzen (alt)
     this->_curWohngruppe.isNull();
-    if(!_AlleWohngruppen.isEmpty())
+    if(!_AlleWohngruppenDesAktuellenMa.isEmpty())
     {
-        this->_curWohngruppe = _AlleWohngruppen.first();
-        QString lastW = settings.value("lastWohngruppe",QVariant("NULL")).toString();
-        if (lastW != "NULL")
-        {
-            foreach(QSharedPointer <ebp::Wohngruppe> wg, _AlleWohngruppen )
-            {
-                if (wg->name() == lastW)
-                {
-                    this->_curWohngruppe = wg;
-                    continue;
-                }
-            }
-        }
+	this->_curWohngruppe = _AlleWohngruppenDesAktuellenMa.first();
+	QString lastW = settings.value("lastWohngruppe",QVariant("NULL")).toString();
+	if (lastW != "NULL")
+	{
+	    foreach(QSharedPointer <ebp::Wohngruppe> wg, _AlleWohngruppenDesAktuellenMa )
+	    {
+		if (wg->name() == lastW)
+		{
+		    this->_curWohngruppe = wg;
+		    continue;
+		}
+	    }
+	}
     }
+
+
     if(!this->_curWohngruppe.isNull())
     {
         QFuture< QList < QSharedPointer <ebp::Bewohner> > > allBewohner = QtConcurrent::run(ebp::loadAllBewohner, this->PointerToConnection, this->_curWohngruppe);
@@ -293,7 +295,10 @@ void MainWindow::setCurBewohnerAndWohngruppeInfo()
 
 }
 
-
+void MainWindow::setCurMitarbeiter(QSharedPointer<ebp::Mitarbeiter> curMitarbeiter)
+{
+    this->_curMitarbeiter = curMitarbeiter;
+}
 
 
 

@@ -30,10 +30,11 @@ private:
     QSharedPointer<ebp::connection> PointerToConnection;
     QMenu *viewMenu;
     QList < QSharedPointer<ebp::Bewohner> > _alleBewohnerDerAktuellenGruppe;
-    QList < QSharedPointer<ebp::Wohngruppe> > _AlleWohngruppen;
+    QList < QSharedPointer<ebp::Wohngruppe> > _AlleWohngruppenDesAktuellenMa;
     InfoFrame *_infoFrame;
     QSharedPointer<ebp::Bewohner> _curBewohner;
     QSharedPointer<ebp::Wohngruppe> _curWohngruppe;
+    QSharedPointer<ebp::Mitarbeiter> _curMitarbeiter;
 
 
 private slots:
@@ -44,6 +45,7 @@ public:
                           Leistungstraeger=5, MeldeListeWidget=6, EreignisWidget = 7,ProjektWidget = 8, CountOfContentWidgets = 9} ;
     QWidget *getContentWidget(int ContentTyp);
     void validLogin(QSharedPointer<ebp::connection> pointer);
+    void setCurMitarbeiter(QSharedPointer<ebp::Mitarbeiter> curMitarbeiter);
 
     ~MainWindow();
     void closeEvent(QCloseEvent *event);
