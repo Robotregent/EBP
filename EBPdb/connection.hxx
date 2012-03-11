@@ -45,6 +45,8 @@ namespace ebp
 		void executeDropUser( const Mitarbeiter & mitarbeiter );
 		void executeSetPassword( const Mitarbeiter & mitarbeiter, const QString & from, const QString & password );
 		void executeSetPassword( const Mitarbeiter & mitarbeiter, const QString & password );
+		QSharedPointer<Mitarbeiter> mitarbeiter() { return connectedUser; }
+		const QSharedPointer<Mitarbeiter> mitarbeiter() const { return connectedUser; }
 
 	private:
 		QString dbUser;
