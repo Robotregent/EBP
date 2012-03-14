@@ -1,7 +1,9 @@
 LIBS += -L ../../EBPdb/ -lEBPdb \
 
 SOURCES += \
-    connectiontest.cpp
+    connectiontest.cpp \
+    mitarbeitertest.cpp \
+    main.cpp
 CONFIG += qtestlib
 
 INCLUDEPATH += $$PWD/../EBPdb
@@ -13,3 +15,8 @@ else:unix:!macx:!symbian: LIBS += -L$$PWD/../EBPdb/ -lEBPdb
 
 INCLUDEPATH += $$PWD/../../
 DEPENDPATH += $$PWD/../../
+
+HEADERS += \
+    AutoTest.h \
+    connectiontest.h \
+    MitarbeiterTest.h

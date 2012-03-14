@@ -1,24 +1,4 @@
-#include <QObject>
-#include <QtTest/QtTest>
-#include <EBPdb/connection.hxx>
-#include <EBPdb/Mitarbeiter.hxx>
-#include <exception>
-
-//Declaration
-class ConnectionTest : public QObject
-{
-    Q_OBJECT
-    ebp::connection *testCon;
-private slots:
-    void initTestCase();
-    void establishCon();
-    void cleanupTestCase();
-    void loginMitarbeiter();
-    void getAttributes();
-
-
-};
-
+#include "connectiontest.h"
 //Implementation
 void ConnectionTest::initTestCase()
 {
@@ -93,5 +73,5 @@ void ConnectionTest::loginMitarbeiter()
     QVERIFY(!tmpMA.isNull());
 }
 
-QTEST_MAIN(ConnectionTest)
-#include "connectiontest.moc"
+//QTEST_MAIN(ConnectionTest)
+//#include "connectiontest.moc"
