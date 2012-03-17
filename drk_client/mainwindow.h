@@ -11,7 +11,9 @@
 #include <EBPdb/connection.hxx>
 #include <EBPdb/Bewohner.hxx>
 #include <EBPdb/Wohngruppe.hxx>
-
+#include "sessioncontext.h"
+#include "texttransferinterface.h"
+#include "texttransferagent.h"
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -20,21 +22,25 @@ private:
     void creat_InfoWidget();
     void create_topmenu();
     void create_actions();
+    void create_TextTransferDock();
     void writeSettings();
     void readSettings();
     void loadWohnguppeUndBewohner();
     void setCurBewohnerAndWohngruppeInfo();
+    TextTransferAgent *setTextTransferAgent(TextTransferInterface *interface);
     QList <QWidget *> ContentWidgetList;
     QDockWidget *dock_side_menu;
+    QDockWidget *TextTransferDock;
     SideMenu *side_menu;
-    QSharedPointer<ebp::connection> PointerToConnection;
+    //QSharedPointer<ebp::connection> PointerToConnection;
     QMenu *viewMenu;
-    QList < QSharedPointer<ebp::Bewohner> > _alleBewohnerDerAktuellenGruppe;
-    QList < QSharedPointer<ebp::Wohngruppe> > _AlleWohngruppenDesAktuellenMa;
     InfoFrame *_infoFrame;
-    QSharedPointer<ebp::Bewohner> _curBewohner;
+    /*QSharedPointer<ebp::Bewohner> _curBewohner;
     QSharedPointer<ebp::Wohngruppe> _curWohngruppe;
     QSharedPointer<ebp::Mitarbeiter> _curMitarbeiter;
+    QList < QSharedPointer<ebp::Bewohner> > _alleBewohnerDerAktuellenGruppe;
+    QList < QSharedPointer<ebp::Wohngruppe> > _AlleWohngruppenDesAktuellenMa;*/
+    SessionContext thisSession;
 
 
 private slots:

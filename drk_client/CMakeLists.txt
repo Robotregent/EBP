@@ -34,6 +34,7 @@ SET( SAMPLE_SRCS
 	projekt.cpp
 	sidemenu.cpp
 	ueberarbeitungframe.cpp
+	texttransferagent.cpp
 )
 
 # another list, this time it includes all header files that should be treated with moc
@@ -58,6 +59,7 @@ SET( SAMPLE_MOC_HDRS
         projekt.h
 	sidemenu.h
 	ueberarbeitungframe.h
+	texttransferagent.h
 )
 
 SET(drk_src_library_dirs
@@ -91,6 +93,7 @@ SET( SAMPLE_UIS
 	pleaswaitdialog.ui
 	projekt.ui
 	ueberarbeitungframe.ui
+	texttransferagent.ui
 )
 # and finally an resource file
 SET( DRK_RCS

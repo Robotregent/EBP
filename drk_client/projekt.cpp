@@ -25,3 +25,24 @@ void Projekt::on_pushButton_clicked()
       dann neues EBP::Projekt anlegen und im widget anzeigen
      */
 }
+
+TextTransferInformation Projekt::getSelectedText()
+{
+    TextTransferInformation result;
+    result.isEmpty = true;
+
+    if(this->ui->zieleEdit->textCursor().hasSelection())
+    {
+	result.information = "Texttransfer aus Projekt/Projektziele:";
+	result.textTransferFragment= this->ui->zieleEdit->textCursor().selection();
+	result.isEmpty = false;
+
+    }
+    else if (this->ui->textEdit->textCursor().hasSelection())
+    {
+	result.information = "Texttransfer aus Projekt/Projektbeschreibung:";
+	result.textTransferFragment = this->ui->textEdit->textCursor().selection();
+	result.isEmpty = false;
+    }
+    return result;
+}

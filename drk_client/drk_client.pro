@@ -23,7 +23,8 @@ HEADERS += \
     WohngruppenUndBewohnerLaden.h \
     pleaswaitdialog.h \
     sessioncontext.h \
-    texttransferinterface.h
+    texttransferinterface.h \
+    texttransferagent.h
 
 SOURCES += \
     mainwindow.cpp \
@@ -46,7 +47,8 @@ SOURCES += \
     einzelereignis.cpp \
     projekt.cpp \
     dokumentation.cpp \
-    pleaswaitdialog.cpp
+    pleaswaitdialog.cpp \
+    texttransferagent.cpp
 
 RESOURCES += \
     images.qrc
@@ -65,7 +67,8 @@ FORMS += \
     einzelereignis.ui \
     projekt.ui \
     dokumentation.ui \
-    pleaswaitdialog.ui
+    pleaswaitdialog.ui \
+    texttransferagent.ui
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../EBPdb/release/ -lEBPdb
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../EBPdb/debug/ -lEBPdb

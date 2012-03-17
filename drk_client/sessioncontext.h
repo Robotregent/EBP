@@ -10,7 +10,7 @@
 /**
   * \brief Hällt alle Daten der aktuellen Session
   */
-struct SessionContext
+typedef struct
 {
     QSharedPointer< ebp::connection > curConnection;        ///< Connectiion zur Datenbank
     QSharedPointer< ebp::Mitarbeiter > curMitarbeiter;      ///< Eingeloggter Mitarbeiter
@@ -18,6 +18,6 @@ struct SessionContext
     QSharedPointer< ebp::Bewohner > curBewohner;            ///< Aktiver Bewohner
     QList< QSharedPointer< ebp::Wohngruppe > > allGroups;   ///< Alle Wohngruppen, die mit dem eingeloggten Mitarbeiter assoziiert sind
     QList< QSharedPointer < ebp::Bewohner > > allBewohner;  ///< Alle Bewohner der aktiven Wohngruppe
-};
+}  SessionContext;
 
 #endif // SESSIONCONTEXT_H
