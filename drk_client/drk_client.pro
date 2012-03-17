@@ -21,7 +21,9 @@ HEADERS += \
     projekt.h \
     dokumentation.h \
     WohngruppenUndBewohnerLaden.h \
-    pleaswaitdialog.h
+    pleaswaitdialog.h \
+    sessioncontext.h \
+    texttransferinterface.h
 
 SOURCES += \
     mainwindow.cpp \
