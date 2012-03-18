@@ -58,13 +58,15 @@
       <string>Los!</string>
      </property>
      <property name="icon">
-      <iconset>
-       <normaloff>arrow-right.png</normaloff>arrow-right.png</iconset>
+      <iconset resource="images.qrc">
+       <normaloff>:/costumer/arrow-right.png</normaloff>:/costumer/arrow-right.png</iconset>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="images.qrc"/>
+ </resources>
  <connections/>
 </ui>

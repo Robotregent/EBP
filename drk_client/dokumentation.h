@@ -12,7 +12,7 @@ class Dokumentation : public QWidget
     Q_OBJECT
 
 public:
-    explicit Dokumentation(QWidget *parent = 0);
+    explicit Dokumentation(QString name,QWidget *parent = 0);
     ~Dokumentation();
 
 private:

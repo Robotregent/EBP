@@ -27,7 +27,7 @@ void Ereignis::on_pushButton_clicked()
 
     EreignisInformation info;
     info.isEmpty = true;
-    NewEreignisDialog ereignisDialog(info,this);
+    NewEreignisDialog ereignisDialog(&info,this);
 
 
 

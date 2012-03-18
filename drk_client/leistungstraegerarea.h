@@ -17,6 +17,8 @@ public:
 
 private:
     Ui::LeistungstraegerArea *ui;
+    void setBoxesInColumn();
+    void setBoxesInTable(int columns);
 };
 
 #endif // LEISTUNGSTRAEGERAREA_H

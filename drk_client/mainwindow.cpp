@@ -20,6 +20,7 @@
 #include "pleaswaitdialog.h"
 #include "person.h"
 #include "texttransferagent.h"
+#include "dokumentation.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -141,6 +142,18 @@ void MainWindow::set_content(QTreeWidgetItem *current, QTreeWidgetItem *previous
     case 2003:
         this->setCentralWidget(this->getContentWidget(MainWindow::Leistungstraeger));
         break;
+    /// \todo Betreuungsdokumentation genauer aufteilen:
+    case 2310:
+    case 2311:
+    case 2312:
+    case 2320:
+    case 2321:
+    case 2322:
+    case 2330:
+    case 2331:
+    case 2332:
+	this->setCentralWidget(this->getContentWidget(MainWindow::DocumentationWidget));
+	break;
     case 3000:
 	this->setCentralWidget(this->getContentWidget(MainWindow::EreignisWidget));
 	break;
@@ -203,6 +216,9 @@ QWidget *MainWindow::getContentWidget(int ContentTyp)
 		this->setTextTransferAgent((TextTransferInterface *)result);
 		break;
 	    }
+	case MainWindow::DocumentationWidget:
+	    result = new Dokumentation("Hier kommt der Name der Betreuungsdokumentation hin",this);
+	    break;
 	}
     }
     //this->ContentWidgetList.replace(ContentTyp,result);

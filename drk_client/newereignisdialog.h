@@ -22,7 +22,7 @@ class NewEreignisDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit NewEreignisDialog(EreignisInformation &_ereignis,QWidget *parent = 0);
+    explicit NewEreignisDialog(EreignisInformation *_ereignis,QWidget *parent = 0);
     ~NewEreignisDialog();
 
 private slots:
@@ -30,7 +30,7 @@ private slots:
 
 private:
     Ui::NewEreignisDialog *ui;
-    EreignisInformation ereignis;
+    EreignisInformation *ereignis;
 };
 
 
