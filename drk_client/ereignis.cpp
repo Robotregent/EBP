@@ -1,5 +1,6 @@
 #include "ereignis.h"
 #include "ui_ereignis.h"
+#include "newereignisdialog.h"
 #include <QDebug>
 
 Ereignis::Ereignis(TextTransferAgent *agent,QWidget *parent) :
@@ -22,19 +23,28 @@ Ereignis::~Ereignis()
 
 void Ereignis::on_pushButton_clicked()
 {
-    //Widget für neue Eingabe erzeugen und befüllen
-    EinzelEreignis *tmp=new EinzelEreignis(this);
-    tmp->setContent(QDateTime::currentDateTime(),this->ui->MAZeichen->text(),this->ui->EreignisText->toHtml() );
+    //Dialog öffnen
 
-    //Neue Eingabe anzeigen
-    this->EreignisListe.prepend(tmp);
-    this->pufferLayout->insertWidget(0,tmp);
+    EreignisInformation info;
+    info.isEmpty = true;
+    NewEreignisDialog ereignisDialog(info,this);
 
-    //Eingabefeld löschen
-    this->ui->MAZeichen->clear();
-    this->ui->EreignisText->clear();
 
-    //TextransferInterface registrieren
-    this->transferAgent->registerNewInterface(tmp);
+
+    if(ereignisDialog.exec()==1)
+    {
+	if(!info.isEmpty)
+	{
+	    EinzelEreignis *tmp=new EinzelEreignis(this);
+	    tmp->setContent(info.time,info.MitarbeiterZeichen,info.EreignisText);
+
+	    //Neue Eingabe anzeigen
+	    this->EreignisListe.prepend(tmp);
+	    this->pufferLayout->insertWidget(0,tmp);
+
+	    //TextransferInterface registrieren
+	    this->transferAgent->registerNewInterface(tmp);
+	}
+    }
 
 }
