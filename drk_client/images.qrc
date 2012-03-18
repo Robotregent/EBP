@@ -17,4 +17,7 @@
         <file>taskList.png</file>
         <file>gruppenbuch.png</file>
     </qresource>
+    <qresource prefix="/actions">
+        <file alias="save">Save-icon.png</file>
+    </qresource>
 </RCC>

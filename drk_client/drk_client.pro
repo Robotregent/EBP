@@ -24,7 +24,8 @@ HEADERS += \
     pleaswaitdialog.h \
     sessioncontext.h \
     texttransferinterface.h \
-    texttransferagent.h
+    texttransferagent.h \
+    savecontentinterface.h
 
 SOURCES += \
     mainwindow.cpp \

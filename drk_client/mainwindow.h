@@ -20,7 +20,6 @@ class MainWindow : public QMainWindow
 private:
     void create_sidemenu();
     void creat_InfoWidget();
-    void create_topmenu();
     void create_actions();
     void create_TextTransferDock();
     void writeSettings();
@@ -31,20 +30,17 @@ private:
     QList <QWidget *> ContentWidgetList;
     QDockWidget *dock_side_menu;
     QDockWidget *TextTransferDock;
+    QDockWidget *InfoDockWidget;
     SideMenu *side_menu;
     //QSharedPointer<ebp::connection> PointerToConnection;
-    QMenu *viewMenu;
+    //QMenu *viewMenu;
     InfoFrame *_infoFrame;
-    /*QSharedPointer<ebp::Bewohner> _curBewohner;
-    QSharedPointer<ebp::Wohngruppe> _curWohngruppe;
-    QSharedPointer<ebp::Mitarbeiter> _curMitarbeiter;
-    QList < QSharedPointer<ebp::Bewohner> > _alleBewohnerDerAktuellenGruppe;
-    QList < QSharedPointer<ebp::Wohngruppe> > _AlleWohngruppenDesAktuellenMa;*/
     SessionContext thisSession;
 
 
 private slots:
     void set_content( QTreeWidgetItem * current, QTreeWidgetItem * previous );
+    void saveCurrentContent();
 public:
     explicit MainWindow(QWidget *parent = 0);
     enum ContentWidgets { LoginWidget = 0, PersonWidget = 1 , DecreeScrollWidget = 2,  BetreuungWidget = 3, BProtokollWidget = 4,

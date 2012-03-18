@@ -4,6 +4,8 @@
 #include <QSettings>
 #include <QDebug>
 #include <QtCore/QtConcurrentRun>
+#include <exception>
+#include <QToolBar>
 
 #include "loginform.h"
 #include "infoframe.h"
@@ -29,7 +31,6 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         this->ContentWidgetList.append(NULL);
     }
-    this->create_topmenu();
     this->setCentralWidget(this->getContentWidget(MainWindow::LoginWidget));
     this->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
     this->setMinimumSize(this->sizeHint());
@@ -55,6 +56,8 @@ void MainWindow::validLogin(QSharedPointer<ebp::connection> pointer)
     this->create_sidemenu();
     this->creat_InfoWidget();
 
+    this->create_actions();
+
 }
 
 void MainWindow::create_sidemenu()
@@ -67,7 +70,6 @@ void MainWindow::create_sidemenu()
     this->dock_side_menu->setObjectName("Navigation");
     this->addDockWidget(Qt::LeftDockWidgetArea,this->dock_side_menu);
 
-    this->viewMenu->addAction(this->dock_side_menu->toggleViewAction());
 
     //Versuche Größe in Griff zu bekommen
     //this->dock_side_menu->setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Expanding);
@@ -82,13 +84,12 @@ void MainWindow::create_sidemenu()
 }
 void MainWindow::creat_InfoWidget()
 {
-    QDockWidget *dw =new QDockWidget(tr("Information zu aktueller Auswahl"),this);
-    dw->setAllowedAreas(Qt::AllDockWidgetAreas);
+    InfoDockWidget =new QDockWidget(tr("Information zu aktueller Auswahl"),this);
+    InfoDockWidget->setAllowedAreas(Qt::AllDockWidgetAreas);
     this->_infoFrame = new InfoFrame(this);
-    dw->setWidget(this->_infoFrame);
-    dw->setObjectName("Information");
-    this->addDockWidget(Qt::TopDockWidgetArea,dw);
-    this->viewMenu->addAction(dw->toggleViewAction());
+    InfoDockWidget->setWidget(this->_infoFrame);
+    InfoDockWidget->setObjectName("Information");
+    this->addDockWidget(Qt::TopDockWidgetArea,InfoDockWidget);
     //Bewohner und Wohngruppe anzeigen
     this->setCurBewohnerAndWohngruppeInfo();
 }
@@ -207,14 +208,51 @@ QWidget *MainWindow::getContentWidget(int ContentTyp)
     //this->ContentWidgetList.replace(ContentTyp,result);
     return result;
 }
-void MainWindow::create_topmenu()
-{
-    this->viewMenu = this->menuBar()->addMenu(tr("&Ansicht"));
-}
+
 void MainWindow::create_actions()
 {
+    //Action erstellen
+    QAction *saveAction = new QAction(QIcon(":/actions/save"),tr("Speichern"),this);
+    saveAction->setVisible(true);
+    saveAction->setShortcut(QKeySequence::Save);  
+    saveAction->setStatusTip(tr("Speichert aktuelle Änderungen"));
+    connect(saveAction, SIGNAL(triggered()),this, SLOT(saveCurrentContent()));
+
+    //Zu toolbar hinzufügen
+    QToolBar *toolbar;
+    toolbar = this->addToolBar(tr("Speichern"));
+    toolbar->setObjectName("Speichern");
+    toolbar->addAction(saveAction);
+
+    toolbar->addSeparator();
+
+    toolbar = this->addToolBar(tr("Ansicht"));
+    toolbar->setObjectName("Ansicht");
+    toolbar->addAction(this->dock_side_menu->toggleViewAction());
+    toolbar->addAction(this->InfoDockWidget->toggleViewAction());
+
 
 }
+/**
+  * \brief Slot für die SaveAction
+  */
+void MainWindow::saveCurrentContent()
+{
+    qDebug()<<"SaveSlot";
+    try
+    {
+        QWidget *ptrToCast = this->centralWidget();
+        SaveContentInterface *saveInterface =dynamic_cast<SaveContentInterface*>(ptrToCast);
+        if(saveInterface!=0)
+            saveInterface->saveContent();
+    }
+    catch (std::exception& ex)
+    {
+
+        qDebug()<<"Crash: "<<ex.what();
+    }
+}
+
 MainWindow::~MainWindow()
 {
     //delete side_menu;
