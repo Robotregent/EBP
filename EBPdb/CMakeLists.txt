@@ -15,6 +15,7 @@ set( EBPdb_headers
 	Wohnheim.hxx
 	Projekt.hxx
 	Protokoll.hxx
+	Abwesenheit.hxx
 )
 
 set( EBPdb_sources
@@ -27,6 +28,7 @@ set( EBPdb_sources
 	Wohnheim.cxx
 	Projekt.cxx
 	Protokoll.cxx
+	Abwesenheit.cxx
 )
 
 set( EBPdb_include_dirs
