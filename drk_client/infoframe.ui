@@ -67,8 +67,8 @@
          <string>Wechsle Bewohner</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>lupe.png</normaloff>lupe.png</iconset>
+         <iconset resource="images.qrc">
+          <normaloff>:/costumer/lupe.png</normaloff>:/costumer/lupe.png</iconset>
         </property>
        </widget>
       </item>
@@ -130,8 +130,8 @@
          <string>Wechsle Wohngruppe</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>lupe.png</normaloff>lupe.png</iconset>
+         <iconset resource="images.qrc">
+          <normaloff>:/costumer/lupe.png</normaloff>:/costumer/lupe.png</iconset>
         </property>
        </widget>
       </item>
@@ -153,6 +153,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="images.qrc"/>
+ </resources>
  <connections/>
 </ui>

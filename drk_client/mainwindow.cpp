@@ -4,6 +4,8 @@
 #include <QSettings>
 #include <QDebug>
 #include <QtCore/QtConcurrentRun>
+#include <exception>
+#include <QToolBar>
 
 #include "loginform.h"
 #include "infoframe.h"
@@ -17,6 +19,9 @@
 #include "WohngruppenUndBewohnerLaden.h"
 #include "pleaswaitdialog.h"
 #include "person.h"
+#include "texttransferagent.h"
+#include "dokumentation.h"
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
@@ -27,31 +32,38 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         this->ContentWidgetList.append(NULL);
     }
-    this->create_topmenu();
     this->setCentralWidget(this->getContentWidget(MainWindow::LoginWidget));
     this->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
     this->setMinimumSize(this->sizeHint());
 
     this->readSettings();
 
+    //DockOptions
+    this->setDockOptions(QMainWindow::AnimatedDocks|QMainWindow::AllowNestedDocks|QMainWindow::AllowTabbedDocks);
+    this->setCorner(Qt::TopLeftCorner,Qt::TopDockWidgetArea);
+    this->setCorner(Qt::TopRightCorner,Qt::TopDockWidgetArea);
+    this->setCorner(Qt::BottomLeftCorner,Qt::LeftDockWidgetArea);
+    this->setCorner(Qt::BottomRightCorner,Qt::BottomDockWidgetArea);
+
 
 }
 void MainWindow::validLogin(QSharedPointer<ebp::connection> pointer)
 {
-    PointerToConnection=pointer;
+    thisSession.curConnection=pointer;
 
     this->loadWohnguppeUndBewohner();
 
+    this->create_TextTransferDock();
     this->create_sidemenu();
     this->creat_InfoWidget();
+
+    this->create_actions();
 
 }
 
 void MainWindow::create_sidemenu()
 {
-    this->setDockOptions(QMainWindow::AnimatedDocks|QMainWindow::AllowNestedDocks|QMainWindow::AllowTabbedDocks);
-    this->setCorner(Qt::TopLeftCorner,Qt::TopDockWidgetArea);
-    this->setCorner(Qt::TopRightCorner,Qt::TopDockWidgetArea);
+
     this->dock_side_menu = new QDockWidget(tr("Navigation"),this);
     this->dock_side_menu->setAllowedAreas(Qt::AllDockWidgetAreas);
     this->side_menu= new SideMenu(this);
@@ -59,7 +71,6 @@ void MainWindow::create_sidemenu()
     this->dock_side_menu->setObjectName("Navigation");
     this->addDockWidget(Qt::LeftDockWidgetArea,this->dock_side_menu);
 
-    this->viewMenu->addAction(this->dock_side_menu->toggleViewAction());
 
     //Versuche Größe in Griff zu bekommen
     //this->dock_side_menu->setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Expanding);
@@ -74,20 +85,43 @@ void MainWindow::create_sidemenu()
 }
 void MainWindow::creat_InfoWidget()
 {
-    QDockWidget *dw =new QDockWidget(tr("Information zu aktueller Auswahl"),this);
-    dw->setAllowedAreas(Qt::AllDockWidgetAreas);
+    InfoDockWidget =new QDockWidget(tr("Information zu aktueller Auswahl"),this);
+    InfoDockWidget->setAllowedAreas(Qt::AllDockWidgetAreas);
     this->_infoFrame = new InfoFrame(this);
-    dw->setWidget(this->_infoFrame);
-    dw->setObjectName("Information");
-    this->addDockWidget(Qt::TopDockWidgetArea,dw);
-    this->viewMenu->addAction(dw->toggleViewAction());
+    InfoDockWidget->setWidget(this->_infoFrame);
+    InfoDockWidget->setObjectName("Information");
+    this->addDockWidget(Qt::TopDockWidgetArea,InfoDockWidget);
     //Bewohner und Wohngruppe anzeigen
     this->setCurBewohnerAndWohngruppeInfo();
+}
+void MainWindow::create_TextTransferDock()
+{
+    this->TextTransferDock = new QDockWidget(this);
+    this->TextTransferDock->setVisible(false);
+    this->TextTransferDock->setAllowedAreas(Qt::AllDockWidgetAreas);
+    this->TextTransferDock->setObjectName("TextTransferAgent");
+    this->addDockWidget(Qt::BottomDockWidgetArea,this->TextTransferDock);
+}
+TextTransferAgent *MainWindow::setTextTransferAgent(TextTransferInterface *interface)
+{
+    TextTransferAgent *result;
+    if(this->TextTransferDock->widget()!=NULL)
+	delete this->TextTransferDock->widget();
+
+    QList<TextTransferInterface *> interfaceList;
+    if (interface!=NULL)
+	interfaceList.append(interface);
+    result=new TextTransferAgent(interfaceList,thisSession, this);
+    this->TextTransferDock->setWidget(result);
+    this->TextTransferDock->setVisible(true);
+    return result;
 }
 
 void MainWindow::set_content(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
     Q_UNUSED(previous);
+    if(this->TextTransferDock!=NULL)
+	this->TextTransferDock->setVisible(false);
     switch(current->type())
     {
     case 2000:
@@ -100,17 +134,29 @@ void MainWindow::set_content(QTreeWidgetItem *current, QTreeWidgetItem *previous
 	this->setCentralWidget(this->getContentWidget(MainWindow::DecreeScrollWidget));
 	break;
     case 2010:
-        this->setCentralWidget(this->getContentWidget(MainWindow::ProjektWidget));
+	this->setCentralWidget(this->getContentWidget(MainWindow::ProjektWidget));
         break;
     case 2020:
-        this->setCentralWidget(this->getContentWidget(MainWindow::BProtokollWidget));
-        break;
+    	this->setCentralWidget(this->getContentWidget(MainWindow::BProtokollWidget));
+	break;
     case 2003:
         this->setCentralWidget(this->getContentWidget(MainWindow::Leistungstraeger));
         break;
+    /// \todo Betreuungsdokumentation genauer aufteilen:
+    case 2310:
+    case 2311:
+    case 2312:
+    case 2320:
+    case 2321:
+    case 2322:
+    case 2330:
+    case 2331:
+    case 2332:
+	this->setCentralWidget(this->getContentWidget(MainWindow::DocumentationWidget));
+	break;
     case 3000:
-        this->setCentralWidget(this->getContentWidget(MainWindow::EreignisWidget));
-        break;
+	this->setCentralWidget(this->getContentWidget(MainWindow::EreignisWidget));
+	break;
     case 3010:
         this->setCentralWidget(this->getContentWidget(MainWindow::MeldeListeWidget));
         break;
@@ -147,8 +193,11 @@ QWidget *MainWindow::getContentWidget(int ContentTyp)
             result = new Betreuung(this);
             break;
         case MainWindow::BProtokollWidget:
-            result = new BewohnerProtokoll(this);
-            break;
+	    {
+		result = new BewohnerProtokoll(this);
+		this->setTextTransferAgent((TextTransferInterface *)result);
+		break;
+	    }
         case MainWindow::Leistungstraeger:
             result = new LeistungstraegerArea(this);
             break;
@@ -156,24 +205,70 @@ QWidget *MainWindow::getContentWidget(int ContentTyp)
             result = new MeldeListe(this);
             break;
         case MainWindow::EreignisWidget:
-            result = new Ereignis(this);
-            break;
+	    {
+		TextTransferAgent *agent=setTextTransferAgent(NULL);
+		result = new Ereignis(agent,this);
+		break;
+	    }
         case MainWindow::ProjektWidget:
-            result = new Projekt(this);
-            break;
+	    {
+		result = new Projekt(this);
+		this->setTextTransferAgent((TextTransferInterface *)result);
+		break;
+	    }
+	case MainWindow::DocumentationWidget:
+	    result = new Dokumentation("Hier kommt der Name der Betreuungsdokumentation hin",this);
+	    break;
 	}
     }
     //this->ContentWidgetList.replace(ContentTyp,result);
     return result;
 }
-void MainWindow::create_topmenu()
-{
-    this->viewMenu = this->menuBar()->addMenu(tr("&Ansicht"));
-}
+
 void MainWindow::create_actions()
 {
+    //Action erstellen
+    QAction *saveAction = new QAction(QIcon(":/actions/save"),tr("Speichern"),this);
+    saveAction->setVisible(true);
+    saveAction->setShortcut(QKeySequence::Save);  
+    saveAction->setStatusTip(tr("Speichert aktuelle Änderungen"));
+    connect(saveAction, SIGNAL(triggered()),this, SLOT(saveCurrentContent()));
+
+    //Zu toolbar hinzufügen
+    QToolBar *toolbar;
+    toolbar = this->addToolBar(tr("Speichern"));
+    toolbar->setObjectName("Speichern");
+    toolbar->addAction(saveAction);
+
+    toolbar->addSeparator();
+
+    toolbar = this->addToolBar(tr("Ansicht"));
+    toolbar->setObjectName("Ansicht");
+    toolbar->addAction(this->dock_side_menu->toggleViewAction());
+    toolbar->addAction(this->InfoDockWidget->toggleViewAction());
+
 
 }
+/**
+  * \brief Slot für die SaveAction
+  */
+void MainWindow::saveCurrentContent()
+{
+    qDebug()<<"SaveSlot";
+    try
+    {
+        QWidget *ptrToCast = this->centralWidget();
+        SaveContentInterface *saveInterface =dynamic_cast<SaveContentInterface*>(ptrToCast);
+        if(saveInterface!=0)
+            saveInterface->saveContent();
+    }
+    catch (std::exception& ex)
+    {
+
+        qDebug()<<"Crash: "<<ex.what();
+    }
+}
+
 MainWindow::~MainWindow()
 {
     //delete side_menu;
@@ -186,13 +281,13 @@ void MainWindow::writeSettings()
     settings.setValue("size", this->size());
     settings.setValue("windowState", saveState());
 
-    if (!this->_curBewohner.isNull())
+    if (!this->thisSession.curBewohner.isNull())
     {
-	settings.setValue("lastBewohner",this->_curBewohner->name());
+	settings.setValue("lastBewohner",this->thisSession.curBewohner->name());
     }
-    if (!this->_curWohngruppe.isNull())
+    if (!this->thisSession.curWohngruppe.isNull())
     {
-	settings.setValue("lastWohngruppe",this->_curWohngruppe->name());
+	settings.setValue("lastWohngruppe",this->thisSession.curWohngruppe->name());
     }
 }
 
@@ -218,31 +313,31 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::loadWohnguppeUndBewohner()
 {
-    if(this->PointerToConnection.isNull())
+    if(this->thisSession.curConnection.isNull())
 	return;
 
     QSettings settings("EBP.ini", QSettings::IniFormat);
     //asynchrones Laden aller Wohngruppen und Bewohner
-    QFuture< QList < QSharedPointer <ebp::Wohngruppe> > > allGroups = QtConcurrent::run(ebp::loadAllGroups, this->PointerToConnection, this->_curMitarbeiter);
+    QFuture< QList < QSharedPointer <ebp::Wohngruppe> > > allGroups = QtConcurrent::run(ebp::loadAllGroups, this->thisSession.curConnection, this->thisSession.curMitarbeiter);
     PleasWaitDialog *pwd=new PleasWaitDialog(this);
     pwd->show();
 
     // Wohngruppe
     allGroups.waitForFinished();
-    this->_AlleWohngruppenDesAktuellenMa = allGroups.result();
+    this->thisSession.allGroups = allGroups.result();
     //Aktuelle Wohngruppe setzen (alt)
-    this->_curWohngruppe.isNull();
-    if(!_AlleWohngruppenDesAktuellenMa.isEmpty())
+    this->thisSession.curWohngruppe.isNull();
+    if(!thisSession.allGroups.isEmpty())
     {
-	this->_curWohngruppe = _AlleWohngruppenDesAktuellenMa.first();
+	this->thisSession.curWohngruppe = thisSession.allGroups.first();
 	QString lastW = settings.value("lastWohngruppe",QVariant("NULL")).toString();
 	if (lastW != "NULL")
 	{
-	    foreach(QSharedPointer <ebp::Wohngruppe> wg, _AlleWohngruppenDesAktuellenMa )
+	    foreach(QSharedPointer <ebp::Wohngruppe> wg, thisSession.allGroups )
 	    {
 		if (wg->name() == lastW)
 		{
-		    this->_curWohngruppe = wg;
+		    this->thisSession.curWohngruppe = wg;
 		    continue;
 		}
 	    }
@@ -250,26 +345,26 @@ void MainWindow::loadWohnguppeUndBewohner()
     }
 
 
-    if(!this->_curWohngruppe.isNull())
+    if(!this->thisSession.curWohngruppe.isNull())
     {
-        QFuture< QList < QSharedPointer <ebp::Bewohner> > > allBewohner = QtConcurrent::run(ebp::loadAllBewohner, this->PointerToConnection, this->_curWohngruppe);
+	QFuture< QList < QSharedPointer <ebp::Bewohner> > > allBewohner = QtConcurrent::run(ebp::loadAllBewohner, this->thisSession.curConnection, this->thisSession.curWohngruppe);
 
         allBewohner.waitForFinished();
-        this->_alleBewohnerDerAktuellenGruppe=allBewohner.result();
+	this->thisSession.allBewohner=allBewohner.result();
 
         //Aktuellen Bewohner setzen
-        this->_curBewohner.isNull();
-        if (!_alleBewohnerDerAktuellenGruppe.isEmpty())
+	this->thisSession.curBewohner.isNull();
+	if (!thisSession.allBewohner.isEmpty())
         {
-            this->_curBewohner = _alleBewohnerDerAktuellenGruppe.first();
+	    this->thisSession.curBewohner = thisSession.allBewohner.first();
             QString lastB = settings.value("lastBewohner",QVariant("NULL")).toString();
             if (lastB != "NULL")
             {
-                foreach(QSharedPointer <ebp::Bewohner> bw , _alleBewohnerDerAktuellenGruppe)
+		foreach(QSharedPointer <ebp::Bewohner> bw , thisSession.allBewohner)
                 {
                     if (bw->name()==lastB)
                     {
-                        this->_curBewohner = bw;
+			this->thisSession.curBewohner = bw;
                         continue;
                     }
                 }
@@ -284,12 +379,12 @@ void MainWindow::loadWohnguppeUndBewohner()
 }
 void MainWindow::setCurBewohnerAndWohngruppeInfo()
 {
-    if (!this->_curBewohner.isNull())
-	this->_infoFrame->setCurBewohner(this->_curBewohner->name());
+    if (!this->thisSession.curBewohner.isNull())
+	this->_infoFrame->setCurBewohner(this->thisSession.curBewohner->name());
     else
 	this->_infoFrame->setCurBewohner("Keine Informationen verfügbar");
-    if(!this->_curWohngruppe.isNull())
-	this->_infoFrame->setCurWohngruppe(this->_curWohngruppe->name());
+    if(!this->thisSession.curWohngruppe.isNull())
+	this->_infoFrame->setCurWohngruppe(this->thisSession.curWohngruppe->name());
     else
 	this->_infoFrame->setCurWohngruppe("Keine Informationen verfügbar");
 
@@ -297,7 +392,7 @@ void MainWindow::setCurBewohnerAndWohngruppeInfo()
 
 void MainWindow::setCurMitarbeiter(QSharedPointer<ebp::Mitarbeiter> curMitarbeiter)
 {
-    this->_curMitarbeiter = curMitarbeiter;
+    this->thisSession.curMitarbeiter = curMitarbeiter;
 }
 
 

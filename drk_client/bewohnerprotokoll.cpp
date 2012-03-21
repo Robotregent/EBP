@@ -52,3 +52,16 @@ void BewohnerProtokoll::on_addTeilnehmer_clicked()
     this->ui->tableWidget->setItem(this->ui->tableWidget->rowCount()-1,0,tmp);
 
 }
+
+TextTransferInformation BewohnerProtokoll::getSelectedText()
+{
+    TextTransferInformation result;
+    result.isEmpty = true;
+    if (this->ui->textBrowser->textCursor().hasSelection())
+    {
+	result.information = "Texttransfer aus Protokoll vom "+this->ui->dateTimeEdit->dateTime().toString();
+	result.textTransferFragment = this->ui->textBrowser->textCursor().selection();
+	result.isEmpty = false;
+    }
+    return result;
+}

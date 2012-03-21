@@ -13,6 +13,7 @@ class LeistungstraegerBox : public QGroupBox
 
 public:
     explicit LeistungstraegerBox(QWidget *parent = 0);
+    static const int fixedWidth = 670;
     ~LeistungstraegerBox();
 
 private:

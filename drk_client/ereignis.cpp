@@ -1,10 +1,12 @@
 #include "ereignis.h"
 #include "ui_ereignis.h"
+#include "newereignisdialog.h"
 #include <QDebug>
 
-Ereignis::Ereignis(QWidget *parent) :
+Ereignis::Ereignis(TextTransferAgent *agent,QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::Ereignis)
+    ui(new Ui::Ereignis),
+    transferAgent(agent)
 {
     ui->setupUi(this);
     QWidget *puffer = new QWidget(this);
@@ -21,17 +23,28 @@ Ereignis::~Ereignis()
 
 void Ereignis::on_pushButton_clicked()
 {
-    //Widget für neue Eingabe erzeugen und befüllen
-    EinzelEreignis *tmp=new EinzelEreignis(this);
-    tmp->setContent(QDateTime::currentDateTime(),this->ui->MAZeichen->text(),this->ui->EreignisText->toHtml() );
-    //this->EreignisListe.append(tmp);
-    this->EreignisListe.prepend(tmp);
-    //Neue Eingabe anzeigen
-    //this->pufferLayout->addWidget(tmp);
-    this->pufferLayout->insertWidget(0,tmp);
+    //Dialog öffnen
 
-    //Eingabefeld löschen
-    this->ui->MAZeichen->clear();
-    this->ui->EreignisText->clear();
+    EreignisInformation info;
+    info.isEmpty = true;
+    NewEreignisDialog ereignisDialog(&info,this);
+
+
+
+    if(ereignisDialog.exec()==1)
+    {
+	if(!info.isEmpty)
+	{
+	    EinzelEreignis *tmp=new EinzelEreignis(this);
+	    tmp->setContent(info.time,info.MitarbeiterZeichen,info.EreignisText);
+
+	    //Neue Eingabe anzeigen
+	    this->EreignisListe.prepend(tmp);
+	    this->pufferLayout->insertWidget(0,tmp);
+
+	    //TextransferInterface registrieren
+	    this->transferAgent->registerNewInterface(tmp);
+	}
+    }
 
 }

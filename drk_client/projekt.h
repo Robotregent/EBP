@@ -2,17 +2,19 @@
 #define PROJEKT_H
 
 #include <QWidget>
+#include "texttransferinterface.h"
 
 namespace Ui {
     class Projekt;
 }
 
-class Projekt : public QWidget
+class Projekt : public QWidget, public TextTransferInterface
 {
     Q_OBJECT
 
 public:
     explicit Projekt(QWidget *parent = 0);
+    TextTransferInformation getSelectedText();
     ~Projekt();
 
 private slots:

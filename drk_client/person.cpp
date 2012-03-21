@@ -5,6 +5,8 @@
 #include <QLineEdit>
 #include <QTextEdit>
 #include <QDateEdit>
+
+
 person::person(QWidget *parent) :
     QWidget(parent)
 {
@@ -60,4 +62,10 @@ QWidget *person::CreatePersonEdit(int type)
 	break;
     }
     return result;
+}
+
+bool person::saveContent()
+{
+    /// \todo Speichern Implementierten
+    return true;
 }

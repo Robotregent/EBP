@@ -2,17 +2,18 @@
 #define BEWOHNERPROTOKOLL_H
 
 #include <QScrollArea>
-
+#include "texttransferinterface.h"
 namespace Ui {
     class BewohnerProtokoll;
 }
 
-class BewohnerProtokoll : public QScrollArea
+class BewohnerProtokoll : public QScrollArea, public TextTransferInterface
 {
     Q_OBJECT
 
 public:
     explicit BewohnerProtokoll(QWidget *parent = 0);
+    TextTransferInformation getSelectedText();
     ~BewohnerProtokoll();
 
 private slots:
