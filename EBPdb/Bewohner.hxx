@@ -2,6 +2,7 @@
 #define BEWOHNER_HXX
 
 
+#include "Abwesenheit.hxx"
 #include "Bewohnerereignis.hxx"
 #include "Wohngruppe.hxx"
 #include "Projekt.hxx"
@@ -20,6 +21,7 @@
 
 namespace ebp
 {
+	class Abwesenheit;
 	class Bewohnerereignis;
 	class Wohngruppe;
 	class Projekt;
@@ -83,11 +85,15 @@ namespace ebp
 		DATABASEOBJECT_DECLARE_LOAD( Ereignisse, Bewohnerereignis )
 		DATABASEOBJECT_DECLARE_LINK( Bewohner, Ereignis, Bewohnerereignis )
 
+		DATABASEOBJECT_DECLARE_LOAD( Abwesenheiten, Abwesenheit )
+		DATABASEOBJECT_DECLARE_LINK( Bewohner, Abwesenheit, Abwesenheit )
+
 	private:
 		friend class odb::access;
 		friend class Projekt;
 		friend class Protokoll;
 		friend class Bewohnerereignis;
+		friend class Abwesenheit;
 		Bewohner() {}
 
 		#pragma db id auto
@@ -118,6 +124,9 @@ namespace ebp
 
 		#pragma db unordered inverse(bewohner_)
 		QList< QLazyWeakPointer<Bewohnerereignis> > ereignisse_;
+
+		#pragma db unordered inverse(bewohner_)
+		QList< QLazyWeakPointer<Abwesenheit> > abwesenheiten_;
 	};
 }
 
