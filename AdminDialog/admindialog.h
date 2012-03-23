@@ -70,6 +70,7 @@ private:
     bool isPasswordValid();
     ebp::Mitarbeiter::Berechtigungen setBerechtigung();
     void loadData();
+    QString dbName;
 
 };
 

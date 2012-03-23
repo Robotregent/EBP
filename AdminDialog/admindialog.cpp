@@ -11,6 +11,7 @@
 #include <QList>
 #include <QMessageBox>
 #include <QDebug>
+#include <QSettings>
 
 using namespace ebp;
 
@@ -42,6 +43,9 @@ void AdminDialog::init()
     this->ui->passwortLineEdit->setEchoMode(QLineEdit::Password);
     this->ui->passwortWiederholenLineEdit->setEchoMode(QLineEdit::Password);
     this->ui->passwortLineEdit_2->setEchoMode(QLineEdit::Password);
+
+    QSettings settings("AdminDialog.ini", QSettings::IniFormat);
+    this->dbName = settings.value("db",QVariant("ebp")).toString();
 
     this->setLogin();
 
@@ -157,7 +161,7 @@ void AdminDialog::setContent()
 
 void AdminDialog::on_ButtonLogin_clicked()
 {
-    this->PointerToConnection = QSharedPointer<connection>(new connection(this->ui->loginNameLineEdit->text(),"drk"));
+    this->PointerToConnection = QSharedPointer<connection>(new connection(this->ui->loginNameLineEdit->text(),this->dbName));
     if (this->PointerToConnection->establish(this->ui->passwortLineEdit->text()))
     {
 	this->setContent();

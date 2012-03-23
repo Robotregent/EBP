@@ -4,12 +4,14 @@
 /**
   *\brief Hält alle notwendigen Informationen für einen Texttransfer
   */
-typedef struct
+struct StructTextTransferInformation
 {
     bool isEmpty;				    ///< true, wenn es keinen Text für einen Texttransfer gab
     QString information;			    ///< Metainformationen über den Texttransfer. In der Regel aus welchem Widget das Textfragment stammt
     QTextDocumentFragment textTransferFragment;	    ///< Ein formatiertes Textfragment
-} TextTransferInformation;
+    StructTextTransferInformation() : isEmpty(true) { }
+};
+typedef struct StructTextTransferInformation TextTransferInformation;
 /**
   * \brief Interface für die Transferfunktion von Text in die Betruungsdokumentation. Kann auch leer sein. Prüfe TextTransferInformation::isEmpty.
   */

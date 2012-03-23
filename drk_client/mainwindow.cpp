@@ -102,6 +102,14 @@ void MainWindow::create_TextTransferDock()
     this->TextTransferDock->setObjectName("TextTransferAgent");
     this->addDockWidget(Qt::BottomDockWidgetArea,this->TextTransferDock);
 }
+TextTransferInterface *convertToInterface(QWidget *toConvert)
+{
+    TextTransferInterface *result;
+    result =dynamic_cast<TextTransferInterface*>(toConvert);
+
+    return result;
+}
+
 TextTransferAgent *MainWindow::setTextTransferAgent(TextTransferInterface *interface)
 {
     TextTransferAgent *result;
@@ -195,7 +203,7 @@ QWidget *MainWindow::getContentWidget(int ContentTyp)
         case MainWindow::BProtokollWidget:
 	    {
 		result = new BewohnerProtokoll(this);
-		this->setTextTransferAgent((TextTransferInterface *)result);
+		this->setTextTransferAgent(dynamic_cast<TextTransferInterface*>(result));
 		break;
 	    }
         case MainWindow::Leistungstraeger:
@@ -213,7 +221,7 @@ QWidget *MainWindow::getContentWidget(int ContentTyp)
         case MainWindow::ProjektWidget:
 	    {
 		result = new Projekt(this);
-		this->setTextTransferAgent((TextTransferInterface *)result);
+		this->setTextTransferAgent(dynamic_cast<TextTransferInterface*>(result));
 		break;
 	    }
 	case MainWindow::DocumentationWidget:

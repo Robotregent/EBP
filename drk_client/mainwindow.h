@@ -27,6 +27,7 @@ private:
     void loadWohnguppeUndBewohner();
     void setCurBewohnerAndWohngruppeInfo();
     TextTransferAgent *setTextTransferAgent(TextTransferInterface *interface);
+    TextTransferInterface *convertToInterface(QWidget *toConvert);
     QList <QWidget *> ContentWidgetList;
     QDockWidget *dock_side_menu;
     QDockWidget *TextTransferDock;
@@ -36,6 +37,7 @@ private:
     //QMenu *viewMenu;
     InfoFrame *_infoFrame;
     SessionContext thisSession;
+    QString dbName;
 
 
 private slots:

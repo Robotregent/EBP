@@ -24,6 +24,7 @@ private slots:
 private:
     Ui::LoginForm *ui;
     MainWindow *_parent;
+    QString dbName;
 };
 
 #endif // LOGINFORM_H

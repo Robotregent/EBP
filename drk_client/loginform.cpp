@@ -2,6 +2,7 @@
 #include "ui_loginform.h"
 #include <EBPdb/connection.hxx>
 #include <QMessageBox>
+#include <QSettings>
 
 //using namespace ebp;
 LoginForm::LoginForm(QWidget *parent) :
@@ -11,6 +12,8 @@ LoginForm::LoginForm(QWidget *parent) :
     ui->setupUi(this);
     _parent = (MainWindow *)parent;
     this->ui->passwortLineEdit->setEchoMode(QLineEdit::Password);
+    QSettings settings("EBP.ini", QSettings::IniFormat);
+    this->dbName = settings.value("db",QVariant("ebp")).toString();
 }
 
 LoginForm::~LoginForm()
@@ -20,7 +23,7 @@ LoginForm::~LoginForm()
 
 void LoginForm::on_pushButton_clicked()
 {
-    QSharedPointer<ebp::connection> PointerToConnection = QSharedPointer<ebp::connection>(new ebp::connection(this->ui->loginLineEdit->text(),"drk"));
+    QSharedPointer<ebp::connection> PointerToConnection = QSharedPointer<ebp::connection>(new ebp::connection(this->ui->loginLineEdit->text(),this->dbName));
     if (PointerToConnection->establish(this->ui->passwortLineEdit->text()))
     {
 	//QList < QSharedPointer<ebp::Mitarbeiter> > allMa = ebp::Mitarbeiter::loadAll(PointerToConnection);

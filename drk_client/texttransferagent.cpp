@@ -53,7 +53,8 @@ void TextTransferAgent::on_pushButton_clicked()
     //Testballon
     foreach(TextTransferInterface *interface, textInterfaces)
     {
-	if (!interface->getSelectedText().isEmpty)
+	TextTransferInformation info =interface->getSelectedText();
+	if (!info.isEmpty)
 	{
 	    QMessageBox::information(this,"Texttransfer",interface->getSelectedText().textTransferFragment.toPlainText());
 	}
