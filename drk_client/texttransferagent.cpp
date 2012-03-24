@@ -5,12 +5,13 @@
 
 TextTransferAgent::TextTransferAgent(QList<TextTransferInterface *>Interfaces, const SessionContext &context,QWidget *parent) :
     QFrame(parent),
+    _context(context),
     ui(new Ui::TextTransferAgent)
 {
     ui->setupUi(this);
 
     this->textInterfaces = Interfaces;
-    this->_context=context;
+
     foreach (QSharedPointer< ebp::Bewohner> bw, _context.allBewohner )
     {
 	this->ui->bewohnerBox->addItem(bw->name(),qulonglong(bw->nummer()));

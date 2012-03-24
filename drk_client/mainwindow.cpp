@@ -189,7 +189,7 @@ QWidget *MainWindow::getContentWidget(int ContentTyp)
 	switch (ContentTyp)
 	{
 	case MainWindow::PersonWidget:
-	    result=new person(this);
+            result=new person(this->thisSession,this);
 	    break;
 	case MainWindow::LoginWidget:
 	    result=new LoginForm(this);

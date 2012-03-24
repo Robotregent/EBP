@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 23. Mrz 2012 um 22:34
+-- Erstellungszeit: 24. Mrz 2012 um 18:06
 -- Server Version: 5.1.61
 -- PHP-Version: 5.3.6-13ubuntu3.6
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Datenbank: `testDB`
+-- Datenbank: `drk`
 --
 
 -- --------------------------------------------------------
@@ -43,11 +43,19 @@ CREATE TABLE IF NOT EXISTS `Abwesenheit` (
 CREATE TABLE IF NOT EXISTS `Bewohner` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `nummer` bigint(20) unsigned NOT NULL,
-  `name` text,
+  `anrede` text,
+  `vorname` text,
+  `nachname` text,
+  `geburtsort` text,
   `geburtsdatum` date DEFAULT NULL,
   `krankenkasse` text,
   `email` text,
   `telefon` text,
+  `familienstatus` text,
+  `konfession` text,
+  `staat` text,
+  `seit` date DEFAULT NULL,
+  `anmerkung` text,
   `wohngruppe` bigint(20) unsigned DEFAULT NULL,
   `bezugsbetreuer` bigint(20) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -58,9 +66,9 @@ CREATE TABLE IF NOT EXISTS `Bewohner` (
 -- Daten für Tabelle `Bewohner`
 --
 
-INSERT INTO `Bewohner` (`id`, `nummer`, `name`, `geburtsdatum`, `krankenkasse`, `email`, `telefon`, `wohngruppe`, `bezugsbetreuer`) VALUES
-(1, 1, 'Erster TestBewohner', '2012-03-01', ' AOK', 'erster@test.de ', ' 0123', 1, 1),
-(2, 2, 'Zweiter TestBewohner', '2012-03-11', 'BKK', 'zweiter@test.de', ' 555', 1, 1);
+INSERT INTO `Bewohner` (`id`, `nummer`, `anrede`, `vorname`, `nachname`, `geburtsort`, `geburtsdatum`, `krankenkasse`, `email`, `telefon`, `familienstatus`, `konfession`, `staat`, `seit`, `anmerkung`, `wohngruppe`, `bezugsbetreuer`) VALUES
+(1, 1, 'Herr', 'Erster', 'TestBewohner', 'TestOrt', '2012-03-01', ' AOK', 'erster@test.de ', ' 0123', 'ledig', 'Pastafari', 'Teststaat', '2012-02-06', 'Testbemerkung', 1, 1),
+(2, 2, 'Frau', 'Zweite', 'TestBewohnerin', 'Tettnang', '2012-03-11', 'BKK', 'zweite@test.de', ' 555', 'verheiratet', 'Katholisch', 'deutsch', '2011-12-11', 'Vegetarierin', 1, 1);
 
 -- --------------------------------------------------------
 

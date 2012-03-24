@@ -26,7 +26,7 @@ private slots:
 private:
     Ui::TextTransferAgent *ui;
     QList<TextTransferInterface *> textInterfaces;
-    SessionContext _context;
+    const SessionContext &_context;
 };
 
 #endif // TEXTTRANSFERAGENT_H

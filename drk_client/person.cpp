@@ -7,8 +7,9 @@
 #include <QDateEdit>
 
 
-person::person(QWidget *parent) :
-    QWidget(parent)
+person::person(const SessionContext &context, QWidget *parent) :
+    QWidget(parent),
+    con(context)
 {
     QHBoxLayout *hLayout = new QHBoxLayout();
     hLayout->setSpacing(20);
@@ -26,7 +27,7 @@ person::person(QWidget *parent) :
     LayoutLeft->addRow(tr("Vorname"),this->person_edit.at(person::forename));
     LayoutLeft->addRow(tr("Nachname"),this->person_edit.at(person::name));
     LayoutLeft->addRow(tr("Geburtsdatum"),this->person_edit.at(person::dateOfBirth));
-    LayoutLeft->addRow(tr("Alter"),this->person_edit.at(person::age));
+    //LayoutLeft->addRow(tr("Alter"),this->person_edit.at(person::age));
     LayoutLeft->addRow(tr("Geburtsort"),this->person_edit.at(person::birthplace));
     LayoutLeft->addRow(tr("Staatsbürgerschaft"),this->person_edit.at(person::citizenship));
     LayoutLeft->addRow(tr("Konfession"),this->person_edit.at(person::confession));
@@ -42,6 +43,8 @@ person::person(QWidget *parent) :
     this->setLayout(hLayout);
     this->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
+    this->initField();
+
 }
 
 QWidget *person::CreatePersonEdit(int type)
@@ -56,12 +59,33 @@ QWidget *person::CreatePersonEdit(int type)
     case person::dateOfBirth:
     case person::residence:
 	result = new QDateEdit(this);
+        ((QDateEdit *)result)->setCalendarPopup(true);
 	break;
     default:
 	result = new QLineEdit(this);
 	break;
     }
     return result;
+}
+void person::initField()
+{
+    if (con.curBewohner!=NULL)
+    {
+
+        ((QLineEdit *)this->person_edit.at(person::title))->setText(this->con.curBewohner->anrede());
+        ((QLineEdit *)this->person_edit.at(person::forename))->setText(this->con.curBewohner->vorname());
+        ((QLineEdit *)this->person_edit.at(person::name))->setText(this->con.curBewohner->nachname());
+        ((QDateEdit *)this->person_edit.at(person::dateOfBirth))->setDate(this->con.curBewohner->geburtsdatum());
+        ((QLineEdit *)this->person_edit.at(person::birthplace))->setText(this->con.curBewohner->geburtsort());
+        ((QLineEdit *)this->person_edit.at(person::citizenship))->setText(this->con.curBewohner->staat());
+        ((QLineEdit *)this->person_edit.at(person::confession))->setText(con.curBewohner->konfession());
+        ((QLineEdit *)this->person_edit.at(person::familyState))->setText(con.curBewohner->familienstatus());
+        ((QDateEdit *)this->person_edit.at(person::residence))->setDate(con.curBewohner->seit());
+        ((QTextEdit *)this->person_edit.at(person::comments))->setText(con.curBewohner->anmerkung());
+
+
+    }
+
 }
 
 bool person::saveContent()
