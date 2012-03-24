@@ -28,3 +28,8 @@ DATABASEOBJECT_IMPLEMENT_LOAD( Bewohner, Projekte, Projekt, projekte_ )
 DATABASEOBJECT_IMPLEMENT_LOAD( Bewohner, Protokolle, Protokoll, protokolle_ )
 DATABASEOBJECT_IMPLEMENT_LOAD( Bewohner, Ereignisse, Bewohnerereignis, ereignisse_ )
 DATABASEOBJECT_IMPLEMENT_LOAD( Bewohner, Abwesenheiten, Abwesenheit, abwesenheiten_ )
+
+const QString Bewohner::name() const
+{
+	return QString( anrede_ + " " + vorname_ + " " + nachname_ ).trimmed();
+}

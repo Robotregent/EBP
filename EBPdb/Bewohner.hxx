@@ -36,27 +36,28 @@ namespace ebp
 	public:
 		Bewohner
 		(
-			const unsigned long & nummer,
-			const QString & name,
-			const QDate & geburtsdatum,
-			const QString & krankenkasse,
-			const QString & email,
-			const QString & telefon
+			const unsigned long & nummer
 		) :
-			nummer_(nummer),
-			name_(name),
-			geburtsdatum_(geburtsdatum),
-			krankenkasse_(krankenkasse),
-			email_(email),
-			telefon_(telefon)
+			nummer_(nummer)
 		{
 		}
 
 		const unsigned long & nummer() const { return nummer_; }
 		void nummer( const unsigned long & nummer ) { nummer_ = nummer; }
 
-		const QString & name() const { return name_; }
-		void name( const QString & name ) { name_ = name; }
+		const QString & anrede() const { return anrede_; }
+		void anrede( const QString & anrede ) { anrede_ = anrede; }
+
+		const QString & vorname() const { return vorname_; }
+		void vorname( const QString & vorname ) { vorname_ = vorname; }
+
+		const QString & nachname() const { return nachname_; }
+		void nachname( const QString & nachname ) { nachname_ = nachname; }
+
+		const QString name() const;
+
+		const QString & geburtsort() const { return geburtsort_; }
+		void geburtsort( const QString & geburtsort ) { geburtsort_ = geburtsort; }
 
 		const QDate & geburtsdatum() const { return geburtsdatum_; }
 		void geburtsdatum( const QDate & geburtsdatum ) { geburtsdatum_ = geburtsdatum; }
@@ -66,6 +67,21 @@ namespace ebp
 
 		const QString & telefon() const { return telefon_; }
 		void telefon( const QString & telefon ) { telefon_ = telefon; }
+
+		const QString & familienstatus() const { return familienstatus_; }
+		void familienstatus( const QString & familienstatus ) { familienstatus_ = familienstatus; }
+
+		const QString & konfession() const { return konfession_; }
+		void konfession( const QString & konfession ) { konfession_ = konfession; }
+
+		const QString & staat() const { return staat_; }
+		void staat( const QString & staat ) { staat_ = staat; }
+
+		const QDate & seit() const { return seit_; }
+		void seit( const QDate & seit ) { seit_ = seit; }
+
+		const QString & anmerkung() const { return anmerkung_; }
+		void anmerkung( const QString & anmerkung ) { anmerkung_ = anmerkung; }
 
 		const QSharedPointer<Wohngruppe> & wohngruppe() const { return wohngruppe_; }
 		DATABASEOBJECT_DECLARE_LINK( Bewohner, Wohngruppe, Wohngruppe )
@@ -102,7 +118,13 @@ namespace ebp
 		#pragma db not_null options("UNIQUE")
 		unsigned long nummer_;
 
-		QString name_;
+		QString anrede_;
+
+		QString vorname_;
+
+		QString nachname_;
+
+		QString geburtsort_;
 
 		QDate geburtsdatum_;
 
@@ -111,6 +133,16 @@ namespace ebp
 		QString email_;
 
 		QString telefon_;
+
+		QString familienstatus_;
+
+		QString konfession_;
+
+		QString staat_;
+
+		QDate seit_;
+
+		QString anmerkung_;
 
 		QSharedPointer<Wohngruppe> wohngruppe_;
 

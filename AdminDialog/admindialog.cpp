@@ -391,8 +391,10 @@ void AdminDialog::on_button_B_speichern_clicked()
     //
     QSharedPointer<Bewohner> tmpBew
     (
-	new Bewohner (this->ui->Bewohnernummer->value(),this->ui->vornameLineEdit->text()+" "+this->ui->nachnameLineEdit->text(), QDate(), " ", " ", " ")
+	new Bewohner (this->ui->Bewohnernummer->value())
     );
+    tmpBew->vorname(this->ui->vornameLineEdit->text());
+    tmpBew->nachname(this->ui->nachnameLineEdit->text());
     if (tmpBew->create( this->PointerToConnection ))
     {
 	CostumListWidget<Bewohner> *newBew=new CostumListWidget<Bewohner>(tmpBew,this->ui->B_list);
