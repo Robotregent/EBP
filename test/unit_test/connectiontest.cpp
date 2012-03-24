@@ -5,6 +5,7 @@ void ConnectionTest::initTestCase()
     this->testCon = NULL;
     this->testCon= new ebp::connection("testUser","testDB");
     QVERIFY(this->testCon!=NULL);
+    //testCon->establish("test");
 }
 void ConnectionTest::establishCon()
 {
@@ -17,7 +18,7 @@ void ConnectionTest::establishCon()
     delete this->testCon;
 
     this->testCon= new ebp::connection("testUser","testDB");
-    QVERIFY(this->testCon->establish("testPasswort")==true);
+    QVERIFY(this->testCon->establish("test")==true);
 
 }
 

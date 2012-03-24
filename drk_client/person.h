@@ -18,7 +18,7 @@ class person : public QWidget, public SaveContentInterface
 public:
     explicit person(const SessionContext &context, QWidget *parent = 0);
     enum PersonSlots{title=0, forename=1, name=2, dateOfBirth=3, birthplace=4, citizenship=5,
-                     confession=6, familyState=7, formerAddress=8, residence=9, comments=10, countOfLineEdits=11};
+                     confession=6, familyState=7, residence=8, comments=9, countOfLineEdits=10};
     QWidget *getPersonSlot(int i){ return this->person_edit.at(i); }
     bool saveContent();
 

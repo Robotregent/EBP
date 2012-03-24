@@ -4,7 +4,7 @@ void MitarbeiterTest::initTestCase()
     //testCon = NULL;
     testCon = QSharedPointer<ebp::connection> (new ebp::connection("testUser","testDB"));
     QVERIFY(!testCon.isNull());
-
+    testCon->establish("test");
 }
 
 /**

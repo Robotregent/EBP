@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 24. Mrz 2012 um 18:06
+-- Erstellungszeit: 24. Mrz 2012 um 21:38
 -- Server Version: 5.1.61
 -- PHP-Version: 5.3.6-13ubuntu3.6
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Datenbank: `drk`
+-- Datenbank: `testDB`
 --
 
 -- --------------------------------------------------------
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `Bewohner` (
   `bezugsbetreuer` bigint(20) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `nummer` (`nummer`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Daten für Tabelle `Bewohner`
@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `Mitarbeiter` (
   `telefon` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `login` (`login`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Daten für Tabelle `Mitarbeiter`
@@ -164,6 +164,13 @@ CREATE TABLE IF NOT EXISTS `Projekt_verantwortliche` (
   KEY `Projekt_verantwortliche_object_id` (`object_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Daten für Tabelle `Projekt_verantwortliche`
+--
+
+INSERT INTO `Projekt_verantwortliche` (`object_id`, `value`) VALUES
+(1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -197,6 +204,13 @@ CREATE TABLE IF NOT EXISTS `Protokoll_schreiber` (
   KEY `Protokoll_schreiber_object_id` (`object_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Daten für Tabelle `Protokoll_schreiber`
+--
+
+INSERT INTO `Protokoll_schreiber` (`object_id`, `value`) VALUES
+(1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -208,6 +222,13 @@ CREATE TABLE IF NOT EXISTS `Protokoll_teilnehmer` (
   `value` bigint(20) unsigned DEFAULT NULL,
   KEY `Protokoll_teilnehmer_object_id` (`object_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Daten für Tabelle `Protokoll_teilnehmer`
+--
+
+INSERT INTO `Protokoll_teilnehmer` (`object_id`, `value`) VALUES
+(1, 1);
 
 -- --------------------------------------------------------
 
@@ -242,14 +263,16 @@ CREATE TABLE IF NOT EXISTS `Wohngruppenereignis` (
   `text` text,
   `wohngruppe` bigint(20) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Daten für Tabelle `Wohngruppenereignis`
 --
 
 INSERT INTO `Wohngruppenereignis` (`id`, `zeitpunkt`, `text`, `wohngruppe`) VALUES
-(1, '2012-03-01 00:00:00', 'Alle aufgewacht', 1);
+(1, '2012-03-01 00:00:00', 'Alle aufgewacht', 1),
+(2, '2012-03-13 00:00:00', 'Essen nicht gekommen', 1),
+(3, '2012-03-18 00:00:00', 'Medikamentenbestellung vergessen', 2);
 
 -- --------------------------------------------------------
 
@@ -262,6 +285,14 @@ CREATE TABLE IF NOT EXISTS `Wohngruppenereignis_schreiber` (
   `value` bigint(20) unsigned DEFAULT NULL,
   KEY `Wohngruppenereignis_schreiber_object_id` (`object_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Daten für Tabelle `Wohngruppenereignis_schreiber`
+--
+
+INSERT INTO `Wohngruppenereignis_schreiber` (`object_id`, `value`) VALUES
+(1, 1),
+(2, 1);
 
 -- --------------------------------------------------------
 

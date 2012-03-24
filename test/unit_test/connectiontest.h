@@ -22,6 +22,5 @@ private slots:
     void cleanupTestCase();
 
 };
-
 DECLARE_TEST(ConnectionTest)
 #endif // CONNECTIONTEST_H

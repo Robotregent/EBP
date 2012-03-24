@@ -27,14 +27,12 @@ person::person(const SessionContext &context, QWidget *parent) :
     LayoutLeft->addRow(tr("Vorname"),this->person_edit.at(person::forename));
     LayoutLeft->addRow(tr("Nachname"),this->person_edit.at(person::name));
     LayoutLeft->addRow(tr("Geburtsdatum"),this->person_edit.at(person::dateOfBirth));
-    //LayoutLeft->addRow(tr("Alter"),this->person_edit.at(person::age));
     LayoutLeft->addRow(tr("Geburtsort"),this->person_edit.at(person::birthplace));
     LayoutLeft->addRow(tr("Staatsbürgerschaft"),this->person_edit.at(person::citizenship));
     LayoutLeft->addRow(tr("Konfession"),this->person_edit.at(person::confession));
     LayoutLeft->addRow(tr("Familienstatus"),this->person_edit.at(person::familyState));
     LayoutLeft->addRow(tr("Aufenthalt hier seit"),this->person_edit.at(person::residence));
 
-    LayoutRight->addRow(tr("Bisherige Anschrift"),this->person_edit.at(person::formerAddress));
     LayoutRight->addRow(tr("Anmerkung"),this->person_edit.at(person::comments));
 
     hLayout->addLayout(LayoutLeft,12);
@@ -53,7 +51,6 @@ QWidget *person::CreatePersonEdit(int type)
     switch (type)
     {
     case person::comments:
-    case person::formerAddress:
 	result = new QTextEdit(this);
 	break;
     case person::dateOfBirth:
