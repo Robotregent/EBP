@@ -5,7 +5,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-
+/**
+  * \brief Initialisiert Connection und Bewohner
+  */
 void BewohnerTest::initTestCase()
 {
     aConnection = QSharedPointer<ebp::connection> ( new ebp::connection("testUser","testDB"));
@@ -16,8 +18,9 @@ void BewohnerTest::initTestCase()
     QVERIFY(!aBewohner.isNull());
     aBewohner->create(aConnection);
 }
-
-
+/**
+  * \brief Testet das Erstellen den Relation Bewohner <-1- -1-> Wohngruppe
+  */
 void BewohnerTest::wohngruppenRelation()
 {
     QList< QSharedPointer<ebp::Wohngruppe> > wgList = ebp::Wohngruppe::loadAll(aConnection);
@@ -38,7 +41,9 @@ void BewohnerTest::wohngruppenRelation()
     QSharedPointer< ebp::Wohngruppe > wgUnlink = aBewohner->wohngruppe();
     QVERIFY(wgUnlink.isNull());
 }
-
+/**
+  * \brief Testet das Erstellen den Relation Bewohner <-1- -1-> Mitarbeiter
+  */
 void BewohnerTest::bezugsbetreuungRelation()
 {
     QList< QSharedPointer<ebp::Mitarbeiter> > maList = ebp::Mitarbeiter::loadAll(aConnection);
@@ -59,7 +64,9 @@ void BewohnerTest::bezugsbetreuungRelation()
     QSharedPointer< ebp::Mitarbeiter > maUnlink = aBewohner->bezugsbetreuer();
     QVERIFY(maUnlink.isNull());
 }
-
+/**
+  * \brief Testet das Erstellen den Relation Bewohner <-1- -n-> Projekt
+  */
 void BewohnerTest::projektRelation()
 {
     QSharedPointer< ebp::Projekt > newProjekt =
@@ -83,7 +90,9 @@ void BewohnerTest::projektRelation()
     newProjekt->remove(aConnection);
 
 }
-
+/**
+  * \brief Testet das Erstellen den Relation Bewohner <-1- -n-> Protokoll
+  */
 void BewohnerTest::protokollRelation()
 {
     QSharedPointer< ebp::Protokoll > newProtokoll =
@@ -109,7 +118,9 @@ void BewohnerTest::protokollRelation()
     newProtokoll->remove(aConnection);
 
 }
-
+/**
+  * \brief Testet das Erstellen den Relation Bewohner <-1- -n-> Bewohnerereignis
+  */
 void BewohnerTest::ereignisRelation()
 {
     QSharedPointer< ebp::Bewohnerereignis > newEreignis =
@@ -135,7 +146,9 @@ void BewohnerTest::ereignisRelation()
     newEreignis->remove(aConnection);
 
 }
-
+/**
+  * \brief Testet das Erstellen den Relation Bewohner <-1- -n-> Abwesenheit
+  */
 void BewohnerTest::AbwesenheitRealtion()
 {
     QSharedPointer< ebp::Abwesenheit > newAbwesenheit =
@@ -161,7 +174,9 @@ void BewohnerTest::AbwesenheitRealtion()
     newAbwesenheit->remove(aConnection);
 
 }
-
+/**
+  * \brief Testet das Setzen und Lesen der Datenbankfelder
+  */
 void BewohnerTest::fields()
 {
     QDate geburtstag = QDate::currentDate(),
@@ -215,6 +230,9 @@ void BewohnerTest::fields()
 
 
 }
+/**
+  * \brief Löschen der TestBewohners
+  */
 void BewohnerTest::cleanupTestCase()
 {
     aBewohner->remove(aConnection);

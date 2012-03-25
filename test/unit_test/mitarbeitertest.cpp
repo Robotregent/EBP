@@ -1,4 +1,7 @@
 #include "MitarbeiterTest.h"
+/**
+  * \brief Initialisiert Connection und Mitarbeiter
+  */
 void MitarbeiterTest::initTestCase()
 {
     //testCon = NULL;
@@ -8,7 +11,7 @@ void MitarbeiterTest::initTestCase()
 }
 
 /**
-  * \brief Test the creation of a new Mitarbeiter
+  * \brief Testet das Erstellen eines neuen Mitarbeiters
   */
 void MitarbeiterTest::testCreateNewMitarbeiter()
 {
@@ -30,7 +33,7 @@ void MitarbeiterTest::testCreateNewMitarbeiter()
 
 }
 /**
-  * \brief Test the setter and getter of ebp::Mitarbeiter
+  * \brief Testet das Setzen und Lesen der Datenbankfelder.
   */
 void MitarbeiterTest::testSetAndGetAttributes()
 {
@@ -59,7 +62,7 @@ void MitarbeiterTest::testSetAndGetAttributes()
     QCOMPARE(testTelefon, QString("9876"));
 }
 /**
-  * \brief Test the update of a passwort
+  * \brief Testet das Updaten des Passworts des neuen Mitarbeiters
   */
 void MitarbeiterTest::updatePasswort()
 {
@@ -67,7 +70,9 @@ void MitarbeiterTest::updatePasswort()
     QVERIFY(test);
 
 }
-
+/**
+  * \brief Löscht angelegten Mitarbeiter wieder.
+  */
 void MitarbeiterTest::cleanupTestCase()
 {
     bool test = aMitarbeiter->remove(testCon);

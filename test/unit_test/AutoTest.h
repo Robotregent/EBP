@@ -1,5 +1,8 @@
 #ifndef AUTOTEST_H
 #define AUTOTEST_H
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+
+
 
 #include <QTest>
 #include <QList>
@@ -76,5 +79,5 @@ public:
   return AutoTest::run(argc, argv); \
  }
 
-
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 #endif // AUTOTEST_H

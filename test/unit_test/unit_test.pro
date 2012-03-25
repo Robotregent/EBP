@@ -4,7 +4,10 @@ SOURCES += \
     connectiontest.cpp \
     mitarbeitertest.cpp \
     main.cpp \
-    bewohnertest.cpp
+    bewohnertest.cpp \
+    wohngruppentest.cpp \
+    wohngruppenereignistest.cpp \
+    bewohnerereignistest.cpp
 CONFIG += qtestlib
 
 INCLUDEPATH += $$PWD/../EBPdb
@@ -21,4 +24,7 @@ HEADERS += \
     AutoTest.h \
     connectiontest.h \
     MitarbeiterTest.h \
-    bewohnertest.h
+    bewohnertest.h \
+    wohngruppentest.h \
+    wohngruppenereignistest.h \
+    bewohnerereignistest.h

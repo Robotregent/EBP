@@ -5,6 +5,9 @@
 #include "AutoTest.h"
 #include <QtTest/QtTest>
 #include <EBPdb/Bewohner.hxx>
+/** Testet das object-relational Mapping die Klasse Bewohner.
+  *
+  */
 class BewohnerTest : public QObject
 {
     Q_OBJECT
