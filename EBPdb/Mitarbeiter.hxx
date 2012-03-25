@@ -35,6 +35,7 @@ namespace ebp
 		Q_DECLARE_TR_FUNCTIONS( Mitarbeiter )
 
 	public:
+		/// Zugangsberechtigungen
 		enum Berechtigungen
 		{
 			AdminRecht,

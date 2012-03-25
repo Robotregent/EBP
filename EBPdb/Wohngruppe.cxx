@@ -21,8 +21,38 @@ DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( Wohngruppe, Ereignis, Wohngruppenereignis
 
 
 DATABASEOBJECT_IMPLEMENT_LOAD( Wohngruppe, Mitarbeiter, Mitarbeiter, mitarbeiter_ )
-DATABASEOBJECT_IMPLEMENT_LOAD( Wohngruppe, Bewohner, Bewohner, bewohner_ )
-DATABASEOBJECT_IMPLEMENT_LOAD( Wohngruppe, Ereignisse, Wohngruppenereignis, ereignisse_ )
+//DATABASEOBJECT_IMPLEMENT_LOAD( Wohngruppe, Bewohner, Bewohner, bewohner_ )
+//DATABASEOBJECT_IMPLEMENT_LOAD( Wohngruppe, Ereignisse, Wohngruppenereignis, ereignisse_ )
+
+
+bool Wohngruppe::hasPermission( const QSharedPointer<ebp::connection> & connection ) const
+{
+	if( connection->mitarbeiter() )
+	{	// benutzer ist registriert
+		switch( connection->mitarbeiter()->berechtigung() )
+		{
+			case Mitarbeiter::WohngruppenRecht:
+				{	// benutzer mit wohngruppenrecht dürfen nur auf die ihnen zugeordneten wohngruppen zugreifen
+					QList< QSharedPointer < Wohngruppe > > wgs = connection->mitarbeiter()->loadWohngruppen( connection );
+					foreach( QSharedPointer < Wohngruppe > wg, wgs )
+					{
+						if( wg->id_ == id_ )
+						{
+							return true;
+						}
+					}
+					return false;
+				}
+				break;
+			default:	// alle anderen dürfen
+				return true;
+		}
+	}
+	else
+	{
+		return true;	// kein registrierter benutzer - üblicherweise root
+	}
+}
 
 /*
 QList< QSharedPointer<Mitarbeiter> > Wohngruppe::loadMitarbeiter( const QSharedPointer<ebp::connection> & connection ) const
@@ -36,10 +66,18 @@ QList< QSharedPointer<Mitarbeiter> > Wohngruppe::loadMitarbeiter( const QSharedP
 	t.commit();
 	return ret;
 }
+*/
 
 QList< QSharedPointer<Bewohner> >  Wohngruppe::loadBewohner( const QSharedPointer<ebp::connection> & connection ) const
 {
 	QList< QSharedPointer<Bewohner> > ret;
+
+	if( !hasPermission( connection ) )
+	{
+		qWarning() << tr("Zugriff auf Bewohner der Wohngruppe \"%1\" verweigert.").arg(name_);
+		return ret;
+	}
+
 	odb::transaction t( connection->getDB()->begin() );
 	for( QList< QLazyWeakPointer<Bewohner> >::const_iterator i = bewohner_.begin(); i != bewohner_.end(); ++i )
 	{
@@ -49,9 +87,17 @@ QList< QSharedPointer<Bewohner> >  Wohngruppe::loadBewohner( const QSharedPointe
 	return ret;
 }
 
+
 QList< QSharedPointer<Wohngruppenereignis> > Wohngruppe::loadEreignisse( const QSharedPointer<ebp::connection> & connection ) const
 {
 	QList< QSharedPointer<Wohngruppenereignis> > ret;
+
+	if( !hasPermission( connection ) )
+	{
+		qWarning() << tr("Zugriff auf Ereignisse der Wohngruppe \"%1\" verweigert.").arg(name_);
+		return ret;
+	}
+
 	odb::transaction t( connection->getDB()->begin() );
 	for( QList< QLazyWeakPointer<Wohngruppenereignis> >::const_iterator i = ereignisse_.begin(); i != ereignisse_.end(); ++i )
 	{
@@ -60,4 +106,3 @@ QList< QSharedPointer<Wohngruppenereignis> > Wohngruppe::loadEreignisse( const Q
 	t.commit();
 	return ret;
 }
-*/

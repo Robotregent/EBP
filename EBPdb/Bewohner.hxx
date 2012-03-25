@@ -42,6 +42,8 @@ namespace ebp
 		{
 		}
 
+		static QList< QSharedPointer< Bewohner > > loadAll( const QSharedPointer<ebp::connection> & connection );
+
 		const unsigned long & nummer() const { return nummer_; }
 		void nummer( const unsigned long & nummer ) { nummer_ = nummer; }
 
