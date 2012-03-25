@@ -18,5 +18,7 @@ DATABASEOBJECT_IMPLEMENT_LINK_ONEMANY( Dokumentation, Bewohner, bewohner_, Bewoh
 
 bool Dokumentation::hasPermission( const QSharedPointer<ebp::connection> & connection ) const
 {
-	return bewohner()->hasPermission( connection );
+	if( bewohner() )
+		return bewohner()->hasPermission( connection );
+	return true;
 }

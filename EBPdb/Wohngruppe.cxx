@@ -21,8 +21,8 @@ DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( Wohngruppe, Ereignis, Wohngruppenereignis
 
 
 DATABASEOBJECT_IMPLEMENT_LOAD( Wohngruppe, Mitarbeiter, Mitarbeiter, mitarbeiter_ )
-//DATABASEOBJECT_IMPLEMENT_LOAD( Wohngruppe, Bewohner, Bewohner, bewohner_ )
-//DATABASEOBJECT_IMPLEMENT_LOAD( Wohngruppe, Ereignisse, Wohngruppenereignis, ereignisse_ )
+DATABASEOBJECT_IMPLEMENT_LOAD( Wohngruppe, Bewohner, Bewohner, bewohner_ )
+DATABASEOBJECT_IMPLEMENT_LOAD( Wohngruppe, Ereignisse, Wohngruppenereignis, ereignisse_ )
 
 
 bool Wohngruppe::hasPermission( const QSharedPointer<ebp::connection> & connection ) const
@@ -66,7 +66,7 @@ QList< QSharedPointer<Mitarbeiter> > Wohngruppe::loadMitarbeiter( const QSharedP
 	t.commit();
 	return ret;
 }
-*/
+
 
 QList< QSharedPointer<Bewohner> >  Wohngruppe::loadBewohner( const QSharedPointer<ebp::connection> & connection ) const
 {
@@ -106,3 +106,4 @@ QList< QSharedPointer<Wohngruppenereignis> > Wohngruppe::loadEreignisse( const Q
 	t.commit();
 	return ret;
 }
+*/

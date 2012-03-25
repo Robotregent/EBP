@@ -22,5 +22,7 @@ DATABASEOBJECT_IMPLEMENT_LOAD( Wohngruppenereignis, Schreiber, Mitarbeiter, schr
 
 bool Wohngruppenereignis::hasPermission( const QSharedPointer<ebp::connection> & connection ) const
 {
-	return wohngruppe()->hasPermission( connection );
+	if( wohngruppe() )
+		return wohngruppe()->hasPermission( connection );
+	return true;
 }

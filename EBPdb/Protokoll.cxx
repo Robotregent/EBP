@@ -24,5 +24,7 @@ DATABASEOBJECT_IMPLEMENT_LOAD( Protokoll, Schreiber, Mitarbeiter, schreiber_ )
 
 bool Protokoll::hasPermission( const QSharedPointer<ebp::connection> & connection ) const
 {
-	return bewohner()->hasPermission( connection );
+	if( bewohner() )
+		return bewohner()->hasPermission( connection );
+	return true;
 }

@@ -37,7 +37,9 @@ DATABASEOBJECT_IMPLEMENT_LOAD( Bewohner, Dokumentationen, Dokumentation, dokumen
 
 bool Bewohner::hasPermission( const QSharedPointer<ebp::connection> & connection ) const
 {
-	return wohngruppe()->hasPermission( connection );
+	if( wohngruppe() )
+		return wohngruppe()->hasPermission( connection );
+	return true;
 }
 
 

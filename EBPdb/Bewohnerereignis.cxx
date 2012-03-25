@@ -21,5 +21,7 @@ DATABASEOBJECT_IMPLEMENT_LOAD( Bewohnerereignis, Schreiber, Mitarbeiter, schreib
 
 bool Bewohnerereignis::hasPermission( const QSharedPointer<ebp::connection> & connection ) const
 {
-	return bewohner()->hasPermission( connection );
+	if( bewohner() )
+		return bewohner()->hasPermission( connection );
+	return true;
 }
