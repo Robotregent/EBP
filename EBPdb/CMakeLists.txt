@@ -1,6 +1,8 @@
 cmake_minimum_required( VERSION 2.6 )
 project( EBPdb )
 
+enable_testing()
+
 find_package( Qt4 REQUIRED )
 include( ${QT_USE_FILE} )
 
