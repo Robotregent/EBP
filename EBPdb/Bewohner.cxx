@@ -2,6 +2,7 @@
 #include "Bewohner-odb.hxx"
 #include "Bewohnerereignis-odb.hxx"
 #include "Abwesenheit-odb.hxx"
+#include "Verfuegung-odb.hxx"
 #include "Protokoll-odb.hxx"
 #include "connection.hxx"
 
@@ -28,6 +29,7 @@ DATABASEOBJECT_IMPLEMENT_LOAD( Bewohner, Projekte, Projekt, projekte_ )
 DATABASEOBJECT_IMPLEMENT_LOAD( Bewohner, Protokolle, Protokoll, protokolle_ )
 DATABASEOBJECT_IMPLEMENT_LOAD( Bewohner, Ereignisse, Bewohnerereignis, ereignisse_ )
 DATABASEOBJECT_IMPLEMENT_LOAD( Bewohner, Abwesenheiten, Abwesenheit, abwesenheiten_ )
+DATABASEOBJECT_IMPLEMENT_LOAD( Bewohner, Verfuegungen, Verfuegung, verfuegungen_ )
 
 
 const QString Bewohner::name() const
