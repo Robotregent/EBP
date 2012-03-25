@@ -140,7 +140,15 @@ QList< QSharedPointer<MEMBER_CLASS> > CLASS::load##NAME( const QSharedPointer<eb
 	odb::transaction t( connection->getDB()->begin() ); \
 	for( QList< QLazyWeakPointer<MEMBER_CLASS> >::const_iterator i = MEMBER_NAME.begin(); i != MEMBER_NAME.end(); ++i ) \
 	{ \
-		ret.push_back( (*i).load() ); \
+		QSharedPointer<MEMBER_CLASS> p = (*i).load(); \
+		if( p->hasPermission( connection ) ) \
+		{ \
+			ret.push_back( p ); \
+		} \
+		else \
+		{ \
+			qWarning() << tr("Zugriff auf \"%1\" verweigert.").arg( typeid(MEMBER_CLASS).name() ); \
+		} \
 	} \
 	t.commit(); \
 	return ret; \
@@ -156,19 +164,21 @@ namespace ebp
 
 	class databaseObjectIFace
 	{
-	public:
-		virtual bool create( const QSharedPointer<ebp::connection> & connection ) = 0;
-		virtual bool remove( const QSharedPointer<ebp::connection> & connection ) = 0;
-		virtual bool update( const QSharedPointer<ebp::connection> & connection ) = 0;
+		public:
+			virtual bool create( const QSharedPointer<ebp::connection> & connection ) = 0;
+			virtual bool remove( const QSharedPointer<ebp::connection> & connection ) = 0;
+			virtual bool update( const QSharedPointer<ebp::connection> & connection ) = 0;
 	};
 
 	template< class T > class databaseObject : public databaseObjectIFace
 	{
-	public:
-		virtual bool create( const QSharedPointer<ebp::connection> & connection );
-		virtual bool remove( const QSharedPointer<ebp::connection> & connection );
-		virtual bool update( const QSharedPointer<ebp::connection> & connection );
-		static QList< QSharedPointer<T> > loadAll( const QSharedPointer<ebp::connection> & connection );
+		Q_DECLARE_TR_FUNCTIONS( databaseObject )
+		public:
+			virtual bool create( const QSharedPointer<ebp::connection> & connection );
+			virtual bool remove( const QSharedPointer<ebp::connection> & connection );
+			virtual bool update( const QSharedPointer<ebp::connection> & connection );
+			virtual bool hasPermission( const QSharedPointer<ebp::connection> & connection ) const = 0;
+			static QList< QSharedPointer<T> > loadAll( const QSharedPointer<ebp::connection> & connection );
 	};
 }
 

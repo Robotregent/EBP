@@ -64,6 +64,12 @@ namespace ebp
 		return true;
 	}
 
+/*
+	template< class T > bool databaseObject<T>::hasPermission( const QSharedPointer<ebp::connection> & connection ) const
+	{
+		return true;
+	}
+*/
 
 	template< class T > QList< QSharedPointer<T> > databaseObject<T>::loadAll( const QSharedPointer<ebp::connection> & connection )
 	{
@@ -75,6 +81,15 @@ namespace ebp
 			for( typename odb::result<T>::iterator i( r.begin() ); i != r.end(); ++i )
 			{
 				list.push_back( i.load() );
+				QSharedPointer<T> be = i.load();
+				if( be->hasPermission( connection ) )
+				{
+					list.push_back( be );
+				}
+				else
+				{
+					qWarning() << tr("Zugriff auf \"%1\" verweigert.").arg( typeid(T).name() );
+				}
 			}
 			t.commit();
 		}

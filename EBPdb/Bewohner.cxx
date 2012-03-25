@@ -34,45 +34,14 @@ DATABASEOBJECT_IMPLEMENT_LOAD( Bewohner, Verfuegungen, Verfuegung, verfuegungen_
 DATABASEOBJECT_IMPLEMENT_LOAD( Bewohner, Dokumentationen, Dokumentation, dokumentationen_ )
 
 
-const QString Bewohner::name() const
+
+bool Bewohner::hasPermission( const QSharedPointer<ebp::connection> & connection ) const
 {
-	return QString( anrede_ + " " + vorname_ + " " + nachname_ ).trimmed();
+	return wohngruppe()->hasPermission( connection );
 }
 
 
-QList< QSharedPointer< Bewohner > > Bewohner::loadAll( const QSharedPointer<ebp::connection> & connection )
+const QString Bewohner::name() const
 {
-	QList< QSharedPointer<Bewohner> > list;
-
-	try
-	{
-		odb::transaction t( connection->getDB()->begin() );
-		odb::result<Bewohner> r( connection->getDB()->query<Bewohner>() );
-		for( typename odb::result<Bewohner>::iterator i( r.begin() ); i != r.end(); ++i )
-		{
-			QSharedPointer<Bewohner> b = i.load();
-			if( b->wohngruppe() )
-			{
-				if( b->wohngruppe()->hasPermission( connection ) )
-				{
-					list.push_back( b );
-				}
-				else
-				{
-					qWarning() << tr("Zugriff auf Bewohner \"%1\" verweigert.").arg(b->nummer_);
-				}
-			}
-			else
-			{
-				list.push_back( b );
-			}
-		}
-		t.commit();
-	}
-	catch( const odb::exception & e )
-	{
-		qCritical() << e.what();
-		return QList< QSharedPointer<Bewohner> >();
-	}
-	return list;
+	return QString( anrede_ + " " + vorname_ + " " + nachname_ ).trimmed();
 }

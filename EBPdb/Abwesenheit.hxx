@@ -36,6 +36,8 @@ namespace ebp
 		{
 		}
 
+		bool hasPermission( const QSharedPointer<ebp::connection> & connection ) const;
+
 		const QDate & tag() const { return tag_; }
 		void tag( const QDate & tag ) { tag_ = tag; }
 

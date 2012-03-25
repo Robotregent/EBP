@@ -28,16 +28,23 @@ namespace ebp
 	public:
 		Verfuegung
 		(
+			const bool & aktiv,
 			const QString & text,
 			const QDate & gerichtsbescheid,
 			const QString & grund
 		) :
+			aktiv_(aktiv),
 			text_(text),
 			gerichtsbescheid_(gerichtsbescheid),
 			grund_(grund)
 		{
 		}
 
+		bool hasPermission( const QSharedPointer<ebp::connection> & connection ) const;
+
+		const bool & aktiv() const { return aktiv_; }
+		void aktiv( const bool & aktiv ) { aktiv_ = aktiv; }
+		
 		const QString & text() const { return text_; }
 		void text( const QString & text ) { text_ = text; }
 
@@ -56,6 +63,8 @@ namespace ebp
 
 		#pragma db id auto
 		unsigned long id_;
+
+		bool aktiv_;
 
 		QString text_;
 

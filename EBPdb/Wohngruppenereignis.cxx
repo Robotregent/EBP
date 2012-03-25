@@ -18,3 +18,9 @@ DATABASEOBJECT_IMPLEMENT_LINK_MANYMANY( Wohngruppenereignis, Schreiber, schreibe
 
 
 DATABASEOBJECT_IMPLEMENT_LOAD( Wohngruppenereignis, Schreiber, Mitarbeiter, schreiber_ )
+
+
+bool Wohngruppenereignis::hasPermission( const QSharedPointer<ebp::connection> & connection ) const
+{
+	return wohngruppe()->hasPermission( connection );
+}

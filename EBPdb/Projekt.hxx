@@ -44,7 +44,9 @@ namespace ebp
 		{
 		}
 
-		const QString & name() const { return name_; }
+		bool hasPermission( const QSharedPointer<ebp::connection> & connection ) const;
+
+ 		const QString & name() const { return name_; }
 		void name( const QString & name ) { name_ = name; }
 
 		const QString & beschreibung() const { return beschreibung_; }
@@ -59,7 +61,7 @@ namespace ebp
 		const QDate & ende() const { return ende_; }
 		void ende( const QDate & ende ) { ende_ = ende; }
 
-		const QSharedPointer<Bewohner> & bewohner( const QSharedPointer<ebp::connection> & connection ) const;
+		const QSharedPointer<Bewohner> & bewohner() const { return bewohner_; }
 		DATABASEOBJECT_DECLARE_LINK( Projekt, Bewohner, Bewohner )
 
 //		QList< QSharedPointer<Mitarbeiter> > loadVerantwortliche( const QSharedPointer<ebp::connection> & connection ) const;

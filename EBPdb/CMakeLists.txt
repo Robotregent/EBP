@@ -30,6 +30,7 @@ set( EBPdb_sources
 	Wohnheim.cxx
 	Projekt.cxx
 	Protokoll.cxx
+	Abwesenheit.cxx
 	Verfuegung.cxx
 	Dokumentation.cxx
 )

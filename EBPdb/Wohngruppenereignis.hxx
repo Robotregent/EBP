@@ -38,6 +38,8 @@ namespace ebp
 		{
 		}
 
+		bool hasPermission( const QSharedPointer<ebp::connection> & connection ) const;
+
 		const QDateTime & zeitpunkt() const { return zeitpunkt_; }
 		void zeitpunkt( const QDateTime & zeitpunkt ) { zeitpunkt_ = zeitpunkt; }
 

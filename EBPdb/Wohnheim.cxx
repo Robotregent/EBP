@@ -32,3 +32,9 @@ QList< QSharedPointer<Wohngruppe> > Wohnheim::loadWohngruppen( const QSharedPoin
 	return ret;
 }
 */
+
+
+bool Wohnheim::hasPermission( const QSharedPointer<ebp::connection> & connection ) const
+{
+	return true;
+}

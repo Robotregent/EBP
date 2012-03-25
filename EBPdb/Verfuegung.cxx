@@ -14,3 +14,9 @@ using namespace ebp;
 
 
 DATABASEOBJECT_IMPLEMENT_LINK_ONEMANY( Verfuegung, Bewohner, bewohner_, Bewohner, Verfuegung, verfuegungen_ )
+
+
+bool Verfuegung::hasPermission( const QSharedPointer<ebp::connection> & connection ) const
+{
+	return bewohner()->hasPermission( connection );
+}

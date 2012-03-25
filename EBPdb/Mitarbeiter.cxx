@@ -34,45 +34,11 @@ DATABASEOBJECT_IMPLEMENT_LOAD( Mitarbeiter, ProtokollSchreiber, Protokoll, proto
 DATABASEOBJECT_IMPLEMENT_LOAD( Mitarbeiter, Bezugsbetreuer, Bewohner, bezugsbetreuer_ )
 
 
-/*
-QList< QSharedPointer<Wohngruppe> > Mitarbeiter::loadWohngruppen( const QSharedPointer<ebp::connection> & connection ) const
+bool Mitarbeiter::hasPermission( const QSharedPointer<ebp::connection> & connection ) const
 {
-	QList< QSharedPointer<Wohngruppe> > ret;
-	odb::transaction t( connection->getDB()->begin() );
-	for( QList< QLazyWeakPointer<Wohngruppe> >::const_iterator i = wohngruppen_.begin(); i!=wohngruppen_.end(); ++i )
-	{
-		ret.push_back( (*i).load() );
-	}
-	t.commit();
-	return ret;
+	return true;
 }
 
-
-QList< QSharedPointer<Projekt> > Mitarbeiter::loadProjekte( const QSharedPointer<ebp::connection> & connection ) const
-{
-	QList< QSharedPointer<Projekt> > ret;
-	odb::transaction t( connection->getDB()->begin() );
-	for( QList< QLazyWeakPointer<Projekt> >::const_iterator i = projekte_.begin(); i!=projekte_.end(); ++i )
-	{
-		ret.push_back( (*i).load() );
-	}
-	t.commit();
-	return ret;
-}
-
-
-QList< QSharedPointer<Bewohner> > Mitarbeiter::loadBezugsbetreuer( const QSharedPointer<ebp::connection> & connection ) const
-{
-	QList< QSharedPointer<Bewohner> > ret;
-	odb::transaction t( connection->getDB()->begin() );
-	for( QList< QLazyWeakPointer<Bewohner> >::const_iterator i = bezugsbetreuer_.begin(); i!=bezugsbetreuer_.end(); ++i )
-	{
-		ret.push_back( (*i).load() );
-	}
-	t.commit();
-	return ret;
-}
-*/
 
 bool Mitarbeiter::create( const QSharedPointer<ebp::connection> & connection, const QString & password )
 {

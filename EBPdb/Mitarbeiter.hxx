@@ -60,6 +60,8 @@ namespace ebp
 		{
 		}
 
+		bool hasPermission( const QSharedPointer<ebp::connection> & connection ) const;
+
 		const QString & login() const { return login_; }
 //		void login( const QString & login ) { login_ = login; }		// don't change login names for existing objects - this will break the mapping to the database user
 

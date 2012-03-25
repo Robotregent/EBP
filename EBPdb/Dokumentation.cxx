@@ -1,5 +1,5 @@
-#include "Abwesenheit.hxx"
-#include "Abwesenheit-odb.hxx"
+#include "Dokumentation.hxx"
+#include "Dokumentation-odb.hxx"
 #include "Bewohner-odb.hxx"
 #include "connection.hxx"
 
@@ -7,10 +7,16 @@
 
 
 #include "databaseObject.ixx"
-template class ebp::databaseObject<ebp::Abwesenheit>;
+template class ebp::databaseObject<ebp::Dokumentation>;
 
 
 using namespace ebp;
 
 
-DATABASEOBJECT_IMPLEMENT_LINK_ONEMANY( Abwesenheit, Bewohner, bewohner_, Bewohner, Abwesenheit, abwesenheiten_ )
+DATABASEOBJECT_IMPLEMENT_LINK_ONEMANY( Dokumentation, Bewohner, bewohner_, Bewohner, Dokumentation, dokumentationen_ )
+
+
+bool Dokumentation::hasPermission( const QSharedPointer<ebp::connection> & connection ) const
+{
+	return bewohner()->hasPermission( connection );
+}

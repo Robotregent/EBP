@@ -46,7 +46,7 @@ namespace ebp
 		{
 		}
 
-		static QList< QSharedPointer< Bewohner > > loadAll( const QSharedPointer<ebp::connection> & connection );
+		bool hasPermission( const QSharedPointer<ebp::connection> & connection ) const;
 
 		const unsigned long & nummer() const { return nummer_; }
 		void nummer( const unsigned long & nummer ) { nummer_ = nummer; }
@@ -141,8 +141,6 @@ namespace ebp
 		QString geburtsort_;
 
 		QDate geburtsdatum_;
-
-		QString krankenkasse_;
 
 		QString email_;
 

@@ -38,7 +38,7 @@ namespace ebp
 
 		enum Einstufung
 		{
-			bekommeHilfe,
+			bekommeKeineHilfe,
 			bekommeBeratung,
 			bekommeAssistenz,
 			machtMitarbeiter,
@@ -55,6 +55,8 @@ namespace ebp
 			einstufung_(einstufung)
 		{
 		}
+
+		bool hasPermission( const QSharedPointer<ebp::connection> & connection ) const;
 
 		const Typ & typ() const { return typ_; }
 		void typ( const Typ & typ ) { typ_ = typ; }

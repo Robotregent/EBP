@@ -20,3 +20,9 @@ DATABASEOBJECT_IMPLEMENT_LINK_MANYMANY( Protokoll, Schreiber, schreiber_, Mitarb
 
 DATABASEOBJECT_IMPLEMENT_LOAD( Protokoll, Teilnehmer, Mitarbeiter, teilnehmer_ )
 DATABASEOBJECT_IMPLEMENT_LOAD( Protokoll, Schreiber, Mitarbeiter, schreiber_ )
+
+
+bool Protokoll::hasPermission( const QSharedPointer<ebp::connection> & connection ) const
+{
+	return bewohner()->hasPermission( connection );
+}

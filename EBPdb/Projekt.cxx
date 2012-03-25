@@ -18,3 +18,9 @@ DATABASEOBJECT_IMPLEMENT_LINK_MANYMANY( Projekt, Verantwortlicher, verantwortlic
 
 
 DATABASEOBJECT_IMPLEMENT_LOAD( Projekt, Verantwortliche, Mitarbeiter, verantwortliche_ )
+
+
+bool Projekt::hasPermission( const QSharedPointer<ebp::connection> & connection ) const
+{
+	return bewohner()->hasPermission( connection );
+}

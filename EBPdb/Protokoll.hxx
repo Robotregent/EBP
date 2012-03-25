@@ -38,6 +38,8 @@ namespace ebp
 		{
 		}
 
+		bool hasPermission( const QSharedPointer<ebp::connection> & connection ) const;
+
 		const QString & inhalt() const { return inhalt_; }
 		void inhalt( const QString & inhalt ) { inhalt_ = inhalt; }
 
