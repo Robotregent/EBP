@@ -91,18 +91,18 @@ namespace ebp
 
 //		QList< QSharedPointer<Projekt> > loadProjekte( const QSharedPointer<ebp::connection> & connection ) const;
 		DATABASEOBJECT_DECLARE_LOAD( Projekte, Projekt )
-		DATABASEOBJECT_DECLARE_LINK( Bewohner, Projekt, Projekt )
+		DATABASEOBJECT_DECLARE_LINK_INVERSE( Bewohner, Projekt, Projekt )
 
 //		QList< QSharedPointer<Protokoll> > loadProtokolle( const QSharedPointer<ebp::connection> & connection ) const;
 		DATABASEOBJECT_DECLARE_LOAD( Protokolle, Protokoll )
-		DATABASEOBJECT_DECLARE_LINK( Bewohner, Protokoll, Protokoll )
+		DATABASEOBJECT_DECLARE_LINK_INVERSE( Bewohner, Protokoll, Protokoll )
 
 //		QList< QSharedPointer<Bewohnerereignis> > loadEreignisse( const QSharedPointer<ebp::connection> & connection ) const;
 		DATABASEOBJECT_DECLARE_LOAD( Ereignisse, Bewohnerereignis )
-		DATABASEOBJECT_DECLARE_LINK( Bewohner, Ereignis, Bewohnerereignis )
+		DATABASEOBJECT_DECLARE_LINK_INVERSE( Bewohner, Ereignis, Bewohnerereignis )
 
 		DATABASEOBJECT_DECLARE_LOAD( Abwesenheiten, Abwesenheit )
-		DATABASEOBJECT_DECLARE_LINK( Bewohner, Abwesenheit, Abwesenheit )
+		DATABASEOBJECT_DECLARE_LINK_INVERSE( Bewohner, Abwesenheit, Abwesenheit )
 
 	private:
 		friend class odb::access;
