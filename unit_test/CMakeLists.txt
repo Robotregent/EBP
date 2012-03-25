@@ -57,6 +57,7 @@ SET(unit_test_libraries
  
 # enable warnings
 ADD_DEFINITIONS( -Wall -Wno-unknown-pragmas )
+
   
 # by default only QtCore and QtGui modules are enabled
 # other modules must be enabled like this:

@@ -12,6 +12,8 @@
 #include <QMessageBox>
 #include <QDebug>
 #include <QSettings>
+#include <EBPdb/Dokumentation.hxx>
+#include <EBPdb/Verfuegung.hxx>
 
 using namespace ebp;
 
@@ -410,6 +412,23 @@ void AdminDialog::on_button_B_speichern_clicked()
 	QSharedPointer<Wohngruppe> tmpWg = this->WohngruppeTreeItems.at(this->ui->WohngruppeTree->currentIndex().row())->getCitem();
 	tmpBew->linkWohngruppe(tmpBew,tmpWg);
 	tmpBew->update(this->PointerToConnection);
+
+	//Betreuungsplanung anlegen
+	ebp::Dokumentation::Typ typs[6] = {ebp::Dokumentation::einkaufen, ebp::Dokumentation::waeschepflege, ebp::Dokumentation::koerperpflege,
+					   ebp::Dokumentation::aufstehenUndZuBettgehen, ebp::Dokumentation::partnerschaften, ebp::Dokumentation::freundschaften };
+
+	for (int i=0; i<6; i++)
+	{
+	    QSharedPointer < ebp::Dokumentation > tmpDoku = QSharedPointer < ebp::Dokumentation > (
+			new ebp::Dokumentation(typs[i],ebp::Dokumentation::bekommeKeineHilfe));
+	    if(tmpDoku->create(PointerToConnection))
+	    {
+		ebp::Dokumentation::linkBewohner(tmpDoku,tmpBew);
+		tmpBew->update(PointerToConnection);
+	    }
+	}
+
+
 
 	//Masken leeren
 	this->ui->vornameLineEdit->clear();
