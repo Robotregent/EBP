@@ -3,6 +3,8 @@
 
 
 #include "Abwesenheit.hxx"
+#include "Verfuegung.hxx"
+#include "Dokumentation.hxx"
 #include "Bewohnerereignis.hxx"
 #include "Wohngruppe.hxx"
 #include "Projekt.hxx"
@@ -22,6 +24,8 @@
 namespace ebp
 {
 	class Abwesenheit;
+	class Verfuegung;
+	class Dokumentation;
 	class Bewohnerereignis;
 	class Wohngruppe;
 	class Projekt;
@@ -41,6 +45,8 @@ namespace ebp
 			nummer_(nummer)
 		{
 		}
+
+		static QList< QSharedPointer< Bewohner > > loadAll( const QSharedPointer<ebp::connection> & connection );
 
 		const unsigned long & nummer() const { return nummer_; }
 		void nummer( const unsigned long & nummer ) { nummer_ = nummer; }
@@ -91,18 +97,24 @@ namespace ebp
 
 //		QList< QSharedPointer<Projekt> > loadProjekte( const QSharedPointer<ebp::connection> & connection ) const;
 		DATABASEOBJECT_DECLARE_LOAD( Projekte, Projekt )
-		DATABASEOBJECT_DECLARE_LINK( Bewohner, Projekt, Projekt )
+		DATABASEOBJECT_DECLARE_LINK_INVERSE( Bewohner, Projekt, Projekt )
 
 //		QList< QSharedPointer<Protokoll> > loadProtokolle( const QSharedPointer<ebp::connection> & connection ) const;
 		DATABASEOBJECT_DECLARE_LOAD( Protokolle, Protokoll )
-		DATABASEOBJECT_DECLARE_LINK( Bewohner, Protokoll, Protokoll )
+		DATABASEOBJECT_DECLARE_LINK_INVERSE( Bewohner, Protokoll, Protokoll )
 
 //		QList< QSharedPointer<Bewohnerereignis> > loadEreignisse( const QSharedPointer<ebp::connection> & connection ) const;
 		DATABASEOBJECT_DECLARE_LOAD( Ereignisse, Bewohnerereignis )
-		DATABASEOBJECT_DECLARE_LINK( Bewohner, Ereignis, Bewohnerereignis )
+		DATABASEOBJECT_DECLARE_LINK_INVERSE( Bewohner, Ereignis, Bewohnerereignis )
 
 		DATABASEOBJECT_DECLARE_LOAD( Abwesenheiten, Abwesenheit )
-		DATABASEOBJECT_DECLARE_LINK( Bewohner, Abwesenheit, Abwesenheit )
+		DATABASEOBJECT_DECLARE_LINK_INVERSE( Bewohner, Abwesenheit, Abwesenheit )
+
+		DATABASEOBJECT_DECLARE_LOAD( Verfuegungen, Verfuegung )
+		DATABASEOBJECT_DECLARE_LINK_INVERSE( Bewohner, Verfuegung, Verfuegung )
+
+		DATABASEOBJECT_DECLARE_LOAD( Dokumentationen, Dokumentation )
+		DATABASEOBJECT_DECLARE_LINK_INVERSE( Bewohner, Dokumentation, Dokumentation )
 
 	private:
 		friend class odb::access;
@@ -110,6 +122,8 @@ namespace ebp
 		friend class Protokoll;
 		friend class Bewohnerereignis;
 		friend class Abwesenheit;
+		friend class Verfuegung;
+		friend class Dokumentation;
 		Bewohner() {}
 
 		#pragma db id auto
@@ -159,6 +173,12 @@ namespace ebp
 
 		#pragma db unordered inverse(bewohner_)
 		QList< QLazyWeakPointer<Abwesenheit> > abwesenheiten_;
+
+		#pragma db unordered inverse(bewohner_)
+		QList< QLazyWeakPointer<Verfuegung> > verfuegungen_;
+
+		#pragma db unordered inverse(bewohner_)
+		QList< QLazyWeakPointer<Dokumentation> > dokumentationen_;
 	};
 }
 

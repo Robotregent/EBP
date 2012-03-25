@@ -38,6 +38,8 @@ namespace ebp
 		{
 		}
 
+		static QList< QSharedPointer< Bewohnerereignis > > loadAll( const QSharedPointer<ebp::connection> & connection );
+
 		const QDateTime & zeitpunkt() const { return zeitpunkt_; }
 		void zeitpunkt( const QDateTime & zeitpunkt ) { zeitpunkt_ = zeitpunkt; }
 
