@@ -2,7 +2,7 @@
 #define WOHNGRUPPENEREIGNISTEST_H
 
 #include <QObject>
-#include <QtTest>
+#include <QtTest/QtTest>
 #include "AutoTest.h"
 #include <EBPdb/Bewohnerereignis.hxx>
 #include <EBPdb/connection.hxx>

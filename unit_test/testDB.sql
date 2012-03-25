@@ -48,7 +48,6 @@ CREATE TABLE IF NOT EXISTS `Bewohner` (
   `nachname` text,
   `geburtsort` text,
   `geburtsdatum` date DEFAULT NULL,
-  `krankenkasse` text,
   `email` text,
   `telefon` text,
   `familienstatus` text,
@@ -66,9 +65,9 @@ CREATE TABLE IF NOT EXISTS `Bewohner` (
 -- Daten für Tabelle `Bewohner`
 --
 
-INSERT INTO `Bewohner` (`id`, `nummer`, `anrede`, `vorname`, `nachname`, `geburtsort`, `geburtsdatum`, `krankenkasse`, `email`, `telefon`, `familienstatus`, `konfession`, `staat`, `seit`, `anmerkung`, `wohngruppe`, `bezugsbetreuer`) VALUES
-(1, 1, 'Herr', 'Erster', 'TestBewohner', 'TestOrt', '2012-03-01', ' AOK', 'erster@test.de ', ' 0123', 'ledig', 'Pastafari', 'Teststaat', '2012-02-06', 'Testbemerkung', 1, 1),
-(2, 2, 'Frau', 'Zweite', 'TestBewohnerin', 'Tettnang', '2012-03-11', 'BKK', 'zweite@test.de', ' 555', 'verheiratet', 'Katholisch', 'deutsch', '2011-12-11', 'Vegetarierin', 1, 1);
+INSERT INTO `Bewohner` (`id`, `nummer`, `anrede`, `vorname`, `nachname`, `geburtsort`, `geburtsdatum`, `email`, `telefon`, `familienstatus`, `konfession`, `staat`, `seit`, `anmerkung`, `wohngruppe`, `bezugsbetreuer`) VALUES
+(1, 1, 'Herr', 'Erster', 'TestBewohner', 'TestOrt', '2012-03-01',  'erster@test.de ', ' 0123', 'ledig', 'Pastafari', 'Teststaat', '2012-02-06', 'Testbemerkung', 1, 1),
+(2, 2, 'Frau', 'Zweite', 'TestBewohnerin', 'Tettnang', '2012-03-11',  'zweite@test.de', ' 555', 'verheiratet', 'Katholisch', 'deutsch', '2011-12-11', 'Vegetarierin', 1, 1);
 
 -- --------------------------------------------------------
 

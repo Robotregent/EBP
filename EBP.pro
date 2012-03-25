@@ -4,4 +4,4 @@ SUBDIRS += \
     AdminDialog \
     drk_client \
     EBPdb \
-    test
+    unit_test \
