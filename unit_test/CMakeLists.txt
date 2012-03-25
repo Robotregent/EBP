@@ -87,4 +87,4 @@ INCLUDE_DIRECTORIES( ${CMAKE_BINARY_DIR} ${unit_test_include_dirs} )
 ADD_EXECUTABLE( unit_test ${TEST_SRCS} ${TEST_MOC_SRCS} )
   
 TARGET_LINK_LIBRARIES( unit_test ${unit_test_libraries})
-ADD_TEST( NAME unit_test COMMAND UnitTest )
+ADD_TEST( UnitTest unit_test )
