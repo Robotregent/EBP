@@ -6,7 +6,9 @@
 #include <EBPdb/connection.hxx>
 #include <EBPdb/Mitarbeiter.hxx>
 
-
+/** Testet das object-relational Mapping die Klasse Mitarbeiter.
+  *
+  */
 class MitarbeiterTest : public QObject
 {
     Q_OBJECT

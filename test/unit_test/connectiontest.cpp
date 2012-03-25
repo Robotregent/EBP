@@ -1,5 +1,8 @@
 #include "connectiontest.h"
 //Implementation
+/**
+  * \brief Initialisiert die Connection
+  */
 void ConnectionTest::initTestCase()
 {
     this->testCon = NULL;
@@ -21,7 +24,9 @@ void ConnectionTest::establishCon()
     QVERIFY(this->testCon->establish("test")==true);
 
 }
-
+/**
+  * \brief Testet das Setzen und Lesen der Datenbankfelder
+  */
 void ConnectionTest::getAttributes()
 {
     //User
@@ -49,7 +54,7 @@ void ConnectionTest::getAttributes()
 
 }
 /**
-  * \brief
+  * \brief Löscht die TestConnection
   */
 void ConnectionTest::cleanupTestCase()
 {

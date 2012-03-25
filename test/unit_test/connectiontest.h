@@ -10,6 +10,9 @@
 #include <exception>
 
 //Declaration
+/** Testet das object-relational Mapping die Klasse Connection.
+  *
+  */
 class ConnectionTest : public QObject
 {
     Q_OBJECT
