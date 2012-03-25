@@ -3,6 +3,8 @@ project( EBPdb )
 
 enable_testing()
 
+add_subdirectory( test )
+
 find_package( Qt4 REQUIRED )
 include( ${QT_USE_FILE} )
 

@@ -7,7 +7,6 @@ find_package( Qt4 REQUIRED )
 include( ${QT_USE_FILE} )
 
 add_subdirectory( EBPdb )
-add_subdirectory( EBPdb/test )
 
 add_subdirectory( AdminDialog )
 add_dependencies( AdminDialog EBPdb )
