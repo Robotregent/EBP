@@ -2,6 +2,8 @@
 #define DECREESCROLLAREA_H
 
 #include <QScrollArea>
+#include "sessioncontext.h"
+#include "savecontentinterface.h"
 
 namespace Ui {
     class DecreeScrollArea;
@@ -10,10 +12,13 @@ namespace Ui {
 class DecreeScrollArea : public QScrollArea
 {
     Q_OBJECT
+     const SessionContext &con;
 
 public:
-    explicit DecreeScrollArea(QWidget *parent = 0);
+    explicit DecreeScrollArea(const SessionContext &context,QWidget *parent = 0);
     ~DecreeScrollArea();
+    bool saveContent();
+
 
 private:
     Ui::DecreeScrollArea *ui;

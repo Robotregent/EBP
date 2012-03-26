@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "texttransferinterface.h"
+#include <projekt.h>
 
 namespace Ui {
     class Projekt;
@@ -22,6 +23,7 @@ private slots:
 
 private:
     Ui::Projekt *ui;
+
 };
 
 #endif // PROJEKT_H

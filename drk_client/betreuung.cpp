@@ -2,8 +2,9 @@
 #include "ui_betreuung.h"
 #include <QDebug>
 
-Betreuung::Betreuung(QWidget *parent) :
+Betreuung::Betreuung(const SessionContext &context, QWidget *parent) :
     QWidget(parent),
+    con(context),
     ui(new Ui::Betreuung)
 {
     ui->setupUi(this);
@@ -16,3 +17,4 @@ Betreuung::~Betreuung()
 {
     delete ui;
 }
+

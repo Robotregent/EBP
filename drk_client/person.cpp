@@ -5,7 +5,9 @@
 #include <QLineEdit>
 #include <QTextEdit>
 #include <QDateEdit>
-
+#include <QTextBlock>
+#include <QMessageBox>
+#include <QString>
 
 person::person(const SessionContext &context, QWidget *parent) :
     QWidget(parent),
@@ -87,6 +89,28 @@ void person::initField()
 
 bool person::saveContent()
 {
-    /// \todo Speichern Implementierten
-    return true;
+    if (con.curBewohner!=NULL)
+    {
+        QString tempBlock = "";
+
+        this->con.curBewohner->anrede(((QLineEdit *)this->person_edit.at(person::title))->text());
+        this->con.curBewohner->vorname(((QLineEdit *)this->person_edit.at(person::forename))->text());
+        this->con.curBewohner->nachname(((QLineEdit *)this->person_edit.at(person::name))->text());
+        this->con.curBewohner->geburtsdatum(((QDateEdit *)this->person_edit.at(person::dateOfBirth))->date());
+        this->con.curBewohner->geburtsort(((QLineEdit *)this->person_edit.at(person::birthplace))->text());
+        this->con.curBewohner->staat(((QLineEdit *)this->person_edit.at(person::citizenship))->text());
+        this->con.curBewohner->konfession(((QLineEdit *)this->person_edit.at(person::confession))->text());
+        this->con.curBewohner->familienstatus(((QLineEdit *)this->person_edit.at(person::familyState))->text());
+        this->con.curBewohner->seit(((QDateEdit *)this->person_edit.at(person::residence))->date());
+        for (QTextBlock it = ((QTextEdit *)this->person_edit.at(person::comments))->document()->begin();it != ((QTextEdit *)this->person_edit.at(person::comments))->document()->end();it = it.next())
+        {
+            tempBlock.append(it.text());
+            tempBlock.append("\n");
+        }
+        this->con.curBewohner->anmerkung(tempBlock);
+
+        this->con.curBewohner->update(this->con.curConnection);
+        return true;
+    }
+    return false;
 }

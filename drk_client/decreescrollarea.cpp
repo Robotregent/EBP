@@ -2,8 +2,9 @@
 #include "ui_decreescrollarea.h"
 #include <QDebug>
 
-DecreeScrollArea::DecreeScrollArea(QWidget *parent) :
+DecreeScrollArea::DecreeScrollArea(const SessionContext &context,QWidget *parent) :
     QScrollArea(parent),
+    con(context),
     ui(new Ui::DecreeScrollArea)
 {
     ui->setupUi(this);

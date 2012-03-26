@@ -195,10 +195,10 @@ QWidget *MainWindow::getContentWidget(int ContentTyp)
 	    result=new LoginForm(this);
 	    break;
 	case MainWindow::DecreeScrollWidget:
-	    result= new DecreeScrollArea(this);
+            result= new DecreeScrollArea(this->thisSession,this);
 	    break;
         case MainWindow::BetreuungWidget:
-            result = new Betreuung(this);
+            result = new Betreuung(this->thisSession,this);
             break;
         case MainWindow::BProtokollWidget:
 	    {
