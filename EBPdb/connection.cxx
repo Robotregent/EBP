@@ -77,40 +77,25 @@ void connection::executeCreateUser( const Mitarbeiter & mitarbeiter, const QStri
 	{
 		case Mitarbeiter::AdminRecht:
 			execute( "GRANT ALL PRIVILEGES ON "+dbDatabase+".* TO '"+mitarbeiter.login()+"'@'"+from+"' WITH GRANT OPTION;" );
-			execute( "GRANT CREATE USER ON *.* TO '"+mitarbeiter.login()+"'@'"+from+"' WITH GRANT OPTION;" );
+			execute( "GRANT CREATE USER,RELOAD,PROCESS ON *.* TO '"+mitarbeiter.login()+"'@'"+from+"' WITH GRANT OPTION;" );
 			break;
 		case Mitarbeiter::WohnverbundRecht:
-			execute( "GRANT UPDATE ON "+dbDatabase+".Wohnheim TO '"+mitarbeiter.login()+"'@'"+from+"';" );
-			execute( "GRANT INSERT ON "+dbDatabase+".Wohnheim TO '"+mitarbeiter.login()+"'@'"+from+"';" );
-			execute( "GRANT DELETE ON "+dbDatabase+".Wohnheim TO '"+mitarbeiter.login()+"'@'"+from+"';" );
+			execute( "GRANT UPDATE,INSERT,DELETE ON "+dbDatabase+".Wohnheim TO '"+mitarbeiter.login()+"'@'"+from+"';" );
 		case Mitarbeiter::WohnheimRecht:
-			execute( "GRANT UPDATE ON "+dbDatabase+".Wohngruppe TO '"+mitarbeiter.login()+"'@'"+from+"';" );
-			execute( "GRANT INSERT ON "+dbDatabase+".Wohngruppe TO '"+mitarbeiter.login()+"'@'"+from+"';" );
-			execute( "GRANT DELETE ON "+dbDatabase+".Wohngruppe TO '"+mitarbeiter.login()+"'@'"+from+"';" );
+			execute( "GRANT UPDATE,INSERT,DELETE ON "+dbDatabase+".Wohngruppe TO '"+mitarbeiter.login()+"'@'"+from+"';" );
 		case Mitarbeiter::WohngruppenRecht:
-			execute( "GRANT UPDATE ON "+dbDatabase+".Wohngruppenereignis TO '"+mitarbeiter.login()+"'@'"+from+"';" );
-			execute( "GRANT INSERT ON "+dbDatabase+".Wohngruppenereignis TO '"+mitarbeiter.login()+"'@'"+from+"';" );
-			execute( "GRANT DELETE ON "+dbDatabase+".Wohngruppenereignis TO '"+mitarbeiter.login()+"'@'"+from+"';" );
-			execute( "GRANT UPDATE ON "+dbDatabase+".Bewohner TO '"+mitarbeiter.login()+"'@'"+from+"';" );
-			execute( "GRANT INSERT ON "+dbDatabase+".Bewohner TO '"+mitarbeiter.login()+"'@'"+from+"';" );
-			execute( "GRANT DELETE ON "+dbDatabase+".Bewohner TO '"+mitarbeiter.login()+"'@'"+from+"';" );
-			execute( "GRANT UPDATE ON "+dbDatabase+".Bewohnerereignis TO '"+mitarbeiter.login()+"'@'"+from+"';" );
-			execute( "GRANT INSERT ON "+dbDatabase+".Bewohnerereignis TO '"+mitarbeiter.login()+"'@'"+from+"';" );
-			execute( "GRANT DELETE ON "+dbDatabase+".Bewohnerereignis TO '"+mitarbeiter.login()+"'@'"+from+"';" );
-			execute( "GRANT UPDATE ON "+dbDatabase+".Projekt TO '"+mitarbeiter.login()+"'@'"+from+"';" );
-			execute( "GRANT INSERT ON "+dbDatabase+".Projekt TO '"+mitarbeiter.login()+"'@'"+from+"';" );
-			execute( "GRANT DELETE ON "+dbDatabase+".Projekt TO '"+mitarbeiter.login()+"'@'"+from+"';" );
-			execute( "GRANT UPDATE ON "+dbDatabase+".Protokoll TO '"+mitarbeiter.login()+"'@'"+from+"';" );
-			execute( "GRANT INSERT ON "+dbDatabase+".Protokoll TO '"+mitarbeiter.login()+"'@'"+from+"';" );
-			execute( "GRANT DELETE ON "+dbDatabase+".Protokoll TO '"+mitarbeiter.login()+"'@'"+from+"';" );
-			execute( "GRANT UPDATE ON "+dbDatabase+".Abwesenheit TO '"+mitarbeiter.login()+"'@'"+from+"';" );
-			execute( "GRANT INSERT ON "+dbDatabase+".Abwesenheit TO '"+mitarbeiter.login()+"'@'"+from+"';" );
-			execute( "GRANT DELETE ON "+dbDatabase+".Abwesenheit TO '"+mitarbeiter.login()+"'@'"+from+"';" );
+			execute( "GRANT UPDATE,INSERT,DELETE ON "+dbDatabase+".Wohngruppenereignis TO '"+mitarbeiter.login()+"'@'"+from+"';" );
+			execute( "GRANT UPDATE,INSERT,DELETE ON "+dbDatabase+".Bewohner TO '"+mitarbeiter.login()+"'@'"+from+"';" );
+			execute( "GRANT UPDATE,INSERT,DELETE ON "+dbDatabase+".Bewohnerereignis TO '"+mitarbeiter.login()+"'@'"+from+"';" );
+			execute( "GRANT UPDATE,INSERT,DELETE ON "+dbDatabase+".Projekt TO '"+mitarbeiter.login()+"'@'"+from+"';" );
+			execute( "GRANT UPDATE,INSERT,DELETE ON "+dbDatabase+".Protokoll TO '"+mitarbeiter.login()+"'@'"+from+"';" );
+			execute( "GRANT UPDATE,INSERT,DELETE ON "+dbDatabase+".Abwesenheit TO '"+mitarbeiter.login()+"'@'"+from+"';" );
 			execute( "GRANT SELECT ON "+dbDatabase+".* TO '"+mitarbeiter.login()+"'@'"+from+"';" );
 			break;
 		default:
 			break;
 	}
+	execute( "FLUSH PRIVILEGES;" );
 }
 
 
