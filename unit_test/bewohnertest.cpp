@@ -24,6 +24,7 @@ void BewohnerTest::initTestCase()
 void BewohnerTest::wohngruppenRelation()
 {
     QList< QSharedPointer<ebp::Wohngruppe> > wgList = ebp::Wohngruppe::loadAll(aConnection);
+    QVERIFY(wgList.count()>0);
     if(wgList.count()<1)
         return;
 

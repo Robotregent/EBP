@@ -16,7 +16,7 @@
 class ConnectionTest : public QObject
 {
     Q_OBJECT
-    ebp::connection *testCon;
+    QSharedPointer<ebp::connection> testCon;
 private slots:
     void initTestCase();
     void establishCon();

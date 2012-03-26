@@ -10,24 +10,28 @@ INCLUDE( ${QT_USE_FILE} )
 # with SET() command you can change variables or define new ones
 # here we define SAMPLE_SRCS variable that contains a list of all .cpp files
 SET( TEST_SRCS
+	connectiontest.cpp
 	wohngruppentest.cpp
 	wohngruppenereignistest.cpp
 	bewohnerereignistest.cpp
 	bewohnertest.cpp
-	connectiontest.cpp
 	mitarbeitertest.cpp
 	main.cpp
+	dokumentationtest.cpp
+	verfuegungtest.cpp
 )
   
 # another list, this time it includes all header files that should be treated with moc
 SET( TEST_MOC_HDRS
+	connectiontest.h
 	wohngruppentest.h
 	wohngruppenereignistest.h
 	bewohnerereignistest.h
 	bewohnertest.h
 	AutoTest.h
-	connectiontest.h
 	MitarbeiterTest.h
+	dokumentationtest.h
+	verfuegungtest.h
 )
 #lib directories
 SET(unit_test_library_dirs

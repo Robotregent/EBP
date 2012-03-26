@@ -5,24 +5,23 @@
   */
 void ConnectionTest::initTestCase()
 {
-    this->testCon = NULL;
-    this->testCon= new ebp::connection("testUser","testDB");
-    QVERIFY(this->testCon!=NULL);
+    this->testCon= QSharedPointer<ebp::connection> (new ebp::connection("testUser","testDB"));
+    QVERIFY(!this->testCon.isNull());
     //testCon->establish("test");
 }
 void ConnectionTest::establishCon()
 {
-    //this->testCon= new ebp::connection("testUser","testDB");
+    this->testCon.clear();
+    this->testCon= QSharedPointer<ebp::connection> (new ebp::connection("testUser","testDB"));
+    QVERIFY(this->testCon->establish("test"));
+
+    this->testCon.clear();
+    this->testCon= QSharedPointer<ebp::connection> (new ebp::connection("testUser","testDB"));
     QVERIFY(this->testCon->establish("")!=true);
-    delete this->testCon;
 
-    this->testCon= new ebp::connection("testUser","testDB");
+    this->testCon.clear();
+    this->testCon= QSharedPointer<ebp::connection> (new ebp::connection("testUser","testDB"));
     QVERIFY(this->testCon->establish("falschesPasswort")!=true);
-    delete this->testCon;
-
-    this->testCon= new ebp::connection("testUser","testDB");
-    QVERIFY(this->testCon->establish("test")==true);
-
 }
 /**
   * \brief Testet das Setzen und Lesen der Datenbankfelder
@@ -58,26 +57,18 @@ void ConnectionTest::getAttributes()
   */
 void ConnectionTest::cleanupTestCase()
 {
-
-    try
-    {
-	delete this->testCon;
-	QVERIFY(true);
-    }
-    catch (std::exception ex)
-    {
-	QVERIFY(false);
-    }
+    this->testCon.clear();
 }
 /**
   * \brief testUser muss als Mitarbeiter eingetragen sein, um Test bestehen zu können
   */
 void ConnectionTest::loginMitarbeiter()
 {
+    this->testCon.clear();
+    this->testCon= QSharedPointer<ebp::connection> (new ebp::connection("testUser","testDB"));
+    QVERIFY(this->testCon->establish("test"));
     //testUser muss Als mitarbeiter eingetragen sein
     QSharedPointer<ebp::Mitarbeiter> tmpMA = this->testCon->mitarbeiter();
     QVERIFY(!tmpMA.isNull());
 }
 
-//QTEST_MAIN(ConnectionTest)
-//#include "connectiontest.moc"

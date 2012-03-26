@@ -7,7 +7,9 @@ SOURCES += \
     bewohnertest.cpp \
     wohngruppentest.cpp \
     wohngruppenereignistest.cpp \
-    bewohnerereignistest.cpp
+    bewohnerereignistest.cpp \
+    dokumentationtest.cpp \
+    verfuegungtest.cpp
 CONFIG += qtestlib
 
 INCLUDEPATH += $$PWD/../EBPdb
@@ -27,4 +29,6 @@ HEADERS += \
     bewohnertest.h \
     wohngruppentest.h \
     wohngruppenereignistest.h \
-    bewohnerereignistest.h
+    bewohnerereignistest.h \
+    dokumentationtest.h \
+    verfuegungtest.h
