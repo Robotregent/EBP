@@ -5,6 +5,7 @@
 #include "Abwesenheit.hxx"
 #include "Verfuegung.hxx"
 #include "Dokumentation.hxx"
+#include "Leistungstraeger.hxx"
 #include "Bewohnerereignis.hxx"
 #include "Wohngruppe.hxx"
 #include "Projekt.hxx"
@@ -26,6 +27,7 @@ namespace ebp
 	class Abwesenheit;
 	class Verfuegung;
 	class Dokumentation;
+	class Leistungstraeger;
 	class Bewohnerereignis;
 	class Wohngruppe;
 	class Projekt;
@@ -116,6 +118,9 @@ namespace ebp
 		DATABASEOBJECT_DECLARE_LOAD( Dokumentationen, Dokumentation )
 		DATABASEOBJECT_DECLARE_LINK_INVERSE( Bewohner, Dokumentation, Dokumentation )
 
+		DATABASEOBJECT_DECLARE_LOAD( Leistungstraeger, Leistungstraeger )
+		DATABASEOBJECT_DECLARE_LINK_INVERSE( Bewohner, Leistungstraeger, Leistungstraeger )
+
 	private:
 		friend class odb::access;
 		friend class Projekt;
@@ -124,6 +129,7 @@ namespace ebp
 		friend class Abwesenheit;
 		friend class Verfuegung;
 		friend class Dokumentation;
+		friend class Leistungstraeger;
 		Bewohner() {}
 
 		#pragma db id auto
@@ -177,6 +183,9 @@ namespace ebp
 
 		#pragma db unordered inverse(bewohner_)
 		QList< QLazyWeakPointer<Dokumentation> > dokumentationen_;
+
+		#pragma db unordered inverse(bewohner_)
+		QList< QLazyWeakPointer<Leistungstraeger> > leistungstraeger_;
 	};
 }
 
