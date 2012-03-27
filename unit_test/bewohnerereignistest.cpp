@@ -1,5 +1,5 @@
 #include "bewohnerereignistest.h"
-
+#include <exception>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -9,6 +9,9 @@
   */
 void BewohnerEreignisTest::initTestCase()
 {
+
+    aDeadConnection = QSharedPointer<ebp::connection> ( new ebp::connection("NULL","NULL"));
+
     aConnection = QSharedPointer<ebp::connection> ( new ebp::connection("testUser","testDB"));
     QVERIFY(!aConnection.isNull());
     aConnection->establish("test");
@@ -27,7 +30,19 @@ void BewohnerEreignisTest::schreiberRelation()
     if ( maList.count()<1)
 	return;
     ebp::Bewohnerereignis::linkSchreiber(aBeEreignis, maList.first());
-    QList< QSharedPointer<ebp::Mitarbeiter> > ma =  aBeEreignis->loadSchreiber(aConnection);
+    QList< QSharedPointer<ebp::Mitarbeiter> > ma;
+    try
+    {
+        ma =  aBeEreignis->loadSchreiber(aDeadConnection);
+        QVERIFY(true);
+    }
+    catch(std::exception ex)
+    {
+        QVERIFY(false);
+    }
+
+    ma =  aBeEreignis->loadSchreiber(aConnection);
+
     QVERIFY(maList.first()->login()==ma.first()->login());
 
     ebp::Bewohnerereignis::unlinkSchreiber(aBeEreignis,ma.first());

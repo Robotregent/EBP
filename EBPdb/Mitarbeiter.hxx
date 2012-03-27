@@ -48,15 +48,11 @@ namespace ebp
 		(
 			const QString & login,
 			const Berechtigungen & berechtigung,
-			const QString & name,
-			const QString & email,
-			const QString & telefon
+			const QString & name
 		) :
 			login_(login),
 			berechtigung_(berechtigung),
-			name_(name),
-			email_(email),
-			telefon_(telefon)
+			name_(name)
 		{
 		}
 

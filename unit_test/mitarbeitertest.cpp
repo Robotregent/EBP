@@ -20,9 +20,7 @@ void MitarbeiterTest::testCreateNewMitarbeiter()
 		new ebp::Mitarbeiter(
 		    "testLogin",
 		    ebp::Mitarbeiter::AdminRecht,
-		    "Hans Test",
-		    "test@mail.test",
-		    "0123456"
+		    "Hans Test"
 		    )
 		);
     aMitarbeiter = tmpMa;

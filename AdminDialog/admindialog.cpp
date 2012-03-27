@@ -78,11 +78,11 @@ void AdminDialog::on_button_MA_speichern_clicked()
 		    (
 			this->ui->loginNameLineEdit_2->text().isEmpty() ? " " : this->ui->loginNameLineEdit_2->text(),
 			this->setBerechtigung(),
-			this->ui->nameLineEdit->text().isEmpty() ?  " " : this->ui->nameLineEdit->text(),
-			this->ui->eMailLineEdit->text().isEmpty() ?  " " : this->ui->eMailLineEdit->text(),
-			this->ui->telefonLineEdit->text().isEmpty() ? " " : this->ui->telefonLineEdit->text()
+			this->ui->nameLineEdit->text().isEmpty() ?  " " : this->ui->nameLineEdit->text()
 		     )
 	);
+	ma->email(this->ui->eMailLineEdit->text().isEmpty() ?  " " : this->ui->eMailLineEdit->text());
+	ma->email(this->ui->telefonLineEdit->text().isEmpty() ? " " : this->ui->telefonLineEdit->text());
 
 	if (ma->create(this->PointerToConnection,this->ui->passwortLineEdit_2->text()))
 	{
