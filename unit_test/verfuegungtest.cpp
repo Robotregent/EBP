@@ -8,7 +8,7 @@ void VerfuegungTest::initTestCase()
     aConnection = QSharedPointer<ebp::connection> ( new ebp::connection("testUser","testDB"));
     QVERIFY(!aConnection.isNull());
     aConnection->establish("test");
-    aVerfuegung = QSharedPointer<ebp::Verfuegung> (new ebp::Verfuegung(true,"test",QDate::currentDate(),"Testgrund"));
+    aVerfuegung = QSharedPointer<ebp::Verfuegung> (new ebp::Verfuegung(true,ebp::Verfuegung::Patientenverfuegung,QDate::currentDate(),"Testgrund"));
     QVERIFY(!aVerfuegung.isNull());
     QVERIFY(aVerfuegung->create(aConnection));
 }
@@ -40,8 +40,8 @@ void VerfuegungTest::testFields()
     QString Text = "TestText", Grund = "Testgrund";
     QDate Gerichtsbescheid = QDate(2012,12,21);
 
-    aVerfuegung->text(Text);
-    QVERIFY(Text == aVerfuegung->text());
+    aVerfuegung->typ(ebp::Verfuegung::Patientenverfuegung);
+    QVERIFY(ebp::Verfuegung::Patientenverfuegung == aVerfuegung->typ());
 
     aVerfuegung->grund(Grund);
     QVERIFY(Grund == aVerfuegung->grund());

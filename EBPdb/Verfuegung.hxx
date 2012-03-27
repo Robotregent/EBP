@@ -26,15 +26,23 @@ namespace ebp
 		Q_DECLARE_TR_FUNCTIONS( Verfuegung )
 
 	public:
+		enum Typ
+		{
+			Fixierung,
+			Bettgitter,
+			Psychopharmaka,
+			Patientenverfuegung
+		};
+
 		Verfuegung
 		(
 			const bool & aktiv,
-			const QString & text,
+			const Typ & typ,
 			const QDate & gerichtsbescheid,
 			const QString & grund
 		) :
 			aktiv_(aktiv),
-			text_(text),
+			typ_(typ),
 			gerichtsbescheid_(gerichtsbescheid),
 			grund_(grund)
 		{
@@ -45,8 +53,8 @@ namespace ebp
 		const bool & aktiv() const { return aktiv_; }
 		void aktiv( const bool & aktiv ) { aktiv_ = aktiv; }
 		
-		const QString & text() const { return text_; }
-		void text( const QString & text ) { text_ = text; }
+		const Typ & typ() const { return typ_; }
+		void typ( const Typ & typ ) { typ_ = typ; }
 
 		const QDate & gerichtsbescheid() const { return gerichtsbescheid_; }
 		void gerichtsbescheid( const QDate & gerichtsbescheid ) { gerichtsbescheid_ = gerichtsbescheid; }
@@ -66,7 +74,7 @@ namespace ebp
 
 		bool aktiv_;
 
-		QString text_;
+		Typ typ_;
 
 		QDate gerichtsbescheid_;
 
