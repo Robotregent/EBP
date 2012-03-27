@@ -16,6 +16,7 @@ class BewohnerEreignisTest : public QObject
 {
     Q_OBJECT
     QSharedPointer<ebp::connection> aConnection;
+    QSharedPointer<ebp::connection> aDeadConnection;
     QSharedPointer<ebp::Bewohnerereignis> aBeEreignis;
 
 private slots:
