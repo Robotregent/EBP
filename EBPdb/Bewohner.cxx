@@ -24,7 +24,9 @@ DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( Bewohner, Projekt, Projekt, Bewohner )
 DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( Bewohner, Protokoll, Protokoll, Bewohner )
 DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( Bewohner, Ereignis, Bewohnerereignis, Bewohner )
 DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( Bewohner, Abwesenheit, Abwesenheit, Bewohner )
-
+DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( Bewohner, Verfuegung, Verfuegung, Bewohner )
+DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( Bewohner, Dokumentation, Dokumentation, Bewohner )
+DATABASEOBJECT_IMPLEMENT_LINK_INVERSE( Bewohner, Leistungstraeger, Leistungstraeger, Bewohner )
 
 DATABASEOBJECT_IMPLEMENT_LOAD( Bewohner, Projekte, Projekt, projekte_ )
 DATABASEOBJECT_IMPLEMENT_LOAD( Bewohner, Protokolle, Protokoll, protokolle_ )
@@ -32,6 +34,7 @@ DATABASEOBJECT_IMPLEMENT_LOAD( Bewohner, Ereignisse, Bewohnerereignis, ereigniss
 DATABASEOBJECT_IMPLEMENT_LOAD( Bewohner, Abwesenheiten, Abwesenheit, abwesenheiten_ )
 DATABASEOBJECT_IMPLEMENT_LOAD( Bewohner, Verfuegungen, Verfuegung, verfuegungen_ )
 DATABASEOBJECT_IMPLEMENT_LOAD( Bewohner, Dokumentationen, Dokumentation, dokumentationen_ )
+DATABASEOBJECT_IMPLEMENT_LOAD( Bewohner, Leistungstraeger, Leistungstraeger, leistungstraeger_ )
 
 
 

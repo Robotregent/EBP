@@ -22,6 +22,7 @@ set( EBPdb_headers
 	Abwesenheit.hxx
 	Verfuegung.hxx
 	Dokumentation.hxx
+	Leistungstraeger.hxx
 )
 
 set( EBPdb_sources
@@ -37,6 +38,7 @@ set( EBPdb_sources
 	Abwesenheit.cxx
 	Verfuegung.cxx
 	Dokumentation.cxx
+	Leistungstraeger.cxx
 )
 
 set( EBPdb_include_dirs
