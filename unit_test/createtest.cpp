@@ -10,6 +10,7 @@ void CreateTest::mitarbeiterTest()
 							    "Mr Test"
 							));
     QVERIFY(!aMitarbeiter.isNull());
+    aMitarbeiter->updatePassword(aConnection,"test_password");
     QVERIFY(aMitarbeiter->create(aConnection));
     srand ( time(NULL) );
 }
