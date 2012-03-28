@@ -93,7 +93,7 @@ namespace ebp
 
 		QString ziele_;
 
-//		#pragma db not_null
+		#pragma db unordered
 		QSharedPointer<Bewohner> bewohner_;
 	};
 }
