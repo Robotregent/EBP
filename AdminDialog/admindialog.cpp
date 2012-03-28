@@ -424,9 +424,9 @@ void AdminDialog::on_button_B_speichern_clicked()
 	    if(tmpDoku->create(PointerToConnection))
 	    {
 		ebp::Dokumentation::linkBewohner(tmpDoku,tmpBew);
-		tmpBew->update(PointerToConnection);
 	    }
 	}
+		tmpBew->update(PointerToConnection);
 
 
 

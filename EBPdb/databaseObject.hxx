@@ -83,6 +83,11 @@ void FROM::link##FROM_NAME( QSharedPointer<FROM> & from, QSharedPointer<TO> & to
 		} \
 		for( QList< QLazyWeakPointer<FROM> >::const_iterator i = to->TO_MEMBER.begin(); i != to->TO_MEMBER.end(); ++i ) \
 		{ \
+			if( !(*i) ) \
+			{ \
+				qWarning() << tr("Null-Pointer in "#TO_NAME"::"#TO_MEMBER"!"); \
+				continue; \
+			} \
 			if( (*i).objectId<FROM>() == from->id_ ) \
 				goto otherSide; \
 		} \

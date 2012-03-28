@@ -80,11 +80,15 @@ namespace ebp
 			odb::result<T> r( connection->getDB()->query<T>() );
 			for( typename odb::result<T>::iterator i( r.begin() ); i != r.end(); ++i )
 			{
-				list.push_back( i.load() );
-				QSharedPointer<T> be = i.load();
-				if( be->hasPermission( connection ) )
+				QSharedPointer<T> p = i.load();
+				if( !p )
 				{
-					list.push_back( be );
+					qWarning() << tr("ODB gab null pointer beim Laden von \"%1\" zurück!").arg( typeid(T).name() );
+					continue;
+				}
+				if( p->hasPermission( connection ) )
+				{
+					list.push_back( p );
 				}
 				else
 				{
