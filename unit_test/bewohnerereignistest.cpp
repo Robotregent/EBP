@@ -31,7 +31,7 @@ void BewohnerEreignisTest::schreiberRelation()
 	return;
     ebp::Bewohnerereignis::linkSchreiber(aBeEreignis, maList.first());
     QList< QSharedPointer<ebp::Mitarbeiter> > ma;
-    try
+    /*try
     {
         ma =  aBeEreignis->loadSchreiber(aDeadConnection);
         QVERIFY(true);
@@ -39,7 +39,7 @@ void BewohnerEreignisTest::schreiberRelation()
     catch(std::exception ex)
     {
         QVERIFY(false);
-    }
+    }*/
 
     ma =  aBeEreignis->loadSchreiber(aConnection);
 

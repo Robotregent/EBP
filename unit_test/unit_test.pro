@@ -9,7 +9,8 @@ SOURCES += \
     wohngruppenereignistest.cpp \
     bewohnerereignistest.cpp \
     dokumentationtest.cpp \
-    verfuegungtest.cpp
+    verfuegungtest.cpp \
+    createtest.cpp
 CONFIG += qtestlib
 
 INCLUDEPATH += $$PWD/../EBPdb
@@ -31,4 +32,5 @@ HEADERS += \
     wohngruppenereignistest.h \
     bewohnerereignistest.h \
     dokumentationtest.h \
-    verfuegungtest.h
+    verfuegungtest.h \
+    createtest.h
