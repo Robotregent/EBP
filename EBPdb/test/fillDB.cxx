@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <EBPdb/connection.hxx>
+#include <EBPdb/Mitarbeiter.hxx>
+#include <EBPdb/Bewohner.hxx>
 #include <EBPdb/Wohnheim.hxx>
 
 using namespace ebp;
@@ -16,6 +18,17 @@ bool createMitarbeiter( QSharedPointer<connection> & c, int nr )
 	return true;
 }
 
+
+bool createBewohner( QSharedPointer<connection> & c, int b )
+{
+	Bewohner x( b );
+	if( !x.create( c ) )
+	{
+		fprintf( stderr, "Could not create '%s'\n", x.name().toLocal8Bit().data() );
+		return false;
+	}
+	return true;
+}
 
 bool createWohngruppe( QSharedPointer<connection> & c, int wh, int wg )
 {
@@ -58,6 +71,13 @@ bool fillDatabase( QSharedPointer<connection> & c )
 	for( int i=0; i<10; i++ )
 	{
 		if( !createMitarbeiter( c, i ) )
+		{
+			return false;
+		}
+	}
+	for( int i=0; i<10; i++ )
+	{
+		if( !createBewohner( c, i ) )
 		{
 			return false;
 		}
