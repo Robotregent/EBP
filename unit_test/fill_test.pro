@@ -1,15 +1,9 @@
 LIBS += -L ../EBPdb/ -lEBPdb \
 
 SOURCES += \
-    connectiontest.cpp \
-    mitarbeitertest.cpp \
     main.cpp \
-    bewohnertest.cpp \
-    wohngruppentest.cpp \
-    wohngruppenereignistest.cpp \
-    bewohnerereignistest.cpp \
-    dokumentationtest.cpp \
-    verfuegungtest.cpp
+    createtest.cpp \
+    fillfieldstest.cpp
 CONFIG += qtestlib
 
 INCLUDEPATH += $$PWD/../EBPdb
@@ -24,11 +18,5 @@ DEPENDPATH += $$PWD/../
 
 HEADERS += \
     AutoTest.h \
-    connectiontest.h \
-    MitarbeiterTest.h \
-    bewohnertest.h \
-    wohngruppentest.h \
-    wohngruppenereignistest.h \
-    bewohnerereignistest.h \
-    dokumentationtest.h \
-    verfuegungtest.h
+    createtest.h \
+    fillfieldstest.h

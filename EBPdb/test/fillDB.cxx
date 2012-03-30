@@ -9,10 +9,10 @@ using namespace ebp;
 
 bool createMitarbeiter( QSharedPointer<connection> & c, int nr )
 {
-	Mitarbeiter x( "ebp_test_user_" + QString::number(nr), Mitarbeiter::WohngruppenRecht, "Mitarbeiter_" + QString::number(nr) );
-	if( !x.create( c, x.name() ) )
+	QSharedPointer<Mitarbeiter> x( new Mitarbeiter( "ebp_test_user_" + QString::number(nr), Mitarbeiter::WohngruppenRecht, "Mitarbeiter_" + QString::number(nr) ) );
+	if( !x->create( c, x->name() ) )
 	{
-		fprintf( stderr, "Could not create '%s'\n", x.name().toLocal8Bit().data() );
+		fprintf( stderr, "Could not create '%s'\n", x->name().toLocal8Bit().data() );
 		return false;
 	}
 	return true;
@@ -21,21 +21,31 @@ bool createMitarbeiter( QSharedPointer<connection> & c, int nr )
 
 bool createBewohner( QSharedPointer<connection> & c, int b )
 {
-	Bewohner x( b );
-	if( !x.create( c ) )
+	QSharedPointer<Bewohner> x( new Bewohner( b ) );
+	if( !x->create( c ) )
 	{
-		fprintf( stderr, "Could not create '%s'\n", x.name().toLocal8Bit().data() );
+		fprintf( stderr, "Could not create '%s'\n", x->name().toLocal8Bit().data() );
 		return false;
 	}
+	QSharedPointer<Dokumentation> d1( new Dokumentation( Dokumentation::einkaufen, Dokumentation::istWichtig ) );
+	QSharedPointer<Dokumentation> d2( new Dokumentation( Dokumentation::aufstehenUndZuBettgehen, Dokumentation::istWichtig ) );
+	QSharedPointer<Dokumentation> d3( new Dokumentation( Dokumentation::freundschaften, Dokumentation::istWichtig ) );
+	Dokumentation::linkBewohner( d1, x );
+	Dokumentation::linkBewohner( d2, x );
+	Dokumentation::linkBewohner( d3, x );
+	d1->create( c );
+	d2->create( c );
+	d3->create( c );
+	x->update( c );
 	return true;
 }
 
 bool createWohngruppe( QSharedPointer<connection> & c, int wh, int wg )
 {
-	Wohngruppe x( "Wohngruppe_" + QString::number(wh) + "_" + QString::number(wg) );
-	if( !x.create( c ) )
+	QSharedPointer<Wohngruppe> x( new Wohngruppe( "Wohngruppe_" + QString::number(wh) + "_" + QString::number(wg) ) );
+	if( !x->create( c ) )
 	{
-		fprintf( stderr, "Could not create '%s'\n", x.name().toLocal8Bit().data() );
+		fprintf( stderr, "Could not create '%s'\n", x->name().toLocal8Bit().data() );
 		return false;
 	}
 	return true;
@@ -43,10 +53,10 @@ bool createWohngruppe( QSharedPointer<connection> & c, int wh, int wg )
 
 bool createWohnheim( QSharedPointer<connection> & c, int wh )
 {
-	Wohnheim x( "Wohnheim_" + QString::number(wh) );
-	if( !x.create( c ) )
+	QSharedPointer<Wohnheim> x( new Wohnheim( "Wohnheim_" + QString::number(wh) ) );
+	if( !x->create( c ) )
 	{
-		fprintf( stderr, "Could not create '%s'\n", x.name().toLocal8Bit().data() );
+		fprintf( stderr, "Could not create '%s'\n", x->name().toLocal8Bit().data() );
 		return false;
 	}
 	for( int i=0; i<3; i++ )

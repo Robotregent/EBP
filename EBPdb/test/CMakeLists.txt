@@ -32,7 +32,7 @@ add_definitions( -Wall -Wno-unknown-pragmas )
 link_directories( ${EBPdbTest_library_dirs} )
 include_directories( ${EBPdbTest_include_dirs} )
 
-add_test( initDB sh -c "cd .. && ./initDB.sh -u root -p ebp_test" )
+add_test( initDB sh -c "cat ../*.sql *.sql | mysql $@ -u root -p ebp_test" )
 
 add_executable( fillDB fillDB.cxx )
 target_link_libraries( fillDB ${EBPdbTest_libraries} )
