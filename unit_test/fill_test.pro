@@ -3,7 +3,8 @@ LIBS += -L ../EBPdb/ -lEBPdb \
 SOURCES += \
     main.cpp \
     createtest.cpp \
-    fillfieldstest.cpp
+    fillfieldstest.cpp \
+    linktest.cpp
 CONFIG += qtestlib
 
 INCLUDEPATH += $$PWD/../EBPdb
@@ -19,4 +20,5 @@ DEPENDPATH += $$PWD/../
 HEADERS += \
     AutoTest.h \
     createtest.h \
-    fillfieldstest.h
+    fillfieldstest.h \
+    linktest.h
