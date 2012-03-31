@@ -47,9 +47,12 @@ void CreateTest::bewohnerTest()
 
 void CreateTest::bewohnerereignisTest()
 {
-    QSharedPointer< ebp::Bewohnerereignis > aBewohnerereignis = QSharedPointer<ebp::Bewohnerereignis>( new ebp::Bewohnerereignis(QDateTime::currentDateTime(),QVariant(rand() % 100000 + 1).toString()));
-    QVERIFY(!aBewohnerereignis.isNull());
-    QVERIFY(aBewohnerereignis->create(aConnection));
+    for( int i = 0 ; i< 10; i++)
+    {
+        QSharedPointer< ebp::Bewohnerereignis > aBewohnerereignis = QSharedPointer<ebp::Bewohnerereignis>( new ebp::Bewohnerereignis(QDateTime::currentDateTime(),QVariant(rand() % 100000 + 1).toString()));
+        QVERIFY(!aBewohnerereignis.isNull());
+        QVERIFY(aBewohnerereignis->create(aConnection));
+    }
 }
 
 void CreateTest::wohngruppeTest()
