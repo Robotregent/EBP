@@ -25,7 +25,7 @@ void LinkTest::linkWohngruppe()
     QSharedPointer< ebp::Wohngruppe > gruppe;
     QSharedPointer< ebp::Mitarbeiter > mitarbeiter;
 
-    if(mitarbeiterList.count()==gruppenList.count())
+    if(mitarbeiterList.count()>=gruppenList.count())
     {
         for ( int i = 0 ; i< gruppenList.count(); i++)
         {
@@ -36,7 +36,7 @@ void LinkTest::linkWohngruppe()
         }
     }
     else
-        QVERIFY(mitarbeiterList.count()==gruppenList.count());
+        QFAIL("Konnte Test nicht durchführen, da zu wenig Wohngruppen geladen wurden.");
 }
 
 void LinkTest::linkWohngruppenereignis()
@@ -68,7 +68,7 @@ void LinkTest::linkWohngruppenereignis()
 	}
     }
     else
-        QVERIFY((mitarbeiterList.count()>1)&&(wohngruppeList.count()>1));
+        QFAIL("Konnte Test nicht durchführen, da zu wenig Wohngruppen oder Mitarbeiter geladen wurden.");
 }
 
 void LinkTest::linkBewohner()
@@ -79,7 +79,7 @@ void LinkTest::linkBewohner()
     QSharedPointer< ebp::Mitarbeiter >  mitarbeiter;
     QSharedPointer< ebp::Wohngruppe > wohngruppe;
 
-    if((mitarbeiterList.count()==bewohnerList.count())&&(wohngruppeList.count()==bewohnerList.count()))
+    if((mitarbeiterList.count()>=bewohnerList.count())&&(wohngruppeList.count()>=bewohnerList.count()))
     {
         int i = 0;
 
@@ -94,7 +94,7 @@ void LinkTest::linkBewohner()
         }
     }
     else
-        QVERIFY((mitarbeiterList.count()==bewohnerList.count())&&(wohngruppeList.count()==bewohnerList.count()));
+        QFAIL("Konnte Test nicht durchführen, da zu wenig Wohngruppen oder Mitarbeiter geladen wurden.");
 
 }
 
@@ -122,7 +122,7 @@ void LinkTest::linkBewohnerEreignis()
         }
     }
     else
-        QVERIFY(bewohnerList.count()>1);
+        QFAIL("Konnte Test nicht durchführen, da zu wenig Bewohner geladen wurden.");
 }
 
 void LinkTest::linkVerfuegung()
@@ -149,7 +149,7 @@ void LinkTest::linkVerfuegung()
         }
     }
     else
-        QVERIFY(bewohnerList.count()>1);
+        QFAIL("Konnte Test nicht durchführen, da zu wenig Bewohner geladen wurden.");
 }
 
 void LinkTest::linkDokumentation()
@@ -176,7 +176,7 @@ void LinkTest::linkDokumentation()
         }
     }
     else
-        QVERIFY(bewohnerList.count()>1);
+        QFAIL("Konnte Test nicht durchführen, da zu wenig Bewohner geladen wurden.");
 
 }
 void LinkTest::linkAbwesenheit()
@@ -203,7 +203,7 @@ void LinkTest::linkAbwesenheit()
         }
     }
     else
-        QVERIFY(bewohnerList.count()>1);
+        QFAIL("Konnte Test nicht durchführen, da zu wenig Bewohner geladen wurden.");
 }
 
 void LinkTest::linkProtokoll()
@@ -239,7 +239,7 @@ void LinkTest::linkProtokoll()
         }
     }
     else
-        QVERIFY((bewohnerList.count()>1)&&(mitarbeiterList.count()>1));
+        QFAIL("Konnte Test nicht durchführen, da zu wenig Bewohner oder Mitarbeiter geladen wurden.");;
 }
 
 void LinkTest::linkLeistungstraeger()
@@ -266,7 +266,7 @@ void LinkTest::linkLeistungstraeger()
          }
      }
      else
-         QVERIFY(bewohnerList.count()>1);
+         QFAIL("Konnte Test nicht durchführen, da zu wenig Bewohner geladen wurden.");
 }
 void LinkTest::linkProjekt()
 {
@@ -275,7 +275,7 @@ void LinkTest::linkProjekt()
     QList< QSharedPointer< ebp::Bewohner> > bewohnerList = ebp::Bewohner::loadAll(aConnection);
     QSharedPointer< ebp::Mitarbeiter> verantwortlicher;
     QSharedPointer< ebp::Bewohner >  bewohner;
-    if((projektList.count()==mitarbeiterList.count())&&(projektList.count()==bewohnerList.count()))
+    if((mitarbeiterList.count()>=projektList.count())&&(bewohnerList.count()>=projektList.count()))
     {
         int i = 0;
         foreach(QSharedPointer< ebp::Projekt > projekt, projektList)
@@ -289,7 +289,7 @@ void LinkTest::linkProjekt()
         }
      }
      else
-        QVERIFY((projektList.count()==mitarbeiterList.count())&&(projektList.count()==bewohnerList.count()));
+        QFAIL("Konnte Test nicht durchführen, da zu wenig Bewohner oder Mitarbeiter geladen wurden.");
 }
 void LinkTest::cleanupTestCase()
 {
