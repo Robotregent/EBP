@@ -6,13 +6,6 @@
 #include <QObject>
 #include <QtTest/QtTest>
 #include <EBPdb/connection.hxx>
-#include <EBPdb/Mitarbeiter.hxx>
-#include <EBPdb/Verfuegung.hxx>
-#include <EBPdb/Bewohner.hxx>
-#include <EBPdb/Bewohnerereignis.hxx>
-#include <EBPdb/Wohngruppe.hxx>
-#include <EBPdb/Wohngruppenereignis.hxx>
-#include <EBPdb/Dokumentation.hxx>
 
 class LinkTest : public QObject
 {
@@ -21,12 +14,17 @@ class LinkTest : public QObject
 
 private slots:
     void initTestCase();
-    void linkMitarbeiter();
+    void linkWohngruppe();
     void linkWohngruppenereignis();
     void linkBewohner();
     void linkBewohnerEreignis();
     void linkVerfuegung();
     void linkDokumentation();
+    void linkAbwesenheit();
+    void linkProtokoll();
+    void linkLeistungstraeger();
+    void linkProjekt();
+    void cleanupTestCase();
 
 };
 DECLARE_TEST(LinkTest)

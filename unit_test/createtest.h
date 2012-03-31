@@ -6,13 +6,7 @@
 #include <QObject>
 #include <QtTest/QtTest>
 #include <EBPdb/connection.hxx>
-#include <EBPdb/Mitarbeiter.hxx>
-#include <EBPdb/Verfuegung.hxx>
-#include <EBPdb/Bewohner.hxx>
-#include <EBPdb/Bewohnerereignis.hxx>
-#include <EBPdb/Wohngruppe.hxx>
-#include <EBPdb/Wohngruppenereignis.hxx>
-#include <EBPdb/Dokumentation.hxx>
+
 
 class CreateTest : public QObject
 {
@@ -29,6 +23,11 @@ private slots:
     void wohngruppenereignisTest();
     void dokumentationTest();
     void verfuegungTest();
+    void Abwesenheit();
+    void Protokoll();
+    void Projekt();
+    void Leistungstraeger();
+    void cleanupTestCase();
 
 
 

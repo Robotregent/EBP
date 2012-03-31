@@ -13,6 +13,7 @@ INCLUDE( ${QT_USE_FILE} )
 SET( FILL_TEST_SRCS
 	createtest.cpp
 	fillfieldstest.cpp
+	linktest.cpp
 	main.cpp
 )
   
@@ -20,6 +21,7 @@ SET( FILL_TEST_SRCS
 SET( FILL_TEST_MOC_HDRS
 	createtest.h
 	fillfieldstest.h
+	linktest.h
 )
 #lib directories
 SET(unit_test_library_dirs
