@@ -47,6 +47,12 @@ void LinkTest::linkWohngruppenereignis()
 
 void LinkTest::linkBewohner()
 {
+    QList< QSharedPointer< ebp::Wohngruppenereignis > > ereignisList = ebp::Wohngruppenereignis::loadAll(aConnection);
+    QList< QSharedPointer< ebp::Mitarbeiter > > mitarbeiterList = ebp::Mitarbeiter::loadAll(aConnection);
+    QList< QSharedPointer< ebp::Wohngruppe > > wohngruppeList = ebp::Wohngruppe::loadAll(aConnection);
+    QSharedPointer< ebp::Mitarbeiter >  mitarbeiter;
+    QSharedPointer< ebp::Wohngruppenereignis >  ereignis;
+    QSharedPointer< ebp::Wohngruppe > wohngruppe;
 
 
 }
