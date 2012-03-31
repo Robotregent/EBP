@@ -36,7 +36,7 @@ void LinkTest::linkWohngruppe()
         }
     }
     else
-        QFAIL("Konnte Test nicht durchführen, da zu wenig Wohngruppen geladen wurden.");
+        QFAIL("Konnte Test nicht durchführen, da zu wenig Mitarbeiter geladen wurden.");
 }
 
 void LinkTest::linkWohngruppenereignis()
