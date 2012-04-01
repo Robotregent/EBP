@@ -142,10 +142,20 @@ void FROM::unlink##FROM_NAME( QSharedPointer<FROM> & from, QSharedPointer<TO> & 
 QList< QSharedPointer<MEMBER_CLASS> > CLASS::load##NAME( const QSharedPointer<ebp::connection> & connection ) const \
 { \
 	QList< QSharedPointer<MEMBER_CLASS> > ret; \
+	if( !connection ) \
+	{ \
+		qWarning() << tr("Connection is a Null-Pointer in "#CLASS"::load"#NAME"!"); \
+		return ret; \
+	} \
 	odb::transaction t( connection->getDB()->begin() ); \
 	for( QList< QLazyWeakPointer<MEMBER_CLASS> >::const_iterator i = MEMBER_NAME.begin(); i != MEMBER_NAME.end(); ++i ) \
 	{ \
 		QSharedPointer<MEMBER_CLASS> p = (*i).load(); \
+		if( !p ) \
+		{ \
+			qWarning() << tr("ODB returned Null-Pointer in "#CLASS"::load"#NAME"!"); \
+			continue; \
+		} \
 		if( p->hasPermission( connection ) ) \
 		{ \
 			ret.push_back( p ); \
