@@ -64,6 +64,23 @@ namespace ebp
 		return true;
 	}
 
+
+	template< class T > bool databaseObject<T>::reload( const QSharedPointer<ebp::connection> & connection )
+	{
+		try
+		{
+			odb::transaction t( connection->getDB()->begin() );
+			connection->getDB()->reload( *((T*)this) );
+			t.commit();
+		}
+		catch( const odb::exception & e )
+		{
+			qCritical() << e.what();
+			return false;
+		}
+		return true;
+	}
+
 /*
 	template< class T > bool databaseObject<T>::hasPermission( const QSharedPointer<ebp::connection> & connection ) const
 	{

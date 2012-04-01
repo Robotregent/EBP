@@ -32,6 +32,7 @@ DecreeScrollArea::~DecreeScrollArea()
 void DecreeScrollArea::getCurrentVerfuegungen()
 {
     int entryCount;
+    con.curBewohner->reload(con.curConnection);
     this->bewohner_verfuegungen=con.curBewohner->loadVerfuegungen(con.curConnection);
     entryCount=bewohner_verfuegungen.count();
     for(int i = 0; i <entryCount; i++)
@@ -227,7 +228,6 @@ bool DecreeScrollArea::saveContent()
                 Patientenverfuegung.clear();
             }
         }
-
 
         return true;
     }
