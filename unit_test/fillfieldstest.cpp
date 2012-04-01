@@ -42,7 +42,7 @@ void FillFieldsTest::fillWohngruppenereignis()
     {
 	wohngruppenEreignisList.at(i)->text("Testtext"+QVariant(i).toString());
 
-	wohngruppenEreignisList.at(i)->zeitpunkt(QDateTime::currentDateTime());
+        wohngruppenEreignisList.at(i)->zeitpunkt(QDateTime(QDate(2012,4,1),QTime(11,11)));
 
 	QVERIFY(wohngruppenEreignisList.at(i)->update(aConnection));
     }
@@ -56,9 +56,9 @@ void FillFieldsTest::fillBewohner()
 
     for ( int i =0; i<bewohnerList.count();i++)
     {
-	bewohnerList.at(i)->geburtsdatum(QDate::currentDate());
+        bewohnerList.at(i)->geburtsdatum(QDate(2012,4,1));
 
-	bewohnerList.at(i)->seit(QDate::currentDate());
+        bewohnerList.at(i)->seit(QDate(2012,4,1));
 
 	bewohnerList.at(i)->anrede("anrede"+QVariant(i).toString());
 
@@ -91,7 +91,7 @@ void FillFieldsTest::fillBewohnerEreignis()
     QVERIFY(bewohnerEreignisList.count()>1);
     for ( int i =0; i<bewohnerEreignisList.count();i++)
     {
-	bewohnerEreignisList.at(i)->zeitpunkt(QDateTime::currentDateTime());
+        bewohnerEreignisList.at(i)->zeitpunkt(QDateTime(QDate(2012,4,1),QTime(11,11)));
 
 	bewohnerEreignisList.at(i)->text("Testtext"+QVariant(i).toString());
 
@@ -109,7 +109,7 @@ void FillFieldsTest::fillVerfuegung()
 
 	vList.at(i)->grund("Grund"+QVariant(i).toString());
 
-	vList.at(i)->gerichtsbescheid(QDate::currentDate());
+        vList.at(i)->gerichtsbescheid(QDate(2012,4,1));
 
 	QVERIFY(vList.at(i)->update(aConnection));
     }
@@ -142,7 +142,7 @@ void FillFieldsTest::fillAbwesenheit()
     {
         abwesenheitsList.at(i)->grund("Testgrund");
 
-        abwesenheitsList.at(i)->tag(QDate::currentDate());
+        abwesenheitsList.at(i)->tag(QDate(2012,4,1));
 
         QVERIFY(abwesenheitsList.at(i)->update(aConnection));
     }
@@ -154,7 +154,7 @@ void FillFieldsTest::fillProtokoll()
     QVERIFY(protokollList.count()>1);
     for ( int i =0; i<protokollList.count();i++)
     {
-        protokollList.at(i)->datum(QDate::currentDate());
+        protokollList.at(i)->datum(QDate(2012,4,1));
 
         protokollList.at(i)->inhalt("VIEl Testinhalt");
 
@@ -168,9 +168,9 @@ void FillFieldsTest::fillProjekt()
     QVERIFY(projektList.count()>1);
     for ( int i =0; i<projektList.count();i++)
     {
-        projektList.at(i)->beginn(QDate::currentDate());
+        projektList.at(i)->beginn(QDate(2012,4,1));
 
-        projektList.at(i)->ende(QDate::currentDate());
+        projektList.at(i)->ende(QDate(2012,4,1));
 
         projektList.at(i)->name("Testname");
 

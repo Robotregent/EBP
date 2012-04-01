@@ -102,8 +102,10 @@ void LinkTest::linkBewohnerEreignis()
 {
     QList< QSharedPointer< ebp::Bewohner> > bewohnerList = ebp::Bewohner::loadAll(aConnection);
     QList< QSharedPointer< ebp::Bewohnerereignis > > ereignisList = ebp::Bewohnerereignis::loadAll(aConnection);
+    QList< QSharedPointer< ebp::Mitarbeiter > > mitarbeiterList = ebp::Mitarbeiter::loadAll(aConnection);
+    QSharedPointer< ebp::Mitarbeiter >  mitarbeiter;
     QSharedPointer< ebp::Bewohner >  bewohner;
-    if(bewohnerList.count()>1)
+    if((bewohnerList.count()>1)&&(mitarbeiterList.count()>1))
     {
         int i = 0;
         foreach (QSharedPointer < ebp::Bewohnerereignis > be,  ereignisList)
@@ -111,18 +113,21 @@ void LinkTest::linkBewohnerEreignis()
             if(i<(ereignisList.count()/2))
             {
                 bewohner = bewohnerList.at(1);
+                mitarbeiter = mitarbeiterList.at(1);
             }
             else
             {
                 bewohner = bewohnerList.at(2);
+                mitarbeiter = mitarbeiterList.at(2);
             }
             ebp::Bewohnerereignis::linkBewohner(be,bewohner);
+            ebp::Bewohnerereignis::linkSchreiber(be,mitarbeiter);
             QVERIFY(be->update(aConnection));
             i++;
         }
     }
     else
-        QFAIL("Konnte Test nicht durchführen, da zu wenig Bewohner geladen wurden.");
+        QFAIL("Konnte Test nicht durchführen, da zu wenig Bewohner oder Mitarbeiter geladen wurden.");
 }
 
 void LinkTest::linkVerfuegung()

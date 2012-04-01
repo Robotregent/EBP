@@ -16,6 +16,11 @@ SET( FILL_TEST_SRCS
 	linktest.cpp
 	main.cpp
 )
+SET( USE_TEST_SRCS
+	main_use.cpp
+	loadfieldstest.cpp
+	loadrelationtest.cpp
+)
 SET( REMOVE_TEST_SRCS	
 	unlinktest.cpp
 	removetest.cpp
@@ -27,6 +32,10 @@ SET( FILL_TEST_MOC_HDRS
 	createtest.h
 	fillfieldstest.h
 	linktest.h
+)
+SET( USE_TEST_MOC_HDRS
+	loadfieldstest.h
+	loadrelationtest.h
 )
 SET( REMOVE_TEST_MOC_HDRS
 	unlinktest.h
@@ -64,6 +73,7 @@ INCLUDE( ${QT_USE_FILE} )
   
 
 QT4_WRAP_CPP( FILL_TEST_MOC_SRCS ${FILL_TEST_MOC_HDRS} )
+QT4_WRAP_CPP( USE_TEST_MOC_SRCS ${USE_TEST_MOC_HDRS} )
 QT4_WRAP_CPP( REMOVE_TEST_MOC_SRCS ${REMOVE_TEST_MOC_HDRS} )
 
 link_directories(${unit_test_library_dirs})  
@@ -71,17 +81,23 @@ link_directories(${unit_test_library_dirs})
 # (CMAKE_BINARY_DIR holds a path to the build directory, while INCLUDE_DIRECTORIES() works just like INCLUDEPATH from qmake)
 INCLUDE_DIRECTORIES( ${CMAKE_BINARY_DIR} ${unit_test_include_dirs} )
 
-# initialize Database
+# initialize database
 add_test( initDB sh -c "cat ../EBPdb/*.sql *.sql | mysql $@ -u root -p ebp_test" )
 
-# fill Database
+# fill database
 ADD_EXECUTABLE( fill_test ${FILL_TEST_SRCS} ${FILL_TEST_MOC_SRCS} )
 TARGET_LINK_LIBRARIES( fill_test ${unit_test_libraries})
 ADD_TEST( fill_test fill_test )
 set_property( TEST fill_test APPEND PROPERTY DEPENDS initDB )
 
-# remove Database
+# work with database
+ADD_EXECUTABLE( use_test ${USE_TEST_SRCS} ${USE_TEST_MOC_SRCS} )
+TARGET_LINK_LIBRARIES( use_test ${unit_test_libraries})
+ADD_TEST( use_test use_test )
+set_property( TEST use_test APPEND PROPERTY DEPENDS fill_test )
+
+# remove database
 ADD_EXECUTABLE( remove_test ${REMOVE_TEST_SRCS} ${REMOVE_TEST_MOC_SRCS} )
 TARGET_LINK_LIBRARIES( remove_test ${unit_test_libraries})
 ADD_TEST( remove_test remove_test )
-set_property( TEST remove_test APPEND PROPERTY DEPENDS fill_test )
+set_property( TEST remove_test APPEND PROPERTY DEPENDS use_test )
