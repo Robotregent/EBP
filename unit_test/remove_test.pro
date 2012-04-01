@@ -1,10 +1,15 @@
 LIBS += -L ../EBPdb/ -lEBPdb \
 
 SOURCES += \
-    main.cpp \
-    createtest.cpp \
-    fillfieldstest.cpp \
-    linktest.cpp
+    main_remove.cpp \
+    unlinktest.cpp \
+    removetest.cpp
+
+HEADERS += \
+    AutoTest.h \
+    unlinktest.h \
+    removetest.h
+
 CONFIG += qtestlib
 
 INCLUDEPATH += $$PWD/../EBPdb
@@ -16,9 +21,3 @@ else:unix:!macx:!symbian: LIBS += -L$$PWD/EBPdb/ -lEBPdb
 
 INCLUDEPATH += $$PWD/../
 DEPENDPATH += $$PWD/../
-
-HEADERS += \
-    AutoTest.h \
-    createtest.h \
-    fillfieldstest.h \
-    linktest.h

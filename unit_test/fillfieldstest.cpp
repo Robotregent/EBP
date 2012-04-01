@@ -6,15 +6,20 @@
 #include <EBPdb/Wohngruppe.hxx>
 #include <EBPdb/Wohngruppenereignis.hxx>
 #include <EBPdb/Dokumentation.hxx>
+#include <EBPdb/Projekt.hxx>
+#include <EBPdb/Protokoll.hxx>
+#include <EBPdb/Abwesenheit.hxx>
 void FillFieldsTest::initTestCase()
 {
     aConnection = QSharedPointer< ebp::connection >( new ebp::connection("ebp_test_root", "ebp_test", "localhost", 3306));
+
     QVERIFY(aConnection->establish("ebp_test_root"));
 }
 
 void FillFieldsTest::fillMitarbeiter()
 {
     QList<QSharedPointer<ebp::Mitarbeiter> > maList = ebp::Mitarbeiter::loadAll(aConnection);
+    QVERIFY(maList.count()>1);
     for ( int i =0; i<maList.count();i++)
     {
 	maList.at(i)->name(QVariant(i).toString()+"Mitarbeiter");
@@ -32,6 +37,7 @@ void FillFieldsTest::fillMitarbeiter()
 void FillFieldsTest::fillWohngruppenereignis()
 {
     QList<QSharedPointer<ebp::Wohngruppenereignis> > wohngruppenEreignisList = ebp::Wohngruppenereignis::loadAll(aConnection);
+    QVERIFY(wohngruppenEreignisList.count()>1);
     for ( int i =0; i<wohngruppenEreignisList.count();i++)
     {
 	wohngruppenEreignisList.at(i)->text("Testtext"+QVariant(i).toString());
@@ -45,6 +51,9 @@ void FillFieldsTest::fillWohngruppenereignis()
 void FillFieldsTest::fillBewohner()
 {
     QList<QSharedPointer<ebp::Bewohner> > bewohnerList = ebp::Bewohner::loadAll(aConnection);
+
+    QVERIFY(bewohnerList.count()>1);
+
     for ( int i =0; i<bewohnerList.count();i++)
     {
 	bewohnerList.at(i)->geburtsdatum(QDate::currentDate());
@@ -79,6 +88,7 @@ void FillFieldsTest::fillBewohner()
 void FillFieldsTest::fillBewohnerEreignis()
 {
     QList<QSharedPointer<ebp::Bewohnerereignis> > bewohnerEreignisList = ebp::Bewohnerereignis::loadAll(aConnection);
+    QVERIFY(bewohnerEreignisList.count()>1);
     for ( int i =0; i<bewohnerEreignisList.count();i++)
     {
 	bewohnerEreignisList.at(i)->zeitpunkt(QDateTime::currentDateTime());
@@ -92,6 +102,7 @@ void FillFieldsTest::fillBewohnerEreignis()
 void FillFieldsTest::fillVerfuegung()
 {
     QList<QSharedPointer<ebp::Verfuegung> > vList = ebp::Verfuegung::loadAll(aConnection);
+    QVERIFY(vList.count()>1);
     for ( int i =0; i<vList.count();i++)
     {
 	vList.at(i)->typ(ebp::Verfuegung::Patientenverfuegung);
@@ -107,6 +118,7 @@ void FillFieldsTest::fillVerfuegung()
 void FillFieldsTest::fillDokumentation()
 {
     QList<QSharedPointer<ebp::Dokumentation> > dokuList = ebp::Dokumentation::loadAll(aConnection);
+    QVERIFY(dokuList.count()>1);
     for ( int i =0; i<dokuList.count();i++)
     {
 	dokuList.at(i)->typ(ebp::Dokumentation::partnerschaften);
@@ -120,4 +132,84 @@ void FillFieldsTest::fillDokumentation()
 	dokuList.at(i)->ziele("TestZiele"+QVariant(i).toString());
 	QVERIFY(dokuList.at(i)->update(aConnection));
     }
+}
+
+void FillFieldsTest::fillAbwesenheit()
+{
+    QList<QSharedPointer<ebp::Abwesenheit> > abwesenheitsList = ebp::Abwesenheit::loadAll(aConnection);
+    QVERIFY(abwesenheitsList.count()>1);
+    for ( int i =0; i<abwesenheitsList.count();i++)
+    {
+        abwesenheitsList.at(i)->grund("Testgrund");
+
+        abwesenheitsList.at(i)->tag(QDate::currentDate());
+
+        QVERIFY(abwesenheitsList.at(i)->update(aConnection));
+    }
+}
+
+void FillFieldsTest::fillProtokoll()
+{
+    QList<QSharedPointer<ebp::Protokoll> > protokollList = ebp::Protokoll::loadAll(aConnection);
+    QVERIFY(protokollList.count()>1);
+    for ( int i =0; i<protokollList.count();i++)
+    {
+        protokollList.at(i)->datum(QDate::currentDate());
+
+        protokollList.at(i)->inhalt("VIEl Testinhalt");
+
+        QVERIFY(protokollList.at(i)->update(aConnection));
+    }
+}
+
+void FillFieldsTest::fillProjekt()
+{
+    QList<QSharedPointer<ebp::Projekt> > projektList = ebp::Projekt::loadAll(aConnection);
+    QVERIFY(projektList.count()>1);
+    for ( int i =0; i<projektList.count();i++)
+    {
+        projektList.at(i)->beginn(QDate::currentDate());
+
+        projektList.at(i)->ende(QDate::currentDate());
+
+        projektList.at(i)->name("Testname");
+
+        projektList.at(i)->beschreibung("Lange Testbeschreibung");
+
+        projektList.at(i)->typ("TestTyp");
+
+        QVERIFY(projektList.at(i)->update(aConnection));
+    }
+}
+
+void FillFieldsTest::fillLeistungstraeger()
+{
+    QList<QSharedPointer<ebp::Leistungstraeger> > leistungstraegerList = ebp::Leistungstraeger::loadAll(aConnection);
+    QVERIFY(leistungstraegerList.count()>1);
+    for ( int i =0; i<leistungstraegerList.count();i++)
+    {
+        leistungstraegerList.at(i)->name("Testname");
+
+        leistungstraegerList.at(i)->strasse("Teststraße");
+
+        leistungstraegerList.at(i)->plz("88069");
+
+        leistungstraegerList.at(i)->ort("Testort");
+
+        leistungstraegerList.at(i)->ansprechpartner("Testansprechpartner");
+
+        leistungstraegerList.at(i)->telefon("000000");
+
+        leistungstraegerList.at(i)->fax("11111111");
+
+        leistungstraegerList.at(i)->email("test@Test.de");
+
+        leistungstraegerList.at(i)->anmerkung("Testanmerkung");
+
+        QVERIFY(leistungstraegerList.at(i)->update(aConnection));
+    }
+}
+void FillFieldsTest::cleanupTestCase()
+{
+    aConnection.clear();
 }

@@ -17,6 +17,11 @@ private slots:
     void fillBewohnerEreignis();
     void fillVerfuegung();
     void fillDokumentation();
+    void fillAbwesenheit();
+    void fillProtokoll();
+    void fillProjekt();
+    void fillLeistungstraeger();
+    void cleanupTestCase();
 
 };
 DECLARE_TEST(FillFieldsTest)
