@@ -20,6 +20,7 @@ class DecreeScrollArea : public QScrollArea, public SaveContentInterface
       QSharedPointer< ebp::Verfuegung > Bettgitter;
       QSharedPointer< ebp::Verfuegung > Psychopharmaka;
       QSharedPointer< ebp::Verfuegung > Patientenverfuegung;
+      QDate voidDate;
      void initField();
 
 public:
@@ -33,6 +34,7 @@ private:
     Ui::DecreeScrollArea *ui;
     void createVerfuegung(ebp::Verfuegung::Typ verfuegungTyp);
     void getCurrentVerfuegungen();
+
 };
 
 #endif // DECREESCROLLAREA_H

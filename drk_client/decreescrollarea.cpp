@@ -17,6 +17,7 @@ DecreeScrollArea::DecreeScrollArea(const SessionContext &context,QWidget *parent
     qDebug() << "Verfügung";
     if (con.curBewohner!=NULL)
     {
+        this->voidDate.setDate(2000,1,1);
         this->getCurrentVerfuegungen();
         this->initField();
     }
@@ -31,11 +32,8 @@ DecreeScrollArea::~DecreeScrollArea()
 void DecreeScrollArea::getCurrentVerfuegungen()
 {
     int entryCount;
-    QMessageBox::information(this,tr("test"),tr("pre loadVerfuegungen"));
     this->bewohner_verfuegungen=con.curBewohner->loadVerfuegungen(con.curConnection);
-    QMessageBox::information(this,tr("test"),tr("pre count"));
     entryCount=bewohner_verfuegungen.count();
-    QMessageBox::information(this,tr("test"),tr("pre zuweisung"));
     for(int i = 0; i <entryCount; i++)
     {
 
@@ -43,9 +41,7 @@ void DecreeScrollArea::getCurrentVerfuegungen()
         switch(bewohner_verfuegungen.at(i)->typ())
             {
             case 0:
-                QMessageBox::information(this,tr("test"),tr("pre c0"));
                 Fixierung = this->Fixierung=bewohner_verfuegungen.at(i);
-                QMessageBox::information(this,tr("test"),tr("a c0"));
                 break;
             case 1:
                 Bettgitter = this->Bettgitter=bewohner_verfuegungen.at(i);
@@ -64,18 +60,19 @@ void DecreeScrollArea::initField()
 {
     if (con.curBewohner!=NULL)
     {
+
     //    if (~(Fixierung.isNull()))
         if (this->Fixierung!=NULL)
         {
             ui->FixierungAktiv->setCurrentIndex(Fixierung->aktiv());
             ui->FixierungDate->setDate(Fixierung->gerichtsbescheid());
             ui->FixierungReason->setText(Fixierung->grund());
-            if (Fixierung->gerichtsbescheid().isNull())
+            if ((Fixierung->gerichtsbescheid() == voidDate)||
+                    (Fixierung->gerichtsbescheid().isNull()))
                 ui->FixierungBescheid->setCurrentIndex(0);
             else
             {
                 ui->FixierungBescheid->setCurrentIndex(1);
-                ui->FixierungReason->setText(Fixierung->grund());
             }
         }
 
@@ -85,12 +82,12 @@ void DecreeScrollArea::initField()
             ui->BettGitterAktiv->setCurrentIndex(Bettgitter->aktiv());
             ui->BettGitterDate->setDate(Bettgitter->gerichtsbescheid());
             ui->BettGitterReason->setText(Bettgitter->grund());
-            if (Bettgitter->gerichtsbescheid().isNull())
+            if ((Bettgitter->gerichtsbescheid() == voidDate)||
+                    (Bettgitter->gerichtsbescheid().isNull()))
                 ui->BettGitterBescheid->setCurrentIndex(0);
             else
             {
                 ui->BettGitterBescheid->setCurrentIndex(1);
-                ui->BettGitterReason->setText(Bettgitter->grund());
             }
         }
 
@@ -100,12 +97,12 @@ void DecreeScrollArea::initField()
             ui->PsychoAktiv->setCurrentIndex(Psychopharmaka->aktiv());
             ui->PsychoDate->setDate(Psychopharmaka->gerichtsbescheid());
             ui->PsychoReason->setText(Psychopharmaka->grund());
-            if (Psychopharmaka->gerichtsbescheid().isNull())
+            if ((Psychopharmaka->gerichtsbescheid() == voidDate)||
+                    (Psychopharmaka->gerichtsbescheid().isNull()))
                 ui->PsychoBescheid->setCurrentIndex(0);
             else
             {
                 ui->PsychoBescheid->setCurrentIndex(1);
-                ui->PsychoReason->setText(Psychopharmaka->grund());
             }
         }
 
@@ -115,12 +112,12 @@ void DecreeScrollArea::initField()
             ui->PatientenAktiv->setCurrentIndex(Patientenverfuegung->aktiv());
             ui->PatientenDate->setDate(Patientenverfuegung->gerichtsbescheid());
             ui->PatientenReason->setText(Patientenverfuegung->grund());
-            if (Patientenverfuegung->gerichtsbescheid().isNull())
-                ui->PatientenBescheid->setCurrentIndex(0);
+            if ((Patientenverfuegung->gerichtsbescheid() == voidDate)||
+                    (Patientenverfuegung->gerichtsbescheid().isNull()))
+                ui->PsychoBescheid->setCurrentIndex(0);
             else
             {
-                ui->PatientenBescheid->setCurrentIndex(1);
-                ui->PatientenReason->setText(Patientenverfuegung->grund());
+                ui->PsychoBescheid->setCurrentIndex(1);
             }
         }
 
@@ -140,15 +137,13 @@ bool DecreeScrollArea::saveContent()
             if (this->Fixierung==NULL)
             {
                 createVerfuegung(ebp::Verfuegung::Fixierung);
-                this->getCurrentVerfuegungen();
-                QMessageBox::information(this,tr("test"),tr("pre tempB"));
-
             }
             Fixierung->aktiv(ui->FixierungAktiv->currentIndex());
-            QMessageBox::information(this,tr("test"),tr("curind"));
             Fixierung->grund(ui->FixierungReason->toPlainText());
-            Fixierung->gerichtsbescheid(ui->FixierungDate->date());
-            Fixierung->grund(ui->FixierungReason->toPlainText());
+            if(ui->FixierungBescheid->currentIndex())
+                Fixierung->gerichtsbescheid(ui->FixierungDate->date());
+            else
+                Fixierung->gerichtsbescheid(voidDate);
             Fixierung->update(this->con.curConnection);
         }
         else
@@ -160,19 +155,19 @@ bool DecreeScrollArea::saveContent()
                 Fixierung.clear();
             }
         }
-        QMessageBox::information(this,tr("test"),tr("Bettgitter"));
         if (ui->BettGitterAktiv->currentIndex()==1)
         {
             //if (Bettgitter.isNull())
             if (this->Bettgitter==NULL)
             {
                 createVerfuegung(ebp::Verfuegung::Bettgitter);
-                this->getCurrentVerfuegungen();
             }
             Bettgitter->aktiv(ui->BettGitterAktiv->currentIndex());
             Bettgitter->grund(ui->BettGitterReason->toPlainText());
-            Bettgitter->gerichtsbescheid(ui->BettGitterDate->date());
-            Bettgitter->grund(ui->BettGitterReason->toPlainText());
+            if(ui->BettGitterBescheid->currentIndex())
+                Bettgitter->gerichtsbescheid(ui->BettGitterDate->date());
+            else
+                Bettgitter->gerichtsbescheid(voidDate);
             Bettgitter->update(this->con.curConnection);
         }
         else
@@ -184,19 +179,19 @@ bool DecreeScrollArea::saveContent()
                 Bettgitter.clear();
             }
         }
-        QMessageBox::information(this,tr("test"),tr("Psyho"));
         if (ui->PsychoAktiv->currentIndex()==1)
         {
            //if (Psychopharmaka.isNull())
             if(this->Psychopharmaka==NULL)
             {
                 createVerfuegung(ebp::Verfuegung::Psychopharmaka);
-                this->getCurrentVerfuegungen();
             }
             Psychopharmaka->aktiv(ui->PsychoAktiv->currentIndex());
             Psychopharmaka->grund(ui->PsychoReason->toPlainText());
-            Psychopharmaka->gerichtsbescheid(ui->PsychoDate->date());
-            Psychopharmaka->grund(ui->PsychoReason->toPlainText());
+            if(ui->PsychoBescheid->currentIndex())
+                Psychopharmaka->gerichtsbescheid(ui->PsychoDate->date());
+            else
+                Psychopharmaka->gerichtsbescheid(voidDate);
             Psychopharmaka->update(this->con.curConnection);
         }
         else
@@ -208,19 +203,19 @@ bool DecreeScrollArea::saveContent()
                 Psychopharmaka.clear();
             }
         }
-        QMessageBox::information(this,tr("test"),tr("patienten"));
         if (ui->PatientenAktiv->currentIndex()==1)
         {
             //if (Patientenverfuegung.isNull())
             if(this->Patientenverfuegung==NULL)
             {
                 createVerfuegung(ebp::Verfuegung::Patientenverfuegung);
-                this->getCurrentVerfuegungen();
             }
             Patientenverfuegung->aktiv(ui->PatientenAktiv->currentIndex());
             Patientenverfuegung->grund(ui->PatientenReason->toPlainText());
-            Patientenverfuegung->gerichtsbescheid(ui->PatientenDate->date());
-            Patientenverfuegung->grund(ui->PatientenReason->toPlainText());
+            if(ui->PatientenBescheid->currentIndex())
+                Patientenverfuegung->gerichtsbescheid(ui->PatientenDate->date());
+            else
+                Patientenverfuegung->gerichtsbescheid(voidDate);
             Patientenverfuegung->update(this->con.curConnection);
         }
         else
@@ -244,10 +239,28 @@ void DecreeScrollArea::createVerfuegung(ebp::Verfuegung::Typ verfuegungTyp)
     if(con.curBewohner!=NULL)
     {
         QSharedPointer< ebp::Verfuegung > tmpVerfuegung(new ebp::Verfuegung(0,verfuegungTyp,QDate(),""));
+        tmpVerfuegung->create(con.curConnection);
         QSharedPointer<ebp::Bewohner> tempB = con.allBewohner.at(con.allBewohner.indexOf(con.curBewohner));
+
         ebp::Verfuegung::linkBewohner(tmpVerfuegung,tempB);
+        bewohner_verfuegungen.append(tmpVerfuegung);
         tmpVerfuegung->update(this->con.curConnection);
 
+        switch(verfuegungTyp)
+            {
+            case 0:
+                Fixierung = tmpVerfuegung;
+                break;
+            case 1:
+                Bettgitter = tmpVerfuegung;
+                break;
+            case 2:
+                Psychopharmaka = tmpVerfuegung;
+                break;
+            case 3:
+                Patientenverfuegung = tmpVerfuegung;
+                break;
+            }
       /*  if (tmpVerfuegung->create( con.curConnection ))
         {
             //qDebug()<<"Erfolg!";
