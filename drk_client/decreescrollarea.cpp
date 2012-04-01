@@ -34,6 +34,7 @@ void DecreeScrollArea::getCurrentVerfuegungen()
     int entryCount;
     con.curBewohner->reload(con.curConnection);
     this->bewohner_verfuegungen=con.curBewohner->loadVerfuegungen(con.curConnection);
+
     entryCount=bewohner_verfuegungen.count();
     for(int i = 0; i <entryCount; i++)
     {
@@ -41,16 +42,16 @@ void DecreeScrollArea::getCurrentVerfuegungen()
 
         switch(bewohner_verfuegungen.at(i)->typ())
             {
-            case 0:
+            case ebp::Verfuegung::Fixierung:
                 Fixierung = this->Fixierung=bewohner_verfuegungen.at(i);
                 break;
-            case 1:
+            case ebp::Verfuegung::Bettgitter:
                 Bettgitter = this->Bettgitter=bewohner_verfuegungen.at(i);
                 break;
-            case 2:
+            case ebp::Verfuegung::Psychopharmaka:
                 Psychopharmaka = this->Psychopharmaka=bewohner_verfuegungen.at(i);
                 break;
-            case 3:
+            case ebp::Verfuegung::Patientenverfuegung:
                 Patientenverfuegung = this->Patientenverfuegung=bewohner_verfuegungen.at(i);
                 break;
             }
@@ -153,6 +154,7 @@ bool DecreeScrollArea::saveContent()
             if (this->Fixierung!=NULL)
             {
                 Fixierung->remove(con.curConnection);
+          //      bewohner_verfuegungen.clear();
                 Fixierung.clear();
             }
         }
@@ -177,6 +179,7 @@ bool DecreeScrollArea::saveContent()
             if (this->Bettgitter!=NULL)
             {
                 Bettgitter->remove(con.curConnection);
+            //    bewohner_verfuegungen.clear();
                 Bettgitter.clear();
             }
         }
@@ -201,6 +204,7 @@ bool DecreeScrollArea::saveContent()
             if(this->Psychopharmaka!=NULL)
             {
                 Psychopharmaka->remove(con.curConnection);
+            //    bewohner_verfuegungen.clear();
                 Psychopharmaka.clear();
             }
         }
@@ -225,10 +229,13 @@ bool DecreeScrollArea::saveContent()
             if(this->Patientenverfuegung!=NULL)
             {
                 Patientenverfuegung->remove(con.curConnection);
+            //    Patientenverfuegung->update(con.curConnection);
+            //    bewohner_verfuegungen.clear();
                 Patientenverfuegung.clear();
             }
         }
-
+        con.curConnection->flushCache();
+        //clearAll();
         return true;
     }
     return false;
@@ -243,21 +250,23 @@ void DecreeScrollArea::createVerfuegung(ebp::Verfuegung::Typ verfuegungTyp)
         QSharedPointer<ebp::Bewohner> tempB = con.allBewohner.at(con.allBewohner.indexOf(con.curBewohner));
 
         ebp::Verfuegung::linkBewohner(tmpVerfuegung,tempB);
-        bewohner_verfuegungen.append(tmpVerfuegung);
+        //bewohner_verfuegungen.clear();
         tmpVerfuegung->update(this->con.curConnection);
-
+        con.curBewohner->update((this->con.curConnection));
+        bewohner_verfuegungen.append(tmpVerfuegung);
+        QMessageBox::about(this, tr("Erfolg"),tr("Verfuegung wurde erfolgreich angelegt"));
         switch(verfuegungTyp)
             {
-            case 0:
+            case ebp::Verfuegung::Fixierung:
                 Fixierung = tmpVerfuegung;
                 break;
-            case 1:
+            case ebp::Verfuegung::Bettgitter:
                 Bettgitter = tmpVerfuegung;
                 break;
-            case 2:
+            case ebp::Verfuegung::Psychopharmaka:
                 Psychopharmaka = tmpVerfuegung;
                 break;
-            case 3:
+            case ebp::Verfuegung::Patientenverfuegung:
                 Patientenverfuegung = tmpVerfuegung;
                 break;
             }
@@ -272,3 +281,12 @@ void DecreeScrollArea::createVerfuegung(ebp::Verfuegung::Typ verfuegungTyp)
         }*/
     }
 }
+/*
+void DecreeScrollArea::clearAll()
+{
+    Fixierung.clear();
+    Bettgitter.clear();
+    Patientenverfuegung.clear();
+    Psychopharmaka.clear();
+    bewohner_verfuegungen.clear();
+}*/
