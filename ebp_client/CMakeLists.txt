@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.6)
 cmake_policy( SET CMP0015 NEW )
 # set project's name
-PROJECT(drk_client)
+PROJECT(ebp_client)
 
 # by default only QtCore and QtGui modules are enabled
 # other modules must be enabled like this:
@@ -64,17 +64,17 @@ SET( SAMPLE_MOC_HDRS
 	newereignisdialog.h
 )
 
-SET(drk_src_library_dirs
+SET(ebp_src_library_dirs
 	../EBPdb
 )
 
-SET(drk_src_include_dirs
+SET(ebp_src_include_dirs
 	${QT_INCLUDE_DIR}
 	.
 	..
 )
 
-SET(drk_src_libraries
+SET(ebp_src_libraries
 	${QT_LIBRARIES}
 	EBPdb
 )
@@ -99,7 +99,7 @@ SET( SAMPLE_UIS
 	newereignisdialog.ui
 )
 # and finally an resource file
-SET( DRK_RCS
+SET( EBP_RCS
      images.qrc
 )
 
@@ -108,7 +108,7 @@ ADD_DEFINITIONS( -Wall -Wno-unknown-pragmas )
 
 # this command will generate rules that will run rcc on all files from SAMPLE_RCS
 # in result SAMPLE_RC_SRCS variable will contain paths to files produced by rcc
-QT4_ADD_RESOURCES( SAMPLE_RC_SRCS ${DRK_RCS} )
+QT4_ADD_RESOURCES( SAMPLE_RC_SRCS ${EBP_RCS} )
 
 # this will run uic on .ui files:
 QT4_WRAP_UI( SAMPLE_UI_HDRS ${SAMPLE_UIS} )
@@ -116,12 +116,12 @@ QT4_WRAP_UI( SAMPLE_UI_HDRS ${SAMPLE_UIS} )
 # and finally this will run moc:
 QT4_WRAP_CPP( SAMPLE_MOC_SRCS ${SAMPLE_MOC_HDRS} )
 
-link_directories( ${drk_src_library_dirs} )
+link_directories( ${ebp_src_library_dirs} )
 
 # we need this to be able to include headers produced by uic in our code
 # (CMAKE_BINARY_DIR holds a path to the build directory, while INCLUDE_DIRECTORIES() works just like INCLUDEPATH from qmake)
-INCLUDE_DIRECTORIES( ${CMAKE_BINARY_DIR} ${drk_src_include_dirs} )
+INCLUDE_DIRECTORIES( ${CMAKE_BINARY_DIR} ${ebp_src_include_dirs} )
 
-ADD_EXECUTABLE( drk_client ${SAMPLE_SRCS} ${SAMPLE_MOC_SRCS} ${SAMPLE_UI_HDRS} ${SAMPLE_RC_SRCS})
+ADD_EXECUTABLE( ebp_client ${SAMPLE_SRCS} ${SAMPLE_MOC_SRCS} ${SAMPLE_UI_HDRS} ${SAMPLE_RC_SRCS})
 
-TARGET_LINK_LIBRARIES( drk_client ${drk_src_libraries} )
+TARGET_LINK_LIBRARIES( ebp_client ${ebp_src_libraries} )

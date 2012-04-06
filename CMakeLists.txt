@@ -11,8 +11,8 @@ add_subdirectory( EBPdb )
 add_subdirectory( AdminDialog )
 add_dependencies( AdminDialog EBPdb )
 
-add_subdirectory( drk_client )
-add_dependencies( drk_client EBPdb )
+add_subdirectory( ebp_client )
+add_dependencies( ebp_client EBPdb )
 
 add_subdirectory( unit_test )
 add_dependencies( fill_test EBPdb )
