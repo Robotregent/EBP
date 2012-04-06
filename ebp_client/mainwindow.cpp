@@ -153,14 +153,24 @@ void MainWindow::set_content(QTreeWidgetItem *current, QTreeWidgetItem *previous
     /// \todo Betreuungsdokumentation genauer aufteilen:
     case 2310:
     case 2311:
+	this->setCentralWidget(this->getContentWidget(MainWindow::DocumentationEinkaufenWidget));
+	break;
     case 2312:
+	this->setCentralWidget(this->getContentWidget(MainWindow::DocumentationWaschpflegeWidget));
+	break;
     case 2320:
     case 2321:
+	this->setCentralWidget(this->getContentWidget(MainWindow::DocumentationKoerperpflegeWidget));
+	break;
     case 2322:
+	this->setCentralWidget(this->getContentWidget(MainWindow::DocumentationAufstehenWidget));
+	break;
     case 2330:
     case 2331:
+	this->setCentralWidget(this->getContentWidget(MainWindow::DocumentationPartnerschaftenWidget));
+	break;
     case 2332:
-	this->setCentralWidget(this->getContentWidget(MainWindow::DocumentationWidget));
+	this->setCentralWidget(this->getContentWidget(MainWindow::DocumentationFreundschaftenWidget));
 	break;
     case 3000:
 	this->setCentralWidget(this->getContentWidget(MainWindow::EreignisWidget));
@@ -179,6 +189,7 @@ void MainWindow::set_content(QTreeWidgetItem *current, QTreeWidgetItem *previous
 
 QWidget *MainWindow::getContentWidget(int ContentTyp)
 {
+
     QWidget *result = this->ContentWidgetList.at(ContentTyp);
     if (result!=NULL)
     {
@@ -186,49 +197,74 @@ QWidget *MainWindow::getContentWidget(int ContentTyp)
     }
     else
     {
-	switch (ContentTyp)
+	if (thisSession.curBewohner.isNull()&&(ContentTyp!=MainWindow::LoginWidget))
 	{
-	case MainWindow::PersonWidget:
-            result=new person(this->thisSession,this);
-	    break;
-	case MainWindow::LoginWidget:
-	    result=new LoginForm(this);
-	    break;
-	case MainWindow::DecreeScrollWidget:
-            result= new DecreeScrollArea(this->thisSession,this);
-	    break;
-        case MainWindow::BetreuungWidget:
-            result = new Betreuung(this->thisSession,this);
-            break;
-        case MainWindow::BProtokollWidget:
+	    //Defaulttyp, wenn Bewohner leer ist
+	    result=new person(this->thisSession,this);
+	}
+	else
+	{
+	    switch (ContentTyp)
 	    {
-		result = new BewohnerProtokoll(this);
-		this->setTextTransferAgent(dynamic_cast<TextTransferInterface*>(result));
+	    case MainWindow::PersonWidget:
+		result=new person(this->thisSession,this);
 		break;
-	    }
-        case MainWindow::Leistungstraeger:
-            result = new LeistungstraegerArea(this);
-            break;
-        case MainWindow::MeldeListeWidget:
-            result = new MeldeListe(this);
-            break;
-        case MainWindow::EreignisWidget:
-	    {
-		TextTransferAgent *agent=setTextTransferAgent(NULL);
-		result = new Ereignis(agent,this);
+	    case MainWindow::LoginWidget:
+		result=new LoginForm(this);
 		break;
-	    }
-        case MainWindow::ProjektWidget:
-	    {
-		result = new Projekt(this);
-		this->setTextTransferAgent(dynamic_cast<TextTransferInterface*>(result));
+	    case MainWindow::DecreeScrollWidget:
+		result= new DecreeScrollArea(this->thisSession,this);
 		break;
+	    case MainWindow::BetreuungWidget:
+		result = new Betreuung(this->thisSession,this);
+		break;
+	    case MainWindow::BProtokollWidget:
+		{
+		    result = new BewohnerProtokoll(this);
+		    this->setTextTransferAgent(dynamic_cast<TextTransferInterface*>(result));
+		    break;
+		}
+	    case MainWindow::Leistungstraeger:
+		result = new LeistungstraegerArea(this);
+		break;
+	    case MainWindow::MeldeListeWidget:
+		result = new MeldeListe(this);
+		break;
+	    case MainWindow::EreignisWidget:
+		{
+		    TextTransferAgent *agent=setTextTransferAgent(NULL);
+		    result = new Ereignis(agent,this);
+		    break;
+		}
+	    case MainWindow::ProjektWidget:
+		{
+		    result = new Projekt(this);
+		    this->setTextTransferAgent(dynamic_cast<TextTransferInterface*>(result));
+		    break;
+		}
+	    case MainWindow::DocumentationEinkaufenWidget:
+		result = new Dokumentation(thisSession,ebp::Dokumentation::einkaufen,this);
+		break;
+	    case MainWindow::DocumentationAufstehenWidget:
+		result = new Dokumentation(thisSession,ebp::Dokumentation::aufstehenUndZuBettgehen,this);
+		break;
+	    case MainWindow::DocumentationFreundschaftenWidget:
+		result = new Dokumentation(thisSession,ebp::Dokumentation::freundschaften,this);
+		break;
+	    case MainWindow::DocumentationKoerperpflegeWidget:
+		result = new Dokumentation(thisSession,ebp::Dokumentation::koerperpflege,this);
+		break;
+	    case MainWindow::DocumentationPartnerschaftenWidget:
+		result = new Dokumentation(thisSession,ebp::Dokumentation::partnerschaften,this);
+		break;
+	    case MainWindow::DocumentationWaschpflegeWidget:
+		result = new Dokumentation(thisSession,ebp::Dokumentation::waeschepflege,this);
+		break;
+
 	    }
-	case MainWindow::DocumentationWidget:
-	    result = new Dokumentation("Hier kommt der Name der Betreuungsdokumentation hin",this);
-	    break;
 	}
     }
+
     //this->ContentWidgetList.replace(ContentTyp,result);
     return result;
 }
