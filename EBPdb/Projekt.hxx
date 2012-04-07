@@ -49,6 +49,9 @@ namespace ebp
  		const QString & name() const { return name_; }
 		void name( const QString & name ) { name_ = name; }
 
+ 		const QString & ziele() const { return ziele_; }
+		void ziele( const QString & ziele ) { ziele_ = ziele; }
+
 		const QString & beschreibung() const { return beschreibung_; }
 		void beschreibung( const QString & beschreibung ) { beschreibung_ = beschreibung; }
 
@@ -76,6 +79,8 @@ namespace ebp
 		unsigned long id_;
 
 		QString name_;
+
+		QString ziele_;
 
 		QString beschreibung_;
 

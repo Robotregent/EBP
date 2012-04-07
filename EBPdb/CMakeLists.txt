@@ -1,10 +1,6 @@
 cmake_minimum_required( VERSION 2.6 )
 project( EBPdb )
 
-enable_testing()
-
-add_subdirectory( test )
-
 find_package( Qt4 REQUIRED )
 include( ${QT_USE_FILE} )
 
@@ -23,6 +19,7 @@ set( EBPdb_headers
 	Verfuegung.hxx
 	Dokumentation.hxx
 	Leistungstraeger.hxx
+	Betreuung.hxx
 )
 
 set( EBPdb_sources
@@ -39,6 +36,7 @@ set( EBPdb_sources
 	Verfuegung.cxx
 	Dokumentation.cxx
 	Leistungstraeger.cxx
+	Betreuung.cxx
 )
 
 set( EBPdb_include_dirs
