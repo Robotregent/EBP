@@ -10,6 +10,7 @@
 #include "Wohngruppe.hxx"
 #include "Projekt.hxx"
 #include "Protokoll.hxx"
+#include "Betreuung.hxx"
 #include "databaseObject.hxx"
 
 #include <QCoreApplication>
@@ -32,6 +33,7 @@ namespace ebp
 	class Wohngruppe;
 	class Projekt;
 	class Protokoll;
+	class Betreuung;
 	class connection;
 
 	#pragma db object
@@ -97,6 +99,9 @@ namespace ebp
 		const QSharedPointer<Mitarbeiter> & bezugsbetreuer() const { return bezugsbetreuer_; }
 		DATABASEOBJECT_DECLARE_LINK( Bewohner, Bezugsbetreuer, Mitarbeiter )
 
+		const QSharedPointer<Betreuung> & betreuung() const { return betreuung_; }
+		DATABASEOBJECT_DECLARE_LINK( Bewohner, Betreuung, Betreuung )
+
 //		QList< QSharedPointer<Projekt> > loadProjekte( const QSharedPointer<ebp::connection> & connection ) const;
 		DATABASEOBJECT_DECLARE_LOAD( Projekte, Projekt )
 		DATABASEOBJECT_DECLARE_LINK_INVERSE( Bewohner, Projekt, Projekt )
@@ -130,6 +135,7 @@ namespace ebp
 		friend class Verfuegung;
 		friend class Dokumentation;
 		friend class Leistungstraeger;
+		friend class Betreuung;
 		Bewohner() {}
 
 		#pragma db id auto
@@ -165,6 +171,9 @@ namespace ebp
 		QSharedPointer<Wohngruppe> wohngruppe_;
 
 		QSharedPointer<Mitarbeiter> bezugsbetreuer_;
+
+		#pragma db inverse(bewohner_)
+		QSharedPointer<Betreuung> betreuung_;
 
 		#pragma db unordered inverse(bewohner_)
 		QList< QLazyWeakPointer<Projekt> > projekte_;
