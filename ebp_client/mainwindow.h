@@ -14,6 +14,7 @@
 #include "sessioncontext.h"
 #include "texttransferinterface.h"
 #include "texttransferagent.h"
+#include "choosedialog.h"
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -26,6 +27,7 @@ private:
     void readSettings();
     void loadWohnguppeUndBewohner();
     void setCurBewohnerAndWohngruppeInfo();
+    void set_content(QTreeWidgetItem * current);
     TextTransferAgent *setTextTransferAgent(TextTransferInterface *interface);
     TextTransferInterface *convertToInterface(QWidget *toConvert);
     QList <QWidget *> ContentWidgetList;
@@ -33,16 +35,20 @@ private:
     QDockWidget *TextTransferDock;
     QDockWidget *InfoDockWidget;
     SideMenu *side_menu;
-    //QSharedPointer<ebp::connection> PointerToConnection;
-    //QMenu *viewMenu;
     InfoFrame *_infoFrame;
     SessionContext thisSession;
     QString dbName;
+    ChooseBwDialog *bwDialog;
+    ChooseWgDialog *wgDialog;
 
 
 private slots:
-    void set_content( QTreeWidgetItem * current, QTreeWidgetItem * previous );
+    void itemChanged( QTreeWidgetItem * current, QTreeWidgetItem * previous );
+    void itemActivated( QTreeWidgetItem * item, int column);
     void saveCurrentContent();
+    void setCurWohngruppe(QSharedPointer< ebp::Wohngruppe > chosenWg);
+    void setCurBewohner(QSharedPointer< ebp::Bewohner > chosenBw);
+    void tabChanged(int index);
 public:
     explicit MainWindow(QWidget *parent = 0);
     enum ContentWidgets { LoginWidget = 0, PersonWidget = 1 , DecreeScrollWidget = 2,  BetreuungWidget = 3, BProtokollWidget = 4,

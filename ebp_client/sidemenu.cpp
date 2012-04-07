@@ -20,9 +20,12 @@ SideMenu::SideMenu(QWidget *parent) :
     //this->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
 
 
+
+
 }
 SideMenu::~SideMenu()
 {
     delete this->Client;
     delete this->Group;
 }
+

@@ -4,6 +4,7 @@
 #include <QDialog>
 #include "custumlistwidgetitem.h"
 #include <EBPdb/Mitarbeiter.hxx>
+#include <EBPdb/Bewohner.hxx>
 
 namespace Ui {
     class ChooseDialog;
@@ -25,7 +26,7 @@ protected:
     Ui::ChooseDialog *ui;
 
 };
-///////////////////////////////////////
+/////////////////////////////////////// Mitarbeiter wählen ////////////////////////////////////////////////////
 
 class ChooseMaDialog : public ChooseDialog
 {
@@ -41,5 +42,34 @@ signals:
 
 };
 
+////////////////////////////////////// Bewohner wählen /////////////////////////////////////////////////////////
+class ChooseBwDialog : public ChooseDialog
+{
+    Q_OBJECT
+private:
+    QList < CustomListWidgetItem <  ebp::Bewohner >  *> bwItemsList;
+private slots:
+    void on_buttonBox_accepted();
+public:
+    explicit ChooseBwDialog(QList < QSharedPointer < ebp::Bewohner > > bwList, QString typ, QWidget *parent);
+signals:
+    void chosen(QSharedPointer < ebp::Bewohner > chosenBw);
+
+};
+
+////////////////////////////////////// Wohngruppe wählen /////////////////////////////////////////////////////////
+class ChooseWgDialog : public ChooseDialog
+{
+    Q_OBJECT
+private:
+    QList < CustomListWidgetItem <  ebp::Wohngruppe >  *> wgItemsList;
+private slots:
+    void on_buttonBox_accepted();
+public:
+    explicit ChooseWgDialog(QList < QSharedPointer < ebp::Wohngruppe > > wgList, QString typ, QWidget *parent);
+signals:
+    void chosen(QSharedPointer < ebp::Wohngruppe > chosenWg);
+
+};
 
 #endif // CHOOSEDIALOG_H

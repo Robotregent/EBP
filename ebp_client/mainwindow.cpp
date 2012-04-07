@@ -77,8 +77,12 @@ void MainWindow::create_sidemenu()
     //this->dock_side_menu->setMaximumSize(this->dock_side_menu->sizeHint());
     //this->dock_side_menu->adjustSize();
 
-    this->connect(this->side_menu->getClientMenu(),SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),SLOT(set_content(QTreeWidgetItem*,QTreeWidgetItem*)));
-    this->connect(this->side_menu->getGroupMenu(),SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),SLOT(set_content(QTreeWidgetItem*,QTreeWidgetItem*)));
+    this->connect(this->side_menu->getClientMenu(),SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),SLOT(itemChanged(QTreeWidgetItem*,QTreeWidgetItem*)));
+    this->connect(this->side_menu->getGroupMenu(),SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),SLOT(itemChanged(QTreeWidgetItem*,QTreeWidgetItem*)));
+    this->connect(this->side_menu->getClientMenu(),SIGNAL(itemActivated(QTreeWidgetItem*,int)),SLOT(itemActivated(QTreeWidgetItem*,int)));
+    this->connect(this->side_menu->getGroupMenu(),SIGNAL(itemActivated(QTreeWidgetItem*,int)),SLOT(itemActivated(QTreeWidgetItem*,int)));
+
+    this->connect(this->side_menu,SIGNAL(currentChanged(int)),SLOT(tabChanged(int)));
 
     this->setCentralWidget(this->getContentWidget(MainWindow::PersonWidget));
 
@@ -87,7 +91,7 @@ void MainWindow::creat_InfoWidget()
 {
     InfoDockWidget =new QDockWidget(tr("Information zu aktueller Auswahl"),this);
     InfoDockWidget->setAllowedAreas(Qt::AllDockWidgetAreas);
-    this->_infoFrame = new InfoFrame(this);
+    this->_infoFrame = new InfoFrame(this->bwDialog,this->wgDialog,this);
     InfoDockWidget->setWidget(this->_infoFrame);
     InfoDockWidget->setObjectName("Information");
     this->addDockWidget(Qt::TopDockWidgetArea,InfoDockWidget);
@@ -125,9 +129,8 @@ TextTransferAgent *MainWindow::setTextTransferAgent(TextTransferInterface *inter
     return result;
 }
 
-void MainWindow::set_content(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+void MainWindow::set_content(QTreeWidgetItem *current)
 {
-    Q_UNUSED(previous);
     if(this->TextTransferDock!=NULL)
 	this->TextTransferDock->setVisible(false);
     switch(current->type())
@@ -315,6 +318,8 @@ void MainWindow::saveCurrentContent()
 
 MainWindow::~MainWindow()
 {
+    delete wgDialog;
+    delete bwDialog;
     //delete side_menu;
     //delete viewMenu;
 }
@@ -419,6 +424,12 @@ void MainWindow::loadWohnguppeUndBewohner()
     }
     pwd->close();
 
+    this->bwDialog = new ChooseBwDialog(thisSession.allBewohner,"Bewohner wählen:",this);
+    QObject::connect(bwDialog,SIGNAL(chosen(QSharedPointer<ebp::Bewohner>)),this,SLOT(setCurBewohner(QSharedPointer<ebp::Bewohner>)));
+
+    this->wgDialog = new ChooseWgDialog(thisSession.allGroups,"Wohngruppe wählen:",this);
+    QObject::connect(wgDialog,SIGNAL(chosen(QSharedPointer<ebp::Wohngruppe>)),this,SLOT(setCurWohngruppe(QSharedPointer<ebp::Wohngruppe>)));
+
 
 }
 void MainWindow::setCurBewohnerAndWohngruppeInfo()
@@ -440,6 +451,38 @@ void MainWindow::setCurMitarbeiter(QSharedPointer<ebp::Mitarbeiter> curMitarbeit
 }
 
 
+void MainWindow::setCurBewohner(QSharedPointer<ebp::Bewohner> chosenBw)
+{
+    thisSession.curBewohner = chosenBw;
+    this->setCurBewohnerAndWohngruppeInfo();
 
+    set_content(this->side_menu->getClientMenu()->currentItem());
 
-
+}
+void MainWindow::setCurWohngruppe(QSharedPointer<ebp::Wohngruppe> chosenWg)
+{
+    thisSession.curWohngruppe = chosenWg;
+    this->setCurBewohnerAndWohngruppeInfo();
+}
+void MainWindow::itemActivated(QTreeWidgetItem *item, int column)
+{
+    Q_UNUSED(column)
+    set_content(item);
+}
+void MainWindow::itemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+{
+    Q_UNUSED(previous)
+    set_content(current);
+}
+void MainWindow::tabChanged(int index)
+{
+    switch ( index )
+    {
+    case 0:
+	set_content(this->side_menu->getClientMenu()->currentItem());
+	break;
+    case 1:
+	set_content(this->side_menu->getGroupMenu()->currentItem());
+	break;
+    }
+}
