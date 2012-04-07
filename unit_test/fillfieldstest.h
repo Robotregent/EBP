@@ -21,6 +21,7 @@ private slots:
     void fillProtokoll();
     void fillProjekt();
     void fillLeistungstraeger();
+    void fillBetreuung();
     void cleanupTestCase();
 
 };

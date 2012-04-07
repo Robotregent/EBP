@@ -24,6 +24,7 @@ private slots:
     void linkProtokoll();
     void linkLeistungstraeger();
     void linkProjekt();
+    void linkBetreuung();
     void cleanupTestCase();
 
 };

@@ -296,6 +296,26 @@ void LinkTest::linkProjekt()
      else
         QFAIL("Konnte Test nicht durchführen, da zu wenig Bewohner oder Mitarbeiter geladen wurden.");
 }
+void LinkTest::linkBetreuung()
+{
+    QList< QSharedPointer< ebp::Bewohner> > bewohnerList = ebp::Bewohner::loadAll(aConnection);
+    QList< QSharedPointer< ebp::Betreuung> > betreuungList = ebp::Betreuung::loadAll(aConnection);
+    QSharedPointer< ebp::Bewohner >  bewohner;
+    QSharedPointer< ebp::Betreuung >  betreuung;
+    if (bewohnerList.count()>=betreuungList.count())
+    {
+	for (int i = 0; i<betreuungList.count(); i++)
+	{
+	    bewohner = bewohnerList.at(i);
+	    betreuung = betreuungList.at(i);
+	    ebp::Betreuung::linkBewohner(betreuung,bewohner);
+	    QVERIFY(betreuung->update(aConnection));
+	}
+    }
+    else
+	QFAIL("Konnte Test nicht durchführen, da zu wenig Bewohner geladen wurden");
+}
+
 void LinkTest::cleanupTestCase()
 {
     aConnection.clear();

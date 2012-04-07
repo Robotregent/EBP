@@ -260,6 +260,18 @@ void LoadRelationTest::loadLeistungstraeger()
     QVERIFY(bewohnerIsLinked);
 }
 
+void LoadRelationTest::loadBetreuung()
+{
+    QList < QSharedPointer < ebp::Betreuung > > betreuungList = ebp::Betreuung::loadAll(aConnection);
+    QSharedPointer < ebp::Bewohner > bewohner;
+    foreach ( QSharedPointer< ebp::Betreuung > b, betreuungList)
+    {
+	bewohner = b->bewohner();
+	QVERIFY(!bewohner.isNull());
+    }
+
+}
+
 void LoadRelationTest::cleanupTestCase()
 {
     aConnection.clear();

@@ -23,6 +23,7 @@ private slots:
     void useProtokoll();
     void useProjekt();
     void useLeistungstraeger();
+    void useBetreuung();
     void cleanupTestCase();
 
 };

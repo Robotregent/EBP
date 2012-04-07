@@ -11,6 +11,7 @@
 #include <EBPdb/Projekt.hxx>
 #include <EBPdb/Protokoll.hxx>
 #include <EBPdb/Leistungstraeger.hxx>
+#include <EBPdb/Betreuung.hxx>
 void CreateTest::mitarbeiterTest()
 {
     for( int i = 0 ; i< 10; i++)
@@ -131,6 +132,15 @@ void CreateTest::Leistungstraeger()
         QSharedPointer< ebp::Leistungstraeger > aLeistungstraeger = QSharedPointer<ebp::Leistungstraeger> (new ebp::Leistungstraeger("Testname"));
         QVERIFY(!aLeistungstraeger.isNull());
         QVERIFY(aLeistungstraeger->create(aConnection));
+    }
+}
+void CreateTest::Betreuung()
+{
+    for( int i = 0 ; i< 10; i++)
+    {
+	QSharedPointer< ebp::Betreuung > aBetreuung = QSharedPointer<ebp::Betreuung> (new ebp::Betreuung());
+	QVERIFY(!aBetreuung.isNull());
+	QVERIFY(aBetreuung->create(aConnection));
     }
 }
 

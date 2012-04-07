@@ -203,6 +203,37 @@ void LoadFieldsTest::useLeistungstraeger()
         //QVERIFY(leistungstraegerList.at(i)->update(aConnection));
     }
 }
+
+void LoadFieldsTest::useBetreuung()
+{
+    QList<QSharedPointer<ebp::Betreuung> > betreuungList = ebp::Betreuung::loadAll(aConnection);
+    QVERIFY(betreuungList.count()>=10);
+    for ( int i =0; i<betreuungList.count();i++)
+    {
+	QCOMPARE(betreuungList.at(i)->vorname(),QString("TestVorname"));
+
+	QCOMPARE(betreuungList.at(i)->nachname(),QString("TestNachname"));
+
+	QCOMPARE(betreuungList.at(i)->strasse(),QString("TestStraße"));
+
+	QCOMPARE(betreuungList.at(i)->plz(),QString("TestPLZ"));
+
+	QCOMPARE(betreuungList.at(i)->ort(),QString("TestOrt"));
+
+	QCOMPARE(betreuungList.at(i)->telefon(),QString("TestTelefon"));
+
+	QCOMPARE(betreuungList.at(i)->fax(),QString("TestFax"));
+
+	QCOMPARE(betreuungList.at(i)->email(),QString("TestMail"));
+
+	QCOMPARE(betreuungList.at(i)->gesundheitsfuersorge(),true);
+
+	QCOMPARE(betreuungList.at(i)->vermoegensfuersorge(),true);
+
+	QCOMPARE(betreuungList.at(i)->aufenthaltsbestimmung(),true);
+    }
+}
+
 void LoadFieldsTest::cleanupTestCase()
 {
     aConnection.clear();

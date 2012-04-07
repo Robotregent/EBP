@@ -116,6 +116,16 @@ void RemoveTest::removeLeistungstraeger()
         QVERIFY(l->remove(aConnection));
     }
 }
+
+void RemoveTest::removeBetreung()
+{
+    QList< QSharedPointer < ebp::Betreuung > > bList = ebp::Betreuung::loadAll(aConnection);
+    foreach (const QSharedPointer < ebp::Betreuung > b, bList )
+    {
+	QVERIFY(b->remove(aConnection));
+    }
+}
+
 void RemoveTest::cleanupTestCase()
 {
     aConnection.clear();

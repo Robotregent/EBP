@@ -23,6 +23,7 @@ private slots:
     void unlinkProtokoll();
     void unlinkLeistungstraeger();
     void unlinkProjekt();
+    void unlinkBetreuung();
     void cleanupTestCase();
 
 };

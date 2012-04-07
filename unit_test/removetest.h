@@ -23,6 +23,7 @@ private slots:
     void removeProtokoll();
     void removeProjekt();
     void removeLeistungstraeger();
+    void removeBetreung();
     void cleanupTestCase();
 };
 DECLARE_TEST(RemoveTest)

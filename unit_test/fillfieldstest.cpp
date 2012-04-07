@@ -9,6 +9,7 @@
 #include <EBPdb/Projekt.hxx>
 #include <EBPdb/Protokoll.hxx>
 #include <EBPdb/Abwesenheit.hxx>
+#include <EBPdb/Betreuung.hxx>
 void FillFieldsTest::initTestCase()
 {
     aConnection = QSharedPointer< ebp::connection >( new ebp::connection("ebp_test_root", "ebp_test", "localhost", 3306));
@@ -211,6 +212,40 @@ void FillFieldsTest::fillLeistungstraeger()
         QVERIFY(leistungstraegerList.at(i)->update(aConnection));
     }
 }
+
+void FillFieldsTest::fillBetreuung()
+{
+    QList<QSharedPointer<ebp::Betreuung> > betreuungList = ebp::Betreuung::loadAll(aConnection);
+    QVERIFY(betreuungList.count()>=10);
+    for ( int i =0; i<betreuungList.count();i++)
+    {
+	betreuungList.at(i)->vorname("TestVorname");
+
+	betreuungList.at(i)->nachname("TestNachname");
+
+	betreuungList.at(i)->strasse("TestStraße");
+
+	betreuungList.at(i)->plz("TestPLZ");
+
+	betreuungList.at(i)->ort("TestOrt");
+
+	betreuungList.at(i)->telefon("TestTelefon");
+
+	betreuungList.at(i)->fax("TestFax");
+
+	betreuungList.at(i)->email("TestMail");
+
+	betreuungList.at(i)->gesundheitsfuersorge(true);
+
+	betreuungList.at(i)->vermoegensfuersorge(true);
+
+	betreuungList.at(i)->aufenthaltsbestimmung(true);
+
+	QVERIFY(betreuungList.at(i)->update(aConnection));
+    }
+
+}
+
 void FillFieldsTest::cleanupTestCase()
 {
     aConnection.clear();

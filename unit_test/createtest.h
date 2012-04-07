@@ -27,6 +27,7 @@ private slots:
     void Protokoll();
     void Projekt();
     void Leistungstraeger();
+    void Betreuung();
     void cleanupTestCase();
 
 

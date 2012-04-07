@@ -23,6 +23,7 @@ private slots:
     void loadProtokoll();
     void loadProjekt();
     void loadLeistungstraeger();
+    void loadBetreuung();
     void cleanupTestCase();
 
 };
