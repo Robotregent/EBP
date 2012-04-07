@@ -1,6 +1,33 @@
 \section{Technische Realisierung}
 
 \subsection{Eingesetzte Entwurfsmuster}
+\subsubsection{Mediator Pattern - Der Text Transfer Agent}
+Neben der Verwaltung von klienten- und wohngruppenspezifischen Daten ist die Überführung von Textstücken aus verschiedenen Teilen des
+Dokumentationsprogramms die Hauptfunktion der \EBP. Diese Funktion wird im folgenden \textit{Text Transfer} genannt. \newline
+Der \textit{Text Transfer} soll aus den Masken Bewohner$\rightarrow$Protokoll, Bewohner$\rightarrow$Projekt und Wohngruppe$\rightarrow$Gruppenbuch
+erfolgen. Gespeichert werden die Textfragmente in den verschiedenen Feldern der Betreuungsplanung eines beliebigen Bewohners. Die Unterschiedlichkeit
+der Quellen für die zu transferierende Textfragmente und die Variation an Zielfelder war die Schwierigkeit bei der Implementierung dieser
+Funktionalität. Da die Anzahl an Objekten, die als Quelle dienen, im Programmverlauf stark variieren kann, muss der Lösungsansatz sehr flexibel
+implementiert sein. Abbildung \ref{unstrukturiert} zeigt die Vielzahl an möglichen Kommunikationswegen zwischen den einzelnen Objekten.\\
+\begin{figure*}[htp]
+	\includegraphics[width=0.8\textwidth]{unmediated}
+	\caption{Kommunikationswege zwischen den Objekten}
+	\label{unstrukturiert}
+\end{figure*}
+Um nicht jeden Kommunikationsweg einzeln verwalten zu müssen, wurde der \textit{Text Transfer} in Form des Mediator Patterns entworfen. Den Zweck
+eines Mediators definiert GAMMA wie folgt: \\
+``Definiert ein Objekt, welches das Zusammenspiel einer Menge von Objekten in sich kapselt. Vermittler fördern lose Kopplung, indem sie Objekte davon
+abhalten, aufeinander explizit Bezug zu nehmen. Sie ermöglichen es Ihnen, das Zusammenspiel der Objekte von ihnen unabhängig zu
+variieren \cite[S. 385]{Entwurfsmuster}.''\\
+Auf einen abstrakten Mediator wird hier verzichtet 
+
+\begin{figure*}[htp]
+	\includegraphics[width=0.8\textwidth]{mediated}
+	\caption{Kommunikationswege zwischen den Objekten, koordiniert durch einen Mediator}
+	\label{unstrukturiert}
+\end{figure*}
+\subsubsection{Observer Pattern - Signal Slot Konzept}
+\subsubsection{Model View Controller Pattern - Datenvisualisierung}
 
 \subsection{Architektur}
 \subsubsection{Aufteilung der Module}
@@ -9,43 +36,12 @@
 \subsection{Qt als Grafikbibliothek}
 
 \subsection{Persistenzschicht mit ODB (libEBPdb)}
-
 \subsubsection{Object-Relational-Mapping (ORM)}
 Um die Daten einer relationellen Datenbank auf Objekte innerhalb einer Programmiersprache abzubilden gibt es prinzipiell zwei Ansätze.
-Entweder wird der Code der die Eigenschaften eines Objekts aus der Datenbank liest und schreibt manuell implementiert, oder aber es wird ein Mechanismus eingesetzt, der automatisiert Variablen eines Objekts den Feldern einer Datenbank zuordnet (Object-Relational-Mapping).\\
-Das Einsetzen eines solchen Mappers hat den Vorteil, dass der sich oft wiederholende Code zum Laden und Speichern der Daten von und in die Datenbank reduziert werden kann. Dies führt zu wartbarerem Code, der bei Änderungen an der Datenbankstruktur besser anpassbar ist.
-
-\subsubsection{Auswahl des Verwendeten Mappers}
-Das verwendete Qt4-Toolkit enthält zwar eine plattformunabhängige Schnittstelle für Datenbanken (QtSql), jedoch hat diese keine ORM Funktion.
-Folgende ORM-Systeme wurden in Betracht gezogen \newline\url{http://en.wikipedia.org/wiki/List_of_object-relational_mapping_software}:
-\begin{itemize}
-	\item LiteSQL - Datenbankschema wird mit XML Dateien beschrieben
-	\item ODB - Datenbankschema wird aus den C++ Klassen generiert
-	\item QxOrm - Benutzt QtSql; Unter Umständen müssen direkte Aufrufe von QtSql erfolgen
-	("QxOrm cannot resolve all problems with sql and databases, so it is sometimes necessary to use QtSql engine of Qt library to write your own sql query or stored procedure." \url{http://www.qxorm.com/qxorm_en/tutorial.html})
-\end{itemize}
-Alle Systeme bieten eine Qt Integration, die die Schnittstelle zwischen GUI und Persistenzschicht vereinfachen.
-Ebenso unterstützen alle Systeme mehrere Datenbankbackends.
-Letztendlich fiel die Entscheidung auf ODB, da diese Bibliothek (unter anderem durch Caching) die beste Performance verspricht.
-Ausserdem lassen sich Klassen mit geringem Aufwandt persistent machen.
-
+Entweder wird der Code der die Eigenschaften eines Objekts aus der Datenbank liest und schreibt manuell implementiert, oder aber es wird ein 
+Mechanismus eingesetzt, der automatisiert Variablen eines Objekts den Feldern einer Datenbank zuordnet.
 \subsubsection{Datenbankunabhängigkeit}
-Durch die zusätzliche Abstraktionsschicht ist es einfacher die bestehende Persistenzschicht auf ein neues Datenbanksystem zu portieren.\\
-Die umgesetzte Lösung ist weitestgehend frei von datenbankspezifischen Aufrufen, und benutzt ausschließlich die Schnittstelle des eingesetzten Object-Relational-Mappers.
-Lediglich das User-Management, um ``Mitarbeiter`` auf Datenbankbenutzer abzubilden verwendet Datenbankspezifische SQL-Kommandos, die über ODB abgewickelt werden.
-
 \subsubsection{Code-Generierung}
-Kern des verwendeten Object-Relational-Mappers ODB ist ein spezieller Precompiler, der auf bestimmte Precompiler-Pragmas reagiert.
-Durch das Markieren einer Klassendefinition mit einer Pragma-Direktive können persistente Objekte der Klasse erstellt werden:
-\begin{verbatim}
-#pragma db object
-class Mitarbeiter { ... }
-\end{verbatim}
-Der ODB-Compiler generiert daraufhin Code, der das gegebene Objekt auf eine Datenbankstruktur abbilden kann. Des weiteren wird auch die Datenbankstruktur in Form von SQL-Dateien generiert, die direkt an die verwendete Datenbank weitergereicht werden können um alle zur Laufzeit benötigten Tabellen zu erstellen.
-
 \subsubsection{Integration in das Buildsystem}
 \subsubsection{Datenbankschema}
-\begin{center}
-\includegraphics[width=0.95\textwidth]{scheme}
-\end{center}
 \subsubsection{Abstraktion der Schnittstelle}
