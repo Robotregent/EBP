@@ -52,3 +52,19 @@ const QString Bewohner::name() const
 {
 	return QString( anrede_ + " " + vorname_ + " " + nachname_ ).trimmed();
 }
+
+
+BewohnerStatistik Bewohner::getStatistik( const QSharedPointer<ebp::connection> & connection )
+{
+	odb::transaction t( connection->getDB()->begin() );
+
+	odb::result<BewohnerStatistik> r( connection->getDB()->query<BewohnerStatistik>() );
+
+	// The result of this query always has exactly one element.
+	//
+	const BewohnerStatistik & bs( *r.begin() );
+
+	t.commit ();
+
+	return bs;
+}

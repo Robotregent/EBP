@@ -34,6 +34,7 @@ namespace ebp
 	class Projekt;
 	class Protokoll;
 	class Betreuung;
+	class BewohnerStatistik;
 	class connection;
 
 	#pragma db object
@@ -42,6 +43,8 @@ namespace ebp
 		Q_DECLARE_TR_FUNCTIONS( Bewohner )
 
 	public:
+		static BewohnerStatistik getStatistik( const QSharedPointer<ebp::connection> & connection );
+
 		Bewohner
 		(
 			const unsigned long & nummer
@@ -196,6 +199,27 @@ namespace ebp
 		#pragma db unordered inverse(bewohner_)
 		QList< QLazyWeakPointer<Leistungstraeger> > leistungstraeger_;
 	};
+
+	#pragma db view object(Bewohner)
+	class BewohnerStatistik
+	{
+	public:
+		#pragma db column("count(" + Bewohner::id_ + ")")
+		unsigned long count;
+
+		#pragma db column("min(" + Bewohner::nummer_ + ")")
+		unsigned long min_nummer;
+
+		#pragma db column("max(" + Bewohner::nummer_ + ")")
+		unsigned long max_nummer;
+
+		#pragma db column("min(" + Bewohner::geburtsdatum_ + ")")
+		unsigned long min_geburtsdatum;
+
+		#pragma db column("max(" + Bewohner::geburtsdatum_ + ")")
+		unsigned long max_geburtsdatum;
+	};
+
 }
 
 
