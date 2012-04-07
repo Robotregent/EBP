@@ -238,7 +238,7 @@ QWidget *MainWindow::getContentWidget(int ContentTyp)
 		}
 	    case MainWindow::ProjektWidget:
 		{
-		    result = new Projekt(this);
+		    result = new Projekt(thisSession,this);
 		    this->setTextTransferAgent(dynamic_cast<TextTransferInterface*>(result));
 		    break;
 		}

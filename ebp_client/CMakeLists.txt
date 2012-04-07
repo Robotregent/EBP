@@ -16,6 +16,7 @@ SET( SAMPLE_SRCS
 	betreuung.cpp
 	bewohnerprotokoll.cpp
 	clientmenu.cpp
+	choosedialog.cpp
 	decree.cpp
 	decreescrollarea.cpp
 	dokumentation.cpp
@@ -43,6 +44,7 @@ SET( SAMPLE_MOC_HDRS
 	betreuung.h
 	bewohnerprotokoll.h
 	clientmenu.h
+	choosedialog.h
 	decree.h
 	decreescrollarea.h
 	dokumentation.h
@@ -83,6 +85,7 @@ SET(ebp_src_libraries
 SET( SAMPLE_UIS
 	betreuung.ui
 	bewohnerprotokoll.ui
+	choosedialog.ui
 	decreescrollarea.ui
 	dokumentation.ui
 	einzelereignis.ui

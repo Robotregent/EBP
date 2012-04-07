@@ -26,7 +26,9 @@ HEADERS += \
     texttransferinterface.h \
     texttransferagent.h \
     savecontentinterface.h \
-    newereignisdialog.h
+    newereignisdialog.h \
+    custumlistwidgetitem.h \
+    choosedialog.h
 
 SOURCES += \
     mainwindow.cpp \
@@ -51,7 +53,8 @@ SOURCES += \
     dokumentation.cpp \
     pleaswaitdialog.cpp \
     texttransferagent.cpp \
-    newereignisdialog.cpp
+    newereignisdialog.cpp \
+    choosedialog.cpp
 
 RESOURCES += \
     images.qrc
@@ -72,7 +75,8 @@ FORMS += \
     dokumentation.ui \
     pleaswaitdialog.ui \
     texttransferagent.ui \
-    newereignisdialog.ui
+    newereignisdialog.ui \
+    choosedialog.ui
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../EBPdb/release/ -lEBPdb
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../EBPdb/debug/ -lEBPdb
