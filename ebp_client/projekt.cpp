@@ -51,6 +51,8 @@ void Projekt::on_pushButton_clicked()
 
 
 	new CustomListWidgetItem<ebp::Projekt>(project,this->ui->listWidget);
+
+	this->ui->NewProjektLineEdit->clear();
     }
 
 

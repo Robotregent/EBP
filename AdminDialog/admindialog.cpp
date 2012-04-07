@@ -14,6 +14,7 @@
 #include <QSettings>
 #include <EBPdb/Dokumentation.hxx>
 #include <EBPdb/Verfuegung.hxx>
+#include <EBPdb/Betreuung.hxx>
 
 using namespace ebp;
 
@@ -424,8 +425,16 @@ void AdminDialog::on_button_B_speichern_clicked()
 		ebp::Dokumentation::linkBewohner(tmpDoku[i],tmpBew);
 		tmpDoku[i]->create(PointerToConnection);
 	}
-	tmpBew->update(PointerToConnection);
 
+	QSharedPointer < ebp::Betreuung > betreuung = QSharedPointer < ebp::Betreuung > (new ebp::Betreuung());
+	if (!betreuung.isNull())
+	{
+
+	    ebp::Betreuung::linkBewohner(betreuung,tmpBew);
+	    betreuung->create(PointerToConnection);
+	}
+
+	tmpBew->update(PointerToConnection);
 	//Masken leeren
 	this->ui->vornameLineEdit->clear();
 	this->ui->nachnameLineEdit->clear();

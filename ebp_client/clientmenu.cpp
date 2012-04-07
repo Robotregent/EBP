@@ -8,7 +8,7 @@ ClientMenu::ClientMenu(QWidget *parent) :
     this->person = new QTreeWidgetItem(this,2000);
     this->person->setText(0,tr("Person"));
     this->person->setIcon(0,QIcon(":/costumer/person.png"));
-    //new QTreeWidgetItem(this->person,QStringList()<<tr("Betreuung"),2001);
+    new QTreeWidgetItem(this->person,QStringList()<<tr("Betreuung"),2001);
     new QTreeWidgetItem(this->person,QStringList()<<tr("Verfügungen"),2002);
     new QTreeWidgetItem(this->person,QStringList()<<tr("Leistungsträger"),2003);
 

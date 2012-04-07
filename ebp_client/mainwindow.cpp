@@ -26,7 +26,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
     //this->showMaximized();
-
+    this->bwDialog = NULL;
+    this->wgDialog = NULL;
 
     for (int i = 0; i< MainWindow::CountOfContentWidgets; i++)
     {
@@ -318,8 +319,10 @@ void MainWindow::saveCurrentContent()
 
 MainWindow::~MainWindow()
 {
-    delete wgDialog;
-    delete bwDialog;
+    if (wgDialog!=NULL)
+	delete wgDialog;
+    if (bwDialog!=NULL)
+	delete bwDialog;
     //delete side_menu;
     //delete viewMenu;
 }
