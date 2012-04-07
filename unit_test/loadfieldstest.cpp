@@ -170,6 +170,8 @@ void LoadFieldsTest::useProjekt()
 
         QCOMPARE(projektList.at(i)->typ(),QString("TestTyp"));
 
+	QCOMPARE(projektList.at(i)->ziele(),QString("TestZiele"));
+
         //QVERIFY(projektList.at(i)->update(aConnection));
     }
 }

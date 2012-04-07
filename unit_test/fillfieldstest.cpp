@@ -178,6 +178,8 @@ void FillFieldsTest::fillProjekt()
 
         projektList.at(i)->typ("TestTyp");
 
+	projektList.at(i)->ziele("TestZiele");
+
         QVERIFY(projektList.at(i)->update(aConnection));
     }
 }
