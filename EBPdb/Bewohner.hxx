@@ -100,7 +100,7 @@ namespace ebp
 		DATABASEOBJECT_DECLARE_LINK( Bewohner, Bezugsbetreuer, Mitarbeiter )
 
 		const QSharedPointer<Betreuung> & betreuung() const { return betreuung_; }
-		DATABASEOBJECT_DECLARE_LINK( Bewohner, Betreuung, Betreuung )
+		DATABASEOBJECT_DECLARE_LINK_INVERSE( Bewohner, Betreuung, Betreuung )
 
 //		QList< QSharedPointer<Projekt> > loadProjekte( const QSharedPointer<ebp::connection> & connection ) const;
 		DATABASEOBJECT_DECLARE_LOAD( Projekte, Projekt )
