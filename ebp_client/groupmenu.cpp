@@ -9,6 +9,7 @@ GroupMenu::GroupMenu(QWidget *parent) :
 
     ///Initalize Ereignisse
     this->gruppenbuch = new QTreeWidgetItem(this,3000);
+    this->setCurrentItem(this->gruppenbuch);
     this->gruppenbuch->setText(0,tr("Gruppenbuch"));
     this->gruppenbuch->setIcon(0,QIcon(":/group/gruppenbuch.png"));
     //new QTreeWidgetItem(this->gruppenbuch,QStringList()<<tr("Eignisse"),3001);

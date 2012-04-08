@@ -40,6 +40,7 @@ private:
     QString dbName;
     ChooseBwDialog *bwDialog;
     ChooseWgDialog *wgDialog;
+    QAction *saveAction;
 
 
 private slots:

@@ -6,6 +6,7 @@ ClientMenu::ClientMenu(QWidget *parent) :
     QTreeWidgetItem *tmp, *tmp2;
     ///Initialize person
     this->person = new QTreeWidgetItem(this,2000);
+    this->setCurrentItem(this->person);
     this->person->setText(0,tr("Person"));
     this->person->setIcon(0,QIcon(":/costumer/person.png"));
     new QTreeWidgetItem(this->person,QStringList()<<tr("Betreuung"),2001);

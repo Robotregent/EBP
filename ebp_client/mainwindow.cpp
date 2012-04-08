@@ -28,6 +28,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //this->showMaximized();
     this->bwDialog = NULL;
     this->wgDialog = NULL;
+    this->saveAction = NULL;
 
     for (int i = 0; i< MainWindow::CountOfContentWidgets; i++)
     {
@@ -132,8 +133,12 @@ TextTransferAgent *MainWindow::setTextTransferAgent(TextTransferInterface *inter
 
 void MainWindow::set_content(QTreeWidgetItem *current)
 {
+    if(current==NULL)
+	return;
+
     if(this->TextTransferDock!=NULL)
 	this->TextTransferDock->setVisible(false);
+
     switch(current->type())
     {
     case 2000:
@@ -276,7 +281,7 @@ QWidget *MainWindow::getContentWidget(int ContentTyp)
 void MainWindow::create_actions()
 {
     //Action erstellen
-    QAction *saveAction = new QAction(QIcon(":/actions/save"),tr("Speichern"),this);
+    saveAction = new QAction(QIcon(":/actions/save"),tr("Speichern"),this);
     saveAction->setVisible(true);
     saveAction->setShortcut(QKeySequence::Save);  
     saveAction->setStatusTip(tr("Speichert aktuelle Änderungen"));
@@ -459,8 +464,16 @@ void MainWindow::setCurMitarbeiter(QSharedPointer<ebp::Mitarbeiter> curMitarbeit
 void MainWindow::setCurBewohner(QSharedPointer<ebp::Bewohner> chosenBw)
 {
     thisSession.curBewohner = chosenBw;
-    this->setCurBewohnerAndWohngruppeInfo();
 
+    // Änderungen dürfen nur gespeichert werden, wenn Mitarbeiter die Betreuungsberechtigung hat
+    if (this->saveAction != NULL)
+    {
+	if (thisSession.curBewohner->hasPermission(thisSession.curConnection))
+	    this->saveAction->setEnabled(true);
+	else
+	    this->saveAction->setEnabled(false);
+    }
+    this->setCurBewohnerAndWohngruppeInfo();
     set_content(this->side_menu->getClientMenu()->currentItem());
 
 }

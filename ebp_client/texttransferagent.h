@@ -27,6 +27,8 @@ private:
     Ui::TextTransferAgent *ui;
     QList<TextTransferInterface *> textInterfaces;
     const SessionContext &_context;
+    QSharedPointer< ebp::Bewohner > selectedBewohner;
+    QList < QSharedPointer < ebp::Dokumentation > > dokus;
 };
 
 #endif // TEXTTRANSFERAGENT_H

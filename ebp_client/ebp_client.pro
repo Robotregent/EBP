@@ -28,7 +28,8 @@ HEADERS += \
     savecontentinterface.h \
     newereignisdialog.h \
     custumlistwidgetitem.h \
-    choosedialog.h
+    choosedialog.h \
+    dokutypwrapper.h
 
 SOURCES += \
     mainwindow.cpp \
