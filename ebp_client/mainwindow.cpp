@@ -370,13 +370,14 @@ void MainWindow::loadWohnguppeUndBewohner()
 
     QSettings settings("EBP.ini", QSettings::IniFormat);
     //asynchrones Laden aller Wohngruppen und Bewohner
-    QFuture< QList < QSharedPointer <ebp::Wohngruppe> > > allGroups = QtConcurrent::run(ebp::loadAllGroups, this->thisSession.curConnection, this->thisSession.curMitarbeiter);
-    PleasWaitDialog *pwd=new PleasWaitDialog(this);
-    pwd->show();
+    //QFuture< QList < QSharedPointer <ebp::Wohngruppe> > > allGroups = QtConcurrent::run(ebp::loadAllGroups, this->thisSession.curConnection, this->thisSession.curMitarbeiter);
+    //PleasWaitDialog *pwd=new PleasWaitDialog(this);
+    //pwd->show();
 
     // Wohngruppe
-    allGroups.waitForFinished();
-    this->thisSession.allGroups = allGroups.result();
+    //allGroups.waitForFinished();
+    //this->thisSession.allGroups = allGroups.result();
+    this->thisSession.allGroups = ebp::loadAllGroups(this->thisSession.curConnection,this->thisSession.curMitarbeiter);
     //Aktuelle Wohngruppe setzen (alt)
     this->thisSession.curWohngruppe.isNull();
     if(!thisSession.allGroups.isEmpty())
@@ -399,10 +400,11 @@ void MainWindow::loadWohnguppeUndBewohner()
 
     if(!this->thisSession.curWohngruppe.isNull())
     {
-	QFuture< QList < QSharedPointer <ebp::Bewohner> > > allBewohner = QtConcurrent::run(ebp::loadAllBewohner, this->thisSession.curConnection, this->thisSession.curWohngruppe);
+	//QFuture< QList < QSharedPointer <ebp::Bewohner> > > allBewohner = QtConcurrent::run(ebp::loadAllBewohner, this->thisSession.curConnection, this->thisSession.curWohngruppe);
 
-        allBewohner.waitForFinished();
-	this->thisSession.allBewohner=allBewohner.result();
+	//allBewohner.waitForFinished();
+
+	this->thisSession.allBewohner=ebp::loadAllBewohner(this->thisSession.curConnection,this->thisSession.allGroups);
 
         //Aktuellen Bewohner setzen
 	this->thisSession.curBewohner.isNull();
@@ -425,7 +427,7 @@ void MainWindow::loadWohnguppeUndBewohner()
 
 
     }
-    pwd->close();
+    //pwd->close();
 
     this->bwDialog = new ChooseBwDialog(thisSession.allBewohner,"Bewohner wählen:",this);
     QObject::connect(bwDialog,SIGNAL(chosen(QSharedPointer<ebp::Bewohner>)),this,SLOT(setCurBewohner(QSharedPointer<ebp::Bewohner>)));

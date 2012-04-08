@@ -17,10 +17,15 @@ namespace ebp
     /**
       * \brief Laden aller Bewohner. Soll QtConcurrent::run() asynchron zum Laden genutzt werden.
       **/
-    QList < QSharedPointer <ebp::Bewohner> > loadAllBewohner(QSharedPointer<ebp::connection> aPointerToAConnection, QSharedPointer <ebp::Wohngruppe> curGroup )
+    QList < QSharedPointer <ebp::Bewohner> > loadAllBewohner(QSharedPointer<ebp::connection> aPointerToAConnection, QList < QSharedPointer <ebp::Wohngruppe> >allGroups )
     {
-	Q_UNUSED(curGroup)
+	QList < QSharedPointer <ebp::Bewohner> > result= QList < QSharedPointer <ebp::Bewohner> >();
 	//return curGroup->loadBewohner(aPointerToAConnection);
-	return ebp::Bewohner::loadAll(aPointerToAConnection);
+	foreach (QSharedPointer <ebp::Wohngruppe> wg, allGroups )
+	{
+	    result.append(wg->loadBewohner(aPointerToAConnection));
+	}
+
+	return result;
     }
 }
