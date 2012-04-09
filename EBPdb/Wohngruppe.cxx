@@ -33,10 +33,20 @@ bool Wohngruppe::hasPermission( const QSharedPointer<ebp::connection> & connecti
 		{
 			case Mitarbeiter::WohngruppenRecht:
 				{	// benutzer mit wohngruppenrecht dürfen nur auf die ihnen zugeordneten wohngruppen zugreifen
+				/*
 					QList< QSharedPointer < Wohngruppe > > wgs = connection->mitarbeiter()->loadWohngruppen( connection );
 					foreach( QSharedPointer < Wohngruppe > wg, wgs )
 					{
 						if( wg->id_ == id_ )
+						{
+							return true;
+						}
+					}
+					return false;
+				*/
+					for( QList< QLazyWeakPointer<Wohngruppe> >::const_iterator i = connection->mitarbeiter()->wohngruppen_.begin(); i != connection->mitarbeiter()->wohngruppen_.end(); ++i )
+					{
+						if( (*i).objectId<Wohngruppe>() == id_ )
 						{
 							return true;
 						}

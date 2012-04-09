@@ -150,6 +150,11 @@ QList< QSharedPointer<MEMBER_CLASS> > CLASS::load##NAME( const QSharedPointer<eb
 	odb::transaction t( connection->getDB()->begin() ); \
 	for( QList< QLazyWeakPointer<MEMBER_CLASS> >::const_iterator i = MEMBER_NAME.begin(); i != MEMBER_NAME.end(); ++i ) \
 	{ \
+		if( !(*i) ) \
+		{ \
+			qWarning() << tr("Null-Pointer in "#CLASS"::"#MEMBER_NAME"!"); \
+			continue; \
+		} \
 		QSharedPointer<MEMBER_CLASS> p = (*i).load(); \
 		if( !p ) \
 		{ \

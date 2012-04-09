@@ -100,7 +100,7 @@ namespace ebp
 				QSharedPointer<T> p = i.load();
 				if( !p )
 				{
-					qWarning() << tr("ODB gab null pointer beim Laden von \"%1\" zurück!").arg( typeid(T).name() );
+					qWarning() << tr("ODB gab null pointer zurück!");
 					continue;
 				}
 				if( p->hasPermission( connection ) )
@@ -109,7 +109,7 @@ namespace ebp
 				}
 				else
 				{
-					qWarning() << tr("Zugriff auf \"%1\" verweigert.").arg( typeid(T).name() );
+					qWarning() << tr("Zugriff auf verweigert.");
 				}
 			}
 			t.commit();
