@@ -43,6 +43,9 @@ namespace ebp
 		const QString & nachname() const { return nachname_; }
 		void nachname( const QString & nachname ) { nachname_ = nachname; }
 
+		const QString & verein() const { return verein_; }
+		void verein( const QString & verein ) { verein_ = verein; }
+
 		const QString & strasse() const { return strasse_; }
 		void strasse( const QString & strasse ) { strasse_ = strasse; }
 
