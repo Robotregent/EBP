@@ -57,7 +57,7 @@ TextTransferInformation BewohnerProtokoll::getSelectedText()
     result.isEmpty = true;
     if (this->ui->textBrowser->textCursor().hasSelection())
     {
-	result.information = "Texttransfer aus Protokoll vom "+this->ui->dateTimeEdit->dateTime().toString();
+	result.information = "Texttransfer aus Protokoll vom "+this->ui->dateTimeEdit->dateTime().toString()+":";
 	result.textTransferFragment = this->ui->textBrowser->textCursor().selection();
 	result.isEmpty = false;
     }

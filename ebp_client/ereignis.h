@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QVBoxLayout>
+#include "sessioncontext.h"
 #include "einzelereignis.h"
 #include "texttransferagent.h"
 
@@ -15,7 +16,7 @@ class Ereignis : public QWidget
     Q_OBJECT
 
 public:
-    explicit Ereignis(TextTransferAgent *agent,QWidget *parent = 0);
+    explicit Ereignis(SessionContext _context, TextTransferAgent *agent,QWidget *parent = 0);
     ~Ereignis();
 
 private slots:
@@ -25,9 +26,9 @@ private:
     Ui::Ereignis *ui;
     QList<EinzelEreignis *> EreignisListe;
     TextTransferAgent *transferAgent;
-    //QList<TextTransferInterface *> transferInterfaces;
-    //QWidget *puffer;
+    SessionContext context;
     QVBoxLayout *pufferLayout;
+    void initEreignisse();
 };
 
 #endif // EREIGNIS_H
