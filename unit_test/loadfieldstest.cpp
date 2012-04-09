@@ -233,6 +233,21 @@ void LoadFieldsTest::useBetreuung()
 	QCOMPARE(betreuungList.at(i)->aufenthaltsbestimmung(),true);
     }
 }
+void LoadFieldsTest::useConnections()
+{
+    QSharedPointer< ebp::connection > newConnection;
+    bool permission;
+    foreach (const QSharedPointer< ebp::Mitarbeiter > ma, ebp::Mitarbeiter::loadAll(aConnection))
+    {
+	newConnection = QSharedPointer<ebp::connection> (new ebp::connection(ma->login(),"ebp_test"));
+	permission=newConnection->establish("test_password");
+	QVERIFY(permission);
+	if (permission)
+	{
+	    ma->loadWohngruppen(newConnection);
+	}
+    }
+}
 
 void LoadFieldsTest::cleanupTestCase()
 {

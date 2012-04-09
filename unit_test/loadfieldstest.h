@@ -24,6 +24,7 @@ private slots:
     void useProjekt();
     void useLeistungstraeger();
     void useBetreuung();
+    void useConnections();
     void cleanupTestCase();
 
 };

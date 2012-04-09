@@ -143,6 +143,15 @@ void CreateTest::Betreuung()
 	QVERIFY(aBetreuung->create(aConnection));
     }
 }
+void CreateTest::Connection()
+{
+    QSharedPointer< ebp::connection > newConnection;
+    foreach (const QSharedPointer< ebp::Mitarbeiter > ma, ebp::Mitarbeiter::loadAll(aConnection))
+    {
+	newConnection = QSharedPointer<ebp::connection> (new ebp::connection(ma->login(),"ebp_test"));
+	QVERIFY(newConnection->establish("test_password"));
+    }
+}
 
 void CreateTest::cleanupTestCase()
 {
