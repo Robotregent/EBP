@@ -9,7 +9,7 @@ namespace Ui {
     class Betreuung;
 }
 
-class Betreuung : public QWidget
+class Betreuung : public QWidget, public SaveContentInterface
 {
     Q_OBJECT
 public:
