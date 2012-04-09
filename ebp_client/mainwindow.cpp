@@ -61,6 +61,7 @@ void MainWindow::validLogin(QSharedPointer<ebp::connection> pointer)
 
     this->create_actions();
 
+    this->setCurBewohner(thisSession.curBewohner);
 }
 
 void MainWindow::create_sidemenu()
@@ -98,7 +99,7 @@ void MainWindow::creat_InfoWidget()
     InfoDockWidget->setObjectName("Information");
     this->addDockWidget(Qt::TopDockWidgetArea,InfoDockWidget);
     //Bewohner und Wohngruppe anzeigen
-    this->setCurBewohnerAndWohngruppeInfo();
+    //this->setCurBewohnerAndWohngruppeInfo();
 }
 void MainWindow::create_TextTransferDock()
 {
@@ -413,9 +414,10 @@ void MainWindow::loadWohnguppeUndBewohner()
 
         //Aktuellen Bewohner setzen
 	this->thisSession.curBewohner.isNull();
+
 	if (!thisSession.allBewohner.isEmpty())
         {
-	    this->thisSession.curBewohner = thisSession.allBewohner.first();
+	    thisSession.curBewohner = thisSession.allBewohner.first();
             QString lastB = settings.value("lastBewohner",QVariant("NULL")).toString();
             if (lastB != "NULL")
             {
@@ -423,13 +425,13 @@ void MainWindow::loadWohnguppeUndBewohner()
                 {
                     if (bw->name()==lastB)
                     {
-			this->thisSession.curBewohner = bw;
+			thisSession.curBewohner = bw;
                         continue;
                     }
                 }
             }
-        }
 
+        }
 
     }
     //pwd->close();
@@ -466,12 +468,17 @@ void MainWindow::setCurBewohner(QSharedPointer<ebp::Bewohner> chosenBw)
     thisSession.curBewohner = chosenBw;
 
     // Änderungen dürfen nur gespeichert werden, wenn Mitarbeiter die Betreuungsberechtigung hat
+    bool hasPermission = false;
+    QSharedPointer<ebp::Mitarbeiter> betreuuer=thisSession.curBewohner->bezugsbetreuer();
     if (this->saveAction != NULL)
     {
-	if (thisSession.curBewohner->hasPermission(thisSession.curConnection))
-	    this->saveAction->setEnabled(true);
-	else
-	    this->saveAction->setEnabled(false);
+	if(!betreuuer.isNull())
+	{
+	    if (betreuuer->login()==thisSession.curMitarbeiter->login())
+		hasPermission=true;
+	}
+
+	this->saveAction->setEnabled(hasPermission);
     }
     this->setCurBewohnerAndWohngruppeInfo();
     set_content(this->side_menu->getClientMenu()->currentItem());
