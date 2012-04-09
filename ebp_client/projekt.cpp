@@ -45,7 +45,10 @@ void Projekt::on_pushButton_clicked()
 	project->create(curContext.curConnection);
 	ebp::Projekt::linkBewohner(project,curContext.curBewohner);
 	if(project->update(curContext.curConnection))
+	{
 	    qDebug()<< "Neues Projekt erfolgreich angelegt";
+	    projects.append(project);
+	}
 	else
 	    qDebug()<< "Neues Projekt anlegen fehlgeschlagen";
 
@@ -110,14 +113,14 @@ void Projekt::setProjekt()
 
     this->ui->endeDateEdit->setDate(this->curProject->ende());
 
-    //this->ui->zieleEdit->setHtml(this->curProject->);
+    this->ui->zieleEdit->setHtml(this->curProject->ziele());
 
     this->ui->beschreibungEdit->setHtml(this->curProject->beschreibung());
 }
 
 void Projekt::on_listWidget_currentRowChanged(int currentRow)
 {
-    if (projects.count()>=(currentRow+1))
+    if (projects.count()>=(currentRow))
     {
 	this->curProject = this->projects.at(currentRow);
 	this->setProjekt();
