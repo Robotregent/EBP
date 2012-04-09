@@ -237,7 +237,7 @@ QWidget *MainWindow::getContentWidget(int ContentTyp)
 		    break;
 		}
 	    case MainWindow::Leistungstraeger:
-		result = new LeistungstraegerArea(this);
+                result = new LeistungstraegerArea(this->thisSession,this);
 		break;
 	    case MainWindow::MeldeListeWidget:
 		result = new MeldeListe(this);
