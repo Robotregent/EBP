@@ -35,6 +35,8 @@ Auf einen abstrakten Mediator wird hier verzichtet
 
 \subsection{Qt als Grafikbibliothek}
 
+\newpage
+
 \subsection{Persistenzschicht mit ODB (libEBPdb)}
 
 \subsubsection{Object-Relational-Mapping (ORM)}
@@ -66,10 +68,13 @@ Durch das Markieren einer Klassendefinition mit einer Pragma-Direktive können p
 class Mitarbeiter { ... }
 \end{verbatim}
 Der ODB-Compiler generiert daraufhin Code, der das gegebene Objekt auf eine Datenbankstruktur abbilden kann. Des weiteren wird auch die Datenbankstruktur in Form von SQL-Dateien generiert, die direkt an die verwendete Datenbank weitergereicht werden können um alle zur Laufzeit benötigten Tabellen zu erstellen. Auf diese Weise wird ebenso sichergestellt, dass Datenbank und Anwendung stets die selbe Struktur verwenden.\\
-\begin{center}
-	\includegraphics[width=0.4\textwidth]{odb-flow}
-\cite{ODB_Manual}
-\end{center}
+\begin{figure*}[htp!]
+	\begin{center}
+		\includegraphics[width=0.4\textwidth]{odb-flow}
+	\end{center}
+	\caption{ODB Toolchain \cite{ODB_Manual}}
+	\label{ODB-Flow}
+\end{figure*}
 
 \newpage
 
@@ -89,8 +94,12 @@ Um das Buildsystem (CMake) automatisch bei veränderungen des Quellcodes alle f�
 \newpage
 
 \subsubsection{Datenbankschema}
-\begin{center}
-	\includegraphics[width=0.95\textwidth]{scheme}
-\end{center}
+\begin{figure*}[htp!]
+	\begin{center}
+		\includegraphics[width=0.93\textwidth]{scheme}
+	\end{center}
+	\caption{Datenbankschema als ER Diagramm}
+	\label{ERDiagram}
+\end{figure*}
 
 \subsubsection{Abstraktion der Schnittstelle}
