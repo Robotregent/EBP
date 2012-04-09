@@ -236,8 +236,10 @@ void LoadFieldsTest::useBetreuung()
 void LoadFieldsTest::useConnections()
 {
     QSharedPointer< ebp::connection > newConnection;
+    QList< QSharedPointer < ebp::Mitarbeiter > > maList = ebp::Mitarbeiter::loadAll(aConnection);
+    aConnection.clear();
     bool permission;
-    foreach (const QSharedPointer< ebp::Mitarbeiter > ma, ebp::Mitarbeiter::loadAll(aConnection))
+    foreach (const QSharedPointer< ebp::Mitarbeiter > ma, maList )
     {
 	newConnection = QSharedPointer<ebp::connection> (new ebp::connection(ma->login(),"ebp_test"));
 	permission=newConnection->establish("test_password");
@@ -246,6 +248,7 @@ void LoadFieldsTest::useConnections()
 	{
 	    ma->loadWohngruppen(newConnection);
 	}
+	newConnection.clear();
     }
 }
 

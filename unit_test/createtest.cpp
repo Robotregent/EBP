@@ -14,13 +14,14 @@
 #include <EBPdb/Betreuung.hxx>
 void CreateTest::mitarbeiterTest()
 {
+    ebp::Mitarbeiter::Berechtigungen ber[2] = {ebp::Mitarbeiter::AdminRecht, ebp::Mitarbeiter::WohngruppenRecht};
     for( int i = 0 ; i< 10; i++)
     {
 	QSharedPointer< ebp::Mitarbeiter > aMitarbeiter  =  QSharedPointer<ebp::Mitarbeiter>
 							    (
 								new ebp::Mitarbeiter(
                                                                 "testLogin"+QVariant(rand() % 100000 + 1).toString(),
-								ebp::Mitarbeiter::AdminRecht,
+								ber[i % 2],
                                                                 "Mr Test"+QVariant(rand() % 100000 + 1).toString()
 							    ));
 	QVERIFY(!aMitarbeiter.isNull());
@@ -146,10 +147,13 @@ void CreateTest::Betreuung()
 void CreateTest::Connection()
 {
     QSharedPointer< ebp::connection > newConnection;
-    foreach (const QSharedPointer< ebp::Mitarbeiter > ma, ebp::Mitarbeiter::loadAll(aConnection))
+    QList <QSharedPointer <ebp::Mitarbeiter > > maList= ebp::Mitarbeiter::loadAll(aConnection);
+    aConnection.clear();
+    foreach (const QSharedPointer< ebp::Mitarbeiter > ma, maList )
     {
 	newConnection = QSharedPointer<ebp::connection> (new ebp::connection(ma->login(),"ebp_test"));
 	QVERIFY(newConnection->establish("test_password"));
+	newConnection.clear();
     }
 }
 

@@ -436,8 +436,8 @@ void MainWindow::loadWohnguppeUndBewohner()
     // Wohngruppe
     //allGroups.waitForFinished();
     //this->thisSession.allGroups = allGroups.result();
-
-    this->thisSession.allGroups = ebp::loadAllGroups(this->thisSession.curConnection,this->thisSession.curMitarbeiter);
+    //this->thisSession.allGroups = ebp::loadAllGroups(this->thisSession.curConnection,this->thisSession.curMitarbeiter);
+    this->thisSession.allGroups = thisSession.curMitarbeiter->loadWohngruppen(thisSession.curConnection);
     //Aktuelle Wohngruppe setzen (alt)
     this->thisSession.curWohngruppe.isNull();
     if(!thisSession.allGroups.isEmpty())
