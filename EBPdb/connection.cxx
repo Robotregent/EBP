@@ -84,12 +84,21 @@ void connection::executeCreateUser( const Mitarbeiter & mitarbeiter, const QStri
 		case Mitarbeiter::WohnheimRecht:
 			execute( "GRANT UPDATE,INSERT,DELETE ON "+dbDatabase+".Wohngruppe TO '"+mitarbeiter.login()+"'@'"+from+"';" );
 		case Mitarbeiter::WohngruppenRecht:
+			execute( "GRANT UPDATE,INSERT,DELETE ON "+dbDatabase+".Betreuung TO '"+mitarbeiter.login()+"'@'"+from+"';" );
+			execute( "GRANT UPDATE,INSERT,DELETE ON "+dbDatabase+".Wohngruppenereignis_schreiber TO '"+mitarbeiter.login()+"'@'"+from+"';" );
 			execute( "GRANT UPDATE,INSERT,DELETE ON "+dbDatabase+".Wohngruppenereignis TO '"+mitarbeiter.login()+"'@'"+from+"';" );
 			execute( "GRANT UPDATE,INSERT,DELETE ON "+dbDatabase+".Bewohner TO '"+mitarbeiter.login()+"'@'"+from+"';" );
 			execute( "GRANT UPDATE,INSERT,DELETE ON "+dbDatabase+".Bewohnerereignis TO '"+mitarbeiter.login()+"'@'"+from+"';" );
 			execute( "GRANT UPDATE,INSERT,DELETE ON "+dbDatabase+".Projekt TO '"+mitarbeiter.login()+"'@'"+from+"';" );
+			execute( "GRANT UPDATE,INSERT,DELETE ON "+dbDatabase+".Projekt_verantwortliche TO '"+mitarbeiter.login()+"'@'"+from+"';" );
 			execute( "GRANT UPDATE,INSERT,DELETE ON "+dbDatabase+".Protokoll TO '"+mitarbeiter.login()+"'@'"+from+"';" );
+			execute( "GRANT UPDATE,INSERT,DELETE ON "+dbDatabase+".Protokoll_schreiber TO '"+mitarbeiter.login()+"'@'"+from+"';" );
+			execute( "GRANT UPDATE,INSERT,DELETE ON "+dbDatabase+".Protokoll_teilnehmer TO '"+mitarbeiter.login()+"'@'"+from+"';" );
 			execute( "GRANT UPDATE,INSERT,DELETE ON "+dbDatabase+".Abwesenheit TO '"+mitarbeiter.login()+"'@'"+from+"';" );
+			execute( "GRANT UPDATE,INSERT,DELETE ON "+dbDatabase+".Verfuegung TO '"+mitarbeiter.login()+"'@'"+from+"';" );
+			execute( "GRANT UPDATE,INSERT,DELETE ON "+dbDatabase+".Dokumentation TO '"+mitarbeiter.login()+"'@'"+from+"';" );
+			execute( "GRANT UPDATE,INSERT,DELETE ON "+dbDatabase+".Leistungstraeger TO '"+mitarbeiter.login()+"'@'"+from+"';" );
+			execute( "GRANT UPDATE,INSERT,DELETE ON "+dbDatabase+".Leistungstraeger_bewohner TO '"+mitarbeiter.login()+"'@'"+from+"';" );
 			execute( "GRANT SELECT ON "+dbDatabase+".* TO '"+mitarbeiter.login()+"'@'"+from+"';" );
 			break;
 		default:

@@ -6,6 +6,7 @@
 #include <QtCore/QtConcurrentRun>
 #include <exception>
 #include <QToolBar>
+#include <QMessageBox>
 
 #include "loginform.h"
 #include "infoframe.h"
@@ -369,7 +370,12 @@ void MainWindow::saveCurrentContent()
         QWidget *ptrToCast = this->centralWidget();
         SaveContentInterface *saveInterface =dynamic_cast<SaveContentInterface*>(ptrToCast);
         if(saveInterface!=0)
-            saveInterface->saveContent();
+	{
+	    if(saveInterface->saveContent())
+		QMessageBox::information(this,"Speichern der Änderung","Erfolgreich gespeichert");
+	    else
+		QMessageBox::information(this,"Speichern der Änderung","Speichern fehlgeschlagen");
+	}
     }
     catch (std::exception& ex)
     {

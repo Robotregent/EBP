@@ -20,6 +20,6 @@ void NewEreignisDialog::on_buttonBox_accepted()
 {
     ereignis->time = this->ui->dateTimeEdit->dateTime();
     ereignis->EreignisText = this->ui->EreignisText->toHtml();
-    ereignis->MitarbeiterZeichen = this->ui->MAZeichen->text();
+    //ereignis->MitarbeiterZeichen = this->ui->MAZeichen->text();
     ereignis->isEmpty = false;
 }

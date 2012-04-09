@@ -8,7 +8,6 @@ typedef struct
 {
     bool isEmpty;
     QDateTime time;
-    QString MitarbeiterZeichen;
     QString EreignisText;
 } EreignisInformation;
 
