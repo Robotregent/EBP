@@ -422,16 +422,17 @@ void AdminDialog::on_button_B_speichern_clicked()
 	for (int i=0; i<6; i++)
 	{
 		tmpDoku[i] = QSharedPointer < ebp::Dokumentation >(new ebp::Dokumentation(typs[i],ebp::Dokumentation::bekommeKeineHilfe));
-		ebp::Dokumentation::linkBewohner(tmpDoku[i],tmpBew);
 		tmpDoku[i]->create(PointerToConnection);
+		ebp::Dokumentation::linkBewohner(tmpDoku[i],tmpBew);
+		tmpDoku[i]->update(PointerToConnection);
 	}
 
 	QSharedPointer < ebp::Betreuung > betreuung = QSharedPointer < ebp::Betreuung > (new ebp::Betreuung());
 	if (!betreuung.isNull())
 	{
-
-	    ebp::Betreuung::linkBewohner(betreuung,tmpBew);
 	    betreuung->create(PointerToConnection);
+	    ebp::Betreuung::linkBewohner(betreuung,tmpBew);
+	    betreuung->update(PointerToConnection);
 	}
 
 	tmpBew->update(PointerToConnection);

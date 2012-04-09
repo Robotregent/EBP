@@ -28,7 +28,10 @@ namespace ebp
 	public:
 		Betreuung
 		(
-		)
+		) :
+			gesundheitsfuersorge_(false),
+			vermoegensfuersorge_(false),
+			aufenthaltsbestimmung_(false)
 		{
 		}
 
