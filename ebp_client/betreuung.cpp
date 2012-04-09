@@ -10,6 +10,7 @@ Betreuung::Betreuung(SessionContext &_context, QWidget *parent) :
 {
     ui->setupUi(this);
     //this->ui->mitarbeiternrLabel->resize(this->ui->aufentahltsbestimmungLabel->size());
+    init();
 }
 
 Betreuung::~Betreuung()
@@ -21,48 +22,56 @@ void Betreuung::init()
 {
     if ( !conntext.curBewohner.isNull())
     {
-	QSharedPointer< ebp::Betreuung > b = conntext.curBewohner->betreuung();
-
-	if(!b.isNull())
+	if(conntext.curBewohner->reload(conntext.curConnection))
 	{
-	    this->ui->vornameLineEdit->setText(b->vorname());
+	    QSharedPointer< ebp::Betreuung > b = conntext.curBewohner->betreuung();
 
-	    this->ui->nameLineEdit->setText(b->nachname());
+	    if(!b.isNull())
+	    {
+		this->ui->vornameLineEdit->setText(b->vorname());
 
-	    this->ui->eMailLineEdit->setText(b->email());
+		this->ui->nameLineEdit->setText(b->nachname());
 
-	    this->ui->faxLineEdit->setText(b->fax());
+		this->ui->eMailLineEdit->setText(b->email());
 
-	    this->ui->ortLineEdit->setText(b->ort());
+		this->ui->faxLineEdit->setText(b->fax());
 
-	    this->ui->pLZLineEdit->setText(b->plz());
+		this->ui->ortLineEdit->setText(b->ort());
 
-	    this->ui->telefonLineEdit->setText(b->telefon());
+		this->ui->pLZLineEdit->setText(b->plz());
 
-	    this->ui->straELineEdit->setText(b->strasse());
+		this->ui->telefonLineEdit->setText(b->telefon());
 
-	    this->ui->vereinVerbandLineEdit->setText(b->verein());
+		this->ui->straELineEdit->setText(b->strasse());
 
-	    if(b->aufenthaltsbestimmung())
-		this->ui->aufentahltsbestimmungComboBox->setCurrentIndex(1);
-	    else
-		this->ui->aufentahltsbestimmungComboBox->setCurrentIndex(0);
+		this->ui->vereinVerbandLineEdit->setText(b->verein());
 
-	    if(b->gesundheitsfuersorge())
-		this->ui->gesundheitsfRsorgeComboBox->setCurrentIndex(1);
-	    else
-		this->ui->gesundheitsfRsorgeComboBox->setCurrentIndex(0);
+		if(b->aufenthaltsbestimmung())
+		    this->ui->aufentahltsbestimmungComboBox->setCurrentIndex(1);
+		else
+		    this->ui->aufentahltsbestimmungComboBox->setCurrentIndex(0);
 
-	    if(b->vermoegensfuersorge())
-		this->ui->vermGensfRsorgeComboBox->setCurrentIndex(1);
-	    else
-		this->ui->vermGensfRsorgeComboBox->setCurrentIndex(0);
+		if(b->gesundheitsfuersorge())
+		    this->ui->gesundheitsfRsorgeComboBox->setCurrentIndex(1);
+		else
+		    this->ui->gesundheitsfRsorgeComboBox->setCurrentIndex(0);
+
+		if(b->vermoegensfuersorge())
+		    this->ui->vermGensfRsorgeComboBox->setCurrentIndex(1);
+		else
+		    this->ui->vermGensfRsorgeComboBox->setCurrentIndex(0);
+	    }
 	}
+	else
+	    qDebug()<<"reload fehlgeschlagen";
     }
+    else
+	qDebug()<<"Kein Bewohner";
 }
 
 bool Betreuung::saveContent()
 {
+    bool result = false;
     if ( !conntext.curBewohner.isNull())
     {
 	QSharedPointer< ebp::Betreuung > b = conntext.curBewohner->betreuung();
@@ -103,9 +112,16 @@ bool Betreuung::saveContent()
 		b->vermoegensfuersorge(true);
 
 	    if(b->update(conntext.curConnection))
-		QMessageBox::information(this,"Betreuung","Erfolgreich gespeichert");
+	    {
+		//QMessageBox::information(this,"Betreuung","Erfolgreich gespeichert");
+		result = true;
+	    }
 	    else
-		QMessageBox::information(this,"Betreuung","Speichern fehlgeschlagen");
+	    {
+		//QMessageBox::information(this,"Betreuung","Speichern fehlgeschlagen");
+		result = false;
+	    }
 	}
     }
+    return result;
 }

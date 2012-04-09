@@ -84,6 +84,7 @@ void connection::executeCreateUser( const Mitarbeiter & mitarbeiter, const QStri
 		case Mitarbeiter::WohnheimRecht:
 			execute( "GRANT UPDATE,INSERT,DELETE ON "+dbDatabase+".Wohngruppe TO '"+mitarbeiter.login()+"'@'"+from+"';" );
 		case Mitarbeiter::WohngruppenRecht:
+			execute( "GRANT UPDATE,INSERT,DELETE ON "+dbDatabase+".Betreuung TO '"+mitarbeiter.login()+"'@'"+from+"';" );
 			execute( "GRANT UPDATE,INSERT,DELETE ON "+dbDatabase+".Wohngruppenereignis TO '"+mitarbeiter.login()+"'@'"+from+"';" );
 			execute( "GRANT UPDATE,INSERT,DELETE ON "+dbDatabase+".Bewohner TO '"+mitarbeiter.login()+"'@'"+from+"';" );
 			execute( "GRANT UPDATE,INSERT,DELETE ON "+dbDatabase+".Bewohnerereignis TO '"+mitarbeiter.login()+"'@'"+from+"';" );
