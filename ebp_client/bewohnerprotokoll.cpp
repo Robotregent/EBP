@@ -21,8 +21,6 @@ BewohnerProtokoll::BewohnerProtokoll(QWidget *parent) :
 
     this->ui->tableWidget->horizontalHeader()->setResizeMode(0,QHeaderView::ResizeToContents);
 
-    this->ui->addTeilnehmer->setIcon(QIcon(":/costumer/Teilnehmer"));
-    this->ui->addTeilnehmer->setText(tr("Neuer Teilnehmer"));
 
     QTableWidgetItem *testEins = new QTableWidgetItem(tr(""));
     testEins->setFlags(testEins->flags()|Qt::ItemIsUserCheckable);
@@ -32,7 +30,7 @@ BewohnerProtokoll::BewohnerProtokoll(QWidget *parent) :
     QTableWidgetItem *testZwei = new QTableWidgetItem(tr(""));
     this->ui->tableWidget->setItem(0,1,testZwei);
 
-    qDebug() << "Protokoll";
+    //qDebug() << "Protokoll";
 }
 
 BewohnerProtokoll::~BewohnerProtokoll()

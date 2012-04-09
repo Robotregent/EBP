@@ -49,9 +49,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 }
-void MainWindow::validLogin(QSharedPointer<ebp::connection> pointer)
+void MainWindow::validLogin(QSharedPointer<ebp::Mitarbeiter> newMitarbeiter, QSharedPointer<ebp::connection> newConnection)
 {
-    thisSession.curConnection=pointer;
+    thisSession.curConnection=newConnection;
+    thisSession.curMitarbeiter=newMitarbeiter;
 
     this->loadWohnguppeUndBewohner();
 
@@ -221,6 +222,7 @@ QWidget *MainWindow::getContentWidget(int ContentTyp)
 		break;
 	    case MainWindow::LoginWidget:
 		result=new LoginForm(this);
+		QObject::connect((LoginForm *)result,SIGNAL(validLogin(QSharedPointer<ebp::Mitarbeiter>,QSharedPointer<ebp::connection>)),SLOT(validLogin(QSharedPointer<ebp::Mitarbeiter>,QSharedPointer<ebp::connection>)));
 		break;
 	    case MainWindow::DecreeScrollWidget:
 		result= new DecreeScrollArea(this->thisSession,this);
@@ -290,19 +292,72 @@ void MainWindow::create_actions()
 
     //Zu toolbar hinzufügen
     QToolBar *toolbar;
+    toolBars.clear();
     toolbar = this->addToolBar(tr("Speichern"));
     toolbar->setObjectName("Speichern");
     toolbar->addAction(saveAction);
-
     toolbar->addSeparator();
+
+    toolBars.append(toolbar);
 
     toolbar = this->addToolBar(tr("Ansicht"));
     toolbar->setObjectName("Ansicht");
     toolbar->addAction(this->dock_side_menu->toggleViewAction());
     toolbar->addAction(this->InfoDockWidget->toggleViewAction());
+    toolbar->addSeparator();
 
+    toolBars.append(toolbar);
 
+    toolbar = this->addToolBar(tr("Neu anmelden"));
+    QAction* logout = new QAction(QIcon(":/actions/Logout"),tr("Neu anmelden"),this);
+    logout->setVisible(true);
+    logout->setStatusTip(tr("Logen Sie sich aus."));
+    toolbar->setObjectName("Logout");
+    toolbar->addAction(logout);
+    connect(logout, SIGNAL(triggered()),this, SLOT(logout()));
+
+    toolBars.append(toolbar);
 }
+/**
+  *\brief Slot zum auslogen
+  */
+void MainWindow::logout()
+{
+    thisSession.allBewohner.clear();
+    thisSession.allGroups.clear();
+    thisSession.curBewohner.clear();
+    thisSession.curConnection.clear();
+    thisSession.curMitarbeiter.clear();
+    thisSession.curWohngruppe.clear();
+
+    this->side_menu->disconnect(this);
+    delete this->side_menu;
+
+    this->bwDialog->disconnect(this);
+    delete this->bwDialog;
+    this->bwDialog = NULL;
+
+    this->wgDialog->disconnect(this);
+    delete this->wgDialog;
+    this->wgDialog = NULL;
+
+    this->InfoDockWidget->setVisible(false);
+    delete this->InfoDockWidget;
+
+    this->dock_side_menu->setVisible(false);
+    delete this->dock_side_menu;
+
+
+    foreach (QToolBar *t, toolBars)
+    {
+	this->removeToolBar(t);
+	delete t;
+    }
+    toolBars.clear();
+
+    this->setCentralWidget(this->getContentWidget(MainWindow::LoginWidget));
+}
+
 /**
   * \brief Slot für die SaveAction
   */
@@ -329,8 +384,6 @@ MainWindow::~MainWindow()
 	delete wgDialog;
     if (bwDialog!=NULL)
 	delete bwDialog;
-    //delete side_menu;
-    //delete viewMenu;
 }
 void MainWindow::writeSettings()
 {
@@ -383,6 +436,7 @@ void MainWindow::loadWohnguppeUndBewohner()
     // Wohngruppe
     //allGroups.waitForFinished();
     //this->thisSession.allGroups = allGroups.result();
+
     this->thisSession.allGroups = ebp::loadAllGroups(this->thisSession.curConnection,this->thisSession.curMitarbeiter);
     //Aktuelle Wohngruppe setzen (alt)
     this->thisSession.curWohngruppe.isNull();
@@ -457,32 +511,27 @@ void MainWindow::setCurBewohnerAndWohngruppeInfo()
 
 }
 
-void MainWindow::setCurMitarbeiter(QSharedPointer<ebp::Mitarbeiter> curMitarbeiter)
-{
-    this->thisSession.curMitarbeiter = curMitarbeiter;
-}
-
-
 void MainWindow::setCurBewohner(QSharedPointer<ebp::Bewohner> chosenBw)
 {
     thisSession.curBewohner = chosenBw;
-
-    // Änderungen dürfen nur gespeichert werden, wenn Mitarbeiter die Betreuungsberechtigung hat
-    bool hasPermission = false;
-    QSharedPointer<ebp::Mitarbeiter> betreuuer=thisSession.curBewohner->bezugsbetreuer();
-    if (this->saveAction != NULL)
+    if(!chosenBw.isNull())
     {
-	if(!betreuuer.isNull())
+	// Änderungen dürfen nur gespeichert werden, wenn Mitarbeiter die Betreuungsberechtigung hat
+	bool hasPermission = false;
+	QSharedPointer<ebp::Mitarbeiter> betreuuer=thisSession.curBewohner->bezugsbetreuer();
+	if (this->saveAction != NULL)
 	{
-	    if (betreuuer->login()==thisSession.curMitarbeiter->login())
-		hasPermission=true;
+	    if(!betreuuer.isNull())
+	    {
+		if (betreuuer->login()==thisSession.curMitarbeiter->login())
+		    hasPermission=true;
+	    }
+
+	    this->saveAction->setEnabled(hasPermission);
 	}
-
-	this->saveAction->setEnabled(hasPermission);
+	this->setCurBewohnerAndWohngruppeInfo();
+	set_content(this->side_menu->getClientMenu()->currentItem());
     }
-    this->setCurBewohnerAndWohngruppeInfo();
-    set_content(this->side_menu->getClientMenu()->currentItem());
-
 }
 void MainWindow::setCurWohngruppe(QSharedPointer<ebp::Wohngruppe> chosenWg)
 {
@@ -501,13 +550,17 @@ void MainWindow::itemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous
 }
 void MainWindow::tabChanged(int index)
 {
-    switch ( index )
+    if (this->side_menu!=NULL)
     {
-    case 0:
-	set_content(this->side_menu->getClientMenu()->currentItem());
-	break;
-    case 1:
-	set_content(this->side_menu->getGroupMenu()->currentItem());
-	break;
+	switch ( index )
+	{
+	case 0:
+	    set_content(this->side_menu->getClientMenu()->currentItem());
+	    break;
+	case 1:
+	    set_content(this->side_menu->getGroupMenu()->currentItem());
+	    break;
+	}
     }
+
 }

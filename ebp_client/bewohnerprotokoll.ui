@@ -103,7 +103,11 @@
       <item>
        <widget class="QPushButton" name="addTeilnehmer">
         <property name="text">
-         <string/>
+         <string>neuer Teilnehmer</string>
+        </property>
+        <property name="icon">
+         <iconset resource="images.qrc">
+          <normaloff>:/costumer/Teilnehmer</normaloff>:/costumer/Teilnehmer</iconset>
         </property>
        </widget>
       </item>

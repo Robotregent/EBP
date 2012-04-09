@@ -31,6 +31,7 @@ private:
     TextTransferAgent *setTextTransferAgent(TextTransferInterface *interface);
     TextTransferInterface *convertToInterface(QWidget *toConvert);
     QList <QWidget *> ContentWidgetList;
+    QList<QToolBar *> toolBars;
     QDockWidget *dock_side_menu;
     QDockWidget *TextTransferDock;
     QDockWidget *InfoDockWidget;
@@ -47,9 +48,11 @@ private slots:
     void itemChanged( QTreeWidgetItem * current, QTreeWidgetItem * previous );
     void itemActivated( QTreeWidgetItem * item, int column);
     void saveCurrentContent();
+    void logout();
     void setCurWohngruppe(QSharedPointer< ebp::Wohngruppe > chosenWg);
     void setCurBewohner(QSharedPointer< ebp::Bewohner > chosenBw);
     void tabChanged(int index);
+    void validLogin(QSharedPointer<ebp::Mitarbeiter> newMitarbeiter, QSharedPointer<ebp::connection> newConnection);
 public:
     explicit MainWindow(QWidget *parent = 0);
     enum ContentWidgets { LoginWidget = 0, PersonWidget = 1 , DecreeScrollWidget = 2,  BetreuungWidget = 3, BProtokollWidget = 4,
@@ -57,8 +60,6 @@ public:
 			  DocumentationKoerperpflegeWidget = 11, DocumentationAufstehenWidget = 12, DocumentationPartnerschaftenWidget = 13, DocumentationFreundschaftenWidget = 14,
 			  CountOfContentWidgets = 15} ;
     QWidget *getContentWidget(int ContentTyp);
-    void validLogin(QSharedPointer<ebp::connection> pointer);
-    void setCurMitarbeiter(QSharedPointer<ebp::Mitarbeiter> curMitarbeiter);
 
     ~MainWindow();
     void closeEvent(QCloseEvent *event);

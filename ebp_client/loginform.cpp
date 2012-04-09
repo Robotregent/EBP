@@ -9,11 +9,12 @@ LoginForm::LoginForm(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::LoginForm)
 {
-    ui->setupUi(this);
-    _parent = (MainWindow *)parent;
+    ui->setupUi(this);;
     this->ui->passwortLineEdit->setEchoMode(QLineEdit::Password);
     QSettings settings("EBP.ini", QSettings::IniFormat);
     this->dbName = settings.value("db",QVariant("ebp")).toString();
+    this->dbHost = settings.value("host",QVariant("localhost")).toString();
+    this->dbPort = settings.value("port",QVariant(3306)).toUInt();
 }
 
 LoginForm::~LoginForm()
@@ -23,17 +24,15 @@ LoginForm::~LoginForm()
 
 void LoginForm::on_pushButton_clicked()
 {
-    QSharedPointer<ebp::connection> PointerToConnection = QSharedPointer<ebp::connection>(new ebp::connection(this->ui->loginLineEdit->text(),this->dbName));
+    QSharedPointer<ebp::connection> PointerToConnection = QSharedPointer<ebp::connection>(new ebp::connection(this->ui->loginLineEdit->text(),this->dbName,this->dbHost,this->dbPort));
     if (PointerToConnection->establish(this->ui->passwortLineEdit->text()))
     {
-	//QList < QSharedPointer<ebp::Mitarbeiter> > allMa = ebp::Mitarbeiter::loadAll(PointerToConnection);
 	QSharedPointer<ebp::Mitarbeiter> curMa = PointerToConnection->mitarbeiter();
 	if (curMa.isNull())
 	    QMessageBox::critical(this,tr("Fehlerhafter Login"),tr("Der Login stimmt mit keinem Mitarbeiter in der Datenbank überein. Bitte wenden Sie sich an Ihren Administrator."));
 	else
 	{
-	    this->_parent->setCurMitarbeiter(curMa);
-	    this->_parent->validLogin(PointerToConnection);
+	    emit validLogin(curMa,PointerToConnection);
 	}
     }
     else

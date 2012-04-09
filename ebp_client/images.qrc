@@ -20,5 +20,6 @@
     <qresource prefix="/actions">
         <file alias="save">Save-icon.png</file>
         <file alias="plus">plus.png</file>
+        <file alias="Logout">Logout.png</file>
     </qresource>
 </RCC>

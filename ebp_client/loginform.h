@@ -2,6 +2,8 @@
 #define LOGINFORM_H
 
 #include <QWidget>
+#include <EBPdb/Mitarbeiter.hxx>
+#include <EBPdb/connection.hxx>
 #include "mainwindow.h"
 
 namespace Ui {
@@ -11,6 +13,8 @@ namespace Ui {
 class LoginForm : public QWidget
 {
     Q_OBJECT
+signals:
+    void validLogin(QSharedPointer<ebp::Mitarbeiter> newMitarbeiter, QSharedPointer<ebp::connection> newConnection);
 
 public:
     explicit LoginForm(QWidget *parent = 0);
@@ -23,8 +27,9 @@ private slots:
 
 private:
     Ui::LoginForm *ui;
-    MainWindow *_parent;
     QString dbName;
+    QString dbHost;
+    unsigned int dbPort;
 };
 
 #endif // LOGINFORM_H
