@@ -245,7 +245,7 @@ QWidget *MainWindow::getContentWidget(int ContentTyp)
 	    case MainWindow::EreignisWidget:
 		{
 		    TextTransferAgent *agent=setTextTransferAgent(NULL);
-		    result = new Ereignis(agent,this);
+		    result = new Ereignis(thisSession,agent,this);
 		    break;
 		}
 	    case MainWindow::ProjektWidget:

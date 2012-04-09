@@ -2,17 +2,21 @@
 #include "ui_ereignis.h"
 #include "newereignisdialog.h"
 #include <QDebug>
-
-Ereignis::Ereignis(TextTransferAgent *agent,QWidget *parent) :
+#include <EBPdb/Wohngruppenereignis.hxx>
+Ereignis::Ereignis(SessionContext _context, TextTransferAgent *agent,QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Ereignis),
-    transferAgent(agent)
+    transferAgent(agent),
+    context(_context)
 {
     ui->setupUi(this);
     QWidget *puffer = new QWidget(this);
     pufferLayout = new QVBoxLayout();
     puffer->setLayout(pufferLayout);
     this->ui->scrollArea->setWidget(puffer);
+    context.curWohngruppe->reload(context.curConnection);
+
+    initEreignisse();
 }
 
 Ereignis::~Ereignis()
@@ -29,22 +33,62 @@ void Ereignis::on_pushButton_clicked()
     info.isEmpty = true;
     NewEreignisDialog ereignisDialog(&info,this);
 
-
-
-    if(ereignisDialog.exec()==1)
+    if(!context.curMitarbeiter.isNull()&&!context.curWohngruppe.isNull())
     {
-	if(!info.isEmpty)
+	if(ereignisDialog.exec()==1)
 	{
-	    EinzelEreignis *tmp=new EinzelEreignis(this);
-	    tmp->setContent(info.time,info.MitarbeiterZeichen,info.EreignisText);
+	    if(!info.isEmpty)
+	    {
+		EinzelEreignis *tmp=new EinzelEreignis(this);
 
-	    //Neue Eingabe anzeigen
-	    this->EreignisListe.prepend(tmp);
-	    this->pufferLayout->insertWidget(0,tmp);
+		QSharedPointer< ebp::Wohngruppenereignis > newEreignis = QSharedPointer< ebp::Wohngruppenereignis >(new ebp::Wohngruppenereignis(info.time,info.EreignisText));
 
-	    //TextransferInterface registrieren
-	    this->transferAgent->registerNewInterface(tmp);
+		if(newEreignis->create(context.curConnection))
+		    qDebug()<<"Erfolgreich angelegt";
+		else
+		    qDebug()<<"Fehlschlag beim angelegen";
+
+		ebp::Wohngruppenereignis::linkSchreiber(newEreignis,context.curMitarbeiter);
+		ebp::Wohngruppenereignis::linkWohngruppe(newEreignis,context.curWohngruppe);
+
+		if (newEreignis->update(context.curConnection))
+		    qDebug()<<"Erfolgreich upgedated";
+		else
+		    qDebug()<<"Fehlschlag beim updaten";
+
+
+		tmp->setContent(info.time,context.curMitarbeiter->name(),info.EreignisText);
+
+		//Neue Eingabe anzeigen
+		this->EreignisListe.prepend(tmp);
+		this->pufferLayout->insertWidget(0,tmp);
+
+		//TextransferInterface registrieren
+		this->transferAgent->registerNewInterface(tmp);
+	    }
 	}
     }
 
+}
+
+void Ereignis::initEreignisse()
+{
+    QList < QSharedPointer < ebp::Wohngruppenereignis > > wgEreignisse = context.curWohngruppe->loadEreignisse(context.curConnection);
+
+    foreach (QSharedPointer < ebp::Wohngruppenereignis > e, wgEreignisse)
+    {
+	EinzelEreignis *tmp=new EinzelEreignis(this);
+	QString mitarbeiter="";
+	foreach ( const QSharedPointer < ebp::Mitarbeiter > ma, e->loadSchreiber(context.curConnection))
+	{
+	    mitarbeiter+=ma->name()+";";
+	}
+
+	tmp->setContent(e->zeitpunkt(),mitarbeiter,e->text());
+	this->EreignisListe.prepend(tmp);
+	this->pufferLayout->insertWidget(0,tmp);
+
+	//TextransferInterface registrieren
+	this->transferAgent->registerNewInterface(tmp);
+    }
 }

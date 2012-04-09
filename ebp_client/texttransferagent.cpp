@@ -65,9 +65,12 @@ void TextTransferAgent::on_pushButton_clicked()
 	TextTransferInformation info =interface->getSelectedText();
 	if (!info.isEmpty)
 	{
-	    dokus.at(this->ui->PlanungsBox->currentIndex())->erlaeuterungen(interface->getSelectedText().textTransferFragment.toHtml());
+	    QString textfragment = dokus.at(this->ui->PlanungsBox->currentIndex())->erlaeuterungen();
+	    textfragment += info.information + "\n";
+	    textfragment += info.textTransferFragment.toPlainText()+"\n\n";
+	    dokus.at(this->ui->PlanungsBox->currentIndex())->erlaeuterungen(textfragment);
 	    dokus.at(this->ui->PlanungsBox->currentIndex())->update(_context.curConnection);
-	    //QMessageBox::information(this,"Texttransfer",interface->getSelectedText().textTransferFragment.toPlainText());
+	    QMessageBox::information(this,"Texttransfer","Erfolgreich übertragen");
 	}
     }
 }
