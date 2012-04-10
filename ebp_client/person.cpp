@@ -89,6 +89,7 @@ void person::initField()
 
 bool person::saveContent()
 {
+    bool result = false;
     if (con.curBewohner!=NULL)
     {
         QString tempBlock = "";
@@ -109,8 +110,10 @@ bool person::saveContent()
         }
         this->con.curBewohner->anmerkung(tempBlock);
 
-        this->con.curBewohner->update(this->con.curConnection);
-        return true;
+        if(this->con.curBewohner->update(this->con.curConnection))
+            result = true;
+        else
+            result = false;
     }
-    return false;
+    return result;
 }

@@ -26,7 +26,6 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
-    //this->showMaximized();
     this->bwDialog = NULL;
     this->wgDialog = NULL;
     this->saveAction = NULL;
@@ -47,9 +46,10 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setCorner(Qt::TopRightCorner,Qt::TopDockWidgetArea);
     this->setCorner(Qt::BottomLeftCorner,Qt::LeftDockWidgetArea);
     this->setCorner(Qt::BottomRightCorner,Qt::BottomDockWidgetArea);
-
-
 }
+/**
+  * \brief Slot. Wird ausgelöst nach erfolgreichem Login
+  */
 void MainWindow::validLogin(QSharedPointer<ebp::Mitarbeiter> newMitarbeiter, QSharedPointer<ebp::connection> newConnection)
 {
     thisSession.curConnection=newConnection;
@@ -65,7 +65,9 @@ void MainWindow::validLogin(QSharedPointer<ebp::Mitarbeiter> newMitarbeiter, QSh
 
     this->setCurBewohner(thisSession.curBewohner);
 }
-
+/**
+  * \brief Seitenmenü mit Navigationsbaum erzeugen
+  */
 void MainWindow::create_sidemenu()
 {
 
@@ -76,12 +78,6 @@ void MainWindow::create_sidemenu()
     this->dock_side_menu->setObjectName("Navigation");
     this->addDockWidget(Qt::LeftDockWidgetArea,this->dock_side_menu);
 
-
-    //Versuche Größe in Griff zu bekommen
-    //this->dock_side_menu->setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Expanding);
-    //this->dock_side_menu->setMaximumSize(this->dock_side_menu->sizeHint());
-    //this->dock_side_menu->adjustSize();
-
     this->connect(this->side_menu->getClientMenu(),SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),SLOT(itemChanged(QTreeWidgetItem*,QTreeWidgetItem*)));
     this->connect(this->side_menu->getGroupMenu(),SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),SLOT(itemChanged(QTreeWidgetItem*,QTreeWidgetItem*)));
     this->connect(this->side_menu->getClientMenu(),SIGNAL(itemActivated(QTreeWidgetItem*,int)),SLOT(itemActivated(QTreeWidgetItem*,int)));
@@ -90,8 +86,10 @@ void MainWindow::create_sidemenu()
     this->connect(this->side_menu,SIGNAL(currentChanged(int)),SLOT(tabChanged(int)));
 
     this->setCentralWidget(this->getContentWidget(MainWindow::PersonWidget));
-
 }
+/**
+  * \brief Infowidget initialisieren
+  */
 void MainWindow::creat_InfoWidget()
 {
     InfoDockWidget =new QDockWidget(tr("Information zu aktueller Auswahl"),this);
@@ -100,9 +98,10 @@ void MainWindow::creat_InfoWidget()
     InfoDockWidget->setWidget(this->_infoFrame);
     InfoDockWidget->setObjectName("Information");
     this->addDockWidget(Qt::TopDockWidgetArea,InfoDockWidget);
-    //Bewohner und Wohngruppe anzeigen
-    //this->setCurBewohnerAndWohngruppeInfo();
 }
+/**
+  * \brief Texttransferdock initialisieren
+  */
 void MainWindow::create_TextTransferDock()
 {
     this->TextTransferDock = new QDockWidget(this);
@@ -111,6 +110,9 @@ void MainWindow::create_TextTransferDock()
     this->TextTransferDock->setObjectName("TextTransferAgent");
     this->addDockWidget(Qt::BottomDockWidgetArea,this->TextTransferDock);
 }
+/**
+  * \brief upcast für Texttransferinterface
+  */
 TextTransferInterface *convertToInterface(QWidget *toConvert)
 {
     TextTransferInterface *result;
@@ -118,7 +120,9 @@ TextTransferInterface *convertToInterface(QWidget *toConvert)
 
     return result;
 }
-
+/**
+  * \brief Erzeugt Mediator Objekt für den Texttransfer
+  */
 TextTransferAgent *MainWindow::setTextTransferAgent(TextTransferInterface *interface)
 {
     TextTransferAgent *result;
@@ -133,7 +137,9 @@ TextTransferAgent *MainWindow::setTextTransferAgent(TextTransferInterface *inter
     this->TextTransferDock->setVisible(true);
     return result;
 }
-
+/**
+  * \brief Mapping Navigationsbaumeintrag <---> ContentWidget
+  */
 void MainWindow::set_content(QTreeWidgetItem *current)
 {
     if(current==NULL)
@@ -162,7 +168,7 @@ void MainWindow::set_content(QTreeWidgetItem *current)
     case 2003:
         this->setCentralWidget(this->getContentWidget(MainWindow::Leistungstraeger));
         break;
-    /// \todo Betreuungsdokumentation genauer aufteilen:
+    case 2300:
     case 2310:
     case 2311:
 	this->setCentralWidget(this->getContentWidget(MainWindow::DocumentationEinkaufenWidget));
@@ -191,14 +197,12 @@ void MainWindow::set_content(QTreeWidgetItem *current)
         this->setCentralWidget(this->getContentWidget(MainWindow::MeldeListeWidget));
         break;
     }
-    //Versuch größe in grif zu bekommen
-    //this->centralWidget()->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
-    //this->centralWidget()->setMinimumSize(this->centralWidget()->sizeHint());
-
-    //this->centralWidget()->adjustSize();
     return;
 }
-
+/**
+  * \brief Erzeuge ContentWidget
+  * \param ContentTyp Entsprechend dem gewählten Eintrag aus Navigationsbaum
+  */
 QWidget *MainWindow::getContentWidget(int ContentTyp)
 {
 
@@ -281,7 +285,9 @@ QWidget *MainWindow::getContentWidget(int ContentTyp)
     //this->ContentWidgetList.replace(ContentTyp,result);
     return result;
 }
-
+/**
+  * \brief Erzeugt Actions in der Toolbar
+  */
 void MainWindow::create_actions()
 {
     //Action erstellen
@@ -383,7 +389,9 @@ void MainWindow::saveCurrentContent()
         qDebug()<<"Crash: "<<ex.what();
     }
 }
-
+/**
+  * \brief DESTROKTOR
+  */
 MainWindow::~MainWindow()
 {
     if (wgDialog!=NULL)
@@ -391,6 +399,9 @@ MainWindow::~MainWindow()
     if (bwDialog!=NULL)
 	delete bwDialog;
 }
+/**
+  * \brief Schreibt aktuelle Fensterposition und Einstellung in die EBP.ini
+  */
 void MainWindow::writeSettings()
 {
     QSettings settings("EBP.ini", QSettings::IniFormat);
@@ -407,7 +418,9 @@ void MainWindow::writeSettings()
 	settings.setValue("lastWohngruppe",this->thisSession.curWohngruppe->name());
     }
 }
-
+/**
+  * \brief Liest EBP.ini aus und setzt Fenster in gespeicherten Modus / Position
+  */
 void MainWindow::readSettings()
 {
     //Zustand wiederherstellen
@@ -418,31 +431,27 @@ void MainWindow::readSettings()
     move(pos);
     this->restoreState(settings.value("windowState").toByteArray());
 }
-
+/**
+  * \brief CloseEvent überschreiben, um Fenstereinstellungen zu speichern
+  */
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-
     this->writeSettings();
     //qDebug() << QApplication::applicationDirPath();
     QMainWindow::closeEvent(event);
 }
 
-
+/**
+  * \brief Lädt Wohngruppen und Bewohner nach Login
+  */
 void MainWindow::loadWohnguppeUndBewohner()
 {
     if(this->thisSession.curConnection.isNull())
 	return;
 
     QSettings settings("EBP.ini", QSettings::IniFormat);
-    //asynchrones Laden aller Wohngruppen und Bewohner
-    //QFuture< QList < QSharedPointer <ebp::Wohngruppe> > > allGroups = QtConcurrent::run(ebp::loadAllGroups, this->thisSession.curConnection, this->thisSession.curMitarbeiter);
-    //PleasWaitDialog *pwd=new PleasWaitDialog(this);
-    //pwd->show();
 
     // Wohngruppe
-    //allGroups.waitForFinished();
-    //this->thisSession.allGroups = allGroups.result();
-    //this->thisSession.allGroups = ebp::loadAllGroups(this->thisSession.curConnection,this->thisSession.curMitarbeiter);
     this->thisSession.allGroups = thisSession.curMitarbeiter->loadWohngruppen(thisSession.curConnection);
     //Aktuelle Wohngruppe setzen (alt)
     this->thisSession.curWohngruppe.isNull();
@@ -466,9 +475,6 @@ void MainWindow::loadWohnguppeUndBewohner()
 
     if(!this->thisSession.curWohngruppe.isNull())
     {
-	//QFuture< QList < QSharedPointer <ebp::Bewohner> > > allBewohner = QtConcurrent::run(ebp::loadAllBewohner, this->thisSession.curConnection, this->thisSession.curWohngruppe);
-
-	//allBewohner.waitForFinished();
 
 	this->thisSession.allBewohner=ebp::loadAllBewohner(this->thisSession.curConnection,this->thisSession.allGroups);
 
@@ -494,16 +500,16 @@ void MainWindow::loadWohnguppeUndBewohner()
         }
 
     }
-    //pwd->close();
 
     this->bwDialog = new ChooseBwDialog(thisSession.allBewohner,"Bewohner wählen:",this);
     QObject::connect(bwDialog,SIGNAL(chosen(QSharedPointer<ebp::Bewohner>)),this,SLOT(setCurBewohner(QSharedPointer<ebp::Bewohner>)));
 
     this->wgDialog = new ChooseWgDialog(thisSession.allGroups,"Wohngruppe wählen:",this);
     QObject::connect(wgDialog,SIGNAL(chosen(QSharedPointer<ebp::Wohngruppe>)),this,SLOT(setCurWohngruppe(QSharedPointer<ebp::Wohngruppe>)));
-
-
 }
+/**
+  * \brief Schreibt Informationen über aktuelle Bewohner und Wohngruppe in des Infowidget
+  */
 void MainWindow::setCurBewohnerAndWohngruppeInfo()
 {
     if (!this->thisSession.curBewohner.isNull())
@@ -514,9 +520,10 @@ void MainWindow::setCurBewohnerAndWohngruppeInfo()
 	this->_infoFrame->setCurWohngruppe(this->thisSession.curWohngruppe->name());
     else
 	this->_infoFrame->setCurWohngruppe("Keine Informationen verfügbar");
-
 }
-
+/**
+  * \brief Slot. Wird ausgelöst, wenn neuer Bewohner gesetzt werden soll.
+  */
 void MainWindow::setCurBewohner(QSharedPointer<ebp::Bewohner> chosenBw)
 {
     thisSession.curBewohner = chosenBw;
@@ -539,21 +546,33 @@ void MainWindow::setCurBewohner(QSharedPointer<ebp::Bewohner> chosenBw)
 	set_content(this->side_menu->getClientMenu()->currentItem());
     }
 }
+/**
+  * \brief Slot der ausgelöst wird, wenn der gewählte Eintrag im Navigationsbaum sich ändert
+  */
 void MainWindow::setCurWohngruppe(QSharedPointer<ebp::Wohngruppe> chosenWg)
 {
     thisSession.curWohngruppe = chosenWg;
     this->setCurBewohnerAndWohngruppeInfo();
 }
+/**
+  * \brief Slot der ausgelöst wird, wenn der gewählte Eintrag im Navigationsbaum sich ändert
+  */
 void MainWindow::itemActivated(QTreeWidgetItem *item, int column)
 {
     Q_UNUSED(column)
     set_content(item);
 }
+/**
+  * \brief Slot der ausgelöst wird, wenn der gewählte Eintrag im Navigationsbaum sich ändert
+  */
 void MainWindow::itemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
     Q_UNUSED(previous)
     set_content(current);
 }
+/**
+  * \brief Slot. Wird ausgelöst, wenn sich der Tab des Seitenmenüs ändert.
+  */
 void MainWindow::tabChanged(int index)
 {
     if (this->side_menu!=NULL)

@@ -12,10 +12,6 @@ CostumDeleteDialog::~CostumDeleteDialog()
 {
     delete ui;
 }
- /*Ui::CostumDeleteDialog *CostumDeleteDialog::getUI()
- {
-     return ui;
- }*/
 
 
 void CostumDeleteDialog::on_pushButton_2_clicked()
