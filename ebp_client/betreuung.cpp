@@ -68,7 +68,9 @@ void Betreuung::init()
     else
 	qDebug()<<"Kein Bewohner";
 }
-
+/**
+  * \brief Speichert Inhalt von Betreuung
+  */
 bool Betreuung::saveContent()
 {
     bool result = false;
