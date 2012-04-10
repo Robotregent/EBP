@@ -3,7 +3,6 @@
 #include "chooseemployee.h"
 #include "employeelistmodel.h"
 #include "costumdeletedialog.h"
-//#include "wohngruppedeletedialog.h"
 #include "zuordnung.h"
 #include <EBPdb/Mitarbeiter.hxx>
 #include <EBPdb/Wohngruppe.hxx>
@@ -60,7 +59,9 @@ void AdminDialog::on_button_MA_suchen_clicked()
     e->setModal(true);
     e->setVisible(true);
 }
-
+/**
+  * \brief Mitarbeiter speichern
+  */
 void AdminDialog::on_button_MA_speichern_clicked()
 {
     if(this->isPasswordValid())
@@ -122,7 +123,10 @@ void AdminDialog::on_button_MA_speichern_clicked()
 
 		bg->update(this->PointerToConnection);
 	    }
-	    ma->update(this->PointerToConnection);
+            if(ma->update(this->PointerToConnection))
+                QMessageBox::information(this,tr("Mitarbeiter erfolgreich angelegt"),tr("Mitarbeiter erfolgreich angelegt"));
+            else
+                QMessageBox::critical(this,tr("Fehler"),tr("Mitarbeiter konnte nicht angelegt werden"));
 	    this->model->addMitarbeiter(ma);
 	    QMessageBox::information(this,tr("Mitarbeiter erfolgreich angelegt"),tr("Mitarbeiter erfolgreich angelegt"));
 	}
@@ -161,7 +165,9 @@ void AdminDialog::setContent()
     this->ui->tab_Mitarbeiter->setEnabled(true);
     this->ui->tab_Organisationseinheiten->setEnabled(true);
 }
-
+/**
+  * \brief Loggin
+  */
 void AdminDialog::on_ButtonLogin_clicked()
 {
     this->PointerToConnection = QSharedPointer<connection>(new connection(this->ui->loginNameLineEdit->text(),this->dbName));
@@ -246,7 +252,9 @@ void AdminDialog::on_ButtonAusloggen_clicked()
 {
     this->setLogin();
 }
-
+/**
+  * \brief Wohngruppen initialisieren
+  */
 void AdminDialog::setOEWidget()
 {
     if(!this->WohngruppenItems.isEmpty())
@@ -272,7 +280,9 @@ void AdminDialog::setOEWidget()
 	this->ui->O_list->addItem(i);
     }
 }
-
+/**
+  * \brief Bewohner initialisieren
+  */
 void AdminDialog::setBWidget()
 {
     if(!this->BewohnerItems.isEmpty())
@@ -341,7 +351,9 @@ void AdminDialog::on_button_O_speichern_clicked()
 { 
 	this->createWohngruppe();
 }
-
+/**
+  * \brief Neue Wohngruppe anlegen
+  */
 void AdminDialog::createWohngruppe()
 {
     if (this->ui->lineEdit_O->text().isEmpty()||this->ui->lineEdit_O->text().isNull())
@@ -407,12 +419,10 @@ void AdminDialog::on_button_B_speichern_clicked()
 	    newBew->setFlags(newBew->flags()|Qt::ItemIsUserCheckable);
 	    newBew->setCheckState(Qt::Unchecked);
 	    this->ui->B_list->addItem(newBew);
-	    qDebug()<<"Erfolg!";
 	}
 
 	QSharedPointer<Wohngruppe> tmpWg = this->WohngruppeTreeItems.at(this->ui->WohngruppeTree->currentIndex().row())->getCitem();
 	tmpBew->linkWohngruppe(tmpBew,tmpWg);
-	tmpBew->update(this->PointerToConnection);
 
 	//Betreuungsplanung anlegen
 	ebp::Dokumentation::Typ typs[6] = {ebp::Dokumentation::einkaufen, ebp::Dokumentation::waeschepflege, ebp::Dokumentation::koerperpflege,
@@ -435,7 +445,10 @@ void AdminDialog::on_button_B_speichern_clicked()
 	    betreuung->update(PointerToConnection);
 	}
 
-	tmpBew->update(PointerToConnection);
+        if(tmpBew->update(PointerToConnection))
+            QMessageBox::information(this,tr("Erfolg"),tr("Bewohner erfolgreich angelegt"));
+        else
+            QMessageBox::critical(this,tr("Fehler"),tr("Bewohner konnte nicht angelegt werden"));
 	//Masken leeren
 	this->ui->vornameLineEdit->clear();
 	this->ui->nachnameLineEdit->clear();
@@ -444,7 +457,7 @@ void AdminDialog::on_button_B_speichern_clicked()
     }
     else
     {
-	qDebug()<<"Fehler!";
+        QMessageBox::critical(this,tr("Fehler"),tr("Bewohner konnte nicht angelegt werden"));
     }
 
 }
@@ -454,14 +467,17 @@ void AdminDialog::on_button_O_eingabeloeschen_clicked()
     this->ui->lineEdit_O->text().clear();
 }
 
-
-
+/**
+  * \brief Wohngruppelöschen Dialog anzeigen
+  */
 void AdminDialog::on_button_O_waehlen_clicked()
 {
     WohngruppenDeleteDialog *wgdd = new WohngruppenDeleteDialog(this->WohngruppenItems,this);
     wgdd->show();
 }
-
+/**
+  * \brief Wohngruppe löschen
+  */
 bool AdminDialog::deleteWohngruppe(int index)
 {
     bool ret = false;
@@ -483,6 +499,9 @@ bool AdminDialog::deleteWohngruppe(int index)
     }
     return ret;
 }
+/**
+  * \brief Bewohner löschen
+  */
 bool AdminDialog::deleteBewohner(int index)
 {
     bool ret = false;
@@ -502,19 +521,25 @@ bool AdminDialog::deleteBewohner(int index)
     }
     return ret;
 }
-
+/**
+  * \brief Bewohnerlöschen Dialog anzeigen
+  */
 void AdminDialog::on_button_B_waelen_clicked()
 {
     BewohnerDeleteDialog *_bewohnerDeleteDialog = new BewohnerDeleteDialog(this->BewohnerItems,this);
     _bewohnerDeleteDialog->show();
 }
-
+/**
+  * \brief Mitarbeiter mit Wohngruppen verknüpfen
+  */
 void AdminDialog::on_pushButton_2_clicked()
 {
     WohngruppenZuordnung *WohngruppenZuordnungsDialog = new WohngruppenZuordnung(this->model,this);
     WohngruppenZuordnungsDialog->show();
 }
-
+/**
+  * \brief Mitarbeiter mit Bewohner verknüpfen (Bezugsbetreuung)
+  */
 void AdminDialog::on_pushButton_clicked()
 {
     BezugsbetreuungZuordnung *bezugsbetreuungsZuordnungsDialog = new BezugsbetreuungZuordnung(this->model,this);
