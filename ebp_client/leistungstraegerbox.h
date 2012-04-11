@@ -2,6 +2,9 @@
 #define LEISTUNGSTRAEGERBOX_H
 
 #include <QGroupBox>
+#include <QSharedPointer>
+#include "sessioncontext.h"
+#include <QList>
 
 namespace Ui {
     class LeistungstraegerBox;
@@ -10,14 +13,21 @@ namespace Ui {
 class LeistungstraegerBox : public QGroupBox
 {
     Q_OBJECT
+    const SessionContext &con;
+    void initField();
+    QSharedPointer< ebp::Leistungstraeger > Ltraeger;
+    QList <QSharedPointer< ebp::Leistungstraeger > > bewohner_leistungstraeger;
 
 public:
-    explicit LeistungstraegerBox(QWidget *parent = 0);
+    explicit LeistungstraegerBox(const SessionContext &context,QWidget *parent = 0,QSharedPointer< ebp::Leistungstraeger > currentLeistungstraeger = 0);
+   // explicit LeistungstraegerBox(const SessionContext &context,QWidget *parent = 0);
     static const int fixedWidth = 670;
     ~LeistungstraegerBox();
+    bool saveContent();
 
 private:
     Ui::LeistungstraegerBox *ui;
+    void createLeistungstraeger();
 };
 
 #endif // LEISTUNGSTRAEGERBOX_H
