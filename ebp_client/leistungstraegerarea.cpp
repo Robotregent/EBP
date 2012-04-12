@@ -10,30 +10,44 @@
 #include <math.h>
 #include <QMessageBox>
 
-LeistungstraegerArea::LeistungstraegerArea(const SessionContext &context,QWidget *parent) :
+LeistungstraegerArea::LeistungstraegerArea(SessionContext &_context,QWidget *parent) :
     QWidget(parent),
-    con(context),
+    context(_context),
     ui(new Ui::LeistungstraegerArea)
 {
     ui->setupUi(this);
 
-    //Widget für die LeistungsträgerBoxen
-    QWidget *wid = new QWidget(this);
-    this->ui->scrollArea->setWidget(wid);
+    this->VLayouts.prepend(this->ui->VLayout);
+
+    if(!context.curBewohner.isNull())
+    {
+	context.curBewohner->reload(context.curConnection);
+	this->leistungstraeger = context.curBewohner->loadLeistungstraeger(context.curConnection);
+
+    }
 
     //entscheiden, in wieviel Spalten die Boxen dargestellt werden
     QDesktopWidget desktop;
     QRect screen = desktop.availableGeometry(parent);
     int availableWidth = screen.width() - 280;
-    grid= new QGridLayout();
-    entryCount=0;
     if(availableWidth > 0)
     {
-        col = availableWidth / LeistungstraegerBox::fixedWidth;
-        this->setBoxesInTable(col);
+	columns = availableWidth / LeistungstraegerBox::fixedWidth;
+	//Mehr Layouts erstellen, wenn Platz ist
+	if(columns>1)
+	{
+	    QVBoxLayout *layout;
+	    for (int i=0;i<columns-1;i++)
+	    {
+		layout = new QVBoxLayout();
+		layout->insertStretch(0,1);
+		//layout->insertSpacing(-1,5);
+		this->ui->HLayout->insertLayout(i+1,layout);
+		this->VLayouts.prepend(layout);
+	    }
+	}
     }
-
-
+    this->initBoxes();
 }
 
 LeistungstraegerArea::~LeistungstraegerArea()
@@ -41,59 +55,38 @@ LeistungstraegerArea::~LeistungstraegerArea()
     delete ui;
 }
 
-void LeistungstraegerArea::setBoxesInColumn()
+
+void LeistungstraegerArea::addBox(QSharedPointer<ebp::Leistungstraeger> newLeistungstraeger = 0)
 {
-  /*  QVBoxLayout *layout = new QVBoxLayout();
+    LeistungstraegerBox *aBox = new LeistungstraegerBox(context,this,newLeistungstraeger);
 
-    LeistungstraegerBox *tmp;
+    this->boxes.append(aBox);
 
-    for (int i = 0 ; i <6; ++i)
-    {
-            tmp=new LeistungstraegerBox(con,this,bewohner_leistungstraeger.at((i*columns)+k));
-            tmp->setTitle(tr("Test Test "));
-            layout->addWidget(tmp);
-    }
-    this->ui->scrollArea->widget()->setLayout(layout);*/
+    QVBoxLayout *l =this->VLayouts.at(boxes.count()%columns);
+    l->insertWidget(l->count()-1,aBox);
 }
 
-void LeistungstraegerArea::setBoxesInTable(int columns)
+void LeistungstraegerArea::initBoxes()
 {
-    grid= new QGridLayout();
-    LeistungstraegerBox *tmp;
-    if (con.curBewohner!=NULL)
+
+    foreach (const QSharedPointer<ebp::Leistungstraeger> l, leistungstraeger)
     {
-        con.curBewohner->reload(con.curConnection);
-        this->bewohner_leistungstraeger=con.curBewohner->loadLeistungstraeger(con.curConnection);
-        if (bewohner_leistungstraeger.isEmpty())
-            return;
-        entryCount=bewohner_leistungstraeger.count();
-        for (int i = 0 ; i <(entryCount/columns); ++i)
-        {
-            for(int k = 0; k<columns; ++k)
-            {
-                tmp=new LeistungstraegerBox(con,this,bewohner_leistungstraeger.at((i*columns)+k));
-                tmp->setTitle(bewohner_leistungstraeger.at((i*columns)+k)->name());
-                grid->addWidget(tmp,i,k);
-            }
-        }
+	addBox(l);
     }
-
 }
-void LeistungstraegerArea::on_pushButton_clicked()
-{
-    if(ui->scrollArea->layout()!=0)
-        delete(ui->scrollArea->layout());
-    LeistungstraegerBox *tmp;
-    QSharedPointer< ebp::Leistungstraeger > tmpPointer(new ebp::Leistungstraeger("Neuer Leistungsträger"));
-   // QString str;
-   // str.append(QString("%1%2").arg(entryCount/col).arg(entryCount));
-   // QMessageBox::about(this, tr("test"),str);
-    tmp=new LeistungstraegerBox(con,this,tmpPointer);
-    tmp->setTitle(tr("Neuer Leistungsträger"));
 
-    if(entryCount==0)
-        grid->addWidget(tmp,0,0);
-    grid->addWidget(tmp,entryCount/col,entryCount%col);
-    ui->scrollArea->setLayout(grid);
-    entryCount++;
+void LeistungstraegerArea::on_neuerTraegerButton_clicked()
+{
+    QSharedPointer<ebp::Leistungstraeger> leer= QSharedPointer<ebp::Leistungstraeger>();
+    addBox(leer);
+}
+bool LeistungstraegerArea::saveContent()
+{
+    bool result = true;
+    foreach (LeistungstraegerBox *b, boxes)
+    {
+	if(!b->saveContent())
+	    result = false;
+    }
+    return result;
 }

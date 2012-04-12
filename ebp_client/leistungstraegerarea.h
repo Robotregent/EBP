@@ -4,36 +4,42 @@
 #include <QWidget>
 #include <QList>
 #include <EBPdb/Leistungstraeger.hxx>
+#include <QBoxLayout>
+#include "leistungstraegerbox.h"
 #include "sessioncontext.h"
 #include "savecontentinterface.h"
-#include <QGridLayout>
+
 
 namespace Ui {
     class LeistungstraegerArea;
 }
 
-class LeistungstraegerArea : public QWidget
+class LeistungstraegerArea : public QWidget , public SaveContentInterface
 {
     Q_OBJECT
-    const SessionContext &con;
-    QList <QSharedPointer< ebp::Leistungstraeger > > bewohner_leistungstraeger;
-    void initField();
+    SessionContext &context;
+    QList <QSharedPointer< ebp::Leistungstraeger > > leistungstraeger;
+    QList <LeistungstraegerBox *> boxes;
+    void initBoxes();
 
 
 public:
-    explicit LeistungstraegerArea(const SessionContext &context,QWidget *parent = 0);
+    explicit LeistungstraegerArea(SessionContext &_context,QWidget *parent = 0);
     ~LeistungstraegerArea();
+    bool saveContent();
 
 private:
     Ui::LeistungstraegerArea *ui;
-    void setBoxesInColumn();
-    void setBoxesInTable(int columns);
-    int entryCount;
-    int col;
-    QGridLayout *grid;
+//    void setBoxesInColumn();
+//    void setBoxesInTable(int columns)
+    int boxCount;
+    int columns;
+//    QGridLayout *grid;
+    QList<QVBoxLayout *> VLayouts;
+    void addBox(QSharedPointer<ebp::Leistungstraeger> newLeistungstraeger);
 
 private slots:
-    void on_pushButton_clicked();
+    void on_neuerTraegerButton_clicked();
 };
 
 #endif // LEISTUNGSTRAEGERAREA_H

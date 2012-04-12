@@ -7,24 +7,19 @@
 #include <QTextEdit>
 #include <QTextBlock>
 
-LeistungstraegerBox::LeistungstraegerBox(const SessionContext &context,QWidget *parent,QSharedPointer< ebp::Leistungstraeger > currentLeistungstraeger) :
+LeistungstraegerBox::LeistungstraegerBox(SessionContext &_context, QWidget *parent,QSharedPointer< ebp::Leistungstraeger > currentLeistungstraeger) :
     QGroupBox(parent),
-    con(context),
-    Ltraeger(currentLeistungstraeger),
+    leistungstraeger(currentLeistungstraeger),
+    context(_context),
     ui(new Ui::LeistungstraegerBox)
 {
     ui->setupUi(this);
-    if(Ltraeger!=0);
-        this->initField();
+    if (leistungstraeger.isNull())
+	createLeistungstraeger();
+
+    this->initField();
 }
-/*LeistungstraegerBox::LeistungstraegerBox(const SessionContext &context,QWidget *parent) :
-    QGroupBox(parent),
-    con(context),
-    Ltraeger(currentLeistungstraeger),
-    ui(new Ui::LeistungstraegerBox)
-{
-    ui->setupUi(this);
-}*/
+
 
 LeistungstraegerBox::~LeistungstraegerBox()
 {
@@ -33,52 +28,49 @@ LeistungstraegerBox::~LeistungstraegerBox()
 
 void LeistungstraegerBox::initField()
 {
-    ui->leistungstrGerLineEdit->setText(Ltraeger->name());
-    ui->straELineEdit->setText(Ltraeger->strasse());
-    ui->pLZLineEdit->setText(Ltraeger->plz());
-    ui->ortLineEdit->setText(Ltraeger->ort());
-    ui->vornameLineEdit->setText(Ltraeger->ansprechpartner().section("*:*",0,0));
-    ui->nachnameLineEdit->setText(Ltraeger->ansprechpartner().section("*:*",1,1));
-    ui->telefonLineEdit->setText(Ltraeger->telefon());
-    ui->faxLineEdit->setText(Ltraeger->fax());
-    ui->eMailLineEdit->setText(Ltraeger->email());
-    ui->textEdit->setText(Ltraeger->anmerkung());
+    ui->leistungstrGerLineEdit->setText(leistungstraeger->name());
+    ui->straELineEdit->setText(leistungstraeger->strasse());
+    ui->pLZLineEdit->setText(leistungstraeger->plz());
+    ui->ortLineEdit->setText(leistungstraeger->ort());
+    ui->vornameLineEdit->setText(leistungstraeger->ansprechpartner().section("*:*",0,0));
+    ui->nachnameLineEdit->setText(leistungstraeger->ansprechpartner().section("*:*",1,1));
+    ui->telefonLineEdit->setText(leistungstraeger->telefon());
+    ui->faxLineEdit->setText(leistungstraeger->fax());
+    ui->eMailLineEdit->setText(leistungstraeger->email());
+    ui->textEdit->setText(leistungstraeger->anmerkung());
 }
 
 bool LeistungstraegerBox::saveContent()
 {
-    if (con.curBewohner!=NULL)
+    bool result = false;
+    if (context.curBewohner!=NULL)
     {
-        if (Ltraeger == 0)
-            createLeistungstraeger();
-        Ltraeger->name(ui->leistungstrGerLineEdit->text());
-        Ltraeger->strasse(ui->straELineEdit->text());
-        Ltraeger->plz(ui->pLZLineEdit->text());
-        Ltraeger->ort(ui->ortLineEdit->text());
-        Ltraeger->ansprechpartner(ui->vornameLineEdit->text()+"*:*"+ui->nachnameLineEdit->text());
-        Ltraeger->telefon(ui->telefonLineEdit->text());
-        Ltraeger->fax(ui->faxLineEdit->text());
-        Ltraeger->email(ui->eMailLineEdit->text());
-        Ltraeger->anmerkung(ui->textEdit->toPlainText());
+	leistungstraeger->name(ui->leistungstrGerLineEdit->text());
+	leistungstraeger->strasse(ui->straELineEdit->text());
+	leistungstraeger->plz(ui->pLZLineEdit->text());
+	leistungstraeger->ort(ui->ortLineEdit->text());
+	leistungstraeger->ansprechpartner(ui->vornameLineEdit->text()+"*:*"+ui->nachnameLineEdit->text());
+	leistungstraeger->telefon(ui->telefonLineEdit->text());
+	leistungstraeger->fax(ui->faxLineEdit->text());
+	leistungstraeger->email(ui->eMailLineEdit->text());
+	leistungstraeger->anmerkung(ui->textEdit->toPlainText());
 
-        Ltraeger->update(this->con.curConnection);
-        return true;
+	if(leistungstraeger->update(this->context.curConnection))
+	    result = true;
+	else
+	    result =false;
+
     }
-    return false;
+    return result;
 }
 void LeistungstraegerBox::createLeistungstraeger()
 {
-    if(con.curBewohner!=NULL)
+    if(context.curBewohner!=NULL)
     {
-        this->bewohner_leistungstraeger=con.curBewohner->loadLeistungstraeger(con.curConnection);
-        QSharedPointer< ebp::Leistungstraeger > tmpPointer(new ebp::Leistungstraeger("Neuer Leistungsträger"));
-        tmpPointer->create(con.curConnection);
-        QSharedPointer<ebp::Bewohner> tempB = con.allBewohner.at(con.allBewohner.indexOf(con.curBewohner));;
-
-        ebp::Leistungstraeger::linkBewohner(tmpPointer,tempB);
-        //bewohner_verfuegungen.clear();
-        tmpPointer->update(this->con.curConnection);
-        con.curBewohner->update((this->con.curConnection));
-        bewohner_leistungstraeger.append(tmpPointer);
+	leistungstraeger = QSharedPointer<ebp::Leistungstraeger>(new ebp::Leistungstraeger("Neuer Leistungsträger"));
+	leistungstraeger->create(context.curConnection);
+	ebp::Leistungstraeger::linkBewohner(leistungstraeger,context.curBewohner);
+	leistungstraeger->update(this->context.curConnection);
+	//context.curBewohner->update((this->context.curConnection));
     }
 }
