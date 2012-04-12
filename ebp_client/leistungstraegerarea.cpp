@@ -80,6 +80,9 @@ void LeistungstraegerArea::on_neuerTraegerButton_clicked()
     QSharedPointer<ebp::Leistungstraeger> leer= QSharedPointer<ebp::Leistungstraeger>();
     addBox(leer);
 }
+/**
+  * \brief Speichern aller Leistungsträger
+  */
 bool LeistungstraegerArea::saveContent()
 {
     bool result = true;

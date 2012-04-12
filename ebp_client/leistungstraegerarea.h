@@ -30,11 +30,7 @@ public:
 
 private:
     Ui::LeistungstraegerArea *ui;
-//    void setBoxesInColumn();
-//    void setBoxesInTable(int columns)
-    int boxCount;
     int columns;
-//    QGridLayout *grid;
     QList<QVBoxLayout *> VLayouts;
     void addBox(QSharedPointer<ebp::Leistungstraeger> newLeistungstraeger);
 

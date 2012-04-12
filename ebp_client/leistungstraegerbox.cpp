@@ -39,7 +39,9 @@ void LeistungstraegerBox::initField()
     ui->eMailLineEdit->setText(leistungstraeger->email());
     ui->textEdit->setText(leistungstraeger->anmerkung());
 }
-
+/**
+  * \brief Speichern des Inhalts
+  */
 bool LeistungstraegerBox::saveContent()
 {
     bool result = false;
@@ -71,6 +73,5 @@ void LeistungstraegerBox::createLeistungstraeger()
 	leistungstraeger->create(context.curConnection);
 	ebp::Leistungstraeger::linkBewohner(leistungstraeger,context.curBewohner);
 	leistungstraeger->update(this->context.curConnection);
-	//context.curBewohner->update((this->context.curConnection));
     }
 }
