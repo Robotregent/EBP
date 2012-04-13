@@ -56,7 +56,7 @@ LeistungstraegerArea::~LeistungstraegerArea()
 }
 
 
-void LeistungstraegerArea::addBox(QSharedPointer<ebp::Leistungstraeger> newLeistungstraeger = 0)
+void LeistungstraegerArea::addBox(QSharedPointer<ebp::Leistungstraeger> newLeistungstraeger)
 {
     LeistungstraegerBox *aBox = new LeistungstraegerBox(context,this,newLeistungstraeger);
 

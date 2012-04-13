@@ -62,11 +62,11 @@ Außerdem lassen sich Klassen mit geringem Aufwandt persistent machen.
 
 \subsubsection{Code-Generierung}
 Kern des verwendeten Object-Relational-Mappers ODB ist ein spezieller Precompiler, der auf bestimmte Precompiler-Pragmas reagiert.
-Durch das Markieren einer Klassendefinition mit einer Pragma-Direktive können persistente Objekte der Klasse erstellt werden:
-\begin{verbatim}
+Durch das Markieren einer Klassendefinition mit einer Pragma-Direktive können persistente Objekte der Klasse erstellt werden:\\
+\begin{lstlisting}
 #pragma db object
 class Mitarbeiter { ... }
-\end{verbatim}
+\end{lstlisting}
 Der ODB-Compiler generiert daraufhin Code, der das gegebene Objekt auf eine Datenbankstruktur abbilden kann. Des weiteren wird auch die Datenbankstruktur in Form von SQL-Dateien generiert, die direkt an die verwendete Datenbank weitergereicht werden können um alle zur Laufzeit benötigten Tabellen zu erstellen. Auf diese Weise wird ebenso sichergestellt, dass Datenbank und Anwendung stets die selbe Struktur verwenden.\\
 \begin{figure*}[htp!]
 	\begin{center}
@@ -103,3 +103,15 @@ Um das Buildsystem (CMake) automatisch bei veränderungen des Quellcodes alle f�
 \end{figure*}
 
 \subsubsection{Abstraktion der Schnittstelle}
+Zweck der Bibliothek ist es die internen Abläufe des ORM Systems zu verbergen, und der Anwendung eine einfache, objektorientierte Schnittstelle zur Verfügung zu stellen.\\
+So lässt sich mit\\
+\begin{lstlisting}
+QSharedPointer<ebp::Mitarbeiter> mitarbeiter =
+	QSharedPointer<ebp::Mitarbeiter>
+	(
+		new ebp::Mitarbeiter( "LoginName", ebp::Mitarbeiter::WohngruppenRecht , "Name" )
+	);
+mitarbeiter->create( connection, "Passwort" );
+\end{lstlisting}
+ein neuer Mitarbeiter in der Datenbank erstellen. Gleichzeitig wird auch ein neuer Datenbankbenutzer angelegt, der intern mit den Daten des Mitarbeiters verknüpft wird.
+Der Datenbankbenutzer erhält dabei nur die Berechtigungen an den Datenbanktabellen, die er für seinen ''Rechtestatus`` benötigt.

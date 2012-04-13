@@ -17,7 +17,7 @@ class LeistungstraegerBox : public QGroupBox
     QSharedPointer< ebp::Leistungstraeger > leistungstraeger;
     SessionContext &context;
 public:
-    explicit LeistungstraegerBox(SessionContext &_context, QWidget *parent = 0,QSharedPointer< ebp::Leistungstraeger > currentLeistungstraeger = 0);
+    explicit LeistungstraegerBox(SessionContext &_context, QWidget *parent = 0,QSharedPointer< ebp::Leistungstraeger > currentLeistungstraeger = QSharedPointer< ebp::Leistungstraeger >());
    // explicit LeistungstraegerBox(const SessionContext &context,QWidget *parent = 0);
     static const int fixedWidth = 670;
     ~LeistungstraegerBox();
