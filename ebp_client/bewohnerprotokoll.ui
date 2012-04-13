@@ -30,7 +30,7 @@
    </property>
    <layout class="QGridLayout" name="gridLayout" columnstretch="0,3,0">
     <item row="0" column="1" rowspan="2">
-     <widget class="QTextBrowser" name="textBrowser">
+     <widget class="QTextBrowser" name="ProtokollText">
       <property name="autoFormatting">
        <set>QTextEdit::AutoAll</set>
       </property>
@@ -52,7 +52,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QDateTimeEdit" name="dateTimeEdit">
+       <widget class="QDateTimeEdit" name="ProtokollDatum">
         <property name="calendarPopup">
          <bool>true</bool>
         </property>
@@ -61,7 +61,7 @@
       <item>
        <widget class="QTableWidget" name="tableWidget">
         <property name="dragEnabled">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
         <property name="alternatingRowColors">
          <bool>true</bool>
@@ -106,7 +106,7 @@
          <string>neuer Teilnehmer</string>
         </property>
         <property name="icon">
-         <iconset resource="images.qrc">
+         <iconset>
           <normaloff>:/costumer/Teilnehmer</normaloff>:/costumer/Teilnehmer</iconset>
         </property>
        </widget>
@@ -130,7 +130,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QListWidget" name="listWidget"/>
+       <widget class="QListWidget" name="ProtokollListe"/>
       </item>
       <item>
        <widget class="QGroupBox" name="groupBox">
@@ -151,7 +151,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QDateTimeEdit" name="dateTimeEdit_2">
+            <widget class="QDateTimeEdit" name="NewProtokollDatum">
              <property name="calendarPopup">
               <bool>true</bool>
              </property>
@@ -165,7 +165,7 @@
             <string>Anlegen</string>
            </property>
            <property name="icon">
-            <iconset resource="images.qrc">
+            <iconset>
              <normaloff>:/actions/plus</normaloff>:/actions/plus</iconset>
            </property>
           </widget>
@@ -178,8 +178,6 @@
    </layout>
   </widget>
  </widget>
- <resources>
-  <include location="images.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

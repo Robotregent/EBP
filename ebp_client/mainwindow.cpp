@@ -237,7 +237,7 @@ QWidget *MainWindow::getContentWidget(int ContentTyp)
 		break;
 	    case MainWindow::BProtokollWidget:
 		{
-		    result = new BewohnerProtokoll(this);
+		    result = new BewohnerProtokoll(thisSession,this);
 		    this->setTextTransferAgent(dynamic_cast<TextTransferInterface*>(result));
 		    break;
 		}

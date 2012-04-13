@@ -6,6 +6,7 @@
 #include <projekt.h>
 #include "sessioncontext.h"
 #include "savecontentinterface.h"
+#include "choosedialog.h"
 
 namespace Ui {
     class Projekt;
@@ -37,6 +38,7 @@ private:
     QSharedPointer < ebp::Projekt > curProject;
     QSharedPointer < ebp::Mitarbeiter > potentiallyNewMa;
     void setProjekt();
+    ChooseMaDialog *maDialog;
 
 };
 

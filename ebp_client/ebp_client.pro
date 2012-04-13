@@ -29,7 +29,8 @@ HEADERS += \
     newereignisdialog.h \
     custumlistwidgetitem.h \
     choosedialog.h \
-    dokutypwrapper.h
+    dokutypwrapper.h \
+    customtablewidgetitem.h
 
 SOURCES += \
     mainwindow.cpp \
