@@ -110,7 +110,7 @@ void CreateTest::Protokoll()
 {
     for( int i = 0 ; i< 10; i++)
     {
-        QSharedPointer< ebp::Protokoll > aProtokoll = QSharedPointer<ebp::Protokoll> (new ebp::Protokoll("TEstinhalt",QDate::currentDate()));
+	QSharedPointer< ebp::Protokoll > aProtokoll = QSharedPointer<ebp::Protokoll> (new ebp::Protokoll("TEstinhalt",QDateTime::currentDateTime()));
         QVERIFY(!aProtokoll.isNull());
         QVERIFY(aProtokoll->create(aConnection));
     }

@@ -58,7 +58,7 @@ bool BewohnerProtokoll::saveContent()
     {
 	curProtokoll->inhalt(this->ui->ProtokollText->toPlainText());
 
-	curProtokoll->datum(this->ui->ProtokollDatum->date());
+	curProtokoll->datum(this->ui->ProtokollDatum->dateTime());
 
 	sync();
 
@@ -138,7 +138,7 @@ void BewohnerProtokoll::chosenMitarbeiter(QSharedPointer<ebp::Mitarbeiter> chose
 void BewohnerProtokoll::fillFields()
 {
     this->ui->ProtokollText->setText(curProtokoll->inhalt());
-    this->ui->ProtokollDatum->setDate(curProtokoll->datum());
+    this->ui->ProtokollDatum->setDateTime(curProtokoll->datum());
 
     int rows = this->ui->tableWidget->rowCount();
 
@@ -188,7 +188,7 @@ void BewohnerProtokoll::on_NewProtokollButton_clicked()
 {
     QDateTime date = this->ui->NewProtokollDatum->dateTime();
 
-    QSharedPointer< ebp::Protokoll > p = QSharedPointer<ebp::Protokoll>(new ebp::Protokoll(" ",date.date()));
+    QSharedPointer< ebp::Protokoll > p = QSharedPointer<ebp::Protokoll>(new ebp::Protokoll(" ",date));
 
     if (p->create(context.curConnection))
     {

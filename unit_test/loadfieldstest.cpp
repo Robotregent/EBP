@@ -146,7 +146,7 @@ void LoadFieldsTest::useProtokoll()
     QVERIFY(protokollList.count()>1);
     for ( int i =0; i<protokollList.count();i++)
     {
-        QCOMPARE(protokollList.at(i)->datum(),QDate(2012,4,1));
+	QCOMPARE(protokollList.at(i)->datum(),QDateTime(QDate(2012,4,1)));
 
         QCOMPARE(protokollList.at(i)->inhalt(),QString("VIEl Testinhalt"));
 
