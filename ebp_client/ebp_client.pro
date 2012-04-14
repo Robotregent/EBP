@@ -27,10 +27,10 @@ HEADERS += \
     texttransferagent.h \
     savecontentinterface.h \
     newereignisdialog.h \
-    custumlistwidgetitem.h \
     choosedialog.h \
     dokutypwrapper.h \
-    customtablewidgetitem.h
+    customtablewidgetitem.h \
+    customlistwidgetitem.h
 
 SOURCES += \
     mainwindow.cpp \

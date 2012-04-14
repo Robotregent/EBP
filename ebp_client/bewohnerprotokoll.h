@@ -29,11 +29,16 @@ private slots:
 
     void on_ProtokollListe_currentRowChanged(int currentRow);
 
+    void on_NewProtokollButton_clicked();
+
 private:
     Ui::BewohnerProtokoll *ui;
     SessionContext &context;
     void init();
-    void initHeader();
+    void initHeader();    
+    void syncSchreiber(QSharedPointer <ebp::Mitarbeiter> s);
+    void syncTeilnehmer(QSharedPointer <ebp::Mitarbeiter> t);
+    void sync();
     ChooseMaDialog *maDialog;
     QList< QSharedPointer <ebp::Mitarbeiter> > schreiber;
     QList< QSharedPointer <ebp::Mitarbeiter> > teilnehmer;

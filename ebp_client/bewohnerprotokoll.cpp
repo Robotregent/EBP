@@ -2,7 +2,7 @@
 #include "ui_bewohnerprotokoll.h"
 #include <QDebug>
 #include "customtablewidgetitem.h"
-
+#include "customlistwidgetitem.h"
 BewohnerProtokoll::BewohnerProtokoll(SessionContext &_conntext, QWidget *parent) :
     QScrollArea(parent),
     ui(new Ui::BewohnerProtokoll),
@@ -60,7 +60,7 @@ bool BewohnerProtokoll::saveContent()
 
 	curProtokoll->datum(this->ui->ProtokollDatum->date());
 
-	ebp::Protokoll::linkBewohner(curProtokoll,context.curBewohner);
+	sync();
 
 	if (curProtokoll->update(context.curConnection))
 	    result = true;
@@ -88,12 +88,29 @@ void BewohnerProtokoll::init()
 
     if (!context.curBewohner.isNull())
     {
+	bool editable = false;
+
+	if(!context.curBewohner->bezugsbetreuer().isNull())
+	    if(context.curBewohner->bezugsbetreuer()->login()== context.curMitarbeiter->login())
+		editable = true;
+
+
+	this->ui->NewProtokollButton->setEnabled(editable);
+	this->ui->addTeilnehmer->setEnabled(editable);
+
+
 	context.curBewohner->reload(context.curConnection);
 
 	protokolle = context.curBewohner->loadProtokolle(context.curConnection);
 
 	if (protokolle.count()>0)
 	{
+	    foreach ( const QSharedPointer<ebp::Protokoll> p , protokolle)
+	    {
+		QListWidgetItem *item = new QListWidgetItem(p->datum().toString(),this->ui->ProtokollListe);
+		Q_UNUSED(item);
+	    }
+
 	    curProtokoll =protokolle.first();
 	    schreiber = curProtokoll->loadSchreiber(context.curConnection);
 	    teilnehmer = curProtokoll->loadTeilnehmer(context.curConnection);
@@ -123,6 +140,13 @@ void BewohnerProtokoll::fillFields()
     this->ui->ProtokollText->setText(curProtokoll->inhalt());
     this->ui->ProtokollDatum->setDate(curProtokoll->datum());
 
+    int rows = this->ui->tableWidget->rowCount();
+
+    for (int i = 0; i < rows;i++ )
+    {
+	this->ui->tableWidget->removeRow(0);
+    }
+
     if(schreiber.count()>0)
 	fillParticipants(schreiber,Qt::Checked);
 
@@ -149,10 +173,82 @@ void BewohnerProtokoll::fillParticipants(QList< QSharedPointer < ebp::Mitarbeite
 
 void BewohnerProtokoll::on_ProtokollListe_currentRowChanged(int currentRow)
 {
-    if (currentRow >= protokolle.count()-1)
+    if (currentRow < protokolle.count())
     {
 	curProtokoll = protokolle.at(currentRow);
 
+	schreiber = curProtokoll->loadSchreiber(context.curConnection);
+	teilnehmer = curProtokoll->loadTeilnehmer(context.curConnection);
+
 	fillFields();
+    }
+}
+
+void BewohnerProtokoll::on_NewProtokollButton_clicked()
+{
+    QDateTime date = this->ui->NewProtokollDatum->dateTime();
+
+    QSharedPointer< ebp::Protokoll > p = QSharedPointer<ebp::Protokoll>(new ebp::Protokoll(" ",date.date()));
+
+    if (p->create(context.curConnection))
+    {
+	ebp::Protokoll::linkBewohner(p,context.curBewohner);
+	p->update(context.curConnection);
+	context.curBewohner->reload(context.curConnection);
+
+	protokolle.append(p);
+
+	QListWidgetItem *item = new QListWidgetItem(date.toString(),this->ui->ProtokollListe);
+	Q_UNUSED(item);
+
+    }
+}
+
+void BewohnerProtokoll::syncSchreiber(QSharedPointer<ebp::Mitarbeiter> s)
+{
+    foreach ( const QSharedPointer<ebp::Mitarbeiter> ma, schreiber)
+    {
+	if (ma->login()==s->login())
+	    return;
+    }
+    ebp::Protokoll::linkSchreiber(curProtokoll,s);
+    foreach ( const QSharedPointer<ebp::Mitarbeiter> ma, teilnehmer)
+    {
+	if (ma->login()==s->login())
+	    ebp::Protokoll::unlinkTeilnehmer(curProtokoll,s);
+    }
+}
+void BewohnerProtokoll::syncTeilnehmer(QSharedPointer<ebp::Mitarbeiter> t)
+{
+    foreach ( const QSharedPointer<ebp::Mitarbeiter> ma, teilnehmer)
+    {
+	if (ma->login()==t->login())
+	    return;
+    }
+    ebp::Protokoll::linkTeilnehmer(curProtokoll,t);
+    foreach ( const QSharedPointer<ebp::Mitarbeiter> ma, schreiber)
+    {
+	if (ma->login()==t->login())
+	    ebp::Protokoll::unlinkSchreiber(curProtokoll,t);
+    }
+}
+void BewohnerProtokoll::sync()
+{
+    QTableWidgetItem *curFlag;
+    CustomTableWidgetItem<ebp::Mitarbeiter> *curMa;
+    for (int i = 0 ; i < this->ui->tableWidget->rowCount(); i++)
+    {
+	curFlag = this->ui->tableWidget->item(i,0);
+	curMa =(CustomTableWidgetItem<ebp::Mitarbeiter> *) this->ui->tableWidget->item(i,1);
+	if (curFlag->checkState()==Qt::Checked)
+	{
+	    //Schreiber
+	    syncSchreiber(curMa->getCitem());
+	}
+	else
+	{
+	    //Teilnehmer
+	    syncTeilnehmer(curMa->getCitem());
+	}
     }
 }

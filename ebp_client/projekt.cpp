@@ -1,7 +1,7 @@
 #include "projekt.h"
 #include "ui_projekt.h"
 #include "choosedialog.h"
-#include "custumlistwidgetitem.h"
+#include "customlistwidgetitem.h"
 #include <QDebug>
 
 Projekt::Projekt(SessionContext &_curContext, QWidget *parent) :

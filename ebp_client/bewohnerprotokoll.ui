@@ -40,7 +40,7 @@
      </widget>
     </item>
     <item row="0" column="2">
-     <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0,0">
+     <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0">
       <property name="sizeConstraint">
        <enum>QLayout::SetMinimumSize</enum>
       </property>
@@ -106,15 +106,8 @@
          <string>neuer Teilnehmer</string>
         </property>
         <property name="icon">
-         <iconset>
+         <iconset resource="images.qrc">
           <normaloff>:/costumer/Teilnehmer</normaloff>:/costumer/Teilnehmer</iconset>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButton">
-        <property name="text">
-         <string>Speichern</string>
         </property>
        </widget>
       </item>
@@ -141,6 +134,9 @@
          <property name="rightMargin">
           <number>0</number>
          </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,2">
            <item>
@@ -160,12 +156,12 @@
           </layout>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_2">
+          <widget class="QPushButton" name="NewProtokollButton">
            <property name="text">
             <string>Anlegen</string>
            </property>
            <property name="icon">
-            <iconset>
+            <iconset resource="images.qrc">
              <normaloff>:/actions/plus</normaloff>:/actions/plus</iconset>
            </property>
           </widget>
@@ -178,6 +174,8 @@
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="images.qrc"/>
+ </resources>
  <connections/>
 </ui>
