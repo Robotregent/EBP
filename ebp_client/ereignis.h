@@ -22,6 +22,10 @@ public:
 private slots:
     void on_pushButton_clicked();
 
+    void on_setFilterButton_clicked();
+
+    void on_clearFilterButton_clicked();
+
 private:
     Ui::Ereignis *ui;
     QList<EinzelEreignis *> EreignisListe;

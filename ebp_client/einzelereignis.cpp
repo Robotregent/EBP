@@ -30,3 +30,7 @@ TextTransferInformation EinzelEreignis::getSelectedText()
     }
     return result;
 }
+QDateTime EinzelEreignis::getDatum()
+{
+    return this->ui->datumDateTimeEdit->dateTime();
+}

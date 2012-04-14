@@ -16,6 +16,7 @@ class EinzelEreignis : public QFrame, public TextTransferInterface
 public:
     explicit EinzelEreignis(QWidget *parent = 0);
     void setContent(QDateTime datum, QString mitarbeiter, QString text);
+    QDateTime getDatum();
     ~EinzelEreignis();
     TextTransferInformation getSelectedText();
 

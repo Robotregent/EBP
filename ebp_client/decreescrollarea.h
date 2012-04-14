@@ -14,14 +14,14 @@ namespace Ui {
 class DecreeScrollArea : public QScrollArea, public SaveContentInterface
 {
     Q_OBJECT
-     const SessionContext &con;
-      QList <QSharedPointer< ebp::Verfuegung > > bewohner_verfuegungen;
-      QSharedPointer< ebp::Verfuegung > Fixierung;
-      QSharedPointer< ebp::Verfuegung > Bettgitter;
-      QSharedPointer< ebp::Verfuegung > Psychopharmaka;
-      QSharedPointer< ebp::Verfuegung > Patientenverfuegung;
-      QDate voidDate;
-     void initField();
+    const SessionContext &con;
+    QList <QSharedPointer< ebp::Verfuegung > > bewohner_verfuegungen;
+    QSharedPointer< ebp::Verfuegung > Fixierung;
+    QSharedPointer< ebp::Verfuegung > Bettgitter;
+    QSharedPointer< ebp::Verfuegung > Psychopharmaka;
+    QSharedPointer< ebp::Verfuegung > Patientenverfuegung;
+    QDate voidDate;
+    void initField();
 
 public:
     explicit DecreeScrollArea(const SessionContext &context,QWidget *parent = 0);

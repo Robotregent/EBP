@@ -44,27 +44,36 @@ void Ereignis::on_pushButton_clicked()
 		QSharedPointer< ebp::Wohngruppenereignis > newEreignis = QSharedPointer< ebp::Wohngruppenereignis >(new ebp::Wohngruppenereignis(info.time,info.EreignisText));
 
 		if(newEreignis->create(context.curConnection))
+		{
 		    qDebug()<<"Erfolgreich angelegt";
+		    ebp::Wohngruppenereignis::linkSchreiber(newEreignis,context.curMitarbeiter);
+		    ebp::Wohngruppenereignis::linkWohngruppe(newEreignis,context.curWohngruppe);
+
+		    if (newEreignis->update(context.curConnection))
+		    {
+			qDebug()<<"Erfolgreich upgedated";
+			tmp->setContent(info.time,context.curMitarbeiter->name(),info.EreignisText);
+
+			//Neue Eingabe anzeigen
+			this->EreignisListe.prepend(tmp);
+			this->pufferLayout->insertWidget(0,tmp);
+
+			//TextransferInterface registrieren
+			this->transferAgent->registerNewInterface(tmp);
+
+			context.curMitarbeiter->reload(context.curConnection);
+			context.curWohngruppe->reload(context.curConnection);
+		    }
+		    else
+			qDebug()<<"Fehlschlag beim updaten";
+
+
+
+		}
 		else
 		    qDebug()<<"Fehlschlag beim angelegen";
 
-		ebp::Wohngruppenereignis::linkSchreiber(newEreignis,context.curMitarbeiter);
-		ebp::Wohngruppenereignis::linkWohngruppe(newEreignis,context.curWohngruppe);
 
-		if (newEreignis->update(context.curConnection))
-		    qDebug()<<"Erfolgreich upgedated";
-		else
-		    qDebug()<<"Fehlschlag beim updaten";
-
-
-		tmp->setContent(info.time,context.curMitarbeiter->name(),info.EreignisText);
-
-		//Neue Eingabe anzeigen
-		this->EreignisListe.prepend(tmp);
-		this->pufferLayout->insertWidget(0,tmp);
-
-		//TextransferInterface registrieren
-		this->transferAgent->registerNewInterface(tmp);
 	    }
 	}
     }
@@ -91,4 +100,25 @@ void Ereignis::initEreignisse()
 	//TextransferInterface registrieren
 	this->transferAgent->registerNewInterface(tmp);
     }
+}
+
+void Ereignis::on_setFilterButton_clicked()
+{
+    QDateTime filter = this->ui->dateTimeEdit->dateTime();
+    foreach (EinzelEreignis *e, EreignisListe)
+    {
+	if ( e->getDatum()==filter)
+	    e->setVisible(true);
+	else
+	    e->setVisible(false);
+    }
+}
+
+void Ereignis::on_clearFilterButton_clicked()
+{
+    foreach (EinzelEreignis *e, EreignisListe)
+    {
+	e->setVisible(true);
+    }
+    this->ui->dateTimeEdit->clear();
 }
