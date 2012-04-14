@@ -1,5 +1,16 @@
 \section{Technische Realisierung}
 
+\subsection{Architektur}
+Das Projekt ist in folgende Module aufgeteilt:
+\begin{itemize}
+	\item EBP-Client - ToDo
+	\item AdminDialog - ToDo
+	\item libEBPdb - ToDo
+	\item Unit-Tests - ToDo
+\end{itemize}
+
+\newpage
+
 \subsection{Eingesetzte Entwurfsmuster}
 \subsubsection{Mediator Pattern - Der Text Transfer Agent}
 Neben der Verwaltung von klienten- und wohngruppenspezifischen Daten ist die Überführung von Textstücken aus verschiedenen Teilen des
@@ -29,11 +40,15 @@ Auf einen abstrakten Mediator wird hier verzichtet
 \subsubsection{Observer Pattern - Signal Slot Konzept}
 \subsubsection{Model View Controller Pattern - Datenvisualisierung}
 
-\subsection{Architektur}
-\subsubsection{Aufteilung der Module}
-\subsubsection{Buildsystem}
-
 \subsection{Qt als Grafikbibliothek}
+
+\newpage
+
+\subsection{Buildsystem}
+Da das Projekt \textit{Qt} als einen zentralen Bestandteil verwendet, ist es naheliegend das \textit{Qt}-eigene Buildsystem \textit{QMake} einzusetzen. Insbesondere die Verwendung von \textit{QMake} innerhalb des \textit{QtCreator}s kann die Entwicklung einfacher Anwendungen erleichtern.\\
+Eine bedeutende Schwierigkeit von \textit{QMake} ist es jedoch, komplexere Build-Prozesse zu automatisieren, wie beispielsweise die integration des verwendeten \textit{ORM}s in den Build-Vorgang der Persistenzschicht.\\
+Daher wurde in diesem Projekt ein zweigleisiges Buildsystem eingesetzt:\\
+Zum einen lassen sich die GUI-Anwendungen weiterhin mit \textit{QMake} erstellen. Zum anderen kann das komplette Projekt samt Bibliothek der Persistenzschicht mit \textit{CMake} kompiliert werden.\\
 
 \newpage
 
@@ -84,7 +99,7 @@ Die umgesetzte Lösung ist weitestgehend frei von datenbankspezifischen Aufrufen
 Lediglich das User-Management, um ``Mitarbeiter`` auf Datenbankbenutzer abzubilden verwendet Datenbankspezifische SQL-Kommandos, die über ODB abgewickelt werden.
 
 \subsubsection{Integration in das Buildsystem}
-Um das Buildsystem (CMake) automatisch bei veränderungen des Quellcodes alle für ODB benötigten Dateien generieren zu lassen, wird im Buildscript wie folgt vorgegangen:
+Um das Buildsystem (CMake) automatisch bei Veränderungen des Quellcodes alle für ODB benötigten Dateien generieren zu lassen, wird im Buildscript wie folgt vorgegangen:
 \begin{enumerate}
 \item Suchen aller Dateien die ODB spezifische Pragma-Definitionen beinhalten.
 \item Erstellen einer Vorschrift um für jede so gefundene Datei den ODB-Compiler aufzurufen.\\
@@ -109,9 +124,13 @@ So lässt sich mit\\
 QSharedPointer<ebp::Mitarbeiter> mitarbeiter =
 	QSharedPointer<ebp::Mitarbeiter>
 	(
-		new ebp::Mitarbeiter( "LoginName", ebp::Mitarbeiter::WohngruppenRecht , "Name" )
+		new ebp::Mitarbeiter( "LoginName", ebp::Mitarbeiter::WohngruppenRecht, "Name" )
 	);
 mitarbeiter->create( connection, "Passwort" );
 \end{lstlisting}
 ein neuer Mitarbeiter in der Datenbank erstellen. Gleichzeitig wird auch ein neuer Datenbankbenutzer angelegt, der intern mit den Daten des Mitarbeiters verknüpft wird.
 Der Datenbankbenutzer erhält dabei nur die Berechtigungen an den Datenbanktabellen, die er für seinen ''Rechtestatus`` benötigt.
+
+\newpage
+
+\subsection{Unit-Tests}
