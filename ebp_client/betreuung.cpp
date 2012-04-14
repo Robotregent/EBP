@@ -4,9 +4,9 @@
 #include <QMessageBox>
 
 Betreuung::Betreuung(SessionContext &_context, QWidget *parent) :
-    QWidget(parent),
-    conntext(_context),
-    ui(new Ui::Betreuung)
+    QWidget(parent),   
+    ui(new Ui::Betreuung),
+    conntext(_context)
 {
     ui->setupUi(this);
     //this->ui->mitarbeiternrLabel->resize(this->ui->aufentahltsbestimmungLabel->size());

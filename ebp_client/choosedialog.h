@@ -2,7 +2,7 @@
 #define CHOOSEDIALOG_H
 
 #include <QDialog>
-#include "custumlistwidgetitem.h"
+#include "customlistwidgetitem.h"
 #include <EBPdb/Mitarbeiter.hxx>
 #include <EBPdb/Bewohner.hxx>
 

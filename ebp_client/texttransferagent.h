@@ -23,12 +23,12 @@ private slots:
 
     void on_pushButton_clicked();
 
-private:
-    Ui::TextTransferAgent *ui;
-    QList<TextTransferInterface *> textInterfaces;
+private: 
     const SessionContext &_context;
+    Ui::TextTransferAgent *ui;
     QSharedPointer< ebp::Bewohner > selectedBewohner;
     QList < QSharedPointer < ebp::Dokumentation > > dokus;
+    QList<TextTransferInterface *> textInterfaces;
 };
 
 #endif // TEXTTRANSFERAGENT_H

@@ -1,7 +1,7 @@
 #include "projekt.h"
 #include "ui_projekt.h"
 #include "choosedialog.h"
-#include "custumlistwidgetitem.h"
+#include "customlistwidgetitem.h"
 #include <QDebug>
 
 Projekt::Projekt(SessionContext &_curContext, QWidget *parent) :
@@ -25,10 +25,20 @@ Projekt::Projekt(SessionContext &_curContext, QWidget *parent) :
 	curProject=projects.first();
 	setProjekt();
     }
+
+    maDialog = NULL;
+
+    maDialog = new ChooseMaDialog(ebp::Mitarbeiter::loadAll(curContext.curConnection),"Mitarbeiter wählen:",this);
+    QObject::connect(maDialog,SIGNAL(chosen(QSharedPointer<ebp::Mitarbeiter>)),this, SLOT(setChosenMa(QSharedPointer<ebp::Mitarbeiter>)));
 }
 
 Projekt::~Projekt()
 {
+    if ( maDialog != NULL)
+    {
+	maDialog->disconnect(this);
+	delete maDialog;
+    }
     delete ui;
 }
 
@@ -65,9 +75,9 @@ void Projekt::on_pushButton_clicked()
   */
 void Projekt::on_pushButton_2_clicked()
 {
-    ChooseMaDialog *dialog = new ChooseMaDialog(ebp::Mitarbeiter::loadAll(curContext.curConnection),"Mitarbeiter wählen:",this);
-    QObject::connect(dialog,SIGNAL(chosen(QSharedPointer<ebp::Mitarbeiter>)),this, SLOT(setChosenMa(QSharedPointer<ebp::Mitarbeiter>)));
-    dialog->show();
+
+    maDialog->show();
+
 }
 /**
   * \brief Implementiert das TextTransferInterface und gibt den selektierten Text zurück.
