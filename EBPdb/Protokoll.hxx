@@ -31,7 +31,7 @@ namespace ebp
 		Protokoll
 		(
 			const QString & inhalt,
-			const QDate & datum
+			const QDateTime & datum
 		) :
 			inhalt_(inhalt),
 			datum_(datum)
@@ -43,8 +43,8 @@ namespace ebp
 		const QString & inhalt() const { return inhalt_; }
 		void inhalt( const QString & inhalt ) { inhalt_ = inhalt; }
 
-		const QDate & datum() const { return datum_; }
-		void datum( const QDate & datum ) { datum_ = datum; }
+		const QDateTime & datum() const { return datum_; }
+		void datum( const QDateTime & datum ) { datum_ = datum; }
 
 		const QSharedPointer<Bewohner> & bewohner() const { return bewohner_; }
 		DATABASEOBJECT_DECLARE_LINK( Protokoll, Bewohner, Bewohner )
@@ -66,7 +66,7 @@ namespace ebp
 
 		QString inhalt_;
 
-		QDate datum_;
+		QDateTime datum_;
 
 		QSharedPointer<Bewohner> bewohner_;
 
