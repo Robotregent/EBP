@@ -18,12 +18,12 @@ InfoFrame::~InfoFrame()
 }
 void InfoFrame::setCurBewohner(QString Bew)
 {
-    this->ui->BewohnerLabel->setText(  "Aktueller Bewohner:	"+Bew);
+    this->ui->BewohnerLabel->setText(  Bew);
     //this->_curBewohner=Bew
 }
 void InfoFrame::setCurWohngruppe(QString group)
 {
-    this->ui->WohngruppenLabel->setText( "Aktuelle Wohngruppe:	    "+ group);
+    this->ui->WohngruppenLabel->setText( group);
 }
 
 void InfoFrame::on_pushButton_clicked()

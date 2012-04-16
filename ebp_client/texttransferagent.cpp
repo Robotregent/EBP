@@ -70,7 +70,7 @@ void TextTransferAgent::on_pushButton_clicked()
 	    textfragment += info.textTransferFragment.toPlainText()+"\n\n";
 	    dokus.at(this->ui->PlanungsBox->currentIndex())->erlaeuterungen(textfragment);
 	    dokus.at(this->ui->PlanungsBox->currentIndex())->update(_context.curConnection);
-	    QMessageBox::information(this,"Texttransfer","Erfolgreich übertragen");
+	    QMessageBox::information(this,tr("Texttransfer"),tr("Erfolgreich übertragen"));
 	}
     }
 }
@@ -80,3 +80,11 @@ void TextTransferAgent::registerNewInterface(TextTransferInterface *newInterface
 }
 
 
+
+void TextTransferAgent::on_helpButton_clicked()
+{
+    QString text = "Wählen Sie als Ziel des Texttransfers den Bewohner und die Kategorie der Betreuungsplanung aus. \n\n";
+    text +="Markieren Sie die gewünschte Textstelle mit dem Cursor.\n\n";
+    text +="Drücken Sie auf Los!";
+    QMessageBox::information(this,"Hilfe",text);
+}
