@@ -22,7 +22,7 @@ public:
 	    result = "Wäschepflege";
 	    break;
 	case ebp::Dokumentation::partnerschaften:
-	    result = "Partenerschaften";
+	    result = "Partnerschaften";
 	    break;
 	case ebp::Dokumentation::koerperpflege:
 	    result = "Körperpflege";
