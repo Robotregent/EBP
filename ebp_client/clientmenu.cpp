@@ -9,7 +9,7 @@ ClientMenu::ClientMenu(QWidget *parent) :
     this->setCurrentItem(this->person);
     this->person->setText(0,tr("Person"));
     this->person->setIcon(0,QIcon(":/costumer/person.png"));
-    new QTreeWidgetItem(this->person,QStringList()<<tr("Betreuung"),2001);
+    new QTreeWidgetItem(this->person,QStringList()<<tr("Gesetzliche Betreuung"),2001);
     new QTreeWidgetItem(this->person,QStringList()<<tr("Verfügungen"),2002);
     new QTreeWidgetItem(this->person,QStringList()<<tr("Leistungsträger"),2003);
 
@@ -25,7 +25,7 @@ ClientMenu::ClientMenu(QWidget *parent) :
 
     ///Initialize documentation
     this->documentation = new QTreeWidgetItem(this,2300);
-    this->documentation->setText(0,tr("Betreuungsdokumentation"));
+    this->documentation->setText(0,tr("Betreuungsplanung"));
     this->documentation->setIcon(0,QIcon(":/costumer/documentation.png"));
     tmp = new QTreeWidgetItem(this->documentation,QStringList()<<tr("Lebensführung"),2310);
     tmp->setToolTip(0,tr("Alltägliche Lebensführungn"));

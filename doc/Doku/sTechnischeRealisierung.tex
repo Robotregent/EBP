@@ -29,19 +29,52 @@ Um nicht jeden Kommunikationsweg einzeln verwalten zu müssen, wurde der \textit
 eines Mediators definiert GAMMA wie folgt: \\
 ``Define an object that encapsulates how a set of objects interact. Mediator promotes loose coupling by keeping objects from reffering to each other explicitly, 
 and it lets you vary their interaction independently \cite[S. 273]{Entwurfsmuster}.''\\
-Beteiligte Objekte\cite[S. 277]{Entwurfsmuster}:
+\\
+\textbf{Beteiligte Objekte\cite[S. 277]{Entwurfsmuster}:}
 \begin{enumerate}
 	\item Eine Instanz des TextTransferAgent als konkreter Mediator. Auf eine abstrakte Mediatorklasse wurde auf Grund des klar definierten Aufgabengebiets verzichtet.
 	\begin{enumerate}
 		\item Implementiert die Interaktion zwischen den verschiedenen Kollegen.
 		\item Kennt alle zu verwaltenden Kollegenobjekte.
+		\item Deklaration der Mediatorklasse TextTransferAgent:
+		\begin{lstlisting}
+class TextTransferAgent : public QFrame
+{
+    Q_OBJECT
+
+public:
+    explicit TextTransferAgent(QList<TextTransferInterface *>Interfaces,const SessionContext &context, QWidget *parent = 0);
+    ~TextTransferAgent();
+    void registerNewInterface(TextTransferInterface *newInterface);
+
+private slots:
+    void on_bewohnerBox_currentIndexChanged(int index);
+    void on_losButton_clicked();
+    void on_helpButton_clicked();
+
+private:
+    const SessionContext &_context;
+    Ui::TextTransferAgent *ui;
+    QSharedPointer< ebp::Bewohner > selectedBewohner;
+    QList < QSharedPointer < ebp::Dokumentation > > dokus;
+    QList<TextTransferInterface *> textInterfaces;
+};
+		\end{lstlisting}
 	\end{enumerate}
-	item Beliebig viele Instanzen von Klassen, die das TextTransferInterface implementiert haben als Kollegen.
+	\item Beliebig viele Instanzen von Klassen, die das TextTransferInterface implementiert haben als Kollegen.
 	\begin{enumerate}
 		\item Jeder Kollege kennt das Mediatorobjekt.
 		\item Möchte ein Kollege mit einem anderen kommunizieren, tut er dies über den Mediator.
 		\item Die Kommunikation zwischen den Kollegen ist in dieser Implementierung unidirektional. Klassen, die das TextTransferInterface implementiert haben dienen stets 
 			als Quelle für den Texttransfer. Als Ziel für den Texttransfer stehen dem Meditor über das aktive Bewohner Objekt alle Instanzen der Betreuungsplanung zur Verfügung.
+		\item Deklaration des Kollegeninterfaces TextTransferInterface:
+		\begin{lstlisting}
+class TextTransferInterface
+{
+public:
+    virtual TextTransferInformation getSelectedText()=0;
+};
+		\end{lstlisting}
 	\end{enumerate}
 \end{enumerate}
 Abbildung \ref{strukturiert} zeigt die Kommunikationswege eines Texttransfers zwischen den einzelnen Objekten, koordiniert durch ein Mediatorobjekt. 
@@ -51,7 +84,33 @@ Abbildung \ref{strukturiert} zeigt die Kommunikationswege eines Texttransfers zw
 	\label{strukturiert}
 \end{figure*}
 \subsubsection{Observer Pattern - Signal Slot Konzept}
-\subsubsection{Model View Controller Pattern - Datenvisualisierung}
+Ein klassisches Konzept zur Kommunikation zwischen Objekten stellen \textit{Events} und \textit{Eventhandler} dar. Dieses Konzept ist allerdings nicht typsicher und unflexibel, da es für ein \textit{Events} auch nur einen \textit{Eventhandler} geben kann\cite[S. 32]{Qt4}. Qt hingegen nutzt zur Kommunikation zwischen Objekten das \textit{Signal Slot Konzept}, das wie ein Observer Pattern aufgebaut ist. GAMMA beschreibt das Observer Pattern wie folgt: \\
+"Define a one-to-many dependency between objects so that when one object changes state, all its dependents are notified and updated automatically\cite[S. 293]{Entwurfsmuster}."\\
+Qt realisiert dies, indem Funktionen einer Klasse durch das Schlüsselwort \textit{Slot} gekennzeichnet werden können. Diese \textit{Slots} werden mit einem \textit{Signal} verbunden und sind damit als \textit{Observer} zu betrachten. Das \textit{Subject} ist ein Funktionsprototyp, der durch das Schlüsselwort \textit{Signal} gekennzeichnet wird. Dieser Prototyp wird nicht implementiert. GAMMA beschreibt diese Beziehung folgendermaßen:\\
+''The Subject is the publisher of notifications. It sends out these notifications without having  to know who its observers are. Any number of observers can subscibe to receive notifications\cite[S. 294]{Entwurfsmuster}."\\
+Verbunden wird ein \textit{Signal} mit einem \textit{Slot} durch den Aufruf der statischen Methode QObject::connect(). \textit{Signal} und \textit{Slot} müssen dabei die gleichen Argumente besitzen. Dadurch wird die Typsicherheit gewährleistet. Allerdings sind die Schlüsselworte \textit{Signal} und \textit{Slot} kein reines C++. Klassen die sich diesem Konzept bedienen müssen daher durch den \textit{Meta Object Compiler (MOC)} in Standard-konformes C++ verwandelt werden\cite[Vgl. S. 51]{Qt4}.
+\EBP bedient sich dieses Konzepts an vielen Stellen. Der Anmeldevorgang soll hier als Beispiel dienen. Die Anmeldung an dem Client erfolgt auf einer Maske, die durch die Klasse LoginForm beschrieben wird. Diese Klasse definiert auch ein eigenes \textit{Signal} \textit{validLogin()}:
+\begin{lstlisting}
+class LoginForm : public QWidget
+{
+    ...
+signals:
+    void validLogin(QSharedPointer<ebp::Mitarbeiter> newMitarbeiter, QSharedPointer<ebp::connection> newConnection);
+    ...
+};
+\end{lstlisting}
+Die Klasse MainWindow definiert den dazu passenden \textit{Slot}, der nach einer erfolreichen Anmeldung den Client initalisiert:
+\begin{lstlisting}
+class MainWindow : public QMainWindow
+{
+    ...
+private slots:
+    void validLogin(QSharedPointer<ebp::Mitarbeiter> newMitarbeiter, QSharedPointer<ebp::connection> newConnection);
+    ...
+};
+\end{lstlisting}
+Durch dieses Konzept der losen Kopplung könnten bei Bedarf weitere \textit{Slots} an ein erfolgreiches Anmelden angekoppelt werden, ohne auf den bereits bestehenden \textit{Slot} zum initialisieren des Clients Einfluss zu nehmen.
+\subsubsection{Model/View Pattern - Datenvisualisierung}
 
 \subsection{Qt als Grafikbibliothek}
 

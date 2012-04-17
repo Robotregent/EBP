@@ -23,7 +23,9 @@ private slots:
 
     void on_pushButton_clicked();
 
-private: 
+    void on_helpButton_clicked();
+
+private:
     const SessionContext &_context;
     Ui::TextTransferAgent *ui;
     QSharedPointer< ebp::Bewohner > selectedBewohner;
