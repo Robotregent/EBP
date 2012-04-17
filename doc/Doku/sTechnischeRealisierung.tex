@@ -27,11 +27,24 @@ implementiert sein. Abbildung \ref{unstrukturiert} zeigt die Vielzahl an möglic
 \end{figure*}
 Um nicht jeden Kommunikationsweg einzeln verwalten zu müssen, wurde der \textit{Text Transfer} in Form des Mediator Patterns entworfen. Den Zweck
 eines Mediators definiert GAMMA wie folgt: \\
-``Definiert ein Objekt, welches das Zusammenspiel einer Menge von Objekten in sich kapselt. Vermittler fördern lose Kopplung, indem sie Objekte davon
-abhalten, aufeinander explizit Bezug zu nehmen. Sie ermöglichen es Ihnen, das Zusammenspiel der Objekte von ihnen unabhängig zu
-variieren \cite[S. 385]{Entwurfsmuster}.''\\
-Auf einen abstrakten Mediator wird hier verzichtet 
-
+``Define an object that encapsulates how a set of objects interact. Mediator promotes loose coupling by keeping objects from reffering to each other explicitly, 
+and it lets you vary their interaction independently \cite[S. 273]{Entwurfsmuster}.''\\
+Beteiligte Objekte\cite[S. 277]{Entwurfsmuster}:
+\begin{enumerate}
+	\item Eine Instanz des TextTransferAgent als konkreter Mediator. Auf eine abstrakte Mediatorklasse wurde auf Grund des klar definierten Aufgabengebiets verzichtet.
+	\begin{enumerate}
+		\item Implementiert die Interaktion zwischen den verschiedenen Kollegen.
+		\item Kennt alle zu verwaltenden Kollegenobjekte.
+	\end{enumerate}
+	item Beliebig viele Instanzen von Klassen, die das TextTransferInterface implementiert haben als Kollegen.
+	\begin{enumerate}
+		\item Jeder Kollege kennt das Mediatorobjekt.
+		\item Möchte ein Kollege mit einem anderen kommunizieren, tut er dies über den Mediator.
+		\item Die Kommunikation zwischen den Kollegen ist in dieser Implementierung unidirektional. Klassen, die das TextTransferInterface implementiert haben dienen stets 
+			als Quelle für den Texttransfer. Als Ziel für den Texttransfer stehen dem Meditor über das aktive Bewohner Objekt alle Instanzen der Betreuungsplanung zur Verfügung.
+	\end{enumerate}
+\end{enumerate}
+Abbildung \ref{strukturiert} zeigt die Kommunikationswege eines Texttransfers zwischen den einzelnen Objekten, koordiniert durch ein Mediatorobjekt. 
 \begin{figure*}[htp!]
 	\includegraphics[width=0.8\textwidth]{mediated}
 	\caption{Kommunikationswege zwischen den Objekten, koordiniert durch einen Mediator}
