@@ -34,75 +34,103 @@ User Stories, die thematisch im Zusammenhang stehen werden unter einem Epic zusa
  von Epic und User Stories aus der Lebenswelt des Kunden stammen. Die Anforderungen an die \EBP wurden in folgende Epic und User Stories aufgeteilt:
 \newline
 
-\begin{longtable}{|p{0.3\textwidth} | p{0.7\textwidth}|}
+\begin{longtable}{| p{0.25\textwidth}|p{0.05\textwidth}|p{0.7\textwidth} | }
   \hline
-  \textbf{Epic} & \textbf{User Story}  \\
+ \textbf{Epic} & \textbf{Nr.} & \textbf{User Story} \\
   \hline
-  Die persönlichen Daten eines Klienten sollen digital verwaltet werden & \\
+\multirow{4}{0.25\textwidth}{Die persönlichen Daten eines Klienten sollen digital verwaltet werden} & 1 & Als Pflegekraft kann ich die Kontaktdaten eines Klienten anzeigen lassen und auch bearbeiten.  \\
+  \cline{2 -3}
+& 2 & Als Pflegekraft kann ich Informationen über die Leistungsträger der Klienten in meinem Verantwortungsbereich anzeigen lassen und
+auch bearbeiten.\\
+   \cline{2 - 3}
+& 3 & Als Pflegekraft kann ich für die Klienten in meinem Verantwortungsbereich anzeigen lassen, welche freiheitseinschränkenden
+Maßnahmen richterlich angeordnet werden, um Rechtssicherheit bei meiner Arbeit zu erlangen.\\
+   \cline{2 - 3}
+& 4 & Als Pflegekraft kann ich die gesetzliche Betreuung und die institutionelle Bezugsbetreuung anzeigen lassen und auch bearbeiten.\\
   \hline
- $ \longmapsto $& Als Pflegekraft kann ich die Kontaktdaten eines Klienten anzeigen lassen und auch bearbeiten \\
-  \cline{2 -2}
-  $ \longmapsto $ & Als Pflegekraft kann ich Informationen über die Leistungsträger der Klienten in meinem Verantwortungsbereich anzeigen lassen und
-auch bearbeiten. \\
-   \cline{2 -2}
- $ \longmapsto $ & Als Pflegekraft kann ich für die Klienten in meinem Verantwortungsbereich anzeigen lassen, welche freiheitseinschränkenden
-Maßnahmen richterlich angeordnet werden, um Rechtssicherheit bei meiner Arbeit zu erlangen. \\
-   \cline{2 - 2}
-  $ \longmapsto $ & Als Pflegekraft kann ich die gesetzliche Betreuung und die institutionelle Bezugsbetreuung anzeigen lassen und auch bearbeiten. \\
-  \hline
-  Für jeden Klienten können mehrere Projekte organisiert werden, die eine pädagogische Zielsetzung haben & \\
-  \hline
-$ \longmapsto $ & Als für ein Projekte verantwortlicher Mitarbeiter kann ich neue Projekte anlegen \\
- \cline{2 - 2}
-  $ \longmapsto $  & Als für ein Projekte verantwortlicher Mitarbeiter kann ich pädagogische Ziele für ein Projekt definieren \\
-   \cline{2 - 2}
- $ \longmapsto $ & Als Pflegekraft kann ich Textfragmente aus der Zielsetzung oder der Projektbeschreibung in einen bestimmten
-Bereich der Betreuungsdokumentation übertragen, um den Fortschritt und die Zielerreichung der Langzeitplanung einfach dokumentieren zu können. \\
+\multirow{3}{0.25\textwidth}{Für jeden Klienten können mehrere Projekte organisiert werden, die eine pädagogische Zielsetzung haben} & 5 & Als für ein Projekte verantwortlicher Mitarbeiter kann ich neue Projekte anlegen \\
+ \cline{2 - 3}
+  & 6 & Als für ein Projekte verantwortlicher Mitarbeiter kann ich pädagogische Ziele für ein Projekt definieren \\
+   \cline{2 - 3}
+  & 7 & Als Pflegekraft kann ich Textfragmente aus der Zielsetzung oder der Projektbeschreibung in einen bestimmten
+Bereich der Betreuungsdokumentation übertragen, um den Fortschritt und die Zielerreichung der Langzeitplanung einfach dokumentieren zu können.\\
  \hline
-  Bei Besprechungen mit einem Klienten müssen Protokolle erstellt werden. Diese Protokolle sollen Teil der \EBP sein. & \\
- \hline
-  $ \longmapsto $ & Es können für jeden Klienten mehrere Projekte angelegt werden. \\
-\cline{2 - 2}
- $ \longmapsto $ & Bei jedem Protokoll sind die Teilnehmer und das Protokolldatum ersichtlich. \\
-\cline{2 - 2}
- $ \longmapsto $ & Ein oder mehrere Teilnehmer können als Protokllant markiert werden \\
-\cline{2 - 2}
- $ \longmapsto $ & Als Pflegekraft kann ich Textfragmente aus dem Protokolltext in einen bestimmten
-Bereich der Betreuungsdokumentation übertragen, um den Fortschritt und die Zielerreichung der Langzeitplanung einfach dokumentieren zu können. \\
- \hline
- Für jeden Klienten solle es eine Betreuungsdokumentation für verschiedene Lebensbereiche geben. & \\
-  \hline
-  $ \longmapsto $ & Als Bezugsbetreuer kann ich in jedem Lebensbereich den Hilfebedarf eines Klienten kategorisieren. \\
-\cline{2 - 2}
- $ \longmapsto $ & Als Bezugsbetreuer kann ich in jedem Lebensbereich den Hilfebedarf eines Klienten prosaisch näher beschreiben. \\
-\cline{2 - 2}
- $ \longmapsto $ & Als Bezugsbetreuer kann ich in jedem Lebensbereich pädagogische Ziele definieren, um eine zielgerichtete pädagogische Arbeit zu
-ermöglichen. \\
-\cline{2 - 2}
- $ \longmapsto $ & Als Pflegekraft kann ich Textfragmente aus anderen Teilen der \EBP an die prosaische Beschreibung der einzelnen Lebensbereiche
-senden, um den Fortschritt und die Zielerreichung der Langzeitplanung einfach dokumentieren zu können. \\
- \hline
-  Es gibt ein Gruppenbuch, in dem die tagesaktuellen Geschehnisse einer Wohngruppe dokumentiert werden. & \\
-  \hline
-  $ \longmapsto $ & Als Pflegekraft kann ich ein Ereignis auf einer Wohngruppe in meinem Verantwortungsbereich mit de \EBP dokumentieren, um eine
-lückenlose Kommunikation mit meinen Kollegen zu gewährleisten. \\
-\cline{2 - 2}
- $ \longmapsto $ & Als Pflegekraft kann ich Textfragmente aus einem Ereignis in einen bestimmten
-  Bereich der Betreuungsdokumentation übertragen, um den Fortschritt und die Zielerreichung der Langzeitplanung einfach dokumentieren zu können. \\
+\multirow{4}{0.25\textwidth}{Bei Besprechungen mit einem Klienten müssen Protokolle erstellt werden. Diese Protokolle sollen Teil der \EBP sein.} & 8 & Es können für jeden Klienten mehrere Protokolle angelegt werden. \\
+\cline{2 - 3}
+ & 9  & Bei jedem Protokoll sind die Teilnehmer und das Protokolldatum ersichtlich. \\
+\cline{2 - 3}
+& 10 & Ein oder mehrere Teilnehmer können als Protokllant markiert werden \\
+\cline{2 - 3}
+& 11 & Als Pflegekraft kann ich Textfragmente aus dem Protokolltext in einen bestimmten
+Bereich der Betreuungsdokumentation übertragen, um den Fortschritt und die Zielerreichung der Langzeitplanung einfach dokumentieren zu können.\\
+\hline
+\multirow{4}{0.25\textwidth}{Für jeden Klienten solle es eine Betreuungsdokumentation für verschiedene Lebensbereiche geben.}& 12 & Als Bezugsbetreuer kann ich in jedem Lebensbereich den Hilfebedarf eines Klienten kategorisieren.\\
+\cline{2 - 3}
+& 13 & Als Bezugsbetreuer kann ich in jedem Lebensbereich den Hilfebedarf eines Klienten prosaisch näher beschreiben.\\
+\cline{2 - 3}
+& 14 & Als Bezugsbetreuer kann ich in jedem Lebensbereich pädagogische Ziele definieren, um eine zielgerichtete pädagogische Arbeit zu
+ermöglichen.\\
+\cline{2 - 3}
+& 15 & Als Pflegekraft kann ich Textfragmente aus anderen Teilen der \EBP an die prosaische Beschreibung der einzelnen Lebensbereiche
+senden, um den Fortschritt und die Zielerreichung der Langzeitplanung einfach dokumentieren zu können.\\
+\hline
+\multirow{2}{0.25\textwidth}{Es gibt ein Gruppenbuch, in dem die tagesaktuellen Geschehnisse einer Wohngruppe dokumentiert werden.}& 16 & Als Pflegekraft kann ich ein Ereignis auf einer Wohngruppe in meinem Verantwortungsbereich mit de \EBP dokumentieren, um eine
+lückenlose Kommunikation mit meinen Kollegen zu gewährleisten.\\
+\cline{2 - 3}
+& 17 & Als Pflegekraft kann ich Textfragmente aus einem Ereignis in einen bestimmten
+  Bereich der Betreuungsdokumentation übertragen, um den Fortschritt und die Zielerreichung der Langzeitplanung einfach dokumentieren zu können.\\
  \hline
  Die Abwesenheit eines Klienten von der Wohngruppe über einen Zeitraum größer gleich einem Tag muss zur Abrechnung mit dem Leistungsträger
-dokumentiert werden. \\
-  $ \longmapsto $ & Als Pflegekraft kann ich die Abwesenheit eines Klienten mit der \EBP dokumentieren, um eine der Verwaltung eine einfache
-Abrechnung zu ermöglichen. \\
+dokumentiert werden. & 18 & Als Pflegekraft kann ich die Abwesenheit eines Klienten mit der \EBP dokumentieren, um eine der Verwaltung eine einfache
+Abrechnung zu ermöglichen.\\
  \hline
 \end{longtable}
 
-\subsubsection{Qualitätssicherung bei der Einhaltung der Anforderungsdefinitionen}
-Stichworte:
-\begin{itemize}
- \item Zur QS Thinking Aloud tests
- \item Ablauf der Tests nach Steve Krug
-\end{itemize}
+\subsubsection{Qualitätssicherung zur Einhaltung der Anforderungsdefinitionen}
+Um die Benutzbarkeit sicherzustellen wurden eine Reihe von Usability-Tests durchgeführt. KRUG beschreibt den Stellenwert von Usability-Tests sehr treffend: \\
+''Wenn Sie an einer Seite auch nur einige Wochen gearbeitet haben, können Sie sie nicht mehr unbedarft betrachten. Sie wissen zu viel. Der einzige Weg, um herauszufinden, ob sie wirklich funktioniert, sind Tests\cite[S. 133]{Usability}.'' \\
+\noindent
+Dies gilt natürlich nicht nur für Websites sondern auch für das Erstellen jeder anderen grafischen Oberfläche. Angelehnt an den Scrum artigen Entwicklungsprozess war auch der Usability-Test Prozess mehrstufig.
+
+\paragraph*{Ablauf:}
+\begin{description}
+
+        \item[Phase 1] Nach der grundlegenden Gestaltung der grafischen Oberfläche ohne funktionale Logik wurden \textit{Tests zum Kapieren} mit verschiedenen Testpersonen durchgeführt. Diese \textit{Tests zum Kapieren} sollen feststellen, ob der Nutzer die Bedienkonzepte, wie z.B. die Navigation, und Absichten der Anwendung versteht\cite[Vgl. S. 144]{Usability}.
+
+        \item[Phase 2] In dieser Phase des Testprozesses waren die getesteten Masken vollständig implementiert und wurden an Hand von \textit{Schlüsselaufgaben} getestet. ''Tests mit Schlüsselaufgaben bedeuten, dass Sie den Usern eine Aufgabe stellen und dann beobachten, wie gut sie zurechtkommen\cite[Vgl. S. 144]{Usability}.'' Die \textit{Schlüsselaufgaben} wurden so definiert, dass mit ihrer Überprüfung gleichzeitig die Umsetzung der User Stories überprüft wurde. Damit erfolgte durch die Usability-Tests auch eine Überprüfung des Erfüllungsgrads der Anforderungsdefinitionen. Folgende Schlüssel-aufgaben wurden für die entsprechenden User Stories (Siehe Nummer) definiert:
+
+        \begin{enumerate}
+		\item Finde das Geburtsdatum von Waldemar Fried heraus. 
+		\item Füge die Deutsche Rentenversicherung als Leistungsträger bei Melinda Müller hinzu.
+		\item Prüfe, wann Melinas Verfügung für die Fixierung abläuft.
+		\item Finde heraus, wie die gesetzliche Betreuerin von Frank Heinz heißt und wo Sie wohnt.
+		\item Lege ein neues Projekt für  an, 
+		\item das die Förderung seiner Selbstständikeit zum Ziel hat.
+		\item Übertrage diese Ziele in ein entsprechendes Feld der Betreuungsplanung von Herman Hinz.
+		\item Lege ein Protokoll für ein Gespräch mit Herman Hinz über sein Verhalten am Mittagstisch an.
+		\item Füge Marlene Friedrich und Klaus Müller als Teinnehmer hinzu.
+		\item Markiere Marlene Friedrich als Protokollantin.
+		\item Übertrage das Ergebnis des Gesprächs mit Melinda vom 19 März 2012 in ihre Betreuungsplanung, Kategorie "Partnerschaften"
+		\item Stufe den Hilfebedarf von Maria Schreiber im Lebensbereich "Einkaufen" neu ein,
+		\item und beschreibe den Hilfebedarf genauer.
+		\item Definiere ein pädagogisches Ziel, um diesen Hilfebedarf zu ändern.
+		\item Übertrage die Beschreibung aus dem Projekt "Einkaufen gehen lernen" von Maria Schreiber in die Betreuungsplanung.
+		\item Finde heraus, was am 23.12.2011 auf der Wohngruppe vorgefallen ist.
+		\item Übertrage den Sturz von Waldemar Fried in die Betreuungsplanung.
+		\item Melde Waldemar Fried für den heutigen Tag Abwesend, da er im Urlaub bei seinen Eltern ist.
+        \end{enumerate}
+
+\end{description}
+
+\paragraph*{Ergebnisse:}
+\begin{description}
+
+        \item[Phase 1]
+
+        \item[Phase 2] 
+
+\end{description}
+
 
 
 

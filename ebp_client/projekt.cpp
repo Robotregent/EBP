@@ -156,7 +156,7 @@ bool Projekt::saveContent()
 
     this->curProject->ende(this->ui->endeDateEdit->date());
 
-    //this->ui->zieleEdit->setHtml(this->curProject->);
+    this->curProject->ziele(this->ui->zieleEdit->toHtml());
 
     this->curProject->beschreibung(this->ui->beschreibungEdit->toHtml());
 
