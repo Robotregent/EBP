@@ -37,7 +37,7 @@ void LeistungstraegerBox::initField()
     ui->telefonLineEdit->setText(leistungstraeger->telefon());
     ui->faxLineEdit->setText(leistungstraeger->fax());
     ui->eMailLineEdit->setText(leistungstraeger->email());
-    ui->textEdit->setText(leistungstraeger->anmerkung());
+    ui->textEdit->setHtml(leistungstraeger->anmerkung());
 }
 /**
   * \brief Speichern des Inhalts
@@ -47,21 +47,23 @@ bool LeistungstraegerBox::saveContent()
     bool result = false;
     if (context.curBewohner!=NULL)
     {
-	leistungstraeger->name(ui->leistungstrGerLineEdit->text());
-	leistungstraeger->strasse(ui->straELineEdit->text());
-	leistungstraeger->plz(ui->pLZLineEdit->text());
-	leistungstraeger->ort(ui->ortLineEdit->text());
-	leistungstraeger->ansprechpartner(ui->vornameLineEdit->text()+"*:*"+ui->nachnameLineEdit->text());
-	leistungstraeger->telefon(ui->telefonLineEdit->text());
-	leistungstraeger->fax(ui->faxLineEdit->text());
-	leistungstraeger->email(ui->eMailLineEdit->text());
-	leistungstraeger->anmerkung(ui->textEdit->toPlainText());
+        if (!leistungstraeger.isNull())
+        {
+            leistungstraeger->name(ui->leistungstrGerLineEdit->text());
+            leistungstraeger->strasse(ui->straELineEdit->text());
+            leistungstraeger->plz(ui->pLZLineEdit->text());
+            leistungstraeger->ort(ui->ortLineEdit->text());
+            leistungstraeger->ansprechpartner(ui->vornameLineEdit->text()+"*:*"+ui->nachnameLineEdit->text());
+            leistungstraeger->telefon(ui->telefonLineEdit->text());
+            leistungstraeger->fax(ui->faxLineEdit->text());
+            leistungstraeger->email(ui->eMailLineEdit->text());
+            leistungstraeger->anmerkung(ui->textEdit->toHtml());
 
-	if(leistungstraeger->update(this->context.curConnection))
-	    result = true;
-	else
-	    result =false;
-
+            if(leistungstraeger->update(this->context.curConnection))
+                result = true;
+            else
+                result =false;
+        }
     }
     return result;
 }

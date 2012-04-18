@@ -141,27 +141,29 @@ bool Projekt::saveContent()
 {
     bool result = false;
 
-    if (!potentiallyNewMa.isNull())
+    if(!curProject.isNull())
     {
-	QList < QSharedPointer < ebp::Mitarbeiter > > list = this->curProject->loadVerantwortliche(this->curContext.curConnection);
-	if (list.count()>0)
-	{
-	    ebp::Projekt::unlinkVerantwortlicher(curProject,list.first());
-	}
+        if (!potentiallyNewMa.isNull())
+        {
+            QList < QSharedPointer < ebp::Mitarbeiter > > list = this->curProject->loadVerantwortliche(this->curContext.curConnection);
+            if (list.count()>0)
+            {
+                ebp::Projekt::unlinkVerantwortlicher(curProject,list.first());
+            }
 
-	ebp::Projekt::linkVerantwortlicher(curProject,potentiallyNewMa);
+            ebp::Projekt::linkVerantwortlicher(curProject,potentiallyNewMa);
+        }
+
+        this->curProject->beginn(this->ui->beginnDateEdit->date());
+
+        this->curProject->ende(this->ui->endeDateEdit->date());
+
+        this->curProject->ziele(this->ui->zieleEdit->toHtml());
+
+        this->curProject->beschreibung(this->ui->beschreibungEdit->toHtml());
+
+        if (this->curProject->update(curContext.curConnection) )
+            result = true;
     }
-
-    this->curProject->beginn(this->ui->beginnDateEdit->date());
-
-    this->curProject->ende(this->ui->endeDateEdit->date());
-
-    this->curProject->ziele(this->ui->zieleEdit->toHtml());
-
-    this->curProject->beschreibung(this->ui->beschreibungEdit->toHtml());
-
-    if (this->curProject->update(curContext.curConnection) )
-	result = true;
-
     return result;
 }

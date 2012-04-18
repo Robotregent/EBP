@@ -102,7 +102,11 @@
         </widget>
        </item>
        <item row="3" column="1">
-        <widget class="QTextEdit" name="BettGitterReason"/>
+        <widget class="QTextEdit" name="BettGitterReason">
+         <property name="autoFormatting">
+          <set>QTextEdit::AutoAll</set>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -177,7 +181,11 @@
         </widget>
        </item>
        <item row="3" column="1">
-        <widget class="QTextEdit" name="PsychoReason"/>
+        <widget class="QTextEdit" name="PsychoReason">
+         <property name="autoFormatting">
+          <set>QTextEdit::AutoAll</set>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -220,7 +228,11 @@
         </widget>
        </item>
        <item row="3" column="1">
-        <widget class="QTextEdit" name="PatientenReason"/>
+        <widget class="QTextEdit" name="PatientenReason">
+         <property name="autoFormatting">
+          <set>QTextEdit::AutoAll</set>
+         </property>
+        </widget>
        </item>
        <item row="1" column="0">
         <widget class="QLabel" name="mitGerichtsbescheidLabel">
@@ -326,7 +338,11 @@
         </widget>
        </item>
        <item row="3" column="1">
-        <widget class="QTextEdit" name="FixierungReason"/>
+        <widget class="QTextEdit" name="FixierungReason">
+         <property name="autoFormatting">
+          <set>QTextEdit::AutoAll</set>
+         </property>
+        </widget>
        </item>
        <item row="3" column="0">
         <widget class="QLabel" name="label_4">

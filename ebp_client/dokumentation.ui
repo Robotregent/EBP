@@ -99,6 +99,9 @@
        <verstretch>1</verstretch>
       </sizepolicy>
      </property>
+     <property name="autoFormatting">
+      <set>QTextEdit::AutoAll</set>
+     </property>
     </widget>
    </item>
    <item row="8" column="0">
@@ -115,6 +118,9 @@
        <horstretch>0</horstretch>
        <verstretch>2</verstretch>
       </sizepolicy>
+     </property>
+     <property name="autoFormatting">
+      <set>QTextEdit::AutoAll</set>
      </property>
     </widget>
    </item>

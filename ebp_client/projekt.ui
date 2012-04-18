@@ -192,7 +192,7 @@
         </sizepolicy>
        </property>
        <property name="autoFormatting">
-        <set>QTextEdit::AutoNone</set>
+        <set>QTextEdit::AutoAll</set>
        </property>
       </widget>
      </item>

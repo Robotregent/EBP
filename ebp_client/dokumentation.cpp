@@ -71,9 +71,9 @@ Dokumentation::Dokumentation(SessionContext &context, ebp::Dokumentation::Typ ty
 	}
 	this->ui->hilfebedarfComboBox->setCurrentIndex(index);
 
-	this->ui->Ziele->setText(curDoku->ziele());
+        this->ui->Ziele->setHtml(curDoku->ziele());
 
-	this->ui->Erlaeuterungen->setText(curDoku->erlaeuterungen());
+        this->ui->Erlaeuterungen->setHtml(curDoku->erlaeuterungen());
     }
 
 
@@ -87,40 +87,42 @@ Dokumentation::~Dokumentation()
 bool Dokumentation::saveContent()
 {
     bool result = false;
-    ebp::Dokumentation::Einstufung einstufung;
-
-    switch(this->ui->hilfebedarfComboBox->currentIndex())
+    if(!curDoku.isNull())
     {
-    case 0:
-	einstufung = ebp::Dokumentation::bekommeKeineHilfe;
-	break;
-    case 1:
-	einstufung = ebp::Dokumentation::bekommeBeratung;
-	break;
-    case 2:
-	einstufung = ebp::Dokumentation::bekommeAssistenz;
-    case 3:
-	einstufung = ebp::Dokumentation::machtMitarbeiter;
-	break;
-    case 4:
-	einstufung = ebp::Dokumentation::istWichtig;
-	break;
-    case 5:
-	einstufung = ebp::Dokumentation::willLernen;
-	break;
-    default:
-	einstufung = ebp::Dokumentation::bekommeKeineHilfe;
-	break;
+        ebp::Dokumentation::Einstufung einstufung;
+
+        switch(this->ui->hilfebedarfComboBox->currentIndex())
+        {
+        case 0:
+            einstufung = ebp::Dokumentation::bekommeKeineHilfe;
+            break;
+        case 1:
+            einstufung = ebp::Dokumentation::bekommeBeratung;
+            break;
+        case 2:
+            einstufung = ebp::Dokumentation::bekommeAssistenz;
+        case 3:
+            einstufung = ebp::Dokumentation::machtMitarbeiter;
+            break;
+        case 4:
+            einstufung = ebp::Dokumentation::istWichtig;
+            break;
+        case 5:
+            einstufung = ebp::Dokumentation::willLernen;
+            break;
+        default:
+            einstufung = ebp::Dokumentation::bekommeKeineHilfe;
+            break;
+        }
+        this->curDoku->einstufung(einstufung);
+
+        this->curDoku->ziele(this->ui->Ziele->toHtml());
+
+        this->curDoku->erlaeuterungen(this->ui->Erlaeuterungen->toHtml());
+        if(this->curDoku->update(curContext.curConnection))
+            result = true;
+        else
+            result = false;
     }
-    this->curDoku->einstufung(einstufung);
-
-    this->curDoku->ziele(this->ui->Ziele->toHtml());
-
-    this->curDoku->erlaeuterungen(this->ui->Erlaeuterungen->toHtml());
-    if(this->curDoku->update(curContext.curConnection))
-	result = true;
-    else
-	result = false;
-
     return result;
 }

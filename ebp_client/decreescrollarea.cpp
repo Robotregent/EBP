@@ -68,7 +68,7 @@ void DecreeScrollArea::initField()
         {
             ui->FixierungAktiv->setCurrentIndex(Fixierung->aktiv());
             ui->FixierungDate->setDate(Fixierung->gerichtsbescheid());
-            ui->FixierungReason->setText(Fixierung->grund());
+            ui->FixierungReason->setHtml(Fixierung->grund());
             if ((Fixierung->gerichtsbescheid() == voidDate)||
                     (Fixierung->gerichtsbescheid().isNull()))
                 ui->FixierungBescheid->setCurrentIndex(0);
@@ -83,7 +83,7 @@ void DecreeScrollArea::initField()
         {
             ui->BettGitterAktiv->setCurrentIndex(Bettgitter->aktiv());
             ui->BettGitterDate->setDate(Bettgitter->gerichtsbescheid());
-            ui->BettGitterReason->setText(Bettgitter->grund());
+            ui->BettGitterReason->setHtml(Bettgitter->grund());
             if ((Bettgitter->gerichtsbescheid() == voidDate)||
                     (Bettgitter->gerichtsbescheid().isNull()))
                 ui->BettGitterBescheid->setCurrentIndex(0);
@@ -98,7 +98,7 @@ void DecreeScrollArea::initField()
         {
             ui->PsychoAktiv->setCurrentIndex(Psychopharmaka->aktiv());
             ui->PsychoDate->setDate(Psychopharmaka->gerichtsbescheid());
-            ui->PsychoReason->setText(Psychopharmaka->grund());
+            ui->PsychoReason->setHtml(Psychopharmaka->grund());
             if ((Psychopharmaka->gerichtsbescheid() == voidDate)||
                     (Psychopharmaka->gerichtsbescheid().isNull()))
                 ui->PsychoBescheid->setCurrentIndex(0);
@@ -113,7 +113,7 @@ void DecreeScrollArea::initField()
         {
             ui->PatientenAktiv->setCurrentIndex(Patientenverfuegung->aktiv());
             ui->PatientenDate->setDate(Patientenverfuegung->gerichtsbescheid());
-            ui->PatientenReason->setText(Patientenverfuegung->grund());
+            ui->PatientenReason->setHtml(Patientenverfuegung->grund());
             if ((Patientenverfuegung->gerichtsbescheid() == voidDate)||
                     (Patientenverfuegung->gerichtsbescheid().isNull()))
                 ui->PsychoBescheid->setCurrentIndex(0);
@@ -141,7 +141,7 @@ bool DecreeScrollArea::saveContent()
                 createVerfuegung(ebp::Verfuegung::Fixierung);
             }
             Fixierung->aktiv(ui->FixierungAktiv->currentIndex());
-            Fixierung->grund(ui->FixierungReason->toPlainText());
+            Fixierung->grund(ui->FixierungReason->toHtml());
             if(ui->FixierungBescheid->currentIndex())
                 Fixierung->gerichtsbescheid(ui->FixierungDate->date());
             else
@@ -166,7 +166,7 @@ bool DecreeScrollArea::saveContent()
                 createVerfuegung(ebp::Verfuegung::Bettgitter);
             }
             Bettgitter->aktiv(ui->BettGitterAktiv->currentIndex());
-            Bettgitter->grund(ui->BettGitterReason->toPlainText());
+            Bettgitter->grund(ui->BettGitterReason->toHtml());
             if(ui->BettGitterBescheid->currentIndex())
                 Bettgitter->gerichtsbescheid(ui->BettGitterDate->date());
             else
@@ -191,7 +191,7 @@ bool DecreeScrollArea::saveContent()
                 createVerfuegung(ebp::Verfuegung::Psychopharmaka);
             }
             Psychopharmaka->aktiv(ui->PsychoAktiv->currentIndex());
-            Psychopharmaka->grund(ui->PsychoReason->toPlainText());
+            Psychopharmaka->grund(ui->PsychoReason->toHtml());
             if(ui->PsychoBescheid->currentIndex())
                 Psychopharmaka->gerichtsbescheid(ui->PsychoDate->date());
             else
@@ -216,7 +216,7 @@ bool DecreeScrollArea::saveContent()
                 createVerfuegung(ebp::Verfuegung::Patientenverfuegung);
             }
             Patientenverfuegung->aktiv(ui->PatientenAktiv->currentIndex());
-            Patientenverfuegung->grund(ui->PatientenReason->toPlainText());
+            Patientenverfuegung->grund(ui->PatientenReason->toHtml());
             if(ui->PatientenBescheid->currentIndex())
                 Patientenverfuegung->gerichtsbescheid(ui->PatientenDate->date());
             else

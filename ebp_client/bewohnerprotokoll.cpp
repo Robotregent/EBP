@@ -56,7 +56,7 @@ bool BewohnerProtokoll::saveContent()
 
     if (!curProtokoll.isNull())
     {
-	curProtokoll->inhalt(this->ui->ProtokollText->toPlainText());
+        curProtokoll->inhalt(this->ui->ProtokollText->toHtml());
 
 	curProtokoll->datum(this->ui->ProtokollDatum->dateTime());
 
@@ -137,7 +137,7 @@ void BewohnerProtokoll::chosenMitarbeiter(QSharedPointer<ebp::Mitarbeiter> chose
 }
 void BewohnerProtokoll::fillFields()
 {
-    this->ui->ProtokollText->setText(curProtokoll->inhalt());
+    this->ui->ProtokollText->setHtml(curProtokoll->inhalt());
     this->ui->ProtokollDatum->setDateTime(curProtokoll->datum());
 
     int rows = this->ui->tableWidget->rowCount();

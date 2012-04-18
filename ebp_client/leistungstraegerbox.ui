@@ -162,7 +162,11 @@
       </widget>
      </item>
      <item row="12" column="1">
-      <widget class="QTextEdit" name="textEdit"/>
+      <widget class="QTextEdit" name="textEdit">
+       <property name="autoFormatting">
+        <set>QTextEdit::AutoAll</set>
+       </property>
+      </widget>
      </item>
      <item row="5" column="1">
       <widget class="QLabel" name="label">
