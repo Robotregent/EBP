@@ -10,7 +10,6 @@ HEADERS += \
     decreescrollarea.h \
     loginform.h \
     infoframe.h \
-    ueberarbeitungframe.h \
     betreuung.h \
     bewohnerprotokoll.h \
     leistungstraegerbox.h \
@@ -43,7 +42,6 @@ SOURCES += \
     decreescrollarea.cpp \
     loginform.cpp \
     infoframe.cpp \
-    ueberarbeitungframe.cpp \
     betreuung.cpp \
     bewohnerprotokoll.cpp \
     leistungstraegerbox.cpp \
@@ -65,7 +63,6 @@ FORMS += \
     decreescrollarea.ui \
     loginform.ui \
     infoframe.ui \
-    ueberarbeitungframe.ui \
     betreuung.ui \
     bewohnerprotokoll.ui \
     leistungstraegerbox.ui \

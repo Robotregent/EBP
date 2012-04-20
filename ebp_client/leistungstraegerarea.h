@@ -13,7 +13,9 @@
 namespace Ui {
     class LeistungstraegerArea;
 }
-
+/**
+  * \brief Maske "Leistungsträger"
+  */
 class LeistungstraegerArea : public QWidget , public SaveContentInterface
 {
     Q_OBJECT
@@ -26,7 +28,7 @@ class LeistungstraegerArea : public QWidget , public SaveContentInterface
 public:
     explicit LeistungstraegerArea(SessionContext &_context,QWidget *parent = 0);
     ~LeistungstraegerArea();
-    bool saveContent();
+    bool saveContent();				///< Speichern den Inhalts
 
 private:
     Ui::LeistungstraegerArea *ui;

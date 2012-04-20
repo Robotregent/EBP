@@ -12,14 +12,17 @@ namespace Ui {
     class Projekt;
 }
 
+/**
+  * \brief Maske: "Projekt"
+  */
 class Projekt : public QWidget, public TextTransferInterface, public SaveContentInterface
 {
     Q_OBJECT
 
 public:
     explicit Projekt(SessionContext &_curContext, QWidget *parent = 0);
-    TextTransferInformation getSelectedText();
-    bool saveContent();
+    TextTransferInformation getSelectedText();				    ///< Gibt selektierten Text unde Metainformationen für den Texttransfer zurück
+    bool saveContent();							    ///< Speichern den Inhalts
     ~Projekt();
 
 private slots:

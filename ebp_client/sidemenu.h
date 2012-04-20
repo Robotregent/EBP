@@ -6,6 +6,9 @@
 #include "groupmenu.h"
 #include <QBoxLayout>
 
+/**
+  * \brief Seitenmenü. Hält Navigation für Klienten- und Wohngruppenmasken
+  */
 class SideMenu : public QTabWidget
 {
     Q_OBJECT

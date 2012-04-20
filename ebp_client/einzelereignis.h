@@ -8,7 +8,9 @@
 namespace Ui {
     class EinzelEreignis;
 }
-
+/**
+  *\brief Einzelnes "Ereignis"
+  */
 class EinzelEreignis : public QFrame, public TextTransferInterface
 {
     Q_OBJECT

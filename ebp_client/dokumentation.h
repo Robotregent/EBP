@@ -9,7 +9,9 @@
 namespace Ui {
     class Dokumentation;
 }
-
+/**
+  * \brief Maske: "Betreuungsplanung"
+  */
 class Dokumentation : public QWidget, public SaveContentInterface
 {
     Q_OBJECT
@@ -17,7 +19,7 @@ class Dokumentation : public QWidget, public SaveContentInterface
 public:
     explicit Dokumentation(SessionContext &context, ebp::Dokumentation::Typ typ, QWidget *parent = 0);
     ~Dokumentation();
-    bool saveContent();
+    bool saveContent();					///< Speichern den Inhalts
 
 private:
     Ui::Dokumentation *ui;

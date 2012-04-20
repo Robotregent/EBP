@@ -15,6 +15,9 @@
 #include "texttransferinterface.h"
 #include "texttransferagent.h"
 #include "choosedialog.h"
+/**
+  * \brief Hauptfenster der Anwendung
+  */
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -42,6 +45,11 @@ private:
     ChooseBwDialog *bwDialog;
     ChooseWgDialog *wgDialog;
     QAction *saveAction;
+    enum ContentWidgets { LoginWidget = 0, PersonWidget = 1 , DecreeScrollWidget = 2,  BetreuungWidget = 3, BProtokollWidget = 4,
+			  Leistungstraeger=5, MeldeListeWidget=6, EreignisWidget = 7,ProjektWidget = 8, DocumentationEinkaufenWidget = 9, DocumentationWaschpflegeWidget = 10,
+			  DocumentationKoerperpflegeWidget = 11, DocumentationAufstehenWidget = 12, DocumentationPartnerschaftenWidget = 13, DocumentationFreundschaftenWidget = 14,
+			  CountOfContentWidgets = 15} ;
+    QWidget *getContentWidget(int ContentTyp);
 
 
 private slots:
@@ -53,13 +61,9 @@ private slots:
     void setCurBewohner(QSharedPointer< ebp::Bewohner > chosenBw);
     void tabChanged(int index);
     void validLogin(QSharedPointer<ebp::Mitarbeiter> newMitarbeiter, QSharedPointer<ebp::connection> newConnection);
+
 public:
     explicit MainWindow(QWidget *parent = 0);
-    enum ContentWidgets { LoginWidget = 0, PersonWidget = 1 , DecreeScrollWidget = 2,  BetreuungWidget = 3, BProtokollWidget = 4,
-			  Leistungstraeger=5, MeldeListeWidget=6, EreignisWidget = 7,ProjektWidget = 8, DocumentationEinkaufenWidget = 9, DocumentationWaschpflegeWidget = 10,
-			  DocumentationKoerperpflegeWidget = 11, DocumentationAufstehenWidget = 12, DocumentationPartnerschaftenWidget = 13, DocumentationFreundschaftenWidget = 14,
-			  CountOfContentWidgets = 15} ;
-    QWidget *getContentWidget(int ContentTyp);
 
     ~MainWindow();
     void closeEvent(QCloseEvent *event);

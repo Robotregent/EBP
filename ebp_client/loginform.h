@@ -9,7 +9,9 @@
 namespace Ui {
     class LoginForm;
 }
-
+/**
+  * \brief Maske: "Login"
+  */
 class LoginForm : public QWidget
 {
     Q_OBJECT

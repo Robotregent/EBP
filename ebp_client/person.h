@@ -7,6 +7,9 @@
 #include "savecontentinterface.h"
 
 
+/**
+  * \brief Maske: "Person"
+  */
 class person : public QWidget, public SaveContentInterface
 {
     Q_OBJECT
@@ -14,13 +17,14 @@ class person : public QWidget, public SaveContentInterface
     QWidget *CreatePersonEdit(int type);
     void initField();
     const SessionContext &con;
+    enum PersonSlots{title=0, forename=1, name=2, dateOfBirth=3, birthplace=4, citizenship=5,
+		     confession=6, familyState=7, residence=8, comments=9, countOfLineEdits=10};
+    QWidget *getPersonSlot(int i){ return this->person_edit.at(i); }
 
 public:
     explicit person(const SessionContext &context, QWidget *parent = 0);
-    enum PersonSlots{title=0, forename=1, name=2, dateOfBirth=3, birthplace=4, citizenship=5,
-                     confession=6, familyState=7, residence=8, comments=9, countOfLineEdits=10};
-    QWidget *getPersonSlot(int i){ return this->person_edit.at(i); }
-    bool saveContent();
+
+    bool saveContent();							    ///< Speichern den Inhalts
 
 signals:
 
@@ -29,3 +33,4 @@ public slots:
 };
 
 #endif // PERSON_H
+

@@ -7,6 +7,9 @@ namespace Ui {
     class MeldeListe;
 }
 
+/**
+  * \brief Maske: "Meldeliste"
+  */
 class MeldeListe : public QWidget
 {
     Q_OBJECT

@@ -4,6 +4,9 @@
 #include <QDialog>
 #include "einzelereignis.h"
 #include "ereignis.h"
+/**
+  *\brief Hält alle notwendigen Informationen, wen ein neues Ereignis erzeugt wird
+  */
 typedef struct
 {
     bool isEmpty;
@@ -16,6 +19,9 @@ namespace Ui {
     class NewEreignisDialog;
 }
 
+/**
+  * \brief Diealog, zum erfassen eines neuen Ereignisses
+  */
 class NewEreignisDialog : public QDialog
 {
     Q_OBJECT

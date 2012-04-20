@@ -34,7 +34,7 @@ SET( SAMPLE_SRCS
 	pleaswaitdialog.cpp	
 	projekt.cpp
 	sidemenu.cpp
-	ueberarbeitungframe.cpp
+#	ueberarbeitungframe.cpp
 	texttransferagent.cpp
 	newereignisdialog.cpp
 )
@@ -61,7 +61,7 @@ SET( SAMPLE_MOC_HDRS
 	pleaswaitdialog.h
         projekt.h
 	sidemenu.h
-	ueberarbeitungframe.h
+#	ueberarbeitungframe.h
 	texttransferagent.h
 	newereignisdialog.h
 )
@@ -97,7 +97,7 @@ SET( SAMPLE_UIS
 	meldeliste.ui
 	pleaswaitdialog.ui
 	projekt.ui
-	ueberarbeitungframe.ui
+#	ueberarbeitungframe.ui
 	texttransferagent.ui
 	newereignisdialog.ui
 )

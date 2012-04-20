@@ -8,14 +8,16 @@
 namespace Ui {
     class Betreuung;
 }
-
+/**
+  * \brief Maske: "Gesetzliche Betreuung"
+  */
 class Betreuung : public QWidget, public SaveContentInterface
 {
     Q_OBJECT
 public:
     explicit Betreuung(SessionContext &_context,QWidget *parent = 0);
     ~Betreuung();
-    bool saveContent();
+    bool saveContent();	///< Speichert den Inhalts
 
 
 private:

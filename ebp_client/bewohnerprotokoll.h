@@ -12,15 +12,17 @@
 namespace Ui {
     class BewohnerProtokoll;
 }
-
+/**
+  * \brief Maske: "Protokoll"
+  */
 class BewohnerProtokoll : public QScrollArea, public TextTransferInterface, public SaveContentInterface
 {
     Q_OBJECT
 
 public:
     explicit BewohnerProtokoll(SessionContext &_conntext, QWidget *parent = 0);
-    TextTransferInformation getSelectedText();
-    bool saveContent();
+    TextTransferInformation getSelectedText();	///< Gibt selektierten Text unde Metainformationen für den Texttransfer zurück
+    bool saveContent();	    ///< Speichern den Inhalts
     ~BewohnerProtokoll();
 
 private slots:

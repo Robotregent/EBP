@@ -2,7 +2,9 @@
 #define DECREE_H
 
 #include <QScrollArea>
-
+/**
+  * \brief Einzelne "Verfügung"
+  */
 class Decree : public QScrollArea
 {
     Q_OBJECT

@@ -2,7 +2,10 @@
 #define DOKUTYPWRAPPER_H
 #include <QString>
 #include <EBPdb/Dokumentation.hxx>
-class DokuTypWrapper
+/**
+  * \brief Helferklasse zur Umwandlung ebp::Dokumentation::Typ <--> QString
+  */
+class DokuTypMapper
 {
 
 public:

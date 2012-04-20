@@ -12,6 +12,8 @@ Ereignis::Ereignis(SessionContext _context, TextTransferAgent *agent,QWidget *pa
     ui->setupUi(this);
     QWidget *puffer = new QWidget(this);
     pufferLayout = new QVBoxLayout();
+    pufferLayout->setMargin(0);
+    pufferLayout->setSpacing(0);
     puffer->setLayout(pufferLayout);
     this->ui->scrollArea->setWidget(puffer);
     context.curWohngruppe->reload(context.curConnection);

@@ -1,6 +1,11 @@
 #ifndef CUSTOMTABLEWIDGETITEM_H
 #define CUSTOMTABLEWIDGETITEM_H
 #include <QTableWidgetItem>
+/**
+  * \brief Templateklasse, die jedes Objekt aus der EBPdb Biblitohek
+  * aufnehemen kann, sofern es das Attribut "Name" besitzt.
+  * Dient zum einfachen Anzeigen in einem QTableWidget, wenn eine Model-View Darstellung zu komplex wäre.
+  */
 template <typename t>
 class CustomTableWidgetItem : public QTableWidgetItem
 {

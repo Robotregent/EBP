@@ -2,7 +2,9 @@
 #define CLIENTMENU_H
 
 #include <QTreeWidget>
-
+/**
+  * \brief Baummenü für die Navigation durch die Klientenmasken
+  */
 class ClientMenu : public QTreeWidget
 {
     Q_OBJECT

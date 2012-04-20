@@ -47,7 +47,7 @@ void TextTransferAgent::on_bewohnerBox_currentIndexChanged(int index)
 	dokus = selectedBewohner->loadDokumentationen(_context.curConnection);
 	foreach (QSharedPointer < ebp::Dokumentation >  doku, dokus)
 	{
-	    this->ui->PlanungsBox->addItem(DokuTypWrapper::toString(doku->typ()));
+	    this->ui->PlanungsBox->addItem(DokuTypMapper::toString(doku->typ()));
 	}
     }
 }

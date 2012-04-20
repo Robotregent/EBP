@@ -10,7 +10,9 @@
 namespace Ui {
     class Ereignis;
 }
-
+/**
+  * \brief Maske: "Ereignis"
+  */
 class Ereignis : public QWidget
 {
     Q_OBJECT

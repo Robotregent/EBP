@@ -9,7 +9,9 @@
 namespace Ui {
     class LeistungstraegerBox;
 }
-
+/**
+  * \brief Einzelner Leistungsträger
+  */
 class LeistungstraegerBox : public QGroupBox
 {
     Q_OBJECT
@@ -18,10 +20,9 @@ class LeistungstraegerBox : public QGroupBox
     SessionContext &context;
 public:
     explicit LeistungstraegerBox(SessionContext &_context, QWidget *parent = 0,QSharedPointer< ebp::Leistungstraeger > currentLeistungstraeger = QSharedPointer< ebp::Leistungstraeger >());
-   // explicit LeistungstraegerBox(const SessionContext &context,QWidget *parent = 0);
-    static const int fixedWidth = 670;
+    static const int fixedWidth = 670;	    ///< constante für das Ausrichten des Layouts
     ~LeistungstraegerBox();
-    bool saveContent();
+    bool saveContent();			    ///< Speichern den Inhalts
 
 private:
     Ui::LeistungstraegerBox *ui;

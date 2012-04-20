@@ -7,6 +7,9 @@ namespace Ui {
     class PleasWaitDialog;
 }
 
+/**
+  * \brief Dialog, der beim Laden von Daten angezeigt werden kann
+  */
 class PleasWaitDialog : public QDialog
 {
     Q_OBJECT

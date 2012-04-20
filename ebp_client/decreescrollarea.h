@@ -10,7 +10,9 @@
 namespace Ui {
     class DecreeScrollArea;
 }
-
+/**
+  * \brief Maske: "Verfügungen"
+  */
 class DecreeScrollArea : public QScrollArea, public SaveContentInterface
 {
     Q_OBJECT
@@ -26,7 +28,7 @@ class DecreeScrollArea : public QScrollArea, public SaveContentInterface
 public:
     explicit DecreeScrollArea(const SessionContext &context,QWidget *parent = 0);
     ~DecreeScrollArea();
-    bool saveContent();
+    bool saveContent();			    ///< Speichern den Inhalts
     enum enumTypes{Fix, Bet, Psy, Pat};
 
 

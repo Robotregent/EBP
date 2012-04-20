@@ -9,7 +9,9 @@
 namespace Ui {
     class ChooseDialog;
 }
-
+/**
+  * \brief Basisklasse für einen Auswahldialog
+  */
 class ChooseDialog : public QDialog
 {
     Q_OBJECT
@@ -17,7 +19,6 @@ class ChooseDialog : public QDialog
 public:
     explicit ChooseDialog(QString typ, QWidget *parent = 0);
     ~ChooseDialog();
-
 
 private slots:
     virtual void on_buttonBox_accepted();
@@ -27,7 +28,9 @@ protected:
 
 };
 /////////////////////////////////////// Mitarbeiter wählen ////////////////////////////////////////////////////
-
+/**
+  * \brief Dialog, um einen Mitarbeiter auzuwählen
+  */
 class ChooseMaDialog : public ChooseDialog
 {
     Q_OBJECT
@@ -43,6 +46,9 @@ signals:
 };
 
 ////////////////////////////////////// Bewohner wählen /////////////////////////////////////////////////////////
+/**
+  * \brief Dialog, um einen Bewohner zu wählen
+  */
 class ChooseBwDialog : public ChooseDialog
 {
     Q_OBJECT
@@ -58,6 +64,9 @@ signals:
 };
 
 ////////////////////////////////////// Wohngruppe wählen /////////////////////////////////////////////////////////
+/**
+  * \brief Dialog, um eine Wohngruppe zu wählen
+  */
 class ChooseWgDialog : public ChooseDialog
 {
     Q_OBJECT
