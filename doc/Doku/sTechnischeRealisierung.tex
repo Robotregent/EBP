@@ -73,9 +73,38 @@ Lediglich das User-Management, um ``Mitarbeiter`` auf Datenbankbenutzer abzubild
 Um das Buildsystem (CMake) automatisch bei Veränderungen des Quellcodes alle für ODB benötigten Dateien generieren zu lassen, wird im Buildscript wie folgt vorgegangen:
 \begin{enumerate}
 \item Suchen aller Dateien die ODB spezifische Pragma-Definitionen beinhalten.
-\item Erstellen einer Vorschrift um für jede so gefundene Datei den ODB-Compiler aufzurufen.\\
-	Dabei werden auch die Abhängigkeiten der generierten Dateien korrekt in das Buildsystem eingefügt, so dass diese nur neu generiert werden, wenn tatsächlich Änderungen an der jeweiligen Eingangsdatei vorhanden sind.
+\item Erstellen einer Vorschrift um für jede so gefundene Datei den ODB-Compiler aufzurufen.
+	Dabei werden auch die Abhängigkeiten der generierten Dateien korrekt in das Buildsystem eingefügt, so dass diese nur neu generiert werden, wenn tatsächlich Änderungen an der jeweiligen Eingangsdatei oder deren Abhängigkeiten vorhanden sind.
 \end{enumerate}
+Der entsprechende Auszug aus dem CMake Buildscript:\\
+\lstset{language=clean}
+Jeder zum Projekt gehörende C++ Header wird eingelesen und nach ODB-Pragma-Definitionen durchsucht:
+\begin{lstlisting}
+foreach( header ${EBPdb_headers} )
+	file( READ ${header} headercontent )
+	if( "${headercontent}" MATCHES "#pragma[ \t]+db[ \t]+object" )
+\end{lstlisting}
+Für jede gefundene Datei wird die generierte ODB-Datei zu den zu kompilierenden Quelldateien hinzugefügt:
+\begin{lstlisting}
+		get_filename_component( headerbase ${header} NAME_WE )
+		set( EBPdb_sources ${EBPdb_sources} ${headerbase}-odb.cxx )
+\end{lstlisting}
+Damit der ODB-Precompiler den Quellcode korrekt parsen kann, müssen sämtliche verwendeten Include-Verzeichnisse bei dem Aufruf des Precompilers angegeben werden. Die Projekteinstellungen werden hierfür übernommen:
+\begin{lstlisting}
+		get_directory_property( odbincludes INCLUDE_DIRECTORIES )
+		foreach( includedir ${odbincludes} )
+			set( odbincludeargs ${odbincludeargs} -I${includedir} )
+		endforeach( includedir )
+\end{lstlisting}
+Eine Regel zum Ausführen des Precompilers der der die Quellcode-Datei generiert wird erstellt (gleichzeitig werden auch alle weiteren benötigten Dateien erzeugt):
+\begin{lstlisting}
+		add_custom_command( OUTPUT ${headerbase}-odb.cxx ${headerbase}-odb.hxx ${headerbase}-odb.ixx ${headerbase}.sql
+			COMMAND odb ${odbincludeargs} --database mysql --profile qt --generate-query --generate-schema ${header}
+			DEPENDS ${header} )
+	endif( "${headercontent}" MATCHES "#pragma[ \t]+db[ \t]+object" )
+endforeach( header )
+\end{lstlisting}
+
 
 \newpage
 
@@ -89,18 +118,56 @@ Um das Buildsystem (CMake) automatisch bei Veränderungen des Quellcodes alle f�
 \end{figure*}
 
 \subsubsection{Abstraktion der Schnittstelle}
+\lstset{language=c++}
 Zweck der Bibliothek ist es die internen Abläufe des ORM Systems zu verbergen, und der Anwendung eine einfache, objektorientierte Schnittstelle zur Verfügung zu stellen.\\
-So lässt sich mit\\
+Voraussetzung zur Verwendung der Bibliothek ist eine funktionierende Verbindung zur Datenbank:\\
 \begin{lstlisting}
-QSharedPointer<ebp::Mitarbeiter> mitarbeiter =
+QSharedPointer<ebp::connection> connection =
+	QSharedPointer<ebp::connection>
+	(
+		new ebp::connection( "LoginName", "DatenbankName", "localhost", 3306)
+	);
+connection->establish( "PasswortDesBenutzers" );
+QSharedPointer<Mitarbeiter> mitarbeiter = connection->mitarbeiter();
+\end{lstlisting}
+Sollen neue Mitarbeiter auf die Datenbank zugreifen, kann mit\\
+\begin{lstlisting}
+QSharedPointer<ebp::Mitarbeiter> neuerMitarbeiter =
 	QSharedPointer<ebp::Mitarbeiter>
 	(
 		new ebp::Mitarbeiter( "LoginName", ebp::Mitarbeiter::WohngruppenRecht, "Name" )
 	);
-mitarbeiter->create( connection, "Passwort" );
+neuerMitarbeiter->create( connection, "PasswortDesNeuenMitarbeiters" );
 \end{lstlisting}
 ein neuer Mitarbeiter in der Datenbank erstellen. Gleichzeitig wird auch ein neuer Datenbankbenutzer angelegt, der intern mit den Daten des Mitarbeiters verknüpft wird.
-Der Datenbankbenutzer erhält dabei nur die Berechtigungen an den Datenbanktabellen, die er für seinen ''Rechtestatus`` benötigt.
+Der Datenbankbenutzer erhält dabei nur die Berechtigungen an den Datenbanktabellen, die er für seinen ''Rechtestatus`` benötigt.\\
+\\
+Analog zum Erstellen eines Mitarbeiters, lassen sich auch alle anderen Objekte der Bibliothek erzeugen:\\
+\begin{lstlisting}
+QSharedPointer<ebp::Bewohner> bewohner =
+	QSharedPointer<ebp::Bewohner>
+	(
+		new ebp::Bewohner( 0 )
+	);
+bewohner->create( connection );
+\end{lstlisting}
+Veränderungen eines Objekts lassen sich mit der ''update``-Methode in der Datenbank sichern:\\
+\begin{lstlisting}
+bewohner->telefon( "0123456789" );
+bewohner->update( connection );
+\end{lstlisting}
+Verknüpfungen lassen sich mit den jeweiligen ''link``-Methoden herstellen:\\
+\begin{lstlisting}
+ebp::Bewohner::linkBezugsbetreuer( bewohner,mitarbeiter);
+ebp::Bewohner::linkWohngruppe( bewohner, wohngruppe);
+bewohner->update( connection );
+\end{lstlisting}
+Dabei geht eine Verknüpfung immer von einer der Klassen aus - die andere ist das ''inverse`` Gegenstück.
+Um die Verknüpfung persistent zu machen, muss immer die ''update``-Methode der Klasse verwendet werden, von der die Verknüpfung ausgeht.\\
+Angelegte verknüpfungen lassen sich mit den verschiedenen ''load``-Methoden wieder laden:\\
+\begin{lstlisting}
+QList< QSharedPointer<ebp::Projekt> > projekte = bewohner->loadProjekte( connection );
+\end{lstlisting}
 
 \newpage
 
@@ -208,7 +275,9 @@ private slots:
 \end{lstlisting}
 Durch dieses Konzept der losen Kopplung könnten bei Bedarf weitere \textit{Slots} an ein erfolgreiches Anmelden angekoppelt werden, ohne auf den bereits bestehenden \textit{Slot} zum initialisieren des Clients Einfluss zu nehmen.
 \subsubsection{Model/View Pattern - Datenvisualisierung}
-Das Entwurfsmuster Model/View oder auch Model/View/Controller ist ein klassisches Entwurfsmuster der Softwareentwicklung und beschreibt, wie die Datenhaltung, die Visualisierung der Daten und die Interaktion mit dem Benutzer in verschiedenen Komponenten realisiert wird. Ziel dieses Entwurfsmusters ist es, flexiblen und wiederverwendbaren Programmcode zu entwickeln.Das Framework Qt bietet die Variante des Model/View Entwurfsmusters an. Dabei werden Der Controller und der View in der selben Komponente realisiert. Dies vereinfacht die Handhabung, ermöglicht aber immernoch ein Trennen der Datenhaltung und der Visualisierung der Daten \cite[Vgl.]{QtModelView}. Qt bietet Abstrakte Klassen für ein Table-, List- oder Treemodel an, um grundlegene Funtionalitäten für die entsprechenden Views vorzugeben. Sind diese Ansätze nicht flexibel genug, kann QAbstractItemModel implementiert werden. Um die Mitarbeiterobjekte in einem Tableview darstellen zu können, wurde ein einfaches Model mit Hilfe von QAbstractTableModel implementiert:
+Das Entwurfsmuster Model/View oder auch Model/View/Controller ist ein klassisches Entwurfsmuster der Softwareentwicklung und beschreibt, wie die Datenhaltung, die Visualisierung der Daten und die Interaktion mit dem Benutzer in verschiedenen Komponenten realisiert wird. Ziel dieses Entwurfsmusters ist es, flexiblen und wiederverwendbaren Programmcode zu entwickeln.
+Das Framework Qt bietet die Variante des Model/View Entwurfsmusters an. Dabei werden Der Controller und der View in der selben Komponente realisiert. Dies vereinfacht die Handhabung, ermöglicht aber immernoch ein Trennen der Datenhaltung und der Visualisierung der Daten \cite[Vgl.]{QtModelView}.
+Qt bietet Abstrakte Klassen für ein Table-, List- oder Treemodel an, um grundlegene Funtionalitäten für die entsprechenden Views vorzugeben. Sind diese Ansätze nicht flexibel genug, kann QAbstractItemModel implementiert werden. Um die Mitarbeiterobjekte in einem Tableview darstellen zu können, wurde ein einfaches Model mit Hilfe von QAbstractTableModel implementiert:
 \begin{lstlisting}
 class EmployeeTableModel : public QAbstractTableModel
 {
@@ -220,16 +289,16 @@ public:
     // Überschriebene Funktion. Liefert dem View die Anzahl an Zeilen    
     int rowCount(const QModelIndex &parent) const;
 
-    // Überschriebene Funktion. Liefert dem View die Anzahl an Spalten					
+    // Überschriebene Funktion. Liefert dem View die Anzahl an Spalten
     int columnCount(const QModelIndex &parent) const;
 
-    // Überschriebene Funktion. Liefert dem View die Daten. 				
+    // Überschriebene Funktion. Liefert dem View die Daten.
     QVariant data(const QModelIndex &index, int role) const;
 
-    // Überschriebene Funktion. Liefert dem View die Überschriften.				
-    QVariant headerData(int section, Qt::Orientation orientation, int role);	
-    QSharedPointer < ebp::Mitarbeiter> getMitarbeiter(int index);			
-    void addMitarbeiter(QSharedPointer<ebp::Mitarbeiter> newMitarbeiter);		
+    // Überschriebene Funktion. Liefert dem View die Überschriften.
+    QVariant headerData(int section, Qt::Orientation orientation, int role);
+    QSharedPointer < ebp::Mitarbeiter> getMitarbeiter(int index);
+    void addMitarbeiter(QSharedPointer<ebp::Mitarbeiter> newMitarbeiter);
 };
 \end{lstlisting}
 Dieses Model kann in verschiedenen Tableviews verwendet werden. Die Views können sich stark von einander unterscheiden. Über die überschriebenen Funktionen von QAbstractTableModel wird sichergestellt, dass der View auf die richtigen Daten zugreift.
