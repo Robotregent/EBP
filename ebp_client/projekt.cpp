@@ -14,22 +14,7 @@ Projekt::Projekt(SessionContext &_curContext, QWidget *parent) :
 
     curContext.curBewohner->reload(curContext.curConnection);
 
-    projects =  this->curContext.curBewohner->loadProjekte(curContext.curConnection);
-    foreach (QSharedPointer< ebp::Projekt> p, projects)
-    {
-	new CustomListWidgetItem<ebp::Projekt>(p,this->ui->listWidget);
-    }
-
-    if (projects.count()>0)
-    {
-	curProject=projects.first();
-	setProjekt();
-    }
-
-    maDialog = NULL;
-
-    maDialog = new ChooseMaDialog(ebp::Mitarbeiter::loadAll(curContext.curConnection),"Mitarbeiter wählen:",this);
-    QObject::connect(maDialog,SIGNAL(chosen(QSharedPointer<ebp::Mitarbeiter>)),this, SLOT(setChosenMa(QSharedPointer<ebp::Mitarbeiter>)));
+    init();
 }
 
 Projekt::~Projekt()
@@ -58,12 +43,16 @@ void Projekt::on_pushButton_clicked()
 	{
 	    qDebug()<< "Neues Projekt erfolgreich angelegt";
 	    projects.append(project);
+
+	    new CustomListWidgetItem<ebp::Projekt>(project,this->ui->listWidget);
+
+	    this->ui->listWidget->setCurrentRow(this->ui->listWidget->count()-1);
 	}
 	else
 	    qDebug()<< "Neues Projekt anlegen fehlgeschlagen";
 
 
-	new CustomListWidgetItem<ebp::Projekt>(project,this->ui->listWidget);
+
 
 	this->ui->NewProjektLineEdit->clear();
     }
@@ -166,4 +155,36 @@ bool Projekt::saveContent()
             result = true;
     }
     return result;
+}
+void Projekt::init()
+{
+
+    if(!this->curContext.curBewohner.isNull())
+    {
+	bool editable = false;
+	if(!curContext.curBewohner->bezugsbetreuer().isNull())
+	    if(curContext.curBewohner->bezugsbetreuer()->login()== curContext.curMitarbeiter->login())
+		editable = true;
+
+	this->ui->pushButton->setEnabled(editable);
+	this->ui->pushButton_2->setEnabled(editable);
+
+	projects =  this->curContext.curBewohner->loadProjekte(curContext.curConnection);
+	foreach (QSharedPointer< ebp::Projekt> p, projects)
+	{
+	    new CustomListWidgetItem<ebp::Projekt>(p,this->ui->listWidget);
+	}
+
+	if (projects.count()>0)
+	{
+	    curProject=projects.first();
+	    setProjekt();
+	}
+
+	maDialog = NULL;
+
+	maDialog = new ChooseMaDialog(ebp::Mitarbeiter::loadAll(curContext.curConnection),"Mitarbeiter wählen:",this);
+	QObject::connect(maDialog,SIGNAL(chosen(QSharedPointer<ebp::Mitarbeiter>)),this, SLOT(setChosenMa(QSharedPointer<ebp::Mitarbeiter>)));
+    }
+
 }

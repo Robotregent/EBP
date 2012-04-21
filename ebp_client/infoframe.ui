@@ -37,7 +37,7 @@
   <property name="frameShadow">
    <enum>QFrame::Raised</enum>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0,0,4,0,1,0,0,4">
+  <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0,0,2,0,1,0,0,2">
    <property name="spacing">
     <number>2</number>
    </property>
@@ -58,6 +58,12 @@
       </property>
       <item>
        <widget class="QLabel" name="BewohnerLabel">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="text">
          <string>Aktueller Bewohner:</string>
         </property>

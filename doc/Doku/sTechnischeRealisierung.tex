@@ -11,114 +11,13 @@ Das Projekt ist in folgende Module aufgeteilt:
 
 \newpage
 
-\subsection{Eingesetzte Entwurfsmuster}
-\subsubsection{Mediator Pattern - Der Text Transfer Agent}
-Neben der Verwaltung von klienten- und wohngruppenspezifischen Daten ist die Überführung von Textstücken aus verschiedenen Teilen des
-Dokumentationsprogramms die Hauptfunktion der \EBP. Diese Funktion wird im folgenden \textit{Text Transfer} genannt. \newline
-Der \textit{Text Transfer} soll aus den Masken Bewohner$\rightarrow$Protokoll, Bewohner$\rightarrow$Projekt und Wohngruppe$\rightarrow$Gruppenbuch
-erfolgen. Gespeichert werden die Textfragmente in den verschiedenen Feldern der Betreuungsplanung eines beliebigen Bewohners. Die Unterschiedlichkeit
-der Quellen für die zu transferierende Textfragmente und die Variation an Zielfelder war die Schwierigkeit bei der Implementierung dieser
-Funktionalität. Da die Anzahl an Objekten, die als Quelle dienen, im Programmverlauf stark variieren kann, muss der Lösungsansatz sehr flexibel
-implementiert sein. Abbildung \ref{unstrukturiert} zeigt die Vielzahl an möglichen Kommunikationswegen zwischen den einzelnen Objekten.\\
-\begin{figure*}[htp!]
-	\includegraphics[width=0.8\textwidth]{unmediated}
-	\caption{Kommunikationswege zwischen den Objekten}
-	\label{unstrukturiert}
-\end{figure*}
-Um nicht jeden Kommunikationsweg einzeln verwalten zu müssen, wurde der \textit{Text Transfer} in Form des Mediator Patterns entworfen. Den Zweck
-eines Mediators definiert GAMMA wie folgt: \\
-``Define an object that encapsulates how a set of objects interact. Mediator promotes loose coupling by keeping objects from reffering to each other explicitly, 
-and it lets you vary their interaction independently \cite[S. 273]{Entwurfsmuster}.''\\
-\\
-\textbf{Beteiligte Objekte\cite[S. 277]{Entwurfsmuster}:}
-\begin{enumerate}
-	\item Eine Instanz des TextTransferAgent als konkreter Mediator. Auf eine abstrakte Mediatorklasse wurde auf Grund des klar definierten Aufgabengebiets verzichtet.
-	\begin{enumerate}
-		\item Implementiert die Interaktion zwischen den verschiedenen Kollegen.
-		\item Kennt alle zu verwaltenden Kollegenobjekte.
-		\item Deklaration der Mediatorklasse TextTransferAgent:
-		\begin{lstlisting}
-class TextTransferAgent : public QFrame
-{
-    Q_OBJECT
-
-public:
-    explicit TextTransferAgent(QList<TextTransferInterface *>Interfaces,const SessionContext &context, QWidget *parent = 0);
-    ~TextTransferAgent();
-    void registerNewInterface(TextTransferInterface *newInterface);
-
-private slots:
-    void on_bewohnerBox_currentIndexChanged(int index);
-    void on_losButton_clicked();
-    void on_helpButton_clicked();
-
-private:
-    const SessionContext &_context;
-    Ui::TextTransferAgent *ui;
-    QSharedPointer< ebp::Bewohner > selectedBewohner;
-    QList < QSharedPointer < ebp::Dokumentation > > dokus;
-    QList<TextTransferInterface *> textInterfaces;
-};
-		\end{lstlisting}
-	\end{enumerate}
-	\item Beliebig viele Instanzen von Klassen, die das TextTransferInterface implementiert haben als Kollegen.
-	\begin{enumerate}
-		\item Jeder Kollege kennt das Mediatorobjekt.
-		\item Möchte ein Kollege mit einem anderen kommunizieren, tut er dies über den Mediator.
-		\item Die Kommunikation zwischen den Kollegen ist in dieser Implementierung unidirektional. Klassen, die das TextTransferInterface implementiert haben dienen stets 
-			als Quelle für den Texttransfer. Als Ziel für den Texttransfer stehen dem Meditor über das aktive Bewohner Objekt alle Instanzen der Betreuungsplanung zur Verfügung.
-		\item Deklaration des Kollegeninterfaces TextTransferInterface:
-		\begin{lstlisting}
-class TextTransferInterface
-{
-public:
-    virtual TextTransferInformation getSelectedText()=0;
-};
-		\end{lstlisting}
-	\end{enumerate}
-\end{enumerate}
-Abbildung \ref{strukturiert} zeigt die Kommunikationswege eines Texttransfers zwischen den einzelnen Objekten, koordiniert durch ein Mediatorobjekt. 
-\begin{figure*}[htp!]
-	\includegraphics[width=0.8\textwidth]{mediated}
-	\caption{Kommunikationswege zwischen den Objekten, koordiniert durch einen Mediator}
-	\label{strukturiert}
-\end{figure*}
-\subsubsection{Observer Pattern - Signal Slot Konzept}
-Ein klassisches Konzept zur Kommunikation zwischen Objekten stellen \textit{Events} und \textit{Eventhandler} dar. Dieses Konzept ist allerdings nicht typsicher und unflexibel, da es für ein \textit{Events} auch nur einen \textit{Eventhandler} geben kann\cite[S. 32]{Qt4}. Qt hingegen nutzt zur Kommunikation zwischen Objekten das \textit{Signal Slot Konzept}, das wie ein Observer Pattern aufgebaut ist. GAMMA beschreibt das Observer Pattern wie folgt: \\
-"Define a one-to-many dependency between objects so that when one object changes state, all its dependents are notified and updated automatically\cite[S. 293]{Entwurfsmuster}."\\
-Qt realisiert dies, indem Funktionen einer Klasse durch das Schlüsselwort \textit{Slot} gekennzeichnet werden können. Diese \textit{Slots} werden mit einem \textit{Signal} verbunden und sind damit als \textit{Observer} zu betrachten. Das \textit{Subject} ist ein Funktionsprototyp, der durch das Schlüsselwort \textit{Signal} gekennzeichnet wird. Dieser Prototyp wird nicht implementiert. GAMMA beschreibt diese Beziehung folgendermaßen:\\
-''The Subject is the publisher of notifications. It sends out these notifications without having  to know who its observers are. Any number of observers can subscibe to receive notifications\cite[S. 294]{Entwurfsmuster}."\\
-Verbunden wird ein \textit{Signal} mit einem \textit{Slot} durch den Aufruf der statischen Methode QObject::connect(). \textit{Signal} und \textit{Slot} müssen dabei die gleichen Argumente besitzen. Dadurch wird die Typsicherheit gewährleistet. Allerdings sind die Schlüsselworte \textit{Signal} und \textit{Slot} kein reines C++. Klassen die sich diesem Konzept bedienen müssen daher durch den \textit{Meta Object Compiler (MOC)} in Standard-konformes C++ verwandelt werden\cite[Vgl. S. 51]{Qt4}.
-\EBP bedient sich dieses Konzepts an vielen Stellen. Der Anmeldevorgang soll hier als Beispiel dienen. Die Anmeldung an dem Client erfolgt auf einer Maske, die durch die Klasse LoginForm beschrieben wird. Diese Klasse definiert auch ein eigenes \textit{Signal} \textit{validLogin()}:
-\begin{lstlisting}
-class LoginForm : public QWidget
-{
-    ...
-signals:
-    void validLogin(QSharedPointer<ebp::Mitarbeiter> newMitarbeiter, QSharedPointer<ebp::connection> newConnection);
-    ...
-};
-\end{lstlisting}
-Die Klasse MainWindow definiert den dazu passenden \textit{Slot}, der nach einer erfolreichen Anmeldung den Client initalisiert:
-\begin{lstlisting}
-class MainWindow : public QMainWindow
-{
-    ...
-private slots:
-    void validLogin(QSharedPointer<ebp::Mitarbeiter> newMitarbeiter, QSharedPointer<ebp::connection> newConnection);
-    ...
-};
-\end{lstlisting}
-Durch dieses Konzept der losen Kopplung könnten bei Bedarf weitere \textit{Slots} an ein erfolgreiches Anmelden angekoppelt werden, ohne auf den bereits bestehenden \textit{Slot} zum initialisieren des Clients Einfluss zu nehmen.
-\subsubsection{Model/View Pattern - Datenvisualisierung}
-
 \subsection{Qt als Grafikbibliothek}
 
 \newpage
 
 \subsection{Buildsystem}
 Da das Projekt \textit{Qt} als einen zentralen Bestandteil verwendet, ist es naheliegend das \textit{Qt}-eigene Buildsystem \textit{QMake} einzusetzen. Insbesondere die Verwendung von \textit{QMake} innerhalb des \textit{QtCreator}s kann die Entwicklung einfacher Anwendungen erleichtern.\\
-Eine bedeutende Schwierigkeit von \textit{QMake} ist es jedoch, komplexere Build-Prozesse zu automatisieren, wie beispielsweise die integration des verwendeten \textit{ORM}s in den Build-Vorgang der Persistenzschicht.\\
+Eine bedeutende Schwierigkeit von \textit{QMake} ist es jedoch, komplexere Build-Prozesse zu automatisieren, wie beispielsweise die Integration des verwendeten \textit{ORM}s in den Build-Vorgang der Persistenzschicht.\\
 Daher wurde in diesem Projekt ein zweigleisiges Buildsystem eingesetzt:\\
 Zum einen lassen sich die GUI-Anwendungen weiterhin mit \textit{QMake} erstellen. Zum anderen kann das komplette Projekt samt Bibliothek der Persistenzschicht mit \textit{CMake} kompiliert werden.\\
 
@@ -143,7 +42,7 @@ Folgende ORM-Systeme wurden in Betracht gezogen\\
 Alle Systeme bieten eine Qt Integration, die die Schnittstelle zwischen GUI und Persistenzschicht vereinfachen.
 Ebenso unterstützen alle Systeme mehrere Datenbankbackends.
 Letztendlich fiel die Entscheidung auf ODB, da diese Bibliothek (unter anderem durch Caching) die beste Performance verspricht.
-Außerdem lassen sich Klassen mit geringem Aufwandt persistent machen.
+Außerdem lassen sich Klassen mit geringem Aufwand persistent machen.
 
 \newpage
 
@@ -206,3 +105,132 @@ Der Datenbankbenutzer erhält dabei nur die Berechtigungen an den Datenbanktabel
 \newpage
 
 \subsection{Unit-Tests}
+
+\newpage
+
+\subsection{Eingesetzte Entwurfsmuster}
+\subsubsection{Mediator Pattern - Der Text Transfer Agent}
+Neben der Verwaltung von klienten- und wohngruppenspezifischen Daten ist die Überführung von Textstücken aus verschiedenen Teilen des
+Dokumentationsprogramms die Hauptfunktion der \EBP. Diese Funktion wird im folgenden \textit{Text Transfer} genannt. \newline
+Der \textit{Text Transfer} soll aus den Masken Bewohner$\rightarrow$Protokoll, Bewohner$\rightarrow$Projekt und Wohngruppe$\rightarrow$Gruppenbuch
+erfolgen. Gespeichert werden die Textfragmente in den verschiedenen Feldern der Betreuungsplanung eines beliebigen Bewohners. Die Unterschiedlichkeit
+der Quellen für die zu transferierende Textfragmente und die Variation an Zielfelder war die Schwierigkeit bei der Implementierung dieser
+Funktionalität. Da die Anzahl an Objekten, die als Quelle dienen, im Programmverlauf stark variieren kann, muss der Lösungsansatz sehr flexibel
+implementiert sein. Abbildung \ref{unstrukturiert} zeigt die Vielzahl an möglichen Kommunikationswegen zwischen den einzelnen Objekten.\\
+\begin{figure*}[htp!]
+	\includegraphics[width=0.8\textwidth]{unmediated}
+	\caption{Kommunikationswege zwischen Objekten}
+	\label{unstrukturiert}
+\end{figure*}
+Um nicht jeden Kommunikationsweg einzeln verwalten zu müssen, wurde der \textit{Text Transfer} in Form des Mediator Patterns entworfen. Den Zweck
+eines Mediators definiert GAMMA wie folgt: \\
+``Define an object that encapsulates how a set of objects interact. Mediator promotes loose coupling by keeping objects from reffering to each other explicitly, 
+and it lets you vary their interaction independently \cite[S. 273]{Entwurfsmuster}.''\\
+\\
+\textbf{Beteiligte Objekte\cite[S. 277]{Entwurfsmuster}:}
+\begin{enumerate}
+	\item Eine Instanz des TextTransferAgent als konkreter Mediator. Auf eine abstrakte Mediatorklasse wurde auf Grund des klar definierten Aufgabengebiets verzichtet.
+	\begin{enumerate}
+		\item Implementiert die Interaktion zwischen den verschiedenen Kollegen.
+		\item Kennt alle zu verwaltenden Kollegenobjekte.
+		\item Deklaration der Mediatorklasse TextTransferAgent:
+		\begin{lstlisting}
+class TextTransferAgent : public QFrame
+{
+    Q_OBJECT
+
+public:
+    explicit TextTransferAgent(QList<TextTransferInterface *>Interfaces,const SessionContext &context, QWidget *parent = 0);
+    ~TextTransferAgent();
+    void registerNewInterface(TextTransferInterface *newInterface);
+
+private slots:
+    void on_bewohnerBox_currentIndexChanged(int index);
+    void on_losButton_clicked();
+    void on_helpButton_clicked();
+
+private:
+    const SessionContext &_context;
+    Ui::TextTransferAgent *ui;
+    QSharedPointer< ebp::Bewohner > selectedBewohner;
+    QList < QSharedPointer < ebp::Dokumentation > > dokus;
+    QList<TextTransferInterface *> textInterfaces;
+};
+		\end{lstlisting}
+	\end{enumerate}
+	\item Beliebig viele Instanzen von Klassen, die das TextTransferInterface implementiert haben als Kollegen.
+	\begin{enumerate}
+		\item Jeder Kollege kennt das Mediatorobjekt.
+		\item Möchte ein Kollege mit einem anderen kommunizieren, tut er dies über den Mediator.
+		\item Die Kommunikation zwischen den Kollegen ist in dieser Implementierung unidirektional. Klassen, die das TextTransferInterface implementiert haben dienen stets 
+			als Quelle für den Texttransfer. Als Ziel für den Texttransfer stehen dem Meditor über das aktive Bewohner Objekt alle Instanzen der Betreuungsplanung zur Verfügung.
+		\item Deklaration des Kollegeninterfaces TextTransferInterface:
+		\begin{lstlisting}
+class TextTransferInterface
+{
+public:
+    virtual TextTransferInformation getSelectedText()=0;
+};
+		\end{lstlisting}
+	\end{enumerate}
+\end{enumerate}
+Abbildung \ref{strukturiert} zeigt die Kommunikationswege eines Texttransfers zwischen den einzelnen Objekten, koordiniert durch ein Mediatorobjekt. 
+\begin{figure*}[htp!]
+	\includegraphics[width=0.8\textwidth]{mediated}
+	\caption{Kommunikationswege zwischen Objekten, koordiniert durch einen Mediator}
+	\label{strukturiert}
+\end{figure*}
+\subsubsection{Observer Pattern - Signal Slot Konzept}
+Ein klassisches Konzept zur Kommunikation zwischen Objekten stellen \textit{Events} und \textit{Eventhandler} dar. Dieses Konzept ist allerdings nicht typsicher und unflexibel, da es für ein \textit{Events} auch nur einen \textit{Eventhandler} geben kann\cite[S. 32]{Qt4}. Qt hingegen nutzt zur Kommunikation zwischen Objekten das \textit{Signal Slot Konzept}, das wie ein Observer Pattern aufgebaut ist. GAMMA beschreibt das Observer Pattern wie folgt: \\
+"Define a one-to-many dependency between objects so that when one object changes state, all its dependents are notified and updated automatically\cite[S. 293]{Entwurfsmuster}."\\
+Qt realisiert dies, indem Funktionen einer Klasse durch das Schlüsselwort \textit{Slot} gekennzeichnet werden können. Diese \textit{Slots} werden mit einem \textit{Signal} verbunden und sind damit als \textit{Observer} zu betrachten. Das \textit{Subject} ist ein Funktionsprototyp, der durch das Schlüsselwort \textit{Signal} gekennzeichnet wird. Dieser Prototyp wird nicht implementiert. GAMMA beschreibt diese Beziehung folgendermaßen:\\
+''The Subject is the publisher of notifications. It sends out these notifications without having  to know who its observers are. Any number of observers can subscibe to receive notifications\cite[S. 294]{Entwurfsmuster}."\\
+Verbunden wird ein \textit{Signal} mit einem \textit{Slot} durch den Aufruf der statischen Methode QObject::connect(). \textit{Signal} und \textit{Slot} müssen dabei die gleichen Argumente besitzen. Dadurch wird die Typsicherheit gewährleistet. Allerdings sind die Schlüsselworte \textit{Signal} und \textit{Slot} kein reines C++. Klassen die sich diesem Konzept bedienen müssen daher durch den \textit{Meta Object Compiler (MOC)} in Standard-konformes C++ verwandelt werden\cite[Vgl. S. 51]{Qt4}.
+\EBP bedient sich dieses Konzepts an vielen Stellen. Der Anmeldevorgang soll hier als Beispiel dienen. Die Anmeldung an dem Client erfolgt auf einer Maske, die durch die Klasse LoginForm beschrieben wird. Diese Klasse definiert auch ein eigenes \textit{Signal} \textit{validLogin()}:
+\begin{lstlisting}
+class LoginForm : public QWidget
+{
+    ...
+signals:
+    void validLogin(QSharedPointer<ebp::Mitarbeiter> newMitarbeiter, QSharedPointer<ebp::connection> newConnection);
+    ...
+};
+\end{lstlisting}
+Die Klasse MainWindow definiert den dazu passenden \textit{Slot}, der nach einer erfolgreichen Anmeldung den Client initialisiert:
+\begin{lstlisting}
+class MainWindow : public QMainWindow
+{
+    ...
+private slots:
+    void validLogin(QSharedPointer<ebp::Mitarbeiter> newMitarbeiter, QSharedPointer<ebp::connection> newConnection);
+    ...
+};
+\end{lstlisting}
+Durch dieses Konzept der losen Kopplung könnten bei Bedarf weitere \textit{Slots} an ein erfolgreiches Anmelden angekoppelt werden, ohne auf den bereits bestehenden \textit{Slot} zum initialisieren des Clients Einfluss zu nehmen.
+\subsubsection{Model/View Pattern - Datenvisualisierung}
+Das Entwurfsmuster Model/View oder auch Model/View/Controller ist ein klassisches Entwurfsmuster der Softwareentwicklung und beschreibt, wie die Datenhaltung, die Visualisierung der Daten und die Interaktion mit dem Benutzer in verschiedenen Komponenten realisiert wird. Ziel dieses Entwurfsmusters ist es, flexiblen und wiederverwendbaren Programmcode zu entwickeln.Das Framework Qt bietet die Variante des Model/View Entwurfsmusters an. Dabei werden Der Controller und der View in der selben Komponente realisiert. Dies vereinfacht die Handhabung, ermöglicht aber immernoch ein Trennen der Datenhaltung und der Visualisierung der Daten \cite[Vgl.]{QtModelView}. Qt bietet Abstrakte Klassen für ein Table-, List- oder Treemodel an, um grundlegene Funtionalitäten für die entsprechenden Views vorzugeben. Sind diese Ansätze nicht flexibel genug, kann QAbstractItemModel implementiert werden. Um die Mitarbeiterobjekte in einem Tableview darstellen zu können, wurde ein einfaches Model mit Hilfe von QAbstractTableModel implementiert:
+\begin{lstlisting}
+class EmployeeTableModel : public QAbstractTableModel
+{
+    Q_OBJECT
+    QList < QSharedPointer < ebp::Mitarbeiter > > EmployeeList;
+public:
+    explicit EmployeeTableModel(QList < QSharedPointer < ebp::Mitarbeiter> > employees, QObject *parent = 0);
+    
+    // Überschriebene Funktion. Liefert dem View die Anzahl an Zeilen    
+    int rowCount(const QModelIndex &parent) const;
+
+    // Überschriebene Funktion. Liefert dem View die Anzahl an Spalten					
+    int columnCount(const QModelIndex &parent) const;
+
+    // Überschriebene Funktion. Liefert dem View die Daten. 				
+    QVariant data(const QModelIndex &index, int role) const;
+
+    // Überschriebene Funktion. Liefert dem View die Überschriften.				
+    QVariant headerData(int section, Qt::Orientation orientation, int role);	
+    QSharedPointer < ebp::Mitarbeiter> getMitarbeiter(int index);			
+    void addMitarbeiter(QSharedPointer<ebp::Mitarbeiter> newMitarbeiter);		
+};
+\end{lstlisting}
+Dieses Model kann in verschiedenen Tableviews verwendet werden. Die Views können sich stark von einander unterscheiden. Über die überschriebenen Funktionen von QAbstractTableModel wird sichergestellt, dass der View auf die richtigen Daten zugreift.
+\newpage

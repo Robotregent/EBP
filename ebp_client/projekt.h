@@ -42,6 +42,7 @@ private:
     QSharedPointer < ebp::Mitarbeiter > potentiallyNewMa;
     void setProjekt();
     ChooseMaDialog *maDialog;
+    void init();
 
 };
 
