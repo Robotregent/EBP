@@ -30,6 +30,7 @@ public:
     explicit MeldeListe(const SessionContext &_curContext,QWidget *parent = 0);
     ~MeldeListe();
     bool saveContent();
+    static bool dateLessThan(const QSharedPointer< ebp::Abwesenheit > s1, const QSharedPointer< ebp::Abwesenheit > s2);
 
 public slots:
     void stateChanged(int row, int col);

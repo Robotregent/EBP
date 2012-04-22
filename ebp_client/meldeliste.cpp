@@ -10,6 +10,7 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QTextStream>
+#include <QtAlgorithms>
 #include <QDesktopServices>
 
 MeldeListe::MeldeListe(const SessionContext &_curContext,QWidget *parent) :
@@ -165,93 +166,76 @@ void MeldeListe::exportFile()
         QFile file(fileName);
         QString tmpString;
         QString appendString;
-        file.open(QIODevice::WriteOnly | QIODevice::Text);
-        QTextStream out(&file);
-        out << "\tAbwesenheitsliste von " + this->ui->from->date().toString(DATEOUTPUTCONVSCHEME)
-               + " bis " + this->ui->to->date().toString(DATEOUTPUTCONVSCHEME) +"\n";
-
-        tmpString = "Datum:";
-        appendString.fill(' ',OUTPUTDATELENGTH-tmpString.length());
-        tmpString.append(appendString);
-        out << tmpString;
-
-        tmpString = "Bewohner:";
-        appendString.fill(' ',OUTPUTNAMELENGTH-tmpString.length());
-        tmpString.append(appendString);
-        out << tmpString;
-
-        tmpString = "Abwesenheitsgrund:";
-        appendString.fill(' ',OUTPUTGRUNDLENGTH-tmpString.length());
-        tmpString.append(appendString);
-        out << tmpString;
-        out << "\n";
-        foreach(QSharedPointer< ebp::Abwesenheit > tmpAbwesenheit,bewohner_abwesenheit)
+        try
         {
-            if ((tmpAbwesenheit->tag().toString(DATECALCCONVSCHEME).toInt()>=startDate)&&(tmpAbwesenheit->tag().toString(DATECALCCONVSCHEME).toInt()<=endDate))
+            file.open(QIODevice::WriteOnly | QIODevice::Text);
+            QTextStream out(&file);
+            out << "\tAbwesenheitsliste von " + this->ui->from->date().toString(DATEOUTPUTCONVSCHEME)
+                   + " bis " + this->ui->to->date().toString(DATEOUTPUTCONVSCHEME) +"\n";
+
+            tmpString = "Datum:";
+            appendString.fill(' ',OUTPUTDATELENGTH-tmpString.length());
+            tmpString.append(appendString);
+            out << tmpString;
+
+            tmpString = "Bewohner:";
+            appendString.fill(' ',OUTPUTNAMELENGTH-tmpString.length());
+            tmpString.append(appendString);
+            out << tmpString;
+
+            tmpString = "Abwesenheitsgrund:";
+            appendString.fill(' ',OUTPUTGRUNDLENGTH-tmpString.length());
+            tmpString.append(appendString);
+            out << tmpString;
+            out << "\n";
+
+            qSort(bewohner_abwesenheit.begin(),bewohner_abwesenheit.end(),MeldeListe::dateLessThan);
+            foreach(QSharedPointer< ebp::Abwesenheit > tmpAbwesenheit,bewohner_abwesenheit)
             {
-                tmpString = tmpAbwesenheit->tag().toString(DATEOUTPUTLISTSCHEME);
-                appendString.fill(' ',OUTPUTDATELENGTH-tmpString.length());
-                tmpString.append(appendString);
-                out << tmpString;
-
-                tmpString = tmpAbwesenheit->bewohner()->name();
-                appendString.fill(' ',OUTPUTNAMELENGTH-tmpString.length());
-                tmpString.append(appendString);
-                out << tmpString;
-
-                tmpString = tmpAbwesenheit->grund().trimmed();
-                if (tmpString.length() >OUTPUTGRUNDLENGTH)
+                if ((tmpAbwesenheit->tag().toString(DATECALCCONVSCHEME).toInt()>=startDate)&&(tmpAbwesenheit->tag().toString(DATECALCCONVSCHEME).toInt()<=endDate))
                 {
-                    // Länge bis Grund:
-                    int breakCount = (tmpString.length() / OUTPUTGRUNDLENGTH);
-                    appendString.fill(' ',OUTPUTDATELENGTH+OUTPUTNAMELENGTH);
-                    for (int i=0;i<breakCount;i++)
+                    tmpString = tmpAbwesenheit->tag().toString(DATEOUTPUTLISTSCHEME);
+                    appendString.fill(' ',OUTPUTDATELENGTH-tmpString.length());
+                    tmpString.append(appendString);
+                    out << tmpString;
+
+                    tmpString = tmpAbwesenheit->bewohner()->name();
+                    appendString.fill(' ',OUTPUTNAMELENGTH-tmpString.length());
+                    tmpString.append(appendString);
+                    out << tmpString;
+
+                    tmpString = tmpAbwesenheit->grund().trimmed();
+                    if (tmpString.length() >OUTPUTGRUNDLENGTH)
                     {
-                        if (tmpString.at(OUTPUTGRUNDLENGTH-1).isLetterOrNumber())
-                            // + eingefügter länge
-                            tmpString.insert(((i+1)*OUTPUTGRUNDLENGTH-1)+((OUTPUTDATELENGTH+OUTPUTNAMELENGTH)*i),QString("-\n%1").arg(appendString));
-                        else
-                            tmpString.insert(((i+1)*OUTPUTGRUNDLENGTH)+((OUTPUTDATELENGTH+OUTPUTNAMELENGTH)*i),QString("\n%1").arg(appendString));
+                        // Länge bis Grund:
+                        int breakCount = (tmpString.length() / OUTPUTGRUNDLENGTH);
+                        appendString.fill(' ',OUTPUTDATELENGTH+OUTPUTNAMELENGTH);
+                        for (int i=0;i<breakCount;i++)
+                        {
+                            if (tmpString.at(OUTPUTGRUNDLENGTH-1).isLetterOrNumber())
+                                // + eingefügter länge
+                                tmpString.insert(((i+1)*OUTPUTGRUNDLENGTH-1)+((OUTPUTDATELENGTH+OUTPUTNAMELENGTH)*i),QString("-\n%1").arg(appendString));
+                            else
+                                tmpString.insert(((i+1)*OUTPUTGRUNDLENGTH)+((OUTPUTDATELENGTH+OUTPUTNAMELENGTH)*i),QString("\n%1").arg(appendString));
+                        }
                     }
+                    out << tmpString;
+                    out << "\n";
                 }
-
-
-                out << tmpString;
-                out << "\n";
             }
+            file.close();
         }
-//// depreciated
-       /* out << "\tAbwesenheitsliste von " + this->ui->from->date().toString(DATEOUTPUTCONVSCHEME) + " bis " + this->ui->to->date().toString(DATEOUTPUTCONVSCHEME) +"\n";
-        out << QString("Datum:%1%1 Bewohner:%1%1%1%1%1 Grund: \n").arg(tabString);
-        foreach(QSharedPointer< ebp::Abwesenheit > tmpAbwesenheit,bewohner_abwesenheit)
+        catch(std::exception &e)
         {
-            if ((tmpAbwesenheit->tag().toString(DATECALCCONVSCHEME).toInt()>=startDate)&&(tmpAbwesenheit->tag().toString(DATECALCCONVSCHEME).toInt()<=endDate))
-            {
-                QString outString;
-                QString grundString = tmpAbwesenheit->grund().trimmed();
-                if (grundString.length() >OUTPUTGRUNDLENGTH)
-                {
-                    for (int i=0;i<(grundString.length()) / OUTPUTGRUNDLENGTH;i++)
-                    {
-                        if (grundString.at(OUTPUTGRUNDLENGTH-1).isLetterOrNumber())
-                            // +7 weil sonst kürzer wegen tabs vom ersten Umbruch
-                            grundString.insert(((i+1)*OUTPUTGRUNDLENGTH-1)+(((TABLENGTH*11)+1)*i),QString("-\n%1%1%1%1%1%1%1%1%1%1%1 ").arg(tabString));
-                        else
-                            grundString.insert(((i+1)*OUTPUTGRUNDLENGTH)+(((TABLENGTH*11)+1)*i),QString("\n%1%1%1%1%1%1%1%1%1%1%1 ").arg(tabString));
-                    }
-                }
-                QString nameString;
+            QMessageBox::critical(this,tr("Schreiben der Datei"),tr("Speichern fehlgeschlagen, eventuell ist die Datei bereits geöffnet."));
+        }
 
-                nameString = tmpAbwesenheit->bewohner()->name();
-                appendString.fill(' ',OUTPUTNAMELENGTH-nameString.length());
-                nameString.append(appendString);
-                outString = QString("%1 %4%2 %4%3\n").arg(tmpAbwesenheit->tag().toString(DATEOUTPUTLISTSCHEME)).arg(nameString).arg(grundString).arg(tabString);
-               //QString outString = tmpAbwesenheit->tag().toString(DATEOUTPUTLISTSCHEME) + "\t" + tmpAbwesenheit->bewohner() + "\t" + tmpAbwesenheit->grund() + "\n";
-               out << outString;
-            }
-        }*/
-        file.close();
     }
+}
+
+bool MeldeListe::dateLessThan(const QSharedPointer<ebp::Abwesenheit>s1, const QSharedPointer<ebp::Abwesenheit>s2)
+{
+    return s1->tag() < s2->tag();
 }
 
 void MeldeListe::stateChanged(int row, int col)
