@@ -1,5 +1,6 @@
 #include "newereignisdialog.h"
 #include "ui_newereignisdialog.h"
+#include <QDate>
 
 NewEreignisDialog::NewEreignisDialog(EreignisInformation *_ereignis, QWidget *parent) :
     QDialog(parent),
@@ -9,6 +10,8 @@ NewEreignisDialog::NewEreignisDialog(EreignisInformation *_ereignis, QWidget *pa
 {
     ui->setupUi(this);
     this->setModal(true);
+    QDate today;
+    this->ui->dateTimeEdit->setDate(today.currentDate());
 }
 
 NewEreignisDialog::~NewEreignisDialog()
