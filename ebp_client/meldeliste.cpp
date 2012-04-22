@@ -26,6 +26,7 @@ MeldeListe::MeldeListe(const SessionContext &_curContext,QWidget *parent) :
         createList();
         QObject::connect(this->ui->tableWidget, SIGNAL(cellClicked(int,int)),this,SLOT(stateChanged(int,int)));
        // QObject::connect(this->ui->pushButton, SIGNAL(clicked()),this,)
+        QObject::connect(this->ui->curDay, SIGNAL(dateChanged(QDate)),this,SLOT(changeList()));
     }
 }
 
@@ -46,8 +47,8 @@ void MeldeListe::createList()
 
     foreach (QSharedPointer < ebp::Bewohner > tmpBewohner , curWgBewohner)
     {
-       // if (tmpBewohner->seit()>=this->ui->curDay->date())
-       // {
+        if ((tmpBewohner->seit().toString("yyyyMMdd").toInt())<=(this->ui->curDay->date().toString("yyyyMMdd").toInt()))
+        {
             this->ui->tableWidget->insertRow(this->ui->tableWidget->rowCount());
             tmp = new QTableWidgetItem(tr(""));
             tmp->setFlags(tmp->flags()|Qt::ItemIsUserCheckable);
@@ -69,7 +70,7 @@ void MeldeListe::createList()
             grundItem=new QTableWidgetItem(grund);
             this->ui->tableWidget->setItem(this->ui->tableWidget->rowCount()-1,2,grundItem);
 
-      //  }
+        }
     }
 }
 
@@ -84,14 +85,24 @@ QString MeldeListe::isAbwesend(QSharedPointer < ebp::Bewohner > tmpBewohner,QDat
     return "";
 }
 
+void MeldeListe::changeList()
+{
+    int count = this->ui->tableWidget->rowCount();
+    for (int i=0; i< count;i++)
+    {
+        this->ui->tableWidget->removeRow(count-1-i);
+    }
+    createList();
+}
+
 bool MeldeListe::saveContent()
 {
-    QMessageBox msgBox;
     bool exists = false;
     if (this->ui->tableWidget->rowCount() >0)
     {
         for (int i = 0; i< this->ui->tableWidget->rowCount();i++)
         {
+            this->ui->tableWidget->setCurrentCell(i,0);
             if (this->ui->tableWidget->item(i,1)->checkState()==Qt::Unchecked)
             {
                 exists = false;
@@ -100,8 +111,11 @@ bool MeldeListe::saveContent()
                 {
                     if (this->ui->curDay->date() == tmpAbwesenheit.at(j)->tag())
                     {
-                        tmpAbwesenheit.at(j)->grund(this->ui->tableWidget->item(i,2)->text());
-                        tmpAbwesenheit.at(j)->update(curContext.curConnection);
+                        if (tmpAbwesenheit.at(j)->grund().trimmed()!=this->ui->tableWidget->item(i,2)->text().trimmed())
+                        {
+                            tmpAbwesenheit.at(j)->grund(this->ui->tableWidget->item(i,2)->text());
+                            tmpAbwesenheit.at(j)->update(curContext.curConnection);
+                        }
                         exists = true;
                     }
                 }
@@ -133,12 +147,13 @@ bool MeldeListe::saveContent()
     }
     return false;
 }
+
 /*
 void MeldeListe::exportFile()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
                                 "~/Documents",
-                                tr("Images (*.png *.xpm *.jpg)"));
+                                tr("File (*.txt)"));
 }
 */
 void MeldeListe::stateChanged(int row, int col)
@@ -168,8 +183,8 @@ void MeldeListe::createAbwesenheit(QSharedPointer <ebp::Bewohner> abwBewohner,QS
     tmpAbwesenheit->create(curContext.curConnection);
     QSharedPointer<ebp::Bewohner> tempB = curContext.allBewohner.at(curContext.allBewohner.indexOf(abwBewohner));
     ebp::Abwesenheit::linkBewohner(tmpAbwesenheit,tempB);
-    tmpAbwesenheit->update(this->curContext.curConnection);
     bewohner_abwesenheit.append(tmpAbwesenheit);
+    tmpAbwesenheit->update(this->curContext.curConnection);
     tempB->reload(curContext.curConnection);
     //QMessageBox::about(this, tr("Erfolg"),tr("Abwesenheit wurde erfolgreich eingetragen"));
 }
