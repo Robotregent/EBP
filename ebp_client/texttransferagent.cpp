@@ -54,12 +54,6 @@ void TextTransferAgent::on_bewohnerBox_currentIndexChanged(int index)
 
 void TextTransferAgent::on_pushButton_clicked()
 {
-    //ToDo:
-    /*
-      Den eigentlichen Texttransfer starten. Member textInterface hält die getText Methode
-      den Text dann einfach in die entsprechende Betreuungsplanung des Bewohners stecken...
-    */
-    //Testballon
     foreach(TextTransferInterface *interface, textInterfaces)
     {
 	TextTransferInformation info =interface->getSelectedText();
@@ -83,8 +77,8 @@ void TextTransferAgent::registerNewInterface(TextTransferInterface *newInterface
 
 void TextTransferAgent::on_helpButton_clicked()
 {
-    QString text = "Wählen Sie als Ziel des Texttransfers den Bewohner und die Kategorie der Betreuungsplanung aus. \n\n";
-    text +="Markieren Sie die gewünschte Textstelle mit dem Cursor.\n\n";
-    text +="Drücken Sie auf Los!";
-    QMessageBox::information(this,"Hilfe",text);
+    QString text = tr("Wählen Sie als Ziel des Texttransfers den Bewohner und die Kategorie der Betreuungsplanung aus. \n\n");
+    text +=tr("Markieren Sie die gewünschte Textstelle mit dem Cursor.\n\n");
+    text +=tr("Drücken Sie auf Los!");
+    QMessageBox::information(this,tr("Hilfe"),text);
 }

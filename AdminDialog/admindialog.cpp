@@ -488,7 +488,7 @@ bool AdminDialog::deleteWohngruppe(int index)
     if(tmpWg->remove(this->PointerToConnection))
     {
 	//Aus der aktuellen Ansicht löschen
-	QMessageBox::about(this,"Erfolg",this->WohngruppenItems.at(index)->text() + " erfolgreich gelöscht!");
+        QMessageBox::about(this,"Erfolg",this->WohngruppenItems.at(index)->text() + tr(" erfolgreich gelöscht!"));
 	delete this->ui->O_list->takeItem(index);
 	this->WohngruppenItems.removeAt(index);
 
@@ -498,7 +498,7 @@ bool AdminDialog::deleteWohngruppe(int index)
     }
     else
     {
-	QMessageBox::critical(this,"Fehlschlag","Löschen fehlgeschlagen");
+        QMessageBox::critical(this,tr("Fehlschlag"),tr("Löschen fehlgeschlagen"));
     }
     return ret;
 }
@@ -513,14 +513,14 @@ bool AdminDialog::deleteBewohner(int index)
     if(tmpBW->remove(this->PointerToConnection))
     {
 	//Aus der aktuellen Ansicht löschen
-	QMessageBox::about(this,"Erfolg",this->BewohnerItems.at(index)->text() + " erfolgreich gelöscht!");
+        QMessageBox::about(this,tr("Erfolg"),this->BewohnerItems.at(index)->text() + tr(" erfolgreich gelöscht!"));
 	delete this->ui->B_list->takeItem(index);
 	this->BewohnerItems.removeAt(index);
 	ret = true;
     }
     else
     {
-	QMessageBox::critical(this,"Fehlschlag","Löschen fehlgeschlagen");
+        QMessageBox::critical(this,tr("Fehlschlag"),tr("Löschen fehlgeschlagen"));
     }
     return ret;
 }

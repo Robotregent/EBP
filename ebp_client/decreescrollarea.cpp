@@ -256,37 +256,20 @@ void DecreeScrollArea::createVerfuegung(ebp::Verfuegung::Typ verfuegungTyp)
         bewohner_verfuegungen.append(tmpVerfuegung);
         QMessageBox::about(this, tr("Erfolg"),tr("Verfuegung wurde erfolgreich angelegt"));
         switch(verfuegungTyp)
-            {
-            case ebp::Verfuegung::Fixierung:
-                Fixierung = tmpVerfuegung;
-                break;
-            case ebp::Verfuegung::Bettgitter:
-                Bettgitter = tmpVerfuegung;
-                break;
-            case ebp::Verfuegung::Psychopharmaka:
-                Psychopharmaka = tmpVerfuegung;
-                break;
-            case ebp::Verfuegung::Patientenverfuegung:
-                Patientenverfuegung = tmpVerfuegung;
-                break;
-            }
-      /*  if (tmpVerfuegung->create( con.curConnection ))
         {
-            //qDebug()<<"Erfolg!";
-            QMessageBox::about(this, tr("Erfolg"),tr("Verfuegung wurde erfolgreich angelegt"));
+        case ebp::Verfuegung::Fixierung:
+            Fixierung = tmpVerfuegung;
+            break;
+        case ebp::Verfuegung::Bettgitter:
+            Bettgitter = tmpVerfuegung;
+            break;
+        case ebp::Verfuegung::Psychopharmaka:
+            Psychopharmaka = tmpVerfuegung;
+            break;
+        case ebp::Verfuegung::Patientenverfuegung:
+            Patientenverfuegung = tmpVerfuegung;
+            break;
         }
-        else
-        {
-            QMessageBox::critical(this, tr("Warnung"),tr("Verfuegung konnte nicht angelegt werden"));
-        }*/
     }
 }
-/*
-void DecreeScrollArea::clearAll()
-{
-    Fixierung.clear();
-    Bettgitter.clear();
-    Patientenverfuegung.clear();
-    Psychopharmaka.clear();
-    bewohner_verfuegungen.clear();
-}*/
+

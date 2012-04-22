@@ -71,7 +71,7 @@ void LeistungstraegerBox::createLeistungstraeger()
 {
     if(context.curBewohner!=NULL)
     {
-	leistungstraeger = QSharedPointer<ebp::Leistungstraeger>(new ebp::Leistungstraeger("Neuer Leistungsträger"));
+        leistungstraeger = QSharedPointer<ebp::Leistungstraeger>(new ebp::Leistungstraeger(tr("Neuer Leistungsträger")));
 	leistungstraeger->create(context.curConnection);
 	ebp::Leistungstraeger::linkBewohner(leistungstraeger,context.curBewohner);
 	leistungstraeger->update(this->context.curConnection);

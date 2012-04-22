@@ -40,11 +40,11 @@ void ChooseEmployee::on_ButtonErase_clicked()
     {
 	if (ma->remove(this->parent_->dbPointer()))
 	{
-	    QMessageBox::information(this,"Erfolg",ma->name()+" erfolgreich gelöscht");
+            QMessageBox::information(this,tr("Erfolg"),ma->name()+tr(" erfolgreich gelöscht"));
 	}
 	else
 	{
-	    QMessageBox::critical(this,"Fehlschlag",ma->name()+" konnte nicht gelöscht werden.");
+            QMessageBox::critical(this,tr("Fehlschlag"),ma->name()+tr(" konnte nicht gelöscht werden."));
 	}
     }
     this->close();

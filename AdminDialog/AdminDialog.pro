@@ -41,3 +41,5 @@ else:unix:!macx:!symbian: LIBS += -L$$PWD/../EBPdb/ -lEBPdb
 
 INCLUDEPATH += $$PWD/../
 DEPENDPATH += $$PWD/../
+
+TRANSLATIONS = admindialog.ts

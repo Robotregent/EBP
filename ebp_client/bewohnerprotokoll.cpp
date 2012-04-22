@@ -43,7 +43,7 @@ TextTransferInformation BewohnerProtokoll::getSelectedText()
         result.isEmpty = true;
         if (this->ui->ProtokollText->textCursor().hasSelection())
         {
-            result.information = "Texttransfer aus Protokoll vom "+curProtokoll->datum().toString()+":";
+            result.information = tr("Texttransfer aus Protokoll vom ")+curProtokoll->datum().toString()+":";
             result.textTransferFragment = this->ui->ProtokollText->textCursor().selection();
             result.isEmpty = false;
         }

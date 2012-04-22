@@ -378,9 +378,9 @@ void MainWindow::saveCurrentContent()
         if(saveInterface!=0)
 	{
 	    if(saveInterface->saveContent())
-		QMessageBox::information(this,"Speichern der Änderung","Erfolgreich gespeichert");
+                QMessageBox::information(this,tr("Speichern der Änderung"),tr("Erfolgreich gespeichert"));
 	    else
-		QMessageBox::information(this,"Speichern der Änderung","Speichern fehlgeschlagen");
+                QMessageBox::information(this,tr("Speichern der Änderung"),tr("Speichern fehlgeschlagen"));
 	}
     }
     catch (std::exception& ex)
@@ -501,10 +501,10 @@ void MainWindow::loadWohnguppeUndBewohner()
 
     }
 
-    this->bwDialog = new ChooseBwDialog(thisSession.allBewohner,"Bewohner wählen:",this);
+    this->bwDialog = new ChooseBwDialog(thisSession.allBewohner,tr("Bewohner wählen:"),this);
     QObject::connect(bwDialog,SIGNAL(chosen(QSharedPointer<ebp::Bewohner>)),this,SLOT(setCurBewohner(QSharedPointer<ebp::Bewohner>)));
 
-    this->wgDialog = new ChooseWgDialog(thisSession.allGroups,"Wohngruppe wählen:",this);
+    this->wgDialog = new ChooseWgDialog(thisSession.allGroups,tr("Wohngruppe wählen:"),this);
     QObject::connect(wgDialog,SIGNAL(chosen(QSharedPointer<ebp::Wohngruppe>)),this,SLOT(setCurWohngruppe(QSharedPointer<ebp::Wohngruppe>)));
 }
 /**
@@ -515,11 +515,11 @@ void MainWindow::setCurBewohnerAndWohngruppeInfo()
     if (!this->thisSession.curBewohner.isNull())
 	this->_infoFrame->setCurBewohner(this->thisSession.curBewohner->name());
     else
-	this->_infoFrame->setCurBewohner("Keine Informationen verfügbar");
+        this->_infoFrame->setCurBewohner(tr("Keine Informationen verfügbar"));
     if(!this->thisSession.curWohngruppe.isNull())
 	this->_infoFrame->setCurWohngruppe(this->thisSession.curWohngruppe->name());
     else
-	this->_infoFrame->setCurWohngruppe("Keine Informationen verfügbar");
+        this->_infoFrame->setCurWohngruppe(tr("Keine Informationen verfügbar"));
 }
 /**
   * \brief Slot. Wird ausgelöst, wenn neuer Bewohner gesetzt werden soll.

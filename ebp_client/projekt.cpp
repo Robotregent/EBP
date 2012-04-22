@@ -81,14 +81,14 @@ TextTransferInformation Projekt::getSelectedText()
 
     if(this->ui->zieleEdit->textCursor().hasSelection())
     {
-	result.information = "Texttransfer aus Projekt/Projektziele:";
+        result.information = tr("Texttransfer aus Projekt/Projektziele:");
 	result.textTransferFragment= this->ui->zieleEdit->textCursor().selection();
 	result.isEmpty = false;
 
     }
     else if (this->ui->beschreibungEdit->textCursor().hasSelection())
     {
-	result.information = "Texttransfer aus Projekt/Projektbeschreibung:";
+        result.information = tr("Texttransfer aus Projekt/Projektbeschreibung:");
 	result.textTransferFragment = this->ui->beschreibungEdit->textCursor().selection();
 	result.isEmpty = false;
     }

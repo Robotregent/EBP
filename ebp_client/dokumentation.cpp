@@ -11,25 +11,25 @@ Dokumentation::Dokumentation(SessionContext &context, ebp::Dokumentation::Typ ty
     switch(typ)
     {
     case ebp::Dokumentation::einkaufen:
-	name = "Einkaufen";
+        name = tr("Einkaufen");
 	break;
     case ebp::Dokumentation::waeschepflege:
-	name = "Waschpflege";
+        name = tr("Waschpflege");
 	break;
     case ebp::Dokumentation::koerperpflege:
-	name = "Körperpflege";
+        name = tr("Körperpflege");
 	break;
     case ebp::Dokumentation::aufstehenUndZuBettgehen:
-	name = "Aufstehen und zu Bett gehen";
+        name = tr("Aufstehen und zu Bett gehen");
 	break;
     case ebp::Dokumentation::partnerschaften:
-	name = "In Partnerschaften";
+        name = tr("In Partnerschaften");
 	break;
     case ebp::Dokumentation::freundschaften:
-	name = "Freundschaften / Peergroups";
+        name = tr("Freundschaften / Peergroups");
 	break;
     default:
-	name = "Betreuung";
+        name = tr("Betreuung");
 	break;
     }
     this->ui->Name->setText(name);

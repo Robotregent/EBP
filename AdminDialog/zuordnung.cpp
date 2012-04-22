@@ -84,7 +84,7 @@ void WohngruppenZuordnung::on_buttonBox_accepted()
     if (this->saveMapping())
 	this->close();
     else
-	QMessageBox::critical(this,"Fehlschlag", "Speichern der neuen Zuordnung hat leider nicht geklappt");
+        QMessageBox::critical(this,tr("Fehlschlag"),tr("Speichern der neuen Zuordnung hat leider nicht geklappt"));
 }
 /**
   *\brief Zuordnung abspeichern
@@ -182,7 +182,7 @@ void BezugsbetreuungZuordnung::on_buttonBox_accepted()
     if (this->saveMapping())
 	this->close();
     else
-	QMessageBox::critical(this,"Fehlschlag", "Speichern der neuen Zuordnung hat leider nicht geklappt");
+        QMessageBox::critical(this,tr("Fehlschlag"),tr("Speichern der neuen Zuordnung hat leider nicht geklappt"));
 }
 /**
   *\brief Zuordnung abspeichern

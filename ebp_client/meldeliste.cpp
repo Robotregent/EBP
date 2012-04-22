@@ -25,7 +25,6 @@ MeldeListe::MeldeListe(const SessionContext &_curContext,QWidget *parent) :
     {
         createList();
         QObject::connect(this->ui->tableWidget, SIGNAL(cellClicked(int,int)),this,SLOT(stateChanged(int,int)));
-       // QObject::connect(this->ui->pushButton, SIGNAL(clicked()),this,)
         QObject::connect(this->ui->curDay, SIGNAL(dateChanged(QDate)),this,SLOT(changeList()));
     }
 }
@@ -63,7 +62,7 @@ void MeldeListe::createList()
             grund = isAbwesend(tmpBewohner,this->ui->curDay->date());
             if (!grund.trimmed().isEmpty())
             {
-                abwItem->setText("Nein");
+                abwItem->setText(tr("Nein"));
                 abwItem->setCheckState(Qt::Unchecked);
             }
             this->ui->tableWidget->setItem(this->ui->tableWidget->rowCount()-1,1,abwItem);
@@ -164,12 +163,12 @@ void MeldeListe::stateChanged(int row, int col)
         if (item->checkState() == Qt::Checked)
         {
             item->setCheckState(Qt::Unchecked);
-            item->setText("Nein");
+            item->setText(tr("Nein"));
         }
         else
         {
             item->setCheckState(Qt::Checked);
-            item->setText("Ja");
+            item->setText(tr("Ja"));
             QTableWidgetItem *item2 = this->ui->tableWidget->item(row,col+1);
             item2->setText("");
         }
@@ -186,5 +185,4 @@ void MeldeListe::createAbwesenheit(QSharedPointer <ebp::Bewohner> abwBewohner,QS
     bewohner_abwesenheit.append(tmpAbwesenheit);
     tmpAbwesenheit->update(this->curContext.curConnection);
     tempB->reload(curContext.curConnection);
-    //QMessageBox::about(this, tr("Erfolg"),tr("Abwesenheit wurde erfolgreich eingetragen"));
 }
