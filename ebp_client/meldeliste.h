@@ -8,6 +8,12 @@
 #include "sessioncontext.h"
 #include "savecontentinterface.h"
 #include <QAbstractItemModel>
+#define DATECALCCONVSCHEME "yyyyMMdd"
+#define DATEOUTPUTCONVSCHEME "d. MMMM yyyy"
+#define DATEOUTPUTLISTSCHEME "MM/dd/yyyy"
+#define OUTPUTGRUNDLENGTH 35
+#define OUTPUTNAMELENGTH 30
+#define OUTPUTDATELENGTH 14
 
 namespace Ui {
     class MeldeListe;
@@ -28,6 +34,7 @@ public:
 public slots:
     void stateChanged(int row, int col);
     void changeList();
+    void exportFile();
 
 private:
 
@@ -37,8 +44,7 @@ private:
     QList< QSharedPointer <ebp::Bewohner> > curWgBewohner;
     const SessionContext curContext;
     Ui::MeldeListe *ui;
-    void createList();
-    //void exportFile();
+    void createList();    
 };
 
 

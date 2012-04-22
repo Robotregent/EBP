@@ -9,6 +9,8 @@
 #include <QPoint>
 #include <QMessageBox>
 #include <QFileDialog>
+#include <QTextStream>
+#include <QDesktopServices>
 
 MeldeListe::MeldeListe(const SessionContext &_curContext,QWidget *parent) :
     QWidget(parent),
@@ -25,6 +27,7 @@ MeldeListe::MeldeListe(const SessionContext &_curContext,QWidget *parent) :
     {
         createList();
         QObject::connect(this->ui->tableWidget, SIGNAL(cellClicked(int,int)),this,SLOT(stateChanged(int,int)));
+        QObject::connect(this->ui->pushButton, SIGNAL(clicked()),this,SLOT(exportFile()));
         QObject::connect(this->ui->curDay, SIGNAL(dateChanged(QDate)),this,SLOT(changeList()));
     }
 }
@@ -38,6 +41,7 @@ void MeldeListe::createList()
 {
     curContext.curWohngruppe->reload(curContext.curConnection);
     curWgBewohner = curContext.curWohngruppe->loadBewohner(curContext.curConnection);
+    bewohner_abwesenheit = ebp::Abwesenheit::loadAll(curContext.curConnection);
     QTableWidgetItem *tmp;
     CustomTableWidgetItem<ebp::Bewohner> *item;
     QTableWidgetItem *abwItem;
@@ -46,7 +50,7 @@ void MeldeListe::createList()
 
     foreach (QSharedPointer < ebp::Bewohner > tmpBewohner , curWgBewohner)
     {
-        if ((tmpBewohner->seit().toString("yyyyMMdd").toInt())<=(this->ui->curDay->date().toString("yyyyMMdd").toInt()))
+        if ((tmpBewohner->seit().toString(DATECALCCONVSCHEME).toInt())<=(this->ui->curDay->date().toString(DATECALCCONVSCHEME).toInt()))
         {
             this->ui->tableWidget->insertRow(this->ui->tableWidget->rowCount());
             tmp = new QTableWidgetItem(tr(""));
@@ -147,14 +151,109 @@ bool MeldeListe::saveContent()
     return false;
 }
 
-/*
+
 void MeldeListe::exportFile()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
-                                "~/Documents",
-                                tr("File (*.txt)"));
+
+    int startDate= this->ui->from->date().toString(DATECALCCONVSCHEME).toInt();
+    int endDate = this->ui->to->date().toString(DATECALCCONVSCHEME).toInt();
+    if (startDate <= endDate)
+    {
+        QString homedir = QString("%1/Abwesenheit.txt").arg(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation));
+        QString selfilter = tr("Textfile(*.txt *.csf *)");
+        QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),homedir,tr("All files (*.*);;Textfile(*.txt *.csf *)" ),&selfilter );
+        QFile file(fileName);
+        QString tmpString;
+        QString appendString;
+        file.open(QIODevice::WriteOnly | QIODevice::Text);
+        QTextStream out(&file);
+        out << "\tAbwesenheitsliste von " + this->ui->from->date().toString(DATEOUTPUTCONVSCHEME)
+               + " bis " + this->ui->to->date().toString(DATEOUTPUTCONVSCHEME) +"\n";
+
+        tmpString = "Datum:";
+        appendString.fill(' ',OUTPUTDATELENGTH-tmpString.length());
+        tmpString.append(appendString);
+        out << tmpString;
+
+        tmpString = "Bewohner:";
+        appendString.fill(' ',OUTPUTNAMELENGTH-tmpString.length());
+        tmpString.append(appendString);
+        out << tmpString;
+
+        tmpString = "Abwesenheitsgrund:";
+        appendString.fill(' ',OUTPUTGRUNDLENGTH-tmpString.length());
+        tmpString.append(appendString);
+        out << tmpString;
+        out << "\n";
+        foreach(QSharedPointer< ebp::Abwesenheit > tmpAbwesenheit,bewohner_abwesenheit)
+        {
+            if ((tmpAbwesenheit->tag().toString(DATECALCCONVSCHEME).toInt()>=startDate)&&(tmpAbwesenheit->tag().toString(DATECALCCONVSCHEME).toInt()<=endDate))
+            {
+                tmpString = tmpAbwesenheit->tag().toString(DATEOUTPUTLISTSCHEME);
+                appendString.fill(' ',OUTPUTDATELENGTH-tmpString.length());
+                tmpString.append(appendString);
+                out << tmpString;
+
+                tmpString = tmpAbwesenheit->bewohner()->name();
+                appendString.fill(' ',OUTPUTNAMELENGTH-tmpString.length());
+                tmpString.append(appendString);
+                out << tmpString;
+
+                tmpString = tmpAbwesenheit->grund().trimmed();
+                if (tmpString.length() >OUTPUTGRUNDLENGTH)
+                {
+                    // Länge bis Grund:
+                    int breakCount = (tmpString.length() / OUTPUTGRUNDLENGTH);
+                    appendString.fill(' ',OUTPUTDATELENGTH+OUTPUTNAMELENGTH);
+                    for (int i=0;i<breakCount;i++)
+                    {
+                        if (tmpString.at(OUTPUTGRUNDLENGTH-1).isLetterOrNumber())
+                            // + eingefügter länge
+                            tmpString.insert(((i+1)*OUTPUTGRUNDLENGTH-1)+((OUTPUTDATELENGTH+OUTPUTNAMELENGTH)*i),QString("-\n%1").arg(appendString));
+                        else
+                            tmpString.insert(((i+1)*OUTPUTGRUNDLENGTH)+((OUTPUTDATELENGTH+OUTPUTNAMELENGTH)*i),QString("\n%1").arg(appendString));
+                    }
+                }
+
+
+                out << tmpString;
+                out << "\n";
+            }
+        }
+//// depreciated
+       /* out << "\tAbwesenheitsliste von " + this->ui->from->date().toString(DATEOUTPUTCONVSCHEME) + " bis " + this->ui->to->date().toString(DATEOUTPUTCONVSCHEME) +"\n";
+        out << QString("Datum:%1%1 Bewohner:%1%1%1%1%1 Grund: \n").arg(tabString);
+        foreach(QSharedPointer< ebp::Abwesenheit > tmpAbwesenheit,bewohner_abwesenheit)
+        {
+            if ((tmpAbwesenheit->tag().toString(DATECALCCONVSCHEME).toInt()>=startDate)&&(tmpAbwesenheit->tag().toString(DATECALCCONVSCHEME).toInt()<=endDate))
+            {
+                QString outString;
+                QString grundString = tmpAbwesenheit->grund().trimmed();
+                if (grundString.length() >OUTPUTGRUNDLENGTH)
+                {
+                    for (int i=0;i<(grundString.length()) / OUTPUTGRUNDLENGTH;i++)
+                    {
+                        if (grundString.at(OUTPUTGRUNDLENGTH-1).isLetterOrNumber())
+                            // +7 weil sonst kürzer wegen tabs vom ersten Umbruch
+                            grundString.insert(((i+1)*OUTPUTGRUNDLENGTH-1)+(((TABLENGTH*11)+1)*i),QString("-\n%1%1%1%1%1%1%1%1%1%1%1 ").arg(tabString));
+                        else
+                            grundString.insert(((i+1)*OUTPUTGRUNDLENGTH)+(((TABLENGTH*11)+1)*i),QString("\n%1%1%1%1%1%1%1%1%1%1%1 ").arg(tabString));
+                    }
+                }
+                QString nameString;
+
+                nameString = tmpAbwesenheit->bewohner()->name();
+                appendString.fill(' ',OUTPUTNAMELENGTH-nameString.length());
+                nameString.append(appendString);
+                outString = QString("%1 %4%2 %4%3\n").arg(tmpAbwesenheit->tag().toString(DATEOUTPUTLISTSCHEME)).arg(nameString).arg(grundString).arg(tabString);
+               //QString outString = tmpAbwesenheit->tag().toString(DATEOUTPUTLISTSCHEME) + "\t" + tmpAbwesenheit->bewohner() + "\t" + tmpAbwesenheit->grund() + "\n";
+               out << outString;
+            }
+        }*/
+        file.close();
+    }
 }
-*/
+
 void MeldeListe::stateChanged(int row, int col)
 {
     if (col == 1) //check if Anwesend field
