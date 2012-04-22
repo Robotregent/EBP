@@ -40,24 +40,10 @@
      </widget>
     </item>
     <item row="0" column="2">
-     <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0">
+     <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0">
       <property name="sizeConstraint">
        <enum>QLayout::SetMinimumSize</enum>
       </property>
-      <item>
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>Protokolldatum:</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QDateTimeEdit" name="ProtokollDatum">
-        <property name="calendarPopup">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
       <item>
        <widget class="QTableWidget" name="tableWidget">
         <property name="dragEnabled">

@@ -17,6 +17,7 @@ Ereignis::Ereignis(SessionContext _context, TextTransferAgent *agent,QWidget *pa
     puffer->setLayout(pufferLayout);
     this->ui->scrollArea->setWidget(puffer);
     context.curWohngruppe->reload(context.curConnection);
+    this->ui->dateTimeEdit->setDate(QDate::currentDate());
 
     initEreignisse();
 }
@@ -122,5 +123,5 @@ void Ereignis::on_clearFilterButton_clicked()
     {
 	e->setVisible(true);
     }
-    this->ui->dateTimeEdit->clear();
+    this->ui->dateTimeEdit->setDate(QDate::currentDate());
 }

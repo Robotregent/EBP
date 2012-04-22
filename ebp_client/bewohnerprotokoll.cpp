@@ -36,13 +36,17 @@ void BewohnerProtokoll::on_addTeilnehmer_clicked()
 
 TextTransferInformation BewohnerProtokoll::getSelectedText()
 {
+
     TextTransferInformation result;
-    result.isEmpty = true;
-    if (this->ui->ProtokollText->textCursor().hasSelection())
+    if(!curProtokoll.isNull())
     {
-	result.information = "Texttransfer aus Protokoll vom "+this->ui->ProtokollDatum->dateTime().toString()+":";
-	result.textTransferFragment = this->ui->ProtokollText->textCursor().selection();
-	result.isEmpty = false;
+        result.isEmpty = true;
+        if (this->ui->ProtokollText->textCursor().hasSelection())
+        {
+            result.information = "Texttransfer aus Protokoll vom "+curProtokoll->datum().toString()+":";
+            result.textTransferFragment = this->ui->ProtokollText->textCursor().selection();
+            result.isEmpty = false;
+        }
     }
     return result;
 }
@@ -57,8 +61,6 @@ bool BewohnerProtokoll::saveContent()
     if (!curProtokoll.isNull())
     {
         curProtokoll->inhalt(this->ui->ProtokollText->toHtml());
-
-	curProtokoll->datum(this->ui->ProtokollDatum->dateTime());
 
 	sync();
 
@@ -94,6 +96,7 @@ void BewohnerProtokoll::init()
 	    if(context.curBewohner->bezugsbetreuer()->login()== context.curMitarbeiter->login())
 		editable = true;
 
+        this->ui->NewProtokollDatum->setDate(QDate::currentDate());
 
 	this->ui->NewProtokollButton->setEnabled(editable);
 	this->ui->addTeilnehmer->setEnabled(editable);
@@ -138,7 +141,6 @@ void BewohnerProtokoll::chosenMitarbeiter(QSharedPointer<ebp::Mitarbeiter> chose
 void BewohnerProtokoll::fillFields()
 {
     this->ui->ProtokollText->setHtml(curProtokoll->inhalt());
-    this->ui->ProtokollDatum->setDateTime(curProtokoll->datum());
 
     int rows = this->ui->tableWidget->rowCount();
 
@@ -201,7 +203,10 @@ void BewohnerProtokoll::on_NewProtokollButton_clicked()
 	QListWidgetItem *item = new QListWidgetItem(date.toString(),this->ui->ProtokollListe);
 	Q_UNUSED(item);
 
+        this->ui->ProtokollListe->setCurrentRow(this->ui->ProtokollListe->count()-1);
+
     }
+    this->ui->NewProtokollDatum->setDate(QDate::currentDate());
 }
 
 void BewohnerProtokoll::syncSchreiber(QSharedPointer<ebp::Mitarbeiter> s)

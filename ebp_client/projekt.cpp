@@ -47,6 +47,9 @@ void Projekt::on_pushButton_clicked()
 	    new CustomListWidgetItem<ebp::Projekt>(project,this->ui->listWidget);
 
 	    this->ui->listWidget->setCurrentRow(this->ui->listWidget->count()-1);
+
+            this->ui->beginnDateEdit->setDate(QDate::currentDate());
+            this->ui->endeDateEdit->setDate(QDate::currentDate());
 	}
 	else
 	    qDebug()<< "Neues Projekt anlegen fehlgeschlagen";
