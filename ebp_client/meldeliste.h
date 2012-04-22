@@ -27,6 +27,7 @@ public:
 
 public slots:
     void stateChanged(int row, int col);
+    void changeList();
 
 private:
 
