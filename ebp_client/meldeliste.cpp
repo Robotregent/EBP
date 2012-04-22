@@ -133,14 +133,14 @@ bool MeldeListe::saveContent()
     }
     return false;
 }
-
+/*
 void MeldeListe::exportFile()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
                                 "~/Documents",
                                 tr("Images (*.png *.xpm *.jpg)"));
 }
-
+*/
 void MeldeListe::stateChanged(int row, int col)
 {
     if (col == 1) //check if Anwesend field

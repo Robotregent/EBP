@@ -37,6 +37,7 @@ private:
     const SessionContext curContext;
     Ui::MeldeListe *ui;
     void createList();
+    //void exportFile();
 };
 
 
