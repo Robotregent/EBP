@@ -445,6 +445,8 @@ void AdminDialog::on_button_B_speichern_clicked()
 	    betreuung->update(PointerToConnection);
 	}
 
+        tmpBew->seit(QDate::currentDate());
+
         if(tmpBew->update(PointerToConnection))
             QMessageBox::information(this,tr("Erfolg"),tr("Bewohner erfolgreich angelegt"));
         else
@@ -452,6 +454,7 @@ void AdminDialog::on_button_B_speichern_clicked()
 	//Masken leeren
 	this->ui->vornameLineEdit->clear();
 	this->ui->nachnameLineEdit->clear();
+
 	this->ui->Bewohnernummer->cleanText();
 	this->ui->Bewohnernummer->clear();
     }
