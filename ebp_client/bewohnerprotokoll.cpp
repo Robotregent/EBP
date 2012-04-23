@@ -43,7 +43,7 @@ TextTransferInformation BewohnerProtokoll::getSelectedText()
         result.isEmpty = true;
         if (this->ui->ProtokollText->textCursor().hasSelection())
         {
-            result.information = tr("Texttransfer aus Protokoll vom ")+curProtokoll->datum().toString()+":";
+            result.information = "\n"+ QDateTime::currentDateTime().toString("ddd MMMM d yy")+tr(" Protokoll vom ")+curProtokoll->datum().toString()+":\n";
             result.textTransferFragment = this->ui->ProtokollText->textCursor().selection();
             result.isEmpty = false;
         }

@@ -59,12 +59,26 @@ void TextTransferAgent::on_pushButton_clicked()
 	TextTransferInformation info =interface->getSelectedText();
 	if (!info.isEmpty)
 	{
+            bool erfolg = true;
 	    QString textfragment = dokus.at(this->ui->PlanungsBox->currentIndex())->erlaeuterungen();
-	    textfragment += info.information + "\n";
-	    textfragment += info.textTransferFragment.toPlainText()+"\n\n";
+            textfragment += "<p>"+info.information + "</p>";
+            //dokus.at(this->ui->PlanungsBox->currentIndex())->erlaeuterungen(textfragment);
+            //erfolg = dokus.at(this->ui->PlanungsBox->currentIndex())->update(_context.curConnection);
+
+            //textfragment = dokus.at(this->ui->PlanungsBox->currentIndex())->erlaeuterungen();
+            QString d = info.textTransferFragment.toPlainText();
+            d.replace("\n","<br>");
+            d="<p>"+d+"</p>";
+            textfragment.append(d);
+            //textfragment += info.textTransferFragment.toHtml();
 	    dokus.at(this->ui->PlanungsBox->currentIndex())->erlaeuterungen(textfragment);
-	    dokus.at(this->ui->PlanungsBox->currentIndex())->update(_context.curConnection);
-	    QMessageBox::information(this,tr("Texttransfer"),tr("Erfolgreich übertragen"));
+            if (dokus.at(this->ui->PlanungsBox->currentIndex())->update(_context.curConnection))
+                erfolg = true;
+
+            if(erfolg )
+                QMessageBox::information(this,tr("Texttransfer"),tr("Erfolgreich kopiert!"));
+            else
+                QMessageBox::information(this,tr("Texttransfer"),tr("Text konnte nicht kopiert werden!"));
 	}
     }
 }

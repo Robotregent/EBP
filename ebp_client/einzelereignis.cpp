@@ -24,7 +24,7 @@ TextTransferInformation EinzelEreignis::getSelectedText()
     result.isEmpty = true;
     if(this->ui->textBrowser->textCursor().hasSelection())
     {
-        result.information=tr("Texttransfer aus Gruppenbuch, Eintrag vom ")+this->ui->datumDateTimeEdit->dateTime().toString()+":";
+        result.information="\n"+ QDateTime::currentDateTime().toString("ddd MMMM d yy")+tr(" Texttransfer aus Gruppenbuch, Eintrag vom ")+this->ui->datumDateTimeEdit->dateTime().toString()+":";
 	result.textTransferFragment = this->ui->textBrowser->textCursor().selection();
 	result.isEmpty=false;
     }

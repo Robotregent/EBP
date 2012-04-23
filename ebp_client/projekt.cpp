@@ -81,14 +81,14 @@ TextTransferInformation Projekt::getSelectedText()
 
     if(this->ui->zieleEdit->textCursor().hasSelection())
     {
-        result.information = tr("Texttransfer aus Projekt/Projektziele:");
-	result.textTransferFragment= this->ui->zieleEdit->textCursor().selection();
+        result.information ="\n"+ QDateTime::currentDateTime().toString("ddd MMMM d yy")+ tr(" Projektziele:");
+        result.textTransferFragment= this->ui->zieleEdit->textCursor().selection();
 	result.isEmpty = false;
 
     }
     else if (this->ui->beschreibungEdit->textCursor().hasSelection())
     {
-        result.information = tr("Texttransfer aus Projekt/Projektbeschreibung:");
+        result.information = "\n"+ QDateTime::currentDateTime().toString("ddd MMMM d yy")+ tr(" Projektbeschreibung:");
 	result.textTransferFragment = this->ui->beschreibungEdit->textCursor().selection();
 	result.isEmpty = false;
     }
