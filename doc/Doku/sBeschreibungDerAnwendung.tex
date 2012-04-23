@@ -1,2 +1,34 @@
 \section{Beschreibung der Anwendung}
 \label{sec:beschreibung}
+
+\subsection{Erstellen der Anwendung}
+\subsubsection{Abhängigkeiten}
+\paragraph{Zur Laufzeit:}
+\begin{itemize}
+	\item \textbf{odb} - ODB Laufzeitbibliothek
+	\item \textbf{odb-mysql} - MySQL Backend für ODB
+	\item \textbf{odb-qt} - QT integration für ODB
+	\item \textbf{qt} - QT Framework
+\end{itemize}
+\paragraph{Zur Compilezeit:}
+\begin{itemize}
+	\item \textbf{CMake} - Buildsystem
+	\item \textbf{ODB Toolchain} - Enthält den Precompiler
+	\item \textbf{GCC} - GNU Compiler Collection
+\end{itemize}
+\subsubsection{Kompilieren der Quellen}
+Die komplette Anwendung kann im Wurzelverzeichnis des Projekts gebaut werden:\\
+\begin{lstlisting}
+$ cmake .
+\end{lstlisting}
+Generiert das benötigte Makefile.\\
+Ist dies erfolgreich abgeschlossen, wird mit\\
+\begin{lstlisting}
+$ make
+\end{lstlisting}
+der eignetliche Kompiliervorgang gestartet.\\
+\subsubsection{Vorbereiten der Datenbank}
+Um die Datenbank zu initialisieren befindet sich ein Shell-Script im EBPdb Verzeichnis:\\
+\begin{lstlisting}
+$ ./initDB.sh -u root -p "DATENBAKNAME"
+\end{lstlisting}
