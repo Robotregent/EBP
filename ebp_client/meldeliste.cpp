@@ -75,6 +75,7 @@ void MeldeListe::createList()
 
         }
     }
+    this->ui->tableWidget->resizeColumnToContents(0);
 }
 
 QString MeldeListe::isAbwesend(QSharedPointer < ebp::Bewohner > tmpBewohner,QDate tmpDate)

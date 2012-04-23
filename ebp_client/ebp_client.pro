@@ -83,3 +83,6 @@ else:unix:!macx:!symbian: LIBS += -L$$PWD/../EBPdb/ -lEBPdb
 
 INCLUDEPATH += $$PWD/../
 DEPENDPATH += $$PWD/../
+
+TRANSLATIONS = ebp_client_Behindertenhilfe.ts \
+                ebp_client_Altenhilfe.ts
