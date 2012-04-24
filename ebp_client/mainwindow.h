@@ -50,6 +50,7 @@ private:
 			  DocumentationKoerperpflegeWidget = 11, DocumentationAufstehenWidget = 12, DocumentationPartnerschaftenWidget = 13, DocumentationFreundschaftenWidget = 14,
 			  CountOfContentWidgets = 15} ;
     QWidget *getContentWidget(int ContentTyp);
+    bool savePermission;
 
 
 private slots:

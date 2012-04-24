@@ -197,6 +197,13 @@ void MainWindow::set_content(QTreeWidgetItem *current)
         this->setCentralWidget(this->getContentWidget(MainWindow::MeldeListeWidget));
         break;
     }
+
+    //Speicherberechtigung
+    if(current->type()<3000)
+	this->saveAction->setEnabled(this->savePermission);
+    else
+	this->saveAction->setEnabled(true);
+
     return;
 }
 /**
@@ -530,18 +537,15 @@ void MainWindow::setCurBewohner(QSharedPointer<ebp::Bewohner> chosenBw)
     if(!chosenBw.isNull())
     {
 	// Änderungen dürfen nur gespeichert werden, wenn Mitarbeiter die Betreuungsberechtigung hat
-	bool hasPermission = false;
+	this->savePermission=false;
 	QSharedPointer<ebp::Mitarbeiter> betreuuer=thisSession.curBewohner->bezugsbetreuer();
-	if (this->saveAction != NULL)
-	{
-	    if(!betreuuer.isNull())
-	    {
-		if (betreuuer->login()==thisSession.curMitarbeiter->login())
-		    hasPermission=true;
-	    }
 
-	    this->saveAction->setEnabled(hasPermission);
+	if(!betreuuer.isNull())
+	{
+	    if (betreuuer->login()==thisSession.curMitarbeiter->login())
+		this->savePermission=true;
 	}
+
 	this->setCurBewohnerAndWohngruppeInfo();
 	set_content(this->side_menu->getClientMenu()->currentItem());
     }
