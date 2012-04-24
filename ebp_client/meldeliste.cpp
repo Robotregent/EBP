@@ -43,7 +43,11 @@ void MeldeListe::createList()
 {
     curContext.curWohngruppe->reload(curContext.curConnection);
     curWgBewohner = curContext.curWohngruppe->loadBewohner(curContext.curConnection);
-    bewohner_abwesenheit = ebp::Abwesenheit::loadAll(curContext.curConnection);
+    for (int i = 0; i < curWgBewohner.length(); i++)
+    {
+        if (!curWgBewohner.at(i)->loadAbwesenheiten(curContext.curConnection).isEmpty())
+            bewohner_abwesenheit.append(curWgBewohner.at(i)->loadAbwesenheiten(curContext.curConnection));
+    }
     QTableWidgetItem *tmp;
     CustomTableWidgetItem<ebp::Bewohner> *item;
     QTableWidgetItem *abwItem;
