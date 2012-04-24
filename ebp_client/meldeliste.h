@@ -36,6 +36,7 @@ public slots:
     void stateChanged(int row, int col);
     void changeList();
     void exportFile();
+    void csvExport();
 
 private:
 

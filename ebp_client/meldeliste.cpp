@@ -29,6 +29,7 @@ MeldeListe::MeldeListe(const SessionContext &_curContext,QWidget *parent) :
         createList();
         QObject::connect(this->ui->tableWidget, SIGNAL(cellClicked(int,int)),this,SLOT(stateChanged(int,int)));
         QObject::connect(this->ui->pushButton, SIGNAL(clicked()),this,SLOT(exportFile()));
+        QObject::connect(this->ui->pushButton_2, SIGNAL(clicked()),this,SLOT(csvExport()));
         QObject::connect(this->ui->curDay, SIGNAL(dateChanged(QDate)),this,SLOT(changeList()));
     }
 }
@@ -157,7 +158,42 @@ bool MeldeListe::saveContent()
     }
     return false;
 }
+void MeldeListe::csvExport()
+{
 
+    int startDate= this->ui->from->date().toString(DATECALCCONVSCHEME).toInt();
+    int endDate = this->ui->to->date().toString(DATECALCCONVSCHEME).toInt();
+    if (startDate <= endDate)
+    {
+        QString homedir = QString(("%1/Abwesenheit.csv")).arg(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation));
+        QString selfilter = tr("CSV-Daten(*.csv)");
+        QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),homedir,tr("All files (*.*);;CSV-Daten(*.csv)" ),&selfilter );
+        QFile file(fileName);
+        try
+        {
+            file.open(QIODevice::WriteOnly | QIODevice::Text);
+            QTextStream out(&file);
+
+            qSort(bewohner_abwesenheit.begin(),bewohner_abwesenheit.end(),MeldeListe::dateLessThan);
+            foreach(QSharedPointer< ebp::Abwesenheit > tmpAbwesenheit,bewohner_abwesenheit)
+            {
+                if ((tmpAbwesenheit->tag().toString(DATECALCCONVSCHEME).toInt()>=startDate)&&(tmpAbwesenheit->tag().toString(DATECALCCONVSCHEME).toInt()<=endDate)&&(!tmpAbwesenheit->bewohner().isNull()))
+                {
+                    out <<tmpAbwesenheit->tag().toString(DATEOUTPUTCONVSCHEME)
+                        << ',' << tmpAbwesenheit->bewohner()->name()
+                        << ',' <<tmpAbwesenheit->grund().trimmed()
+                        << '\n';
+                }
+            }
+            file.close();
+        }
+        catch(std::exception &e)
+        {
+            QMessageBox::critical(this,tr("Schreiben der Datei"),tr("Speichern fehlgeschlagen, eventuell ist die Datei bereits geöffnet."));
+        }
+
+    }
+}
 
 void MeldeListe::exportFile()
 {
