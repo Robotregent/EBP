@@ -153,7 +153,7 @@ bool MeldeListe::saveContent()
                 }
             }
         }
-        return true;
+	return !info;
     }
     return false;
 }
