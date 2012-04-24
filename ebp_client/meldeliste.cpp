@@ -193,7 +193,7 @@ void MeldeListe::exportFile()
             qSort(bewohner_abwesenheit.begin(),bewohner_abwesenheit.end(),MeldeListe::dateLessThan);
             foreach(QSharedPointer< ebp::Abwesenheit > tmpAbwesenheit,bewohner_abwesenheit)
             {
-                if ((tmpAbwesenheit->tag().toString(DATECALCCONVSCHEME).toInt()>=startDate)&&(tmpAbwesenheit->tag().toString(DATECALCCONVSCHEME).toInt()<=endDate))
+		if ((tmpAbwesenheit->tag().toString(DATECALCCONVSCHEME).toInt()>=startDate)&&(tmpAbwesenheit->tag().toString(DATECALCCONVSCHEME).toInt()<=endDate)&&(!tmpAbwesenheit->bewohner().isNull()))
                 {
                     tmpString = tmpAbwesenheit->tag().toString(DATEOUTPUTLISTSCHEME);
                     appendString.fill(' ',OUTPUTDATELENGTH-tmpString.length());
