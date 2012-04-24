@@ -105,17 +105,17 @@ Abrechnung zu ermöglichen.\\
 \end{longtable}
 
 \subsubsection{Qualitätssicherung zur Einhaltung der Anforderungsdefinitionen}
-Um die Benutzbarkeit sicherzustellen wurden eine Reihe von Usability-Tests durchgeführt. KRUG beschreibt den Stellenwert von Usability-Tests sehr treffend: \\
+Um die Benutzbarkeit sicher zu stellen wurden eine Reihe von Usability-Tests durchgeführt. KRUG beschreibt den Stellenwert von Usability-Tests sehr treffend: \\
 ''Wenn Sie an einer Seite auch nur einige Wochen gearbeitet haben, können Sie sie nicht mehr unbedarft betrachten. Sie wissen zu viel. Der einzige Weg, um herauszufinden, ob sie wirklich funktioniert, sind Tests\cite[S. 133]{Usability}.'' \\
 \noindent
-Dies gilt natürlich nicht nur für Websites sondern auch für das Erstellen jeder anderen grafischen Oberfläche. Angelehnt an den Scrum artigen Entwicklungsprozess war auch der Usability-Test Prozess mehrstufig.
+Dies gilt natürlich nicht nur für Websites sondern auch für das Erstellen jeder anderen grafischen Oberfläche. Angelehnt an den agilen Entwicklungsprozess war auch der Usability-Test Prozess mehrstufig.
 
 \paragraph*{Ablauf:}
 \begin{description}
 
         \item[Phase 1] Nach der grundlegenden Gestaltung der grafischen Oberfläche ohne funktionale Logik wurden \textit{Tests zum Kapieren} mit verschiedenen Testpersonen durchgeführt. Diese \textit{Tests zum Kapieren} sollen feststellen, ob der Nutzer die Bedienkonzepte, wie z.B. die Navigation, und Absichten der Anwendung versteht\cite[Vgl. S. 144]{Usability}.
 
-        \item[Phase 2] In dieser Phase des Testprozesses waren die getesteten Masken vollständig implementiert und wurden an Hand von \textit{Schlüsselaufgaben} getestet. ''Tests mit Schlüsselaufgaben bedeuten, dass Sie den Usern eine Aufgabe stellen und dann beobachten, wie gut sie zurechtkommen\cite[Vgl. S. 144]{Usability}.'' Die \textit{Schlüsselaufgaben} wurden so definiert, dass mit ihrer Überprüfung gleichzeitig die Umsetzung der User Stories überprüft wurde. Damit erfolgte durch die Usability-Tests auch eine Überprüfung des Erfüllungsgrads der Anforderungsdefinitionen. Folgende Schlüssel-aufgaben wurden für die entsprechenden User Stories (Siehe Nummer) definiert:
+        \item[Phase 2] In dieser Phase des Testprozesses waren die getesteten Masken vollständig implementiert und wurden an Hand von \textit{Schlüsselaufgaben} getestet. ''Tests mit bedeuten, dass Sie den Usern eine Aufgabe stellen und dann beobachten, wie gut sie zurechtkommen\cite[Vgl. S. 144]{Usability}.'' Die \textit{Schlüsselaufgaben} wurden so definiert, dass mit ihrer Überprüfung gleichzeitig die Umsetzung der User Stories überprüft wurde. Damit erfolgte durch die Usability-Tests auch eine Überprüfung des Erfüllungsgrads der Anforderungsdefinitionen. Folgende Schlüssel-aufgaben wurden für die entsprechenden User Stories (Siehe Nummer) definiert:
 
         \begin{enumerate}
 		\item Finde das Geburtsdatum von Waldemar Fried heraus. 
@@ -149,7 +149,9 @@ Dies gilt natürlich nicht nur für Websites sondern auch für das Erstellen jed
 Als Ergebnis wurde zum Beispiel beim \textit{TextTransfer} ein Hilfebutton eingefügt, der eine kleines PopUp mit kurzer Hilfestellung anzeigt.
 Häufige Problemstellungen waren auch falsche oder uneinheitliche Benennungen von Menüpunkten und Inhalt. Diese Fehler waren sehr dankbar, da leicht zu beheben und verdeutlichen noch einmal den Stellenwert von Usability Tests. Das Konzept, dass \EBP immer einen aktiven Bewohner und eine aktive Wohngruppe hat, war die größte Hürde für die User.
 Die Informationen über die aktuell aktive Wohngruppe und den aktiven Bewohner werden in einem Informationswidget im oberen Bereich der Anwendung visualisiert (siehe dazu Kapitel \ref{sec:beschreibung}). Dort können die aktiven Elemente auch geändert werden. Bei jedem Test wurde das Bedienkonzept erst klar, als der User das Infowidget endeckte und seine Funktionen  ausprobierte. In allen Fällen war das 
-Konzept nach kurzem Experimentieren klar. Eine Verbesserung der Bedienbarkeit sollte jedoch an diesem Widget ansetzten. Die vollständigen Ergebnisse finden sich im Anhang in Form von Protokollen oder in Form von Screencasts mit Tonaufnahmen der Testsitzungen.
+Konzept nach kurzem Experimentieren klar. Eine Verbesserung der Bedienbarkeit sollte jedoch an diesem Widget ansetzten.\\
+Eine weitere Schwierigkeit für die meisten Probanden war das Speicherkonzept. Eine häufige Erwartungshaltung war es, dass sich der Speicherbutton am rechten unteren Ende der Maske befindet. Dies kann nicht bei allen Masken realisiert werden. Bei Masken mit einem Scrollbereich und beliebig viel Inhalt, wie die "Leistungsträger" Maske, müsste der Button an einer anderen Stelle positioniert werden. Ein wechselndes Verhalten wäre für die Usability aber noch störender. Aus diesem Grund ist der Speicherbutton an einer globalen Stelle positioniert, im linken oberen Eck. Dies entspricht auch dem Verhalten bekannter Prorgamme, wie z.B. Microsoft Word.\\
+Die vollständigen Ergebnisse finden sich im Anhang in Form von Protokollen oder in Form von Screencasts mit Tonaufnahmen der Testsitzungen.
 
 \end{description}
 
