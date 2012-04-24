@@ -103,6 +103,7 @@ void MeldeListe::changeList()
 bool MeldeListe::saveContent()
 {
     bool exists = false;
+    bool info = false;
     if (this->ui->tableWidget->rowCount() >0)
     {
         for (int i = 0; i< this->ui->tableWidget->rowCount();i++)
@@ -110,6 +111,11 @@ bool MeldeListe::saveContent()
             this->ui->tableWidget->setCurrentCell(i,0);
             if (this->ui->tableWidget->item(i,1)->checkState()==Qt::Unchecked)
             {
+                if (this->ui->tableWidget->item(i,2)->text().trimmed().isEmpty() && !info)
+                {
+                    QMessageBox::information(this,tr("Speichern der Abwesenheit"),tr("Bitte geben Sie einen Grund für die Abwesenheit an, ansonsten wird diese nicht gespeichert."));
+                    info = true;
+                }
                 exists = false;
                 QList <QSharedPointer< ebp::Abwesenheit > > tmpAbwesenheit = curWgBewohner.at(i)->loadAbwesenheiten(curContext.curConnection);
                 for (int j=0; j < tmpAbwesenheit.count(); j++)
@@ -140,7 +146,6 @@ bool MeldeListe::saveContent()
                         QSharedPointer<ebp::Bewohner> tempB = curContext.allBewohner.at(curContext.allBewohner.indexOf(curWgBewohner.at(i)));
                         ebp::Abwesenheit::unlinkBewohner(tmpAbwesenheit.operator [](j),tempB);
                         tmpAbwesenheit.at(j)->remove(curContext.curConnection);
-                        tmpAbwesenheit.at(j)->update(curContext.curConnection);
                         tmpAbwesenheit.removeAt(j);
                         tempB->reload(curContext.curConnection);
 
