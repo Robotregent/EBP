@@ -179,7 +179,7 @@ void MeldeListe::csvExport()
             {
                 if ((tmpAbwesenheit->tag().toString(DATECALCCONVSCHEME).toInt()>=startDate)&&(tmpAbwesenheit->tag().toString(DATECALCCONVSCHEME).toInt()<=endDate)&&(!tmpAbwesenheit->bewohner().isNull()))
                 {
-                    out <<tmpAbwesenheit->tag().toString(DATEOUTPUTCONVSCHEME)
+                    out <<tmpAbwesenheit->tag().toString(DATEOUTPUTLISTSCHEME)
                         << ',' << tmpAbwesenheit->bewohner()->name()
                         << ',' <<tmpAbwesenheit->grund().trimmed()
                         << '\n';
