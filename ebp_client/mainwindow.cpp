@@ -37,6 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setCentralWidget(this->getContentWidget(MainWindow::LoginWidget));
     this->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
     this->setMinimumSize(this->sizeHint());
+    this->setWindowTitle("Elektronische Betreuungsplanung");
 
     this->readSettings();
 
@@ -199,10 +200,13 @@ void MainWindow::set_content(QTreeWidgetItem *current)
     }
 
     //Speicherberechtigung
-    if(current->type()<3000)
-	this->saveAction->setEnabled(this->savePermission);
-    else
-	this->saveAction->setEnabled(true);
+    if (saveAction!=NULL)
+    {
+	if(current->type()<3000)
+	    this->saveAction->setEnabled(this->savePermission);
+	else
+	    this->saveAction->setEnabled(true);
+    }
 
     return;
 }
