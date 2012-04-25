@@ -66,6 +66,12 @@ Maßnahmen richterlich angeordnet werden, um Rechtssicherheit bei meiner Arbeit 
    \cline{2 - 3}
 & 4 & Als Pflegekraft kann ich die gesetzliche Betreuung und die institutionelle Bezugsbetreuung anzeigen lassen und auch bearbeiten.\\
   \hline
+\end{longtable}
+
+\newpage
+
+\begin{longtable}{| p{0.25\textwidth}|p{0.05\textwidth}|p{0.7\textwidth} | }
+  \hline
 \multirow{3}{0.25\textwidth}{Für jeden Klienten können mehrere Projekte organisiert werden, die eine pädagogische Zielsetzung haben} & 5 & Als für ein Projekte verantwortlicher Mitarbeiter kann ich neue Projekte anlegen \\
  \cline{2 - 3}
   & 6 & Als für ein Projekte verantwortlicher Mitarbeiter kann ich pädagogische Ziele für ein Projekt definieren \\
@@ -92,6 +98,12 @@ ermöglichen.\\
 & 15 & Als Pflegekraft kann ich Textfragmente aus anderen Teilen der \EBP an die prosaische Beschreibung der einzelnen Lebensbereiche
 senden, um den Fortschritt und die Zielerreichung der Langzeitplanung einfach dokumentieren zu können.\\
 \hline
+\end{longtable}
+
+\newpage
+
+\begin{longtable}{| p{0.25\textwidth}|p{0.05\textwidth}|p{0.7\textwidth} | }
+  \hline
 \multirow{2}{0.25\textwidth}{Es gibt ein Gruppenbuch, in dem die tagesaktuellen Geschehnisse einer Wohngruppe dokumentiert werden.}& 16 & Als Pflegekraft kann ich ein Ereignis auf einer Wohngruppe in meinem Verantwortungsbereich mit de \EBP dokumentieren, um eine
 lückenlose Kommunikation mit meinen Kollegen zu gewährleisten.\\
 \cline{2 - 3}
@@ -110,7 +122,7 @@ Um die Benutzbarkeit sicher zu stellen wurden eine Reihe von Usability-Tests dur
 \noindent
 Dies gilt natürlich nicht nur für Websites sondern auch für das Erstellen jeder anderen grafischen Oberfläche. Angelehnt an den agilen Entwicklungsprozess war auch der Usability-Test Prozess mehrstufig.
 
-\paragraph*{Ablauf:}
+\paragraph*{Ablauf}
 \begin{description}
 
         \item[Phase 1] Nach der grundlegenden Gestaltung der grafischen Oberfläche ohne funktionale Logik wurden \textit{Tests zum Kapieren} mit verschiedenen Testpersonen durchgeführt. Diese \textit{Tests zum Kapieren} sollen feststellen, ob der Nutzer die Bedienkonzepte, wie z.B. die Navigation, und Absichten der Anwendung versteht\cite[Vgl. S. 144]{Usability}.
@@ -140,12 +152,12 @@ Dies gilt natürlich nicht nur für Websites sondern auch für das Erstellen jed
 
 \end{description}
 
-\paragraph*{Ergebnisse:}
+\paragraph*{Ergebnisse}
 \begin{description}
 
-\item[Phase 1:]
+\item[Phase 1:] Inkonsistente Namensgebung und fehlende Funktionen, wie eine Logoutfunktion, wurden aufgedeckt. Das grundlegende Navigationskonzept in Form des Baummenüs wurde geprüft und von den Probanden als verständlich empfunden. Die Dockingfunktion des Navigationsmenüs und des Informationswidgets wurden eingeschränkt, da die völlige Freiheit der Platzierung der Widgets die Probanden stark verunsichert hatte. 
 
-\item[Phase 2:] In dieser Phase wurde die Stellen offen gelegt, an denen den Usern das Bedinkonzept nicht deutlich wurde.
+\item[Phase 2:] In dieser Phase wurde die Stellen offen gelegt, an denen den Usern das Bedienkonzept nicht deutlich wurde.
 Als Ergebnis wurde zum Beispiel beim \textit{TextTransfer} ein Hilfebutton eingefügt, der eine kleines PopUp mit kurzer Hilfestellung anzeigt.
 Häufige Problemstellungen waren auch falsche oder uneinheitliche Benennungen von Menüpunkten und Inhalt. Diese Fehler waren sehr dankbar, da leicht zu beheben und verdeutlichen noch einmal den Stellenwert von Usability Tests. Das Konzept, dass \EBP immer einen aktiven Bewohner und eine aktive Wohngruppe hat, war die größte Hürde für die User.
 Die Informationen über die aktuell aktive Wohngruppe und den aktiven Bewohner werden in einem Informationswidget im oberen Bereich der Anwendung visualisiert (siehe dazu Kapitel \ref{sec:beschreibung}). Dort können die aktiven Elemente auch geändert werden. Bei jedem Test wurde das Bedienkonzept erst klar, als der User das Infowidget endeckte und seine Funktionen  ausprobierte. In allen Fällen war das 
@@ -163,13 +175,11 @@ orientierte. Organisatorische Elemente des \textit{Scrum Frameworks}, wie das \t
 globalen Zielsetzung möglichst strukturierte Arbeitspakete zu generieren. Der klassische Scrumzyklus, visualisiert in Abbildung \ref{ScrumFramework},
 eignet sich für diese Anforderung durch seine Methodik, vor allem die Definition in User Stories und die Gliederung dieser in einem
 \textbf{Backlog}, in besonderer Weise.\\
-
 \begin{figure*}[htp]
 	\includegraphics[width=\textwidth]{ScrumFrameworkFlow}
 	\caption{Scrum Framework}
 	\label{ScrumFramework}
 \end{figure*}
-
 Unsere \textbf{Vision} war die in Kapitel \ref{subsubsec:ziel} beschriebene Zielsetzung. Der Dokumentationsaufwand in der Behinderten- und Altenhilfe
 soll durch die \EBP verringert werden. Das \textbf{Product Backlog} bildeten die gesamten User Stories, die bei ihrer Erstellung priorisiert wurden.
 Das \textbf{Sprint Backlog} bestand in jeder Iteration aus drei bis vier User Stories. Dieses \textbf{Sprint Backlog} wurde in innerhalb einer
@@ -177,9 +187,9 @@ Das \textbf{Sprint Backlog} bestand in jeder Iteration aus drei bis vier User St
 Projekt fertig entwickelt sein sollte und vier Wochen als Puffer verbleiben sollten. Zur Visualisierung des \textbf{Product} und \textbf{Sprint
 Backlogs} wurden die Werkzeuge der Plattform \url{github.com} genutzt. Die Plattform bietet neben der Versionskontrolle durch das verteilte
 Versionsverwaltungswerkzeugs \textit{git} auch die Möglichkeit Meilensteine mit zugehörigen Aufgaben zu definieren und diese einzelnen
-Projektteilnehmern zuzuordnen. Das \textbf{Daily Scrum Meeting} wurde nicht in der vom \textit{Scrum Frameworks} vorgesehen Regelmäßigkeit und
-Verbindlichkeit durchgeführt. In der ex post Betrachtung stellt sich dies als Fehler heraus. Schwierigkeiten bei der Implementierungen hätten sich
+Projektteilnehmern zuzuordnen.  Als schneller und unkomplizierter Kommunikationsweg diente ein IRC Channel, der nahezu jeden Tag besucht wurde. Dieses informelle Kommunikationswerkzeug wurde häufig für Absprachen und Hilfestellungen genutzt, hat aber nicht die selbe Verbindlichkeit und Austauschmöglichkeit, wie ein \textbf{Daily Scrum Meeting} ohne elektronische Hilfsmittel. Das \textbf{Daily Scrum Meeting} wurde nicht in der vom \textit{Scrum Frameworks} vorgesehen Regelmäßigkeit und Verbindlichkeit durchgeführt. In der ex post Betrachtung stellt sich dies als Fehler heraus. Schwierigkeiten bei der Implementierungen hätten sich
 bei regelmäßiger Rücksprache untereinander sicher schneller lösen lassen. Auch eine stärkere Verbindlichkeit gegenüber den Projektzielen hätte sich
-durch kontinuierliche Reflexion erzeugen lassen und zu einem besseren Produkt geführt. Eine \textbf{Shippable Product Increment} war nicht das Ziel
+durch kontinuierliche Reflexion erzeugen lassen und zu einem besseren Produkt geführt.\\
+Eine \textbf{Shippable Product Increment} war nicht das Ziel
 einer \textbf{Sprint} Phase. Allerdings sollten die User Stories des jeweiligen \textbf{Sprint Backlogs} am Ende einer \textbf{Sprint} Phase
 vollständig umgesetzt sein, inklusive durchlaufener Qualitätssicherung.  

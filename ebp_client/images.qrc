@@ -9,6 +9,7 @@
         <file>project.png</file>
         <file alias="Teilnehmer">Teilnehmer.png</file>
         <file>protokollf.png</file>
+        <file alias="altenhilfe">ebp_client_Altenhilfe.qm</file>
     </qresource>
     <qresource prefix="/group">
         <file>lupe.png</file>

@@ -1,5 +1,6 @@
 #include <QtGui/QApplication>
 #include <QTextCodec>
+#include <QTranslator>
 #include "mainwindow.h"
 
 int main(int argc, char *argv[])
@@ -10,6 +11,10 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForTr( QTextCodec::codecForName("UTF-8") );
 
     QApplication a(argc, argv);
+    QTranslator* translator = new QTranslator();
+    if (translator->load("ebp_client_Altenhilfe", ":/costumer/altenhilfe")) {
+	a.installTranslator(translator);
+    }
     MainWindow w;
     w.show();
 

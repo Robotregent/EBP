@@ -85,4 +85,6 @@ INCLUDEPATH += $$PWD/../
 DEPENDPATH += $$PWD/../
 
 TRANSLATIONS = ebp_client_Behindertenhilfe.ts \
-                ebp_client_Altenhilfe.ts
+	       ebp_client_Altenhilfe.ts
+
+CODECFORTR      = ISO-8859-5
