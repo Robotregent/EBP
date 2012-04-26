@@ -215,9 +215,8 @@
     </message>
     <message>
         <location filename="clientmenu.cpp" line="34"/>
-        <location filename="clientmenu.cpp" line="35"/>
         <source>WУЄschepflege</source>
-        <translation>Sich bewegen</translation>
+        <translation>Wäschepflege</translation>
     </message>
     <message>
         <location filename="clientmenu.cpp" line="37"/>
@@ -239,7 +238,7 @@
         <location filename="clientmenu.cpp" line="41"/>
         <location filename="clientmenu.cpp" line="42"/>
         <source>Aufstehen / zu Bett gehen</source>
-        <translation>Sich bewegen</translation>
+        <translation>Sich Pflegen</translation>
     </message>
     <message>
         <location filename="clientmenu.cpp" line="44"/>
@@ -255,17 +254,17 @@
         <location filename="clientmenu.cpp" line="46"/>
         <location filename="clientmenu.cpp" line="47"/>
         <source>In Partnerschaften</source>
-        <translation>Essen und trinken</translation>
+        <translation>Ausscheiden</translation>
     </message>
     <message>
         <location filename="clientmenu.cpp" line="48"/>
         <source>In Freundschaften</source>
-        <translation>Ausscheiden</translation>
+        <translation>Essen und trinken</translation>
     </message>
     <message>
         <location filename="clientmenu.cpp" line="49"/>
         <source>In Freundschaften / Peergroup</source>
-        <translation>Ausscheiden</translation>
+        <translation>Essen und trinken</translation>
     </message>
 </context>
 <context>
@@ -452,7 +451,7 @@
     <message>
         <location filename="dokumentation.cpp" line="17"/>
         <source>Waschpflege</source>
-        <translation>Sich bewegen</translation>
+        <translation>Waschpflege</translation>
     </message>
     <message>
         <location filename="dokumentation.cpp" line="20"/>
@@ -477,7 +476,7 @@
     <message>
         <location filename="dokumentation.cpp" line="32"/>
         <source>Betreuung</source>
-        <translation>Ausscheiden</translation>
+        <translation>Pflege</translation>
     </message>
 </context>
 <context>

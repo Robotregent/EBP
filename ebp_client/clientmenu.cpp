@@ -32,7 +32,7 @@ ClientMenu::ClientMenu(QWidget *parent) :
     tmp2 = new QTreeWidgetItem(tmp,QStringList()<<tr("Einkaufen"),2311);
     tmp2->setToolTip(0,tr("Einkaufen"));
     tmp2 = new QTreeWidgetItem(tmp,QStringList()<<tr("Wäschepflege"),2312);
-    tmp2->setToolTip(0,tr("Wäschepflege"));
+    tmp2->setToolTip(0,tr("Waschpflege"));
 
     tmp = new QTreeWidgetItem(this->documentation,QStringList()<<tr("Basisversorgung"),2320);
     tmp->setToolTip(0,tr("Individuelle Basisversorgung"));
