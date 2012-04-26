@@ -215,7 +215,6 @@
     </message>
     <message>
         <location filename="clientmenu.cpp" line="34"/>
-        <location filename="clientmenu.cpp" line="35"/>
         <source>WУЄschepflege</source>
         <translation type="unfinished"></translation>
     </message>
