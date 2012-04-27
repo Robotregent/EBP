@@ -3,39 +3,40 @@
 \subsection{Architektur}
 Das Projekt ist in folgende Module aufgeteilt:
 \begin{itemize}
-	\item EBP-Client - Grafisches Datenbankfrontend für den alltäglichen Gebrauch
-	\item AdminDialog - Grafisches Datenbank-Administrationswerkzeug
-	\item libEBPdb - Stellt Fachklassen und Persistenzfunktionen als Bibliothek zur Verfügung
-	\item Unit-Tests - Automatisierte Tests der Bibliothek
+	\item EBP-Client
+Grafisches Datenbankfrontend für den alltäglichen Gebrauch
+	\item AdminDialog
+Grafisches Datenbank-Administrationswerkzeug
+	\item libEBPdb
+Stellt Fachklassen und Persistenzfunktionen als Bibliothek zur Verfügung
+	\item Unit-Tests
+Automatisierte Tests der Bibliothek
 \end{itemize}
 
 \newpage
 
 \subsection{Das QT-Framework}
-\subsubsection{Grafische Oberfläche}
-Die GUI wurde in grafischer Weise mit den bei QT mitgelieferten Tools erstellt.
-Diese Tools sind:
+\subsubsection{Grafische Oberfläche}\mbox{}\\
+Die GUI wurde in grafischer Weise mit den bei QT mitgelieferten Tools erstellt.\\Diese Tools sind:
 \begin{itemize}
-	\item \textit{QT-Designer}\\ der die grafisch erstellte GUI in XML-Form beschreibt und in \textit{U}ser \textit{I}nterface definition files (.ui) speichert.
-	\item \textit{UIC} - \textit{U}ser \textit{I}nterface \textit{C}ompiler\\ der die UI-Dateien liest und anschließend in C++-Header Dateien konvertiert.
+	\item \textit{QT-Designer}\\[\baselineskip]der die grafisch erstellte GUI in XML-Form beschreibt und in \textit{U}ser \textit{I}nterface definition files (.ui) speichert.
+	\item \textit{UIC} - \textit{U}ser \textit{I}nterface \textit{C}ompiler\\[\baselineskip]der die UI-Dateien liest und anschließend in C++-Header Dateien konvertiert.
 \end{itemize}
-\paragraph{UIC}
+\paragraph{UIC}\mbox{}\\
 Der von \textit{UIC} generierte Code enthält das im QT-Designer erstellte Objekt in Form eines C++-structs mit folgendem Inhalt:
 \begin{itemize}
 	\item Pointer zu den Widgets, Layouts, Layout-Elemente, Button-Groups, und Aktionen.
 	\item Eine Mitgliedsfunktion setupUi() die den Widgetbaum auf dem Parent-Widget erstellt.
 	\item Eine Mitgliedsfunktion retranslateUi() die das Übersetzen von String-Eigenschaften in der GUI übernimmt.
 \end{itemize}
-Es gibt nun mehrere Möglichkeiten die generierte C++-Header Datei in der Anwendung zu verwenden.
-Diese sind als direct approach, Single Inheritance Approach und als Multiple Inheritance Approach bekannt
-\paragraph{Direct Approach}\\
-Hier wird die generierte C++-Header Datei in einer cpp Datei inkludiert
-Und die setupUi()-Methode auf ein standard QWidget angewendet, welches dann das, in der vom \textit{UIC} generierten Header Datei beschriebenes, \textit{U}ser \textit{I}nterface (UI) enthält.
+Es gibt nun mehrere Möglichkeiten die generierte C++-Header Datei in der Anwendung zu verwenden.Diese sind als direct approach, Single Inheritance Approach und als Multiple Inheritance Approach bekannt.
+\paragraph{Direct Approach}\mbox{}\\
+Hier wird die generierte C++-Header Datei in einer cpp Datei inkludiert und die setupUi()-Methode auf ein standard QWidget angewendet, welches dann das, in der vom \textit{UIC} generierten Header Datei beschriebenes, \textit{U}ser \textit{I}nterface (UI) enthält.
 \begin{lstlisting}
 %HERE IS SUPPOSED TO COME A CODE EXAMPLE
 \end{lstlisting}
 Diese Anwendungsart ist für sehr einfache UI’s deren komplette Funktionalität in sich geschlossen ist gedacht. Auch ist nur die Verwendung von vordefinierten Signals und Slots möglich. Das Signal und Slot Prinzip ist im Kapitel Observermodel ausführlicher beschrieben.
-\paragraph{Single Inheritance Approach}\\
+\paragraph{Single Inheritance Approach}\mbox{}\\
 Hier wird von der QWidget-Klasse abgeleitet und eine private Instanz des UI-Objekts, über eine Mitgliedsvariable oder einen Mitgliedspointer, inkludiert.\\
 Das verwenden der Mitgliedsvariable hat den Vorteil das die Variablen innerhalb der UI gekapselt sind. Daher kann diese Methode benutzt werden mehrere UI’s im selben Widget zu realisieren.
 \begin{lstlisting}
@@ -45,23 +46,29 @@ Wenn der Mitgliedspointer verwendet wird, ist es möglich das UI-Objekt nur zu d
 \begin{lstlisting}
 %HERE IS SUPPOSED TO COME A CODE EXAMPLE
 \end{lstlisting}
-\paragraph{Multiple Inheritance Approach}\\
+\paragraph{Multiple Inheritance Approach}\mbox{}\\
 Hier wird sowohl von der UI als auch von QWidget abgeleitet, was den Vorteil hat, das die Widgets in der UI auf die selbe weise addressiert werden können, wie von Hand erstellte Widgets, daher ohne das ui prefix.
 HERE IS SUPPOSED TO COME A CODE EXAMPLE
 Über die QtUiLoader-Klasse können die .ui-Files zur Laufzeit bearbeitet werden um dynamisch generierte Oberflächen zu erzeugen, dies haben wir jedoch in \EBP nicht verwendet. 
 \newpage
-\subsubsection{Das Meta-Objekt System}
+\subsubsection{Das Meta-Objekt System}\mbox{}\\
 Das \textit{M}eta-\textit{O}bjekt \textit{S}ystem (MOS) ist eine C++-Erweiterung von QT die folgende zusätzliche Features bietet:
 \begin{itemize}
-	\item den Signal und Slot-Mechanismus für inter-Objekt Kommunikation\\Beschrieben im Observermodel.
-	\item Typ-Informationen zur Laufzeit\\z.B. gibt QObject::className() den Klassenname als String zur Laufzeit zurück, ohne native Laufzeit Typ Infromationen (RTTI - \textit{R}un\textit{T}ime \textit{T}ype \textit{I}nformation) Support durch den C++ Kompiler zu benötigen.
-	\item das dynamische Eigenschaftssystem\\z.B. QObject:setProperty() setzt dynamisch Eigenschaften durch den Namen.
+	\item den Signal und Slot-Mechanismus für inter-Objekt Kommunikation\\[\baselineskip]
+Beschrieben im Observermodel.
+	\item Typ-Informationen zur Laufzeit\\[\baselineskip]
+z.B. gibt QObject::className() den Klassenname als String zur Laufzeit zurück, ohne native Laufzeit Typ Infromationen (RTTI - \textit{R}un\textit{T}ime \textit{T}ype \textit{I}nformation) Support durch den C++ Kompiler zu benötigen.
+	\item das dynamische Eigenschaftssystem\\[\baselineskip]
+z.B. QObject:setProperty() setzt dynamisch Eigenschaften durch den Namen.
 \end{itemize}
 Es basiert auf 3 Dinge:
 \begin{itemize}
-	\item die QObject Klasse\\Eine Basisklasse für Objekte die das MOS verwenden können
-	\item das Q\_OBJECT Macro\\Muss im Private Teil der Klassendefinition sein. Es deklariert Features des MOS, z.B. Signals und Slots
-	\item den \textit{M}eta-{O}bjekt \textit{C}ompiler\\Liest C++ Dateien und erstellt für jede Klassendeklaration die das Q_OBJECT Makro enthält eine zusätzliche C++ Source Datei die den Meta Objekt Code für diese Klassen enthält. Die so erstellte Source Datei wird entweder inkludiert oder, üblicherweise, kompiliert und mit der Implementation der Klasse gelinkt.
+	\item die QObject Klasse\\[\baselineskip]
+Eine Basisklasse für Objekte die das MOS verwenden können
+	\item das Q\_OBJECT Macro\\[\baselineskip]
+Muss im Private Teil der Klassendefinition sein. Es deklariert Features des MOS, z.B. Signals und Slots
+	\item den \textit{M}eta-\textit{O}bjekt \textit{C}ompiler\\[\baselineskip]
+Liest C++ Dateien und erstellt für jede Klassendeklaration die das Q\_OBJECT Makro enthält eine zusätzliche C++ Source Datei die den Meta Objekt Code für diese Klassen enthält. Die so erstellte Source Datei wird entweder inkludiert oder, üblicherweise, kompiliert und mit der Implementation der Klasse gelinkt.
 \end{itemize}
 \newpage
 \subsection{Buildsystem}
