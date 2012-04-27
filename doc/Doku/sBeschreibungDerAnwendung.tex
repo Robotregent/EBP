@@ -1,7 +1,7 @@
 \section{Beschreibung der Anwendung}
 \label{sec:beschreibung}
 \subsection{Admindialog}
-\paragraph{Wohngruppe}
+\paragraph{Wohngruppe}\mbox{}\\
 Im \textit{Admindialog} können Administratoren Bewohner, Wohngruppen/-heime und Mitarbeiter verwalten.
 \begin{figure*}[h]
 	\begin{center}
@@ -17,7 +17,7 @@ Im \textit{Admindialog} können Administratoren Bewohner, Wohngruppen/-heime und
 Hier werden Wohngruppen erstellt, diese dienen als Gruppierung für sowohl Bewohner, als auch für Mitarbeiter.
 \newpage
 \noindent
-\paragraph{Bewohner}
+\paragraph{Bewohner}\mbox{}\\
 Bewohner werden mit einer Bewohnernummer, Vor-/Nachnamen und ihrer Wohngruppe  erstellt. 
 \begin{figure*}[h]
 	\begin{center}
@@ -33,7 +33,7 @@ Bewohner werden mit einer Bewohnernummer, Vor-/Nachnamen und ihrer Wohngruppe  e
 Restliche Informationen werden im Client von zugewiesenen Bezugsbetreuern ausgefüllt.
 \newpage
 \noindent
-\paragraph{Mitarbeiter}
+\paragraph{Mitarbeiter}\mbox{}\\
 Mitarbeiter werden mit Login sowie einigen persönlichen Daten, Name und Kontaktmöglichkeiten, sowie ihrer Berechtigung erstellt. Es ist darauf zu achten das jedem Mitarbeiter beim erstellen mindestens eine Wohngruppe zugeordnet werden muss, die er betreut. Er kann allerdings natürlich auch für mehrere Wohngruppen zuständig sein und auch der Bezugsbetreuer für Bewohner sein.
 \begin{figure*}[h]
 	\begin{center}
@@ -47,9 +47,11 @@ Mitarbeiter werden mit Login sowie einigen persönlichen Daten, Name und Kontakt
 Mitarbeiter die keine Administratorenrechte haben können nur Informationen von Bewohner in ihrer Wohngruppe einsehen und nur von Bewohner deren Bezugsbetreuer sie sind verändern.
 \newpage
 \subsection{\EBP Client}
-Der \EBP textit{Client} besitzt eine widgetbasierende GUI die aus folgenden Elementen besteht.
+Der \EBP \textit{Client} besitzt eine widgetbasierende GUI die aus folgenden Elementen besteht.
 \begin{itemize}
-	\item einer Menüleiste
+	\item einer Menüleiste\mbox{}\\
+	\noindent
+	Hier wird der Inhalt des Hauptfensters gespeichert, die zusätzlichen Widgets aus-, bzw eingeblendet oder der Mitarbeiter ausgeloggt.\\ Der Speichern Button ist ausgegraut wenn der eingeloggte Mitarbeiter kein Bezugsbetreuer des aktive Bewohners ist.
 	\begin{figure*}[h]
 		\begin{center}
 			\includegraphics[keepaspectratio=true, width=0.55\textwidth]{pics/client_header.png}
@@ -59,20 +61,20 @@ Der \EBP textit{Client} besitzt eine widgetbasierende GUI die aus folgenden Elem
 	\end{figure*}
 	\FloatBarrier
 	\noindent
-	Hier wird der Inhalt des Hauptfensters gespeichert, die zusätzlichen Widgets aus-, bzw eingeblendet oder der Mitarbeiter ausgeloggt.
-	\item einem Informationswidget
+	\item einem Informationswidget\mbox{}\\
+	Hier der momentan ausgewählte Bewohner und dessen Wohngruppe angezeigt, zum ändern öffnet sich, bei Auswahl des jeweiligen Buttons, ein Popup mit allen Wohngruppen für die der Mitarbeiter berechtigt ist, bzw. alle Bewohner der jeweiligen Wohngruppe.
 	\begin{figure*}[h]
 		\begin{center}
-			\includegraphics[keepaspectratio=true, width=0.95\textwidth]{pics/client_info.png}
+			\includegraphics[keepaspectratio=true, width=0.85\textwidth]{pics/client_info.png}
 			\caption{Informationswidget}
 			%\label{Bewohner- und Stationswidget}
 		\end{center}
 	\end{figure*}
 	\FloatBarrier
-	\noindent
-	Hier der momentan ausgewählte Bewohner und dessen Station angezeigt, zum ändern öffnet sich bei Auswahl des jeweiligen Buttons ein Popup mit allen Stationen für die der Mitarbeiter berechtigt ist, bzw. alle Bewohner der jeweiligen Station.
 	\newpage
-	\item einem Navigationsmenü
+	\item einem Navigationswidget\mbox{}\\
+	\noindent
+	Im Navigationsmenü wird der Inhalt des Hauptfensters ausgewählt. Das ``Bewohner'' Tab enthält alle Daten und Menü's die sich auf den aktiven Bewohner beziehen, während das ``Wohngruppen'' Tab Unterpunkte beinhaltet die für die komplette aktuelle Wohngruppe gültig sind.	
 	\begin{figure*}[h]
 		\begin{center}
 			\includegraphics[keepaspectratio=true, width=0.35\textwidth]{pics/client_navi.png}
@@ -81,21 +83,21 @@ Der \EBP textit{Client} besitzt eine widgetbasierende GUI die aus folgenden Elem
 		\end{center}
 	\end{figure*}
 	\FloatBarrier
+	\item dem Hauptfenster\mbox{}\\
 	\noindent
-	Im Navigationsmenü wird der Inhalt des Hauptfensters ausgewählt.
-	\item dem Mainwindow
+	Das eigentliche Hauptfenster dient zur Ein-/Ausgabe von Daten und bezieht sich immer auf den im Informationswidget ausgewählten Bewohner, bzw die ausgewählte Wohngruppe. Um hier eingegebene Daten zu sichern muss der Speichern-Knopf in der Menüleiste betätigt werden.\\
 	\begin{figure*}[h]
 		\begin{center}
-			\includegraphics[keepaspectratio=true, width=0.95\textwidth]{pics/client_main.png}
-			\caption{Mainwindow}
+			\includegraphics[keepaspectratio=true, width=0.85\textwidth]{pics/client_main.png}
+			\caption{Hauptfenster}
 			%\label{Hauptfenster}
 		\end{center}
 	\end{figure*}
 	\FloatBarrier
-	\noindent
-	Das eigentliche Hauptfenster dient zur Ein-/Ausgabe von Daten und bezieht sich immer auf den im Informationswidget ausgewählten Bewohner, bzw die ausgewählte Wohngruppe. Um hier eingegebene Daten zu sichern muss der Speichern-Knopf in der Menüleiste betätigt werden.
 \end{itemize}
-
+\subsubsection{Bewohnerbezogene Menüs}
+\paragraph{Person}\mbox{}\\
+Hier können Mitarbeiter die persönlichen Daten von Bewohnern einsehen.
 \subsection{Lokalisierung}
 Sowohl der AdminDialog als auch die \EBP sind komplett lokalisierbar. Qt stellt dafür einen einfachen Mechanismus zur Verfügung. Jeder zu lokalisierende String wird dabei von eimem Makro umschlossen.
 

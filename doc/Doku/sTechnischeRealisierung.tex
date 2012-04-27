@@ -29,27 +29,116 @@ Der von \textit{UIC} generierte Code enthält das im QT-Designer erstellte Objek
 	\item Eine Mitgliedsfunktion setupUi() die den Widgetbaum auf dem Parent-Widget erstellt.
 	\item Eine Mitgliedsfunktion retranslateUi() die das Übersetzen von String-Eigenschaften in der GUI übernimmt.
 \end{itemize}
-Es gibt nun mehrere Möglichkeiten die generierte C++-Header Datei in der Anwendung zu verwenden.Diese sind als direct approach, Single Inheritance Approach und als Multiple Inheritance Approach bekannt.
+Es gibt nun mehrere Möglichkeiten die generierte C++-Header Datei in der Anwendung zu verwenden.Diese sind als Direct Approach, Single Inheritance Approach und als Multiple Inheritance Approach bekannt.
 \paragraph{Direct Approach}\mbox{}\\
-Hier wird die generierte C++-Header Datei in einer cpp Datei inkludiert und die setupUi()-Methode auf ein standard QWidget angewendet, welches dann das, in der vom \textit{UIC} generierten Header Datei beschriebenes, \textit{U}ser \textit{I}nterface (UI) enthält.
+Hier wird die generierte C++-Header Datei in einer cpp Datei inkludiert und die setupUi()-Methode auf ein standard QWidget angewendet, welches dann das, in der vom \textit{UIC} generierten Header Datei beschriebenes, \textit{U}ser \textit{I}nterface (UI) enthält.\\Beispielcode:
 \begin{lstlisting}
-%HERE IS SUPPOSED TO COME A CODE EXAMPLE
+main.cpp
+
+int main(int argc, char *argv[])
+ {
+     QApplication Musteranwendung(argc, argv);
+     QWidget *widget = new QWidget;
+     Ui::MusterForm ui;
+     ui.setupUi(widget);
+
+     widget->show();
+     return Musteranwendung.exec();
+ }
 \end{lstlisting}
 Diese Anwendungsart ist für sehr einfache UI’s deren komplette Funktionalität in sich geschlossen ist gedacht. Auch ist nur die Verwendung von vordefinierten Signals und Slots möglich. Das Signal und Slot Prinzip ist im Kapitel Observermodel ausführlicher beschrieben.
+\newpage
 \paragraph{Single Inheritance Approach}\mbox{}\\
 Hier wird von der QWidget-Klasse abgeleitet und eine private Instanz des UI-Objekts, über eine Mitgliedsvariable oder einen Mitgliedspointer, inkludiert.\\
-Das verwenden der Mitgliedsvariable hat den Vorteil das die Variablen innerhalb der UI gekapselt sind. Daher kann diese Methode benutzt werden mehrere UI’s im selben Widget zu realisieren.
+Das verwenden der Mitgliedsvariable hat den Vorteil das die Variablen innerhalb der UI gekapselt sind. Daher kann diese Methode benutzt werden mehrere UI’s im selben Widget zu realisieren.\\Beispielcode:
 \begin{lstlisting}
-%HERE IS SUPPOSED TO COME A CODE EXAMPLE
+musteranwendung.h
+
+ class MusterForm : public QWidget
+ {
+     Q_OBJECT
+
+ public:
+     MusterForm(QWidget *parent = 0);
+
+ private slots:
+     void on_inputSpinBox1_valueChanged(int value);
+     void on_inputSpinBox2_valueChanged(int value);
+
+ private:
+     Ui::MusterForm ui;
+ };
 \end{lstlisting}
+\begin{lstlisting}
+ musteranwendung.cpp
+
+ MusterForm::MusterForm(QWidget *parent)
+     : QWidget(parent)
+ {
+     ui.setupUi(this);
+ }
+\end{lstlisting}
+
 Wenn der Mitgliedspointer verwendet wird, ist es möglich das UI-Objekt nur zu deklarieren, somit muss der generierte Header nicht im source Header inkludiert werden muss. Somit kann die UI ausgetauscht werden ohne das die abhängigen Quelldateien neu kompiliert werden müssen.\\ Auf diese Art wurde in \EBP die GUI Implementation realisiert. 
 \begin{lstlisting}
-%HERE IS SUPPOSED TO COME A CODE EXAMPLE
+ musteranwendung.h
+
+ namespace Ui {
+     class MusterForm;
+ }
+
+ class MusterForm : public QWidget
+ ...
+ virtual ~MusterForm();
+ ...
+ private:
+     Ui::MusterForm *ui;
+ ...
+\end{lstlisting}
+\begin{lstlisting}
+ musteranwendung.cpp
+
+ #include "ui_musterform.h"
+
+ MusterForm::MusterForm(QWidget *parent) :
+     QWidget(parent), ui(new Ui::MusterForm)
+ {
+     ui->setupUi(this);
+ }
+
+ MusterForm::~MusterForm()
+ {
+     delete ui;
+ }
+ ...
 \end{lstlisting}
 \paragraph{Multiple Inheritance Approach}\mbox{}\\
 Hier wird sowohl von der UI als auch von QWidget abgeleitet, was den Vorteil hat, das die Widgets in der UI auf die selbe weise addressiert werden können, wie von Hand erstellte Widgets, daher ohne das ui prefix.
-HERE IS SUPPOSED TO COME A CODE EXAMPLE
-Über die QtUiLoader-Klasse können die .ui-Files zur Laufzeit bearbeitet werden um dynamisch generierte Oberflächen zu erzeugen, dies haben wir jedoch in \EBP nicht verwendet. 
+\begin{lstlisting}
+ musteranwendung.h
+
+#include "ui_musterform.h"
+
+class MusterForm : public QWidget, private Ui::MusterForm
+ {
+     Q_OBJECT
+
+ public:
+     MusterForm(QWidget *parent = 0);
+
+ private slots:
+     void on_inputSpinBox1_valueChanged(int value);
+     void on_inputSpinBox2_valueChanged(int value);
+ };
+
+ CalculatorForm::CalculatorForm(QWidget *parent)
+     : QWidget(parent)
+ {
+     setupUi(this);
+ }
+\end{lstlisting}
+Über die QtUiLoader-Klasse können die .ui-Files zur Laufzeit bearbeitet werden um dynamisch generierte Oberflächen zu erzeugen, dies haben wir jedoch in \EBP nicht verwendet.\\
+\cite{QT_UIC} 
 \newpage
 \subsubsection{Das Meta-Objekt System}\mbox{}\\
 Das \textit{M}eta-\textit{O}bjekt \textit{S}ystem (MOS) ist eine C++-Erweiterung von QT die folgende zusätzliche Features bietet:
@@ -70,13 +159,13 @@ Muss im Private Teil der Klassendefinition sein. Es deklariert Features des MOS,
 	\item den \textit{M}eta-\textit{O}bjekt \textit{C}ompiler\\[\baselineskip]
 Liest C++ Dateien und erstellt für jede Klassendeklaration die das Q\_OBJECT Makro enthält eine zusätzliche C++ Source Datei die den Meta Objekt Code für diese Klassen enthält. Die so erstellte Source Datei wird entweder inkludiert oder, üblicherweise, kompiliert und mit der Implementation der Klasse gelinkt.
 \end{itemize}
+\cite{QT_MOC}
 \newpage
 \subsection{Buildsystem}
 Da das Projekt \textit{Qt} als einen zentralen Bestandteil verwendet, ist es naheliegend das \textit{Qt}-eigene Buildsystem \textit{QMake} einzusetzen. Insbesondere die Verwendung von \textit{QMake} innerhalb des \textit{QtCreator}s kann die Entwicklung einfacher Anwendungen erleichtern.\\
 Eine bedeutende Schwierigkeit von \textit{QMake} ist es jedoch, komplexere Build-Prozesse zu automatisieren, wie beispielsweise die Integration des verwendeten \textit{ORM}s in den Build-Vorgang der Persistenzschicht.\\
 Daher wurde in diesem Projekt ein zweigleisiges Buildsystem eingesetzt:\\
 Zum einen lassen sich die GUI-Anwendungen weiterhin mit \textit{QMake} erstellen. Zum anderen kann das komplette Projekt samt Bibliothek der Persistenzschicht mit \textit{CMake} kompiliert werden.\\
-
 \newpage
 
 \subsection{Persistenzschicht mit ODB (libEBPdb)}
