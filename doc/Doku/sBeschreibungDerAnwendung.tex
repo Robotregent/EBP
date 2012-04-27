@@ -6,13 +6,10 @@ Im \textit{Admindialog} können Administratoren Bewohner, Wohngruppen/-heime und
 \begin{figure*}[h]
 	\begin{center}
 		\includegraphics[keepaspectratio=true, width=0.85\textwidth]{pics/admin3.png}
-<<<<<<< HEAD
 		\caption{Wohngruppe}
 		\label{Admindialog Wohngruppe}
-=======
 		\caption{Graphen eines Interfaces}
 		\label{Admindialog_Mitarbeiter_erstellen}
->>>>>>> 52c99611e9681ad1f612fa30a632eb980148647c
 	\end{center}
 \end{figure*}
 \FloatBarrier
@@ -25,13 +22,10 @@ Bewohner werden mit einer Bewohnernummer, Vor-/Nachnamen und ihrer Wohngruppe  e
 \begin{figure*}[h]
 	\begin{center}
 		\includegraphics[keepaspectratio=true, width=0.85\textwidth]{pics/admin2.png}
-<<<<<<< HEAD
 		\caption{Bewohner}
 		\label{Admindialog Bewohner}
-=======
 		\caption{Graphen eines Interfaces}
 		\label{Admindialog_Bewohner}
->>>>>>> 52c99611e9681ad1f612fa30a632eb980148647c
 	\end{center}
 \end{figure*}
 \FloatBarrier
@@ -60,7 +54,7 @@ Der \EBP textit{Client} besitzt eine widgetbasierende GUI die aus folgenden Elem
 		\begin{center}
 			\includegraphics[keepaspectratio=true, width=0.55\textwidth]{pics/client_header.png}
 			\caption{Menueleiste}
-			\label{Menüleiste, fixiert an der oberen Seite des Programms}
+			%\label{Menüleiste, fixiert an der oberen Seite des Programms}
 		\end{center}
 	\end{figure*}
 	\FloatBarrier
@@ -71,7 +65,7 @@ Der \EBP textit{Client} besitzt eine widgetbasierende GUI die aus folgenden Elem
 		\begin{center}
 			\includegraphics[keepaspectratio=true, width=0.95\textwidth]{pics/client_info.png}
 			\caption{Informationswidget}
-			\label{Bewohner- und Stationswidget}
+			%\label{Bewohner- und Stationswidget}
 		\end{center}
 	\end{figure*}
 	\FloatBarrier
@@ -83,7 +77,7 @@ Der \EBP textit{Client} besitzt eine widgetbasierende GUI die aus folgenden Elem
 		\begin{center}
 			\includegraphics[keepaspectratio=true, width=0.35\textwidth]{pics/client_navi.png}
 			\caption{Navigationswidget}
-			\label{Navigationsmenü}
+			%\label{Navigationsmenü}
 		\end{center}
 	\end{figure*}
 	\FloatBarrier
@@ -94,7 +88,7 @@ Der \EBP textit{Client} besitzt eine widgetbasierende GUI die aus folgenden Elem
 		\begin{center}
 			\includegraphics[keepaspectratio=true, width=0.95\textwidth]{pics/client_main.png}
 			\caption{Mainwindow}
-			\label{Hauptfenster}
+			%\label{Hauptfenster}
 		\end{center}
 	\end{figure*}
 	\FloatBarrier
@@ -102,9 +96,11 @@ Der \EBP textit{Client} besitzt eine widgetbasierende GUI die aus folgenden Elem
 	Das eigentliche Hauptfenster dient zur Ein-/Ausgabe von Daten und bezieht sich immer auf den im Informationswidget ausgewählten Bewohner, bzw die ausgewählte Wohngruppe. Um hier eingegebene Daten zu sichern muss der Speichern-Knopf in der Menüleiste betätigt werden.
 \end{itemize}
 
-\newpage
 \subsection{Lokalisierung}
-Sowohl der AdminDialog wie auch die \EBP sind komplett lokalisierbar. Qt stellt dafür einen einfachen Mechanismus zur Verfügung. Jeder zu lokalisierende String wird dabei von eimem Makro umschlossen. Das 
+Sowohl der AdminDialog als auch die \EBP sind komplett lokalisierbar. Qt stellt dafür einen einfachen Mechanismus zur Verfügung. Jeder zu lokalisierende String wird dabei von eimem Makro umschlossen.
+
+\newpage
+
 \subsection{Erstellen der Anwendung}
 \subsubsection{Abhängigkeiten}
 \paragraph{Zur Laufzeit:}
