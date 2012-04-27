@@ -95,9 +95,119 @@ Der \EBP \textit{Client} besitzt eine widgetbasierende GUI die aus folgenden Ele
 	\end{figure*}
 	\FloatBarrier
 \end{itemize}
+\newpage
 \subsubsection{Bewohnerbezogene Menüs}
-\paragraph{Person}\mbox{}\\
-Hier können Mitarbeiter die persönlichen Daten von Bewohnern einsehen.
+\begin{itemize}
+	\item Person\mbox{}\\
+	\noindent
+	Hier können persönliche Daten des Bewohners eingesehen und geändert werden.
+	\begin{figure*}[h]
+		\begin{center}
+			\includegraphics[keepaspectratio=true, width=0.85\textwidth]{pics/client_person.png}
+			\caption{Person}
+			%\label{Hauptfenster}
+		\end{center}
+	\end{figure*}
+	\FloatBarrier
+	\item Gesetzliche Betreuung\mbox{}\\
+	\noindent
+	Ein Unterpunkt von 'Person'. Hier sind Angaben über den gesetzlichen Betreuer des Bewohners.
+	\begin{figure*}[h]
+		\begin{center}
+			\includegraphics[keepaspectratio=true, width=0.85\textwidth]{pics/client_betreuung.png}
+			\caption{Gesetzliche Betreuung}
+			%\label{Hauptfenster}
+		\end{center}
+	\end{figure*}
+	\FloatBarrier
+	\newpage
+	\item Verfügungen\mbox{}\\
+	\noindent
+	Ein Unterpunkt von 'Person'. Eventuelle Verfügungen gegen den Patienten, ihre Dauer und Begründung sind hier dokumentiert.
+	\begin{figure*}[h!]
+		\begin{center}
+			\includegraphics[keepaspectratio=true, width=0.85\textwidth]{pics/client_verfuegung.png}
+			\caption{Verfügungen}
+			%\label{Hauptfenster}
+		\end{center}
+	\end{figure*}
+	\FloatBarrier
+	\item Leistungsträger\mbox{}\\
+	\noindent
+	Ein Unterpunkt von 'Person'. Durch den Button in der links, oberen Ecke können Angabemasken für Leistungsträger hinzugefügt werden. Diese beinhalten sowohl den Leistungsträger an sich, als auch Kontaktdaten eines Ansprechspartners.
+	\begin{figure*}[h!]
+		\begin{center}
+			\includegraphics[keepaspectratio=true, width=0.85\textwidth]{pics/client_leistungstraeger.png}
+			\caption{Leistungsträger}
+			%\label{Hauptfenster}
+		\end{center}
+	\end{figure*}
+	\FloatBarrier
+	\newpage
+	\item Projekt\mbox{}\\
+	\noindent
+	Hier werden Projekte mit Zielen, Betreuern und einer Beschreibung für den Bewohner angelegt.\\ Am unterem Rand ist eine Möglichkeit zum einfachem kopieren von ausgewählten Textteilen in die Betreungsplanung eines auswählbaren Bewohners gegeben.
+	\begin{figure*}[h!]
+		\begin{center}
+			\includegraphics[keepaspectratio=true, width=0.85\textwidth]{pics/client_projekt.png}
+			\caption{Projekt}
+			%\label{Hauptfenster}
+		\end{center}
+	\end{figure*}
+	\FloatBarrier
+	\newpage
+	\item Protokoll\mbox{}\\
+	\noindent
+	Um Mitarbeiterbesprechungen, die einen Bewohner betreffen, einfacher anderen betroffenen Mitarbeitern zugänglich zu machen, können hier Protokolle, durch Datum und Uhrzeit markiert, mit einer Liste der Teilnehmer sowie einer Markierung für den Schriftführer angelegt werden.\\Am unterem Rand ist eine Möglichkeit zum einfachem kopieren von ausgewählten Textteilen in die Betreungsplanung eines auswählbaren Bewohners gegeben.
+	\begin{figure*}[h!]
+		\begin{center}
+			\includegraphics[keepaspectratio=true, width=0.85\textwidth]{pics/client_protokoll.png}
+			\caption{Protokoll}
+			%\label{Hauptfenster}
+		\end{center}
+	\end{figure*}
+	\FloatBarrier
+	\newpage
+	\item Betreungsplanung\mbox{}\\
+	\noindent
+	in der Betreungsplanung werden einzelne Fähigkeiten oder Umstände des Bewohners beschrieben, sowohl der momentane Zustand als auch mögliche Ziele die der Bewohner erreichen soll.
+	\begin{figure*}[h!]
+		\begin{center}
+			\includegraphics[keepaspectratio=true, width=0.85\textwidth]{pics/client_lebensfuehrung.png}
+			\caption{Betreungsplanung: Unterpunkt Einkaufen}
+			%\label{Hauptfenster}
+		\end{center}
+	\end{figure*}
+\end{itemize}
+\newpage
+\subsubsection{Wohngruppen bezogene Menüs}
+In den wohngruppen bezogenen Menüs können Ereignisse sowie Abwesenheiten sowohl eingetragen, als auch über Zeit filterbar eingesehen werden.
+\begin{itemize}
+	\item Gruppenbuch\mbox{}\\
+	\noindent
+	Im Gruppenbuch werden Ereignisse für andere Mitarbeiter protokolliert. Diese Ereignisse bestehen aus einem Datum, den eintragenden Mitarbeiter und einer Beschreibung.\\Standardmäßig werden alle Ereignisse, nach dem Eintragezeitpunkt sortiert, angezeigt. Es ist jedoch möglich die Einträge über einen Zeitbereich zu filtern.\\\\Am unterem Rand ist eine Möglichkeit zum einfachem kopieren von ausgewählten Textteilen in die Betreungsplanung eines auswählbaren Bewohners gegeben.
+	\begin{figure*}[h]
+		\begin{center}
+			\includegraphics[keepaspectratio=true, width=0.85\textwidth]{pics/client_ereignis.png}
+			\caption{Gruppenbuch}
+			%\label{Hauptfenster}
+		\end{center}
+	\end{figure*}
+	\FloatBarrier
+	\newpage
+	\item Meldeliste\mbox{}\\
+	\noindent
+	In der Meldeliste werden alle Bewohner der Wohngruppe die zu dem ausgewählten Tag bereits in der Wohngruppe waren angezeigt. Standardmäßig sind alle Bewohner als 'Anwesend' eingetragen. Es ist nur möglich Bewohner als abwesend zu markieren, wenn ein Grund angegeben wird.\\ Es ist möglich die Abwesenheiten der Bewohner in einem auswählbaren Zeitbereich zu exportieren. Dieser Export ist sowohl im CSV-Format (zur weiterverarbeitung in anderen Programmen, z.B. Excel) als auch in From einer Textdatei die in einer druckbaren Formatierung möglich.
+	\begin{figure*}[h]
+		\begin{center}
+			\includegraphics[keepaspectratio=true, width=0.85\textwidth]{pics/client_meldeliste.png}
+			\caption{Meldeliste}
+			%\label{Hauptfenster}
+		\end{center}
+	\end{figure*}
+	\FloatBarrier
+\end{itemize}
+\newpage
 \subsection{Lokalisierung}
 Sowohl der AdminDialog als auch die \EBP sind koplett lokalisierbar. Qt stellt dafür einen einfachen Mechanismus zur Verfügung. Jeder zu
 lokalisierende String wird dabei von einem Makro umschlossen. Mit Hilfe des Qt Linguist können diese Strings zu einem Wörterbuch zusammengefasst und

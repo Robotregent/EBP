@@ -30,6 +30,7 @@ Der von \textit{UIC} generierte Code enthält das im QT-Designer erstellte Objek
 	\item Eine Mitgliedsfunktion retranslateUi() die das Übersetzen von String-Eigenschaften in der GUI übernimmt.
 \end{itemize}
 Es gibt nun mehrere Möglichkeiten die generierte C++-Header Datei in der Anwendung zu verwenden.Diese sind als Direct Approach, Single Inheritance Approach und als Multiple Inheritance Approach bekannt.
+\newpage
 \paragraph{Direct Approach}\mbox{}\\
 Hier wird die generierte C++-Header Datei in einer cpp Datei inkludiert und die setupUi()-Methode auf ein standard QWidget angewendet, welches dann das, in der vom \textit{UIC} generierten Header Datei beschriebenes, \textit{U}ser \textit{I}nterface (UI) enthält.\\Beispielcode:
 \begin{lstlisting}
@@ -78,7 +79,8 @@ musteranwendung.h
      ui.setupUi(this);
  }
 \end{lstlisting}
-
+\newpage
+\noindent
 Wenn der Mitgliedspointer verwendet wird, ist es möglich das UI-Objekt nur zu deklarieren, somit muss der generierte Header nicht im source Header inkludiert werden muss. Somit kann die UI ausgetauscht werden ohne das die abhängigen Quelldateien neu kompiliert werden müssen.\\ Auf diese Art wurde in \EBP die GUI Implementation realisiert. 
 \begin{lstlisting}
  musteranwendung.h
@@ -112,6 +114,7 @@ Wenn der Mitgliedspointer verwendet wird, ist es möglich das UI-Objekt nur zu d
  }
  ...
 \end{lstlisting}
+\newpage
 \paragraph{Multiple Inheritance Approach}\mbox{}\\
 Hier wird sowohl von der UI als auch von QWidget abgeleitet, was den Vorteil hat, das die Widgets in der UI auf die selbe weise addressiert werden können, wie von Hand erstellte Widgets, daher ohne das ui prefix.
 \begin{lstlisting}
