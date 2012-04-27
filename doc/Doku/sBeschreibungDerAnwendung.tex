@@ -99,7 +99,16 @@ Der \EBP \textit{Client} besitzt eine widgetbasierende GUI die aus folgenden Ele
 \paragraph{Person}\mbox{}\\
 Hier können Mitarbeiter die persönlichen Daten von Bewohnern einsehen.
 \subsection{Lokalisierung}
-Sowohl der AdminDialog als auch die \EBP sind komplett lokalisierbar. Qt stellt dafür einen einfachen Mechanismus zur Verfügung. Jeder zu lokalisierende String wird dabei von eimem Makro umschlossen.
+Sowohl der AdminDialog als auch die \EBP sind koplett lokalisierbar. Qt stellt dafür einen einfachen Mechanismus zur Verfügung. Jeder zu
+lokalisierende String wird dabei von einem Makro umschlossen. Mit Hilfe des Qt Linguist können diese Strings zu einem Wörterbuch zusammengefasst und
+übersetzt werden. Für die \EBP war im Plichtenheft angedacht, ein englisches und eine deutsches Wörterbuch zur Verfügung zu stellen. In den
+Gesprächen zur Anforderungsdefinition mit Herrn Zimmer zeichnete sich ein anderer Lokalisierungsbedarf an die \EBP ab.\\
+Die Fachkräfte in der Altenhilfe und der Behindertenhilfe haben ihre eigene Fachsprache im täglichen Umgang mit ihren Klienten. So liegt der Fokus in
+der Altenhilfe eher auf pflegerischen Tätigkeiten, wohingegen in der Behindertenhilfe pädagogische Ziele und Maßnahmen im Fordergrund stehen. Ein
+Klient wird in der Altenhilfe eher als Patient bezeichnet, in der Behindertenhilfe spricht man häufiger von einem Bewohner. Um diesen Umstand zu
+berücksichtigen, wurden keine Wörterbücher für Englisch und Deutsch erstellt, sondern Wörterbücher für die Altenhilfe und für die Behindertenhilfe.\\
+Wird der Client oder der AdminDialog ohne Parameter gestartet, wird das Wörterbuch der Behindertenhilfe geladen. Um die Lokalisierung der Altenhilfe
+zu aktivieren, muss der entsprechenden Anwendung der Parameter ``-a'' übergeben werden.
 
 \newpage
 
