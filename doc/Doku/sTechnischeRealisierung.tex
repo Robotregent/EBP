@@ -172,13 +172,33 @@ QList< QSharedPointer<ebp::Projekt> > projekte = bewohner->loadProjekte( connect
 \newpage
 
 \subsection{Unit-Tests}
-Unit-Tests, auch Komponententests genannt, sind sehr entwicklungsnahe Tests und sollen sicherstellen, dass die Erwartungen an eine Software
-erfüllt werden können, indem Fehler vermieden werden.\\
-''Das Testen von Software dient durch die Identifizierung von Defekten und deren anschließender Beseitigung zur Steigerung der Softwarequalität. Die
-Testfälle sollen so gewählt werden, dass sie weitgehend der späteren Benutzung der Software entsprechen. Die nachgewiesene Qualität des Programms
-während der Tests entspricht dann der zu erwartenden Qualität während der späteren Benutzung\cite[S. 11]{Softwaretests}.''\\
-Bei Unit-Tests werden einzelne Programmmodule isoliert von einander getested. Dadurch sollen Einflüsse durch andere Softwarekomponenten
-ausgeschlossen werden.
+
+Unit-Tests, auch Komponententests genannt, sind sehr entwicklungsnahe Tests und sollen sicherstellen, dass die Erwartungen an eine Software erfüllt
+werden können, indem Fehler vermieden werden.\\
+''Das Testen von Software dient durch die Identifizierung von Defekten und deren anschließender Beseitigung zur Steigerung der Softwarequalität. Die 
+Testfälle sollen so gewählt werden, dass sie weitgehend der späteren Benutzung der Software entsprechen. Die nachgewiesene Qualität des
+Programmswährend der Tests entspricht dann der zu erwartenden Qualität während der späteren Benutzung\cite[S. 11]{Softwaretests}.''\\
+
+Bei Unit-Tests werden einzelne Programmmodule isoliert von einander getestet. Dadurch sollen Einflüsse durch andere Softwarekomponenten ausgeschlossen
+werden. Programmmodule müssen dabei aber nicht zwingendermaßen nur einzelne Klassen oder Funktionen sein \cite[Vgl. S. 11]{Softwaretests}. Bei der
+\EBP erfolgt die Trennung in die Programmmodule libEBPdb und GUI. Für die Qualitätssicherung der GUI-Funktion wurden keine automatisierter Testcode
+eingesetzt. Die korrekte Funktionalität der GUI wurde durch das regelmäßige Testen aller Masken durch einen Tester gewährleistet. Sollen auch diese
+Aufgaben automatisiert werden, stellt Qt eine beschränkte API für User Interface Tests zur Verfügung. Darüber hinaus gibt es auch weitere
+Drittanbieter für Tools und Frameworks zum automatisierten Testen von User Interfaces, wie z.B. TestComplete von Smart Bear. Diese Tests sind
+allerdings äußerst aufwendig zu konfigurieren und zu pflegen.\\
+
+Es wurden daher in erster Linie die libEBPdb mit Hilfe von automatisierten Unit-Tests getestet. Es sollte eine Testumgebung entworfen werden, die es
+dem Entwickler ermöglicht nach einer Änderung im Quellcode mit Hilfe eines einzelnen Befehls überprüfen zu können, ob die libEBPdb als Gesamtheit noch
+korrekt ausgeführt wird. Dazu wurde die Testumgebung mit Hilfe des Testtools CTest, ein Teil von CMake, in das Buildsystem integriert. Als Framework
+für die eigentlichen Unit-Tests kommt die QTestLib, ein Teil von Qt, zum Einsatz. QTestLib bietet diverse Makros, die ein errechnetes Ergebnis mit dem
+erwarteten Wert vergleichen und ein abweichendes Verhalten protokollieren. Dies ist die grundlegende Vorgehensweise bei einem Unit-Test. So
+vergleicht der folgende Aufruf des Macros QCOMPARE den Rückgabewert einer Methode der Klasse ebp::Wohngruppe mit dem erwarteten Wert. Im Fehlerfall
+wird der Rückgabewert und die Fehlerstelle protokolliert.
+\begin{lslisting}
+QCOMPARE(wohngruppenEreignisList.at(i)->zeitpunkt(),QDateTime(QDate(2012,4,1),QTime(11,11)));
+\end{lslisting}
+
+
 
 \newpage
 
