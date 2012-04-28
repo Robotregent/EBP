@@ -33,34 +33,43 @@ WohngruppenDeleteDialog::WohngruppenDeleteDialog(QList<CostumListWidget<ebp::Woh
     parentAdmin = (AdminDialog *) parent;
     for (int i = 0 ; i<itemList.count();i++)
     {
-	this->ui->listWidget->insertItem(i,itemList.at(i)->text());
+        this->ui->listWidget->insertItem(i,itemList.at(i)->text());
     }
 
 }
+/**
+  * \brief Ersetzt die angezeigten Wohngruppen, durch eine neue Liste
+  */
 void WohngruppenDeleteDialog::setItemList(QList<CostumListWidget<ebp::Wohngruppe> *> _itemList)
 {
     foreach (CostumListWidget<ebp::Wohngruppe> *i,this->itemList)
     {
-	this->ui->listWidget->removeItemWidget(i);
-	delete i;
+        this->ui->listWidget->removeItemWidget(i);
+        delete i;
     }
     itemList = _itemList;
     foreach (CostumListWidget<ebp::Wohngruppe> *i,this->itemList)
     {
-	this->ui->listWidget->addItem(i);
+        this->ui->listWidget->addItem(i);
     }
 }
+/**
+  * \brief Gibt die Liste an angezeigten Wohngruppen zurück
+  */
 QList<CostumListWidget<ebp::Wohngruppe> *> WohngruppenDeleteDialog::getItemList()
 {
     return itemList;
 }
+/**
+  * \brief Löscht die ausgewählte Wohngruppe
+  */
 void WohngruppenDeleteDialog::on_pushButton_2_clicked()
 {
     if(this->ui->listWidget->currentIndex().isValid())
     {
-	//Löschen der Wohngruppe auslösen.
-	if(this->parentAdmin->deleteWohngruppe(this->ui->listWidget->currentRow()))
-	    this->close();
+        //Löschen der Wohngruppe auslösen.
+        if(this->parentAdmin->deleteWohngruppe(this->ui->listWidget->currentRow()))
+            this->close();
     }
 }
 ///////////////Ableitung für löschen eines Bewohners/////////////
@@ -72,33 +81,42 @@ BewohnerDeleteDialog::BewohnerDeleteDialog(QList<CostumListWidget<ebp::Bewohner>
     parentAdmin = (AdminDialog *) parent;
     for (int i = 0 ; i<itemList.count();i++)
     {
-	this->ui->listWidget->insertItem(i,itemList.at(i)->text());
+        this->ui->listWidget->insertItem(i,itemList.at(i)->text());
     }
 
 }
+/**
+  * \brief Ersetzt die angezeigten Bewohner, durch eine neue Liste
+  */
 void BewohnerDeleteDialog::setItemList(QList<CostumListWidget<ebp::Bewohner> *> _itemList)
 {
     foreach (CostumListWidget<ebp::Bewohner> *i,this->itemList)
     {
-	this->ui->listWidget->removeItemWidget(i);
-	delete i;
+        this->ui->listWidget->removeItemWidget(i);
+        delete i;
     }
     itemList = _itemList;
     foreach (CostumListWidget<ebp::Bewohner> *i,this->itemList)
     {
-	this->ui->listWidget->addItem(i);
+        this->ui->listWidget->addItem(i);
     }
 }
+/**
+  * \brief Gibt die Liste an angezeigten Bewohnern zurück
+  */
 QList<CostumListWidget<ebp::Bewohner> *> BewohnerDeleteDialog::getItemList()
 {
     return itemList;
 }
+/**
+  * \brief Löscht den ausgewählten Bewohner
+  */
 void BewohnerDeleteDialog::on_pushButton_2_clicked()
 {
     if(this->ui->listWidget->currentIndex().isValid())
     {
-	//Löschen der Bewohner auslösen.
-	if(this->parentAdmin->deleteBewohner(this->ui->listWidget->currentRow()))
-	    this->close();
+        //Löschen der Bewohner auslösen.
+        if(this->parentAdmin->deleteBewohner(this->ui->listWidget->currentRow()))
+            this->close();
     }
 }

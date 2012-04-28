@@ -4,10 +4,7 @@
 #
 #-------------------------------------------------
 
-#QT       += core gui
 LIBS += -L ../EBPdb/ -lEBPdb \
-#TARGET = AdminDialog
-#TEMPLATE = app
 
 INCLUDEPATH += $$PWD/../EBPdb
 DEPENDPATH += $$PWD/../EBPdb
@@ -42,4 +39,6 @@ else:unix:!macx:!symbian: LIBS += -L$$PWD/../EBPdb/ -lEBPdb
 INCLUDEPATH += $$PWD/../
 DEPENDPATH += $$PWD/../
 
-TRANSLATIONS = admindialog.ts
+CODECFORTR = UTF-8
+CODECFORSRC = UTF-8
+TRANSLATIONS = admindialog-a.ts

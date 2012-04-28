@@ -68,6 +68,9 @@ QVariant EmployeeTableModel::headerData(int section, Qt::Orientation orientation
     }
     return result;
 }
+/**
+  * \brief gibt den Mitarbeiter an einer bestimmten Stelle des Models zurück.
+  */
 QSharedPointer<ebp::Mitarbeiter> EmployeeTableModel::getMitarbeiter(int index)
 {
     QSharedPointer<ebp::Mitarbeiter> res = QSharedPointer<ebp::Mitarbeiter>();
@@ -75,6 +78,9 @@ QSharedPointer<ebp::Mitarbeiter> EmployeeTableModel::getMitarbeiter(int index)
 	res = this->EmployeeList.at(index);
     return res;
 }
+/**
+  * \brief Fügt einen neuen Mitarbeiter dem Model hinzu.
+  */
 void EmployeeTableModel::addMitarbeiter(QSharedPointer<ebp::Mitarbeiter> newMA)
 {
     this->EmployeeList.append(newMA);

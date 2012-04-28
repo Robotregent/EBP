@@ -12,9 +12,15 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
 
+    QString trans="";
+    if(argc>1)
+    {
+        trans=QString(argv[1]);
+    }
     QTranslator translator;
-    translator.load("admindialog");
+    translator.load("admindialog"+trans);
     a.installTranslator(&translator);
+
 
 
     AdminDialog w;

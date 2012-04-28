@@ -4,7 +4,9 @@
 #include <EBPdb/Mitarbeiter.hxx>
 #include <QMessageBox>
 using namespace ebp;
-
+/**
+  * PopUp Dialog, um einen Mitarbeiter zum löschen auszuwählen.
+  */
 ChooseEmployee::ChooseEmployee(EmployeeTableModel *_model,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ChooseEmployee),
