@@ -44,7 +44,6 @@ class WohngruppenZuordnung : public Zuordnung
 public:
     explicit WohngruppenZuordnung(EmployeeTableModel *_model, QWidget *parent);
 private:
-    //QList< CostumListWidget< ebp::Wohngruppe > > WohngruppenListe;
     QList<  QSharedPointer< ebp::Wohngruppe > > zugeordneteWohngruppen;
     QList<  QSharedPointer< ebp::Wohngruppe > > alleWohngruppen;
 protected:
@@ -60,7 +59,6 @@ class BezugsbetreuungZuordnung : public Zuordnung
 public:
     explicit BezugsbetreuungZuordnung(EmployeeTableModel *_model, QWidget *parent);
 private:
-    //QList< CostumListWidget< ebp::Wohngruppe > > WohngruppenListe;
     QList<  QSharedPointer< ebp::Bewohner > > zugeordneteBezugsbetreuung;
     QList<  QSharedPointer< ebp::Bewohner > > alleBezugsbetreuungen;
 protected:

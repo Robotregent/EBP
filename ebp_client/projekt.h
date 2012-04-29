@@ -31,9 +31,7 @@ private slots:
     void on_pushButton_2_clicked();
     void setChosenMa(QSharedPointer< ebp::Mitarbeiter > chosenMa);
     void on_listWidget_currentRowChanged(int currentRow);
-
     void on_beginnDateEdit_dateChanged(const QDate &date);
-
     void on_endeDateEdit_dateChanged(const QDate &date);
 
 private:

@@ -40,7 +40,6 @@ LeistungstraegerArea::LeistungstraegerArea(SessionContext &_context,QWidget *par
             {
             layout = new QVBoxLayout();
             layout->insertStretch(0,1);
-            //layout->insertSpacing(-1,5);
             this->ui->HLayout->insertLayout(i+1,layout);
             this->VLayouts.prepend(layout);
             }
