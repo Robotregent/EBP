@@ -3,27 +3,23 @@
 \subsection{Architektur}
 Das Projekt ist in folgende Module aufgeteilt:
 \begin{itemize}
-	\item EBP-Client
-Grafisches Datenbankfrontend für den alltäglichen Gebrauch
-	\item AdminDialog
-Grafisches Datenbank-Administrationswerkzeug
-	\item libEBPdb
-Stellt Fachklassen und Persistenzfunktionen als Bibliothek zur Verfügung
-	\item Unit-Tests
-Automatisierte Tests der Bibliothek
+	\item \textbf{EBP-Client} - Grafisches Datenbankfrontend für den alltäglichen Gebrauch
+	\item \textbf{AdminDialog} - Grafisches Datenbank-Administrationswerkzeug
+	\item \textbf{libEBPdb} - Stellt Fachklassen und Persistenzfunktionen als Bibliothek zur Verfügung
+	\item \textbf{Unit-Tests} - Automatisierte Tests der Bibliothek
 \end{itemize}
 
 \newpage
 
 \subsection{Das QT-Framework}
 \subsubsection{Grafische Oberfläche}\mbox{}\\
-Die GUI wurde in grafischer Weise mit den bei QT mitgelieferten Tools erstellt.\\Diese Tools sind:
+Die GUI wurde in grafischer Weise mit den bei \textit{Qt} mitgelieferten Tools erstellt.\\Diese Tools sind:
 \begin{itemize}
 	\item \textit{QT-Designer}\\[\baselineskip]der die grafisch erstellte GUI in XML-Form beschreibt und in \textit{U}ser \textit{I}nterface definition files (.ui) speichert.
 	\item \textit{UIC} - \textit{U}ser \textit{I}nterface \textit{C}ompiler\\[\baselineskip]der die UI-Dateien liest und anschließend in C++-Header Dateien konvertiert.
 \end{itemize}
 \paragraph{UIC}\mbox{}\\
-Der von \textit{UIC} generierte Code enthält das im QT-Designer erstellte Objekt in Form eines C++-structs mit folgendem Inhalt:
+Der von \textit{UIC} generierte Code enthält das im \textit{QT-Designer} erstellte Objekt in Form eines C++-structs mit folgendem Inhalt:
 \begin{itemize}
 	\item Pointer zu den Widgets, Layouts, Layout-Elemente, Button-Groups, und Aktionen.
 	\item Eine Mitgliedsfunktion setupUi() die den Widgetbaum auf dem Parent-Widget erstellt.
@@ -32,7 +28,7 @@ Der von \textit{UIC} generierte Code enthält das im QT-Designer erstellte Objek
 Es gibt nun mehrere Möglichkeiten die generierte C++-Header Datei in der Anwendung zu verwenden.Diese sind als Direct Approach, Single Inheritance Approach und als Multiple Inheritance Approach bekannt.
 \newpage
 \paragraph{Direct Approach}\mbox{}\\
-Hier wird die generierte C++-Header Datei in einer cpp Datei inkludiert und die setupUi()-Methode auf ein standard QWidget angewendet, welches dann das, in der vom \textit{UIC} generierten Header Datei beschriebenes, \textit{U}ser \textit{I}nterface (UI) enthält.\\Beispielcode:
+Hier wird die generierte C++-Header Datei in einer cpp Datei inkludiert und die setupUi()-Methode auf ein standard \textit{QWidget} angewendet, welches dann das, in der vom \textit{UIC} generierten Header Datei beschriebenes, \textit{U}ser \textit{I}nterface (UI) enthält.\\Beispielcode:
 \begin{lstlisting}
 main.cpp
 
@@ -50,7 +46,7 @@ int main(int argc, char *argv[])
 Diese Anwendungsart ist für sehr einfache UI’s deren komplette Funktionalität in sich geschlossen ist gedacht. Auch ist nur die Verwendung von vordefinierten Signals und Slots möglich. Das Signal und Slot Prinzip ist im Kapitel Observermodel ausführlicher beschrieben.
 \newpage
 \paragraph{Single Inheritance Approach}\mbox{}\\
-Hier wird von der QWidget-Klasse abgeleitet und eine private Instanz des UI-Objekts, über eine Mitgliedsvariable oder einen Mitgliedspointer, inkludiert.\\
+Hier wird von der \textit{QWidget}-Klasse abgeleitet und eine private Instanz des UI-Objekts, über eine Mitgliedsvariable oder einen Mitgliedspointer, inkludiert.\\
 Das verwenden der Mitgliedsvariable hat den Vorteil das die Variablen innerhalb der UI gekapselt sind. Daher kann diese Methode benutzt werden mehrere UI’s im selben Widget zu realisieren.\\Beispielcode:
 \begin{lstlisting}
 musteranwendung.h
@@ -116,7 +112,7 @@ Wenn der Mitgliedspointer verwendet wird, ist es möglich das UI-Objekt nur zu d
 \end{lstlisting}
 \newpage
 \paragraph{Multiple Inheritance Approach}\mbox{}\\
-Hier wird sowohl von der UI als auch von QWidget abgeleitet, was den Vorteil hat, das die Widgets in der UI auf die selbe weise addressiert werden können, wie von Hand erstellte Widgets, daher ohne das ui prefix.
+Hier wird sowohl von der UI als auch von \textit{QWidget} abgeleitet, was den Vorteil hat, das die Widgets in der UI auf die selbe weise addressiert werden können, wie von Hand erstellte Widgets, daher ohne das ui prefix.
 \begin{lstlisting}
  musteranwendung.h
 
@@ -140,27 +136,27 @@ class MusterForm : public QWidget, private Ui::MusterForm
      setupUi(this);
  }
 \end{lstlisting}
-Über die QtUiLoader-Klasse können die .ui-Files zur Laufzeit bearbeitet werden um dynamisch generierte Oberflächen zu erzeugen, dies haben wir jedoch in \EBP nicht verwendet.\\
+Über die \textit{QtUiLoader}-Klasse können die .ui-Files zur Laufzeit bearbeitet werden um dynamisch generierte Oberflächen zu erzeugen, dies haben wir jedoch in \EBP nicht verwendet.\\
 \cite{QT_UIC} 
 \newpage
 \subsubsection{Das Meta-Objekt System}\mbox{}\\
-Das \textit{M}eta-\textit{O}bjekt \textit{S}ystem (MOS) ist eine C++-Erweiterung von QT die folgende zusätzliche Features bietet:
+Das \textit{M}eta-\textit{O}bjekt \textit{S}ystem (MOS) ist eine C++-Erweiterung von \textit{Qt} die folgende zusätzliche Features bietet:
 \begin{itemize}
 	\item den Signal und Slot-Mechanismus für inter-Objekt Kommunikation\\[\baselineskip]
 Beschrieben im Observermodel.
 	\item Typ-Informationen zur Laufzeit\\[\baselineskip]
-z.B. gibt QObject::className() den Klassenname als String zur Laufzeit zurück, ohne native Laufzeit Typ Infromationen (RTTI - \textit{R}un\textit{T}ime \textit{T}ype \textit{I}nformation) Support durch den C++ Kompiler zu benötigen.
+z.B. gibt \textit{QObject::className()} den Klassenname als String zur Laufzeit zurück, ohne native Laufzeit Typ Informationen (RTTI - \textit{R}un\textit{T}ime \textit{T}ype \textit{I}nformation) Support durch den C++ Compiler zu benötigen.
 	\item das dynamische Eigenschaftssystem\\[\baselineskip]
-z.B. QObject:setProperty() setzt dynamisch Eigenschaften durch den Namen.
+z.B. \textit{QObject:setProperty()} setzt dynamisch Eigenschaften durch den Namen.
 \end{itemize}
 Es basiert auf 3 Dinge:
 \begin{itemize}
-	\item die QObject Klasse\\[\baselineskip]
+	\item die \textit{QObject} Klasse\\[\baselineskip]
 Eine Basisklasse für Objekte die das MOS verwenden können
-	\item das Q\_OBJECT Macro\\[\baselineskip]
+	\item das \textit{Q\_OBJECT} Macro\\[\baselineskip]
 Muss im Private Teil der Klassendefinition sein. Es deklariert Features des MOS, z.B. Signals und Slots
 	\item den \textit{M}eta-\textit{O}bjekt \textit{C}ompiler\\[\baselineskip]
-Liest C++ Dateien und erstellt für jede Klassendeklaration die das Q\_OBJECT Makro enthält eine zusätzliche C++ Source Datei die den Meta Objekt Code für diese Klassen enthält. Die so erstellte Source Datei wird entweder inkludiert oder, üblicherweise, kompiliert und mit der Implementation der Klasse gelinkt.
+Liest C++ Dateien und erstellt für jede Klassendeklaration die das \textit{Q\_OBJECT} Makro enthält eine zusätzliche C++ Source Datei die den Meta Objekt Code für diese Klassen enthält. Die so erstellte Source Datei wird entweder inkludiert oder, üblicherweise, kompiliert und mit der Implementation der Klasse gelinkt.
 \end{itemize}
 \cite{QT_MOC}
 \newpage
@@ -179,29 +175,29 @@ Entweder wird der Code der die Eigenschaften eines Objekts aus der Datenbank lie
 Das Einsetzen eines solchen Mappers hat den Vorteil, dass der sich oft wiederholende Code zum Laden und Speichern der Daten von und in die Datenbank reduziert werden kann. Dies führt zu wartbarerem Code, der bei Änderungen an der Datenbankstruktur schneller und fehlerfreier anpassbar ist.
 
 \subsubsection{Auswahl des Verwendeten Mappers}
-Das verwendete Qt4-Toolkit enthält zwar eine plattformunabhängige Schnittstelle für Datenbanken (QtSql), jedoch hat diese keine ORM Funktion.
+Das verwendete \textit{Qt4}-Toolkit enthält zwar eine plattformunabhängige Schnittstelle für Datenbanken (\textit{QtSql}), jedoch hat diese keine ORM Funktion.
 Folgende ORM-Systeme wurden in Betracht gezogen\\
 \url{http://en.wikipedia.org/wiki/List_of_object-relational_mapping_software}:
 \begin{itemize}
-	\item LiteSQL - Datenbankschema wird mit XML Dateien beschrieben
-	\item ODB - Datenbankschema wird aus den C++ Klassen generiert
-	\item QxOrm - Benutzt QtSql; Unter Umständen müssen direkte Aufrufe von QtSql erfolgen. \cite{QxOrm_Tutorial}
+	\item \textit{LiteSQL} - Datenbankschema wird mit XML Dateien beschrieben
+	\item \textit{ODB} - Datenbankschema wird aus den C++ Klassen generiert
+	\item \textit{QxOrm} - Benutzt \textit{QtSql}; Unter Umständen müssen direkte Aufrufe von \textit{QtSql} erfolgen. \cite{QxOrm_Tutorial}
 \end{itemize}
-Alle Systeme bieten eine Qt Integration, die die Schnittstelle zwischen GUI und Persistenzschicht vereinfachen.
+Alle Systeme bieten eine \textit{Qt} Integration, die die Schnittstelle zwischen GUI und Persistenzschicht vereinfachen.
 Ebenso unterstützen alle Systeme mehrere Datenbankbackends.
-Letztendlich fiel die Entscheidung auf ODB, da diese Bibliothek (unter anderem durch Caching) die beste Performance verspricht.
+Letztendlich fiel die Entscheidung auf \textit{ODB}, da diese Bibliothek (unter anderem durch Caching) die beste Performance verspricht.
 Außerdem lassen sich Klassen mit geringem Aufwand persistent machen.
 
 \newpage
 
 \subsubsection{Code-Generierung}
-Kern des verwendeten Object-Relational-Mappers ODB ist ein spezieller Precompiler, der auf bestimmte Precompiler-Pragmas reagiert.
+Kern des verwendeten Object-Relational-Mappers \textit{ODB} ist ein spezieller Precompiler, der auf bestimmte Precompiler-Pragmas reagiert.
 Durch das Markieren einer Klassendefinition mit einer Pragma-Direktive können persistente Objekte der Klasse erstellt werden:\\
 \begin{lstlisting}
 #pragma db object
 class Mitarbeiter { ... }
 \end{lstlisting}
-Der ODB-Compiler generiert daraufhin Code, der das gegebene Objekt auf eine Datenbankstruktur abbilden kann. Des weiteren wird auch die Datenbankstruktur in Form von SQL-Dateien generiert, die direkt an die verwendete Datenbank weitergereicht werden können um alle zur Laufzeit benötigten Tabellen zu erstellen. Auf diese Weise wird ebenso sichergestellt, dass Datenbank und Anwendung stets die selbe Struktur verwenden.\\
+Der \textit{ODB}-Compiler generiert daraufhin Code, der das gegebene Objekt auf eine Datenbankstruktur abbilden kann. Des weiteren wird auch die Datenbankstruktur in Form von SQL-Dateien generiert, die direkt an die verwendete Datenbank weitergereicht werden können um alle zur Laufzeit benötigten Tabellen zu erstellen. Auf diese Weise wird ebenso sichergestellt, dass Datenbank und Anwendung stets die selbe Struktur verwenden.\\
 \begin{figure*}[htp!]
 	\begin{center}
 		\includegraphics[width=0.4\textwidth]{odb-flow}
@@ -215,29 +211,29 @@ Der ODB-Compiler generiert daraufhin Code, der das gegebene Objekt auf eine Date
 \subsubsection{Datenbankunabhängigkeit}
 Durch die zusätzliche Abstraktionsschicht ist es einfacher die bestehende Persistenzschicht auf ein neues Datenbanksystem zu portieren.\\
 Die umgesetzte Lösung ist weitestgehend frei von datenbankspezifischen Aufrufen, und benutzt ausschließlich die Schnittstelle des eingesetzten Object-Relational-Mappers.
-Lediglich das User-Management, um ``Mitarbeiter`` auf Datenbankbenutzer abzubilden verwendet Datenbankspezifische SQL-Kommandos, die über ODB abgewickelt werden.
+Lediglich das User-Management, um ``Mitarbeiter`` auf Datenbankbenutzer abzubilden verwendet Datenbankspezifische SQL-Kommandos, die über \textit{ODB} abgewickelt werden.
 
 \subsubsection{Integration in das Buildsystem}
-Um das Buildsystem (CMake) automatisch bei Veränderungen des Quellcodes alle für ODB benötigten Dateien generieren zu lassen, wird im Buildscript wie folgt vorgegangen:
+Um das Buildsystem (\textit{CMake}) automatisch bei Veränderungen des Quellcodes alle für \textit{ODB} benötigten Dateien generieren zu lassen, wird im Buildscript wie folgt vorgegangen:
 \begin{enumerate}
-\item Suchen aller Dateien die ODB spezifische Pragma-Definitionen beinhalten.
-\item Erstellen einer Vorschrift um für jede so gefundene Datei den ODB-Compiler aufzurufen.
+\item Suchen aller Dateien die \textit{ODB} spezifische Pragma-Definitionen beinhalten.
+\item Erstellen einer Vorschrift um für jede so gefundene Datei den \textit{ODB}-Compiler aufzurufen.
 	Dabei werden auch die Abhängigkeiten der generierten Dateien korrekt in das Buildsystem eingefügt, so dass diese nur neu generiert werden, wenn tatsächlich Änderungen an der jeweiligen Eingangsdatei oder deren Abhängigkeiten vorhanden sind.
 \end{enumerate}
-Der entsprechende Auszug aus dem CMake Buildscript:\\
+Der entsprechende Auszug aus dem \textit{CMake} Buildscript:\\
 \lstset{language=clean}
-Jeder zum Projekt gehörende C++ Header wird eingelesen und nach ODB-Pragma-Definitionen durchsucht:
+Jeder zum Projekt gehörende C++ Header wird eingelesen und nach \textit{ODB}-Pragma-Definitionen durchsucht:
 \begin{lstlisting}
 foreach( header ${EBPdb_headers} )
 	file( READ ${header} headercontent )
 	if( "${headercontent}" MATCHES "#pragma[ \t]+db[ \t]+object" )
 \end{lstlisting}
-Für jede gefundene Datei wird die generierte ODB-Datei zu den zu kompilierenden Quelldateien hinzugefügt:
+Für jede gefundene Datei wird die generierte \textit{ODB}-Datei zu den zu kompilierenden Quelldateien hinzugefügt:
 \begin{lstlisting}
 		get_filename_component( headerbase ${header} NAME_WE )
 		set( EBPdb_sources ${EBPdb_sources} ${headerbase}-odb.cxx )
 \end{lstlisting}
-Damit der ODB-Precompiler den Quellcode korrekt parsen kann, müssen sämtliche verwendeten Include-Verzeichnisse bei dem Aufruf des Precompilers angegeben werden. Die Projekteinstellungen werden hierfür übernommen:
+Damit der \textit{ODB}-Precompiler den Quellcode korrekt parsen kann, müssen sämtliche verwendeten Include-Verzeichnisse bei dem Aufruf des Precompilers angegeben werden. Die Projekteinstellungen werden hierfür übernommen:
 \begin{lstlisting}
 		get_directory_property( odbincludes INCLUDE_DIRECTORIES )
 		foreach( includedir ${odbincludes} )
@@ -328,25 +324,25 @@ Programmswährend der Tests entspricht dann der zu erwartenden Qualität währen
 
 Bei Unit-Tests werden einzelne Programmmodule isoliert von einander getestet. Dadurch sollen Einflüsse durch andere Softwarekomponenten ausgeschlossen
 werden. Programmmodule müssen dabei aber nicht zwingendermaßen nur einzelne Klassen oder Funktionen sein \cite[Vgl. S. 11]{Softwaretests}. Bei der
-\EBP erfolgt die Trennung in die Programmmodule libEBPdb und GUI. Für die Qualitätssicherung der GUI-Funktion wurden keine automatisierter Testcode
+\EBP erfolgt die Trennung in die Programmmodule \textit{libEBPdb} und GUI. Für die Qualitätssicherung der GUI-Funktion wurden keine automatisierter Testcode
 eingesetzt. Die korrekte Funktionalität der GUI wurde durch das regelmäßige Testen aller Masken durch einen Tester gewährleistet. Sollen auch diese
-Aufgaben automatisiert werden, stellt Qt eine beschränkte API für User Interface Tests zur Verfügung. Darüber hinaus gibt es auch weitere
-Drittanbieter für Tools und Frameworks zum automatisierten Testen von User Interfaces, wie z.B. TestComplete von Smart Bear. Diese Tests sind
+Aufgaben automatisiert werden, stellt \textit{Qt} eine beschränkte API für User Interface Tests zur Verfügung. Darüber hinaus gibt es auch weitere
+Drittanbieter für Tools und Frameworks zum automatisierten Testen von User Interfaces, wie z.B. \textit{TestComplete} von \textit{Smart Bear}. Diese Tests sind
 allerdings äußerst aufwendig zu konfigurieren und zu pflegen.\\
 
 Es wurden daher in erster Linie die libEBPdb mit Hilfe von automatisierten Unit-Tests getestet. Es sollte eine Testumgebung entworfen werden, die es
 dem Entwickler ermöglicht nach einer Änderung im Quellcode mit Hilfe eines einzelnen Befehls überprüfen zu können, ob die libEBPdb als Gesamtheit noch
 korrekt ausgeführt wird. Dazu wurde die Testumgebung mit Hilfe des Testtools CTest, ein Teil von CMake, in das Buildsystem integriert. Als Framework
-für die eigentlichen Unit-Tests kommt die QTestLib, ein Teil von Qt, zum Einsatz. QTestLib bietet diverse Makros, die ein errechnetes Ergebnis mit dem
+für die eigentlichen Unit-Tests kommt die \textit{QTestLib}, ein Teil von \textit{Qt}, zum Einsatz. \textit{QTestLib} bietet diverse Makros, die ein errechnetes Ergebnis mit dem
 erwarteten Wert vergleichen und ein abweichendes Verhalten protokollieren. Dies ist die grundlegende Vorgehensweise bei einem Unit-Test. So
-vergleicht der folgende Aufruf des Macros QCOMPARE den Rückgabewert einer Methode der Klasse ebp::Wohngruppe mit dem erwarteten Wert. Im Fehlerfall
+vergleicht der folgende Aufruf des Macros \textit{QCOMPARE} den Rückgabewert einer Methode der Klasse \textit{ebp::Wohngruppe} mit dem erwarteten Wert. Im Fehlerfall
 wird der Rückgabewert und die Fehlerstelle protokolliert.
 \begin{lstlisting}
 QCOMPARE(wohngruppenEreignisList.at(i)->zeitpunkt(),QDateTime(QDate(2012,4,1),QTime(11,11)));
 \end{lstlisting}
 Die Testumgebung besteht aus drei aufeinander aufbauenden Testmodulen:
 \begin{description}
- \item [fill\textunderscore test] Testet das Erstellen aller Klassen aus der libEBPdb. Dabei werden von jeder Klasse mehrere Instanzen erzeugt, die
+ \item [fill\textunderscore test] Testet das Erstellen aller Klassen aus der \textit{libEBPdb}. Dabei werden von jeder Klasse mehrere Instanzen erzeugt, die
 Datenfelder befüllt und die Relationen zwischen den Objekten gebildet. Das Ergebnis nach einem erfolgreichen Testlauf ist eine vollständig mit
 Testdaten befüllte Datenbank.
  \item [use\textunderscore test] Dieser Test prüft das Auslesen der Datenbankfelder und das Laden der Beziehungen zwischen den Datenbankobjekten. Die
@@ -360,7 +356,7 @@ $ make test ARGS="-V"
 \end{lstlisting}
 Die Testmodule können auch eingeschränkt unabhängig voneinander eingesetzt werden. So setzten use\textunderscore test und remove\textunderscore test
 einen erfolgreichen Durchlauf des Moduls fill\textunderscore test voraus. Ist dies gegeben können die Tests auch unabhängig voneinander laufen.
-Schlägt beispielsweise der use\textunderscore test fehl, kann er nach einem durchlauf des Moduls fill\textunderscore test beliebig oft einzeln
+Schlägt beispielsweise der use\textunderscore test fehl, kann er nach einem Durchlauf des Moduls fill\textunderscore test beliebig oft einzeln
 aufgerufen werden.
 
 \newpage
@@ -438,11 +434,11 @@ Abbildung \ref{strukturiert} zeigt die Kommunikationswege eines Texttransfers zw
 	\label{strukturiert}
 \end{figure*}
 \subsubsection{Observer Pattern - Signal Slot Konzept}
-Ein klassisches Konzept zur Kommunikation zwischen Objekten stellen \textit{Events} und \textit{Eventhandler} dar. Dieses Konzept ist allerdings nicht typsicher und unflexibel, da es für ein \textit{Events} auch nur einen \textit{Eventhandler} geben kann\cite[S. 32]{Qt4}. Qt hingegen nutzt zur Kommunikation zwischen Objekten das \textit{Signal Slot Konzept}, das wie ein Observer Pattern aufgebaut ist. GAMMA beschreibt das Observer Pattern wie folgt: \\
+Ein klassisches Konzept zur Kommunikation zwischen Objekten stellen \textit{Events} und \textit{Eventhandler} dar. Dieses Konzept ist allerdings nicht typsicher und unflexibel, da es für ein \textit{Events} auch nur einen \textit{Eventhandler} geben kann\cite[S. 32]{Qt4}. \textit{Qt} hingegen nutzt zur Kommunikation zwischen Objekten das \textit{Signal Slot Konzept}, das wie ein Observer Pattern aufgebaut ist. GAMMA beschreibt das Observer Pattern wie folgt: \\
 "Define a one-to-many dependency between objects so that when one object changes state, all its dependents are notified and updated automatically\cite[S. 293]{Entwurfsmuster}."\\
-Qt realisiert dies, indem Funktionen einer Klasse durch das Schlüsselwort \textit{Slot} gekennzeichnet werden können. Diese \textit{Slots} werden mit einem \textit{Signal} verbunden und sind damit als \textit{Observer} zu betrachten. Das \textit{Subject} ist ein Funktionsprototyp, der durch das Schlüsselwort \textit{Signal} gekennzeichnet wird. Dieser Prototyp wird nicht implementiert. GAMMA beschreibt diese Beziehung folgendermaßen:\\
+\textit{Qt} realisiert dies, indem Funktionen einer Klasse durch das Schlüsselwort \textit{Slot} gekennzeichnet werden können. Diese \textit{Slots} werden mit einem \textit{Signal} verbunden und sind damit als \textit{Observer} zu betrachten. Das \textit{Subject} ist ein Funktionsprototyp, der durch das Schlüsselwort \textit{Signal} gekennzeichnet wird. Dieser Prototyp wird nicht implementiert. GAMMA beschreibt diese Beziehung folgendermaßen:\\
 ''The Subject is the publisher of notifications. It sends out these notifications without having  to know who its observers are. Any number of observers can subscibe to receive notifications\cite[S. 294]{Entwurfsmuster}."\\
-Verbunden wird ein \textit{Signal} mit einem \textit{Slot} durch den Aufruf der statischen Methode QObject::connect(). \textit{Signal} und \textit{Slot} müssen dabei die gleichen Argumente besitzen. Dadurch wird die Typsicherheit gewährleistet. Allerdings sind die Schlüsselworte \textit{Signal} und \textit{Slot} kein reines C++. Klassen die sich diesem Konzept bedienen müssen daher durch den \textit{Meta Object Compiler (MOC)} in Standard-konformes C++ verwandelt werden\cite[Vgl. S. 51]{Qt4}.
+Verbunden wird ein \textit{Signal} mit einem \textit{Slot} durch den Aufruf der statischen Methode \textit{QObject::connect()}. \textit{Signal} und \textit{Slot} müssen dabei die gleichen Argumente besitzen. Dadurch wird die Typsicherheit gewährleistet. Allerdings sind die Schlüsselworte \textit{Signal} und \textit{Slot} kein reines C++. Klassen die sich diesem Konzept bedienen müssen daher durch den \textit{Meta Object Compiler (MOC)} in Standard-konformes C++ verwandelt werden\cite[Vgl. S. 51]{Qt4}.
 \EBP bedient sich dieses Konzepts an vielen Stellen. Der Anmeldevorgang soll hier als Beispiel dienen. Die Anmeldung an dem Client erfolgt auf einer Maske, die durch die Klasse LoginForm beschrieben wird. Diese Klasse definiert auch ein eigenes \textit{Signal} \textit{validLogin()}:
 \begin{lstlisting}
 class LoginForm : public QWidget
@@ -466,8 +462,8 @@ private slots:
 Durch dieses Konzept der losen Kopplung könnten bei Bedarf weitere \textit{Slots} an ein erfolgreiches Anmelden angekoppelt werden, ohne auf den bereits bestehenden \textit{Slot} zum initialisieren des Clients Einfluss zu nehmen.
 \subsubsection{Model/View Pattern - Datenvisualisierung}
 Das Entwurfsmuster Model/View oder auch Model/View/Controller ist ein klassisches Entwurfsmuster der Softwareentwicklung und beschreibt, wie die Datenhaltung, die Visualisierung der Daten und die Interaktion mit dem Benutzer in verschiedenen Komponenten realisiert wird. Ziel dieses Entwurfsmusters ist es, flexiblen und wiederverwendbaren Programmcode zu entwickeln.
-Das Framework Qt bietet die Variante des Model/View Entwurfsmusters an. Dabei werden Der Controller und der View in der selben Komponente realisiert. Dies vereinfacht die Handhabung, ermöglicht aber immernoch ein Trennen der Datenhaltung und der Visualisierung der Daten \cite[Vgl.]{QtModelView}.
-Qt bietet Abstrakte Klassen für ein Table-, List- oder Treemodel an, um grundlegene Funtionalitäten für die entsprechenden Views vorzugeben. Sind diese Ansätze nicht flexibel genug, kann QAbstractItemModel implementiert werden. Um die Mitarbeiterobjekte in einem Tableview darstellen zu können, wurde ein einfaches Model mit Hilfe von QAbstractTableModel implementiert:
+Das Framework \textit{Qt} bietet die Variante des Model/View Entwurfsmusters an. Dabei werden Der Controller und der View in der selben Komponente realisiert. Dies vereinfacht die Handhabung, ermöglicht aber immernoch ein Trennen der Datenhaltung und der Visualisierung der Daten \cite[Vgl.]{QtModelView}.
+\textit{Qt} bietet Abstrakte Klassen für ein Table-, List- oder Treemodel an, um grundlegende Funktionalitäten für die entsprechenden Views vorzugeben. Sind diese Ansätze nicht flexibel genug, kann \textit{QAbstractItemModel} implementiert werden. Um die Mitarbeiterobjekte in einem Tableview darstellen zu können, wurde ein einfaches Model mit Hilfe von \textit{QAbstractTableModel} implementiert:
 \begin{lstlisting}
 class EmployeeTableModel : public QAbstractTableModel
 {
@@ -491,5 +487,5 @@ public:
     void addMitarbeiter(QSharedPointer<ebp::Mitarbeiter> newMitarbeiter);
 };
 \end{lstlisting}
-Dieses Model kann in verschiedenen Tableviews verwendet werden. Die Views können sich stark von einander unterscheiden. Über die überschriebenen Funktionen von QAbstractTableModel wird sichergestellt, dass der View auf die richtigen Daten zugreift.
+Dieses Model kann in verschiedenen Tableviews verwendet werden. Die Views können sich stark von einander unterscheiden. Über die überschriebenen Funktionen von \textit{QAbstractTableModel} wird sichergestellt, dass der View auf die richtigen Daten zugreift.
 \newpage
