@@ -95,12 +95,12 @@ void AdminDialog::on_button_MA_speichern_clicked()
             //Alle WG die mit dem MA assoziiert werden sollen auslesen
             for (int i = 0; i < this->ui->O_list->count(); i++)
             {
-            if(this->ui->O_list->item(i)->checkState()==Qt::Checked)
-            {
-                QSharedPointer<Wohngruppe> wg = ((CostumListWidget<Wohngruppe> *)this->ui->O_list->item(i))->getCitem();
-                w.append(wg);
-                qDebug()<<wg->name();
-            }
+                if(this->ui->O_list->item(i)->checkState()==Qt::Checked)
+                {
+                    QSharedPointer<Wohngruppe> wg = ((CostumListWidget<Wohngruppe> *)this->ui->O_list->item(i))->getCitem();
+                    w.append(wg);
+                    qDebug()<<wg->name();
+                }
             }
             //WG mit MA verknüpfen
             foreach(QSharedPointer<Wohngruppe> wg, w)
@@ -226,13 +226,15 @@ void AdminDialog::on_button_MA_eingabeloeschen_clicked()
     this->ui->telefonLineEdit->clear();
     this->ui->eMailLineEdit->clear();
 
+    this->ui->B_list->setCurrentRow(-1);
+    this->ui->O_list->setCurrentRow(-1);
     for (int i = 0; i < this->ui->O_list->count();i++)
     {
-        this->ui->O_list->itemAt(i,0)->setCheckState(Qt::Unchecked);
+        this->ui->O_list->item(i)->setCheckState(Qt::Unchecked);
     }
     for (int i = 0; i < this->ui->B_list->count();i++)
     {
-        this->ui->B_list->itemAt(i,0)->setCheckState(Qt::Unchecked);
+        this->ui->B_list->item(i)->setCheckState(Qt::Unchecked);
     }
 }
 /**
