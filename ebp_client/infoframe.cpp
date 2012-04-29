@@ -19,7 +19,6 @@ InfoFrame::~InfoFrame()
 void InfoFrame::setCurBewohner(QString Bew)
 {
     this->ui->BewohnerLabel->setText(  Bew);
-    //this->_curBewohner=Bew
 }
 void InfoFrame::setCurWohngruppe(QString group)
 {
@@ -30,11 +29,11 @@ void InfoFrame::on_pushButton_clicked()
 {
     try
     {
-	this->bewohner->show();
+        this->bewohner->show();
     }
     catch(std::exception &ex )
     {
-	qDebug()<< "Exception";
+        qDebug()<< "Exception";
     }
 }
 
@@ -46,6 +45,6 @@ void InfoFrame::on_pushButton_2_clicked()
     }
     catch(std::exception &ex )
     {
-	qDebug()<< "Exception";
+        qDebug()<< "Exception";
     }
 }

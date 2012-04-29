@@ -9,7 +9,6 @@ Betreuung::Betreuung(SessionContext &_context, QWidget *parent) :
     conntext(_context)
 {
     ui->setupUi(this);
-    //this->ui->mitarbeiternrLabel->resize(this->ui->aufentahltsbestimmungLabel->size());
     init();
 }
 
@@ -115,12 +114,10 @@ bool Betreuung::saveContent()
 
             if(b->update(conntext.curConnection))
             {
-                //QMessageBox::information(this,"Betreuung","Erfolgreich gespeichert");
                 result = true;
             }
             else
             {
-                //QMessageBox::information(this,"Betreuung","Speichern fehlgeschlagen");
                 result = false;
             }
         }

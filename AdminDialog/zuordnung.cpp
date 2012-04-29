@@ -13,10 +13,8 @@ Zuordnung::Zuordnung(EmployeeTableModel *_model, QWidget *parent) :
 
     if (_model != NULL)
     {
-	this->model = _model;
-	this->ui->MitarbeiterView->setModel(_model);
-
-	//this->on_MitarbeiterView_activated(model->index(0,0));
+        this->model = _model;
+        this->ui->MitarbeiterView->setModel(_model);
     }
 
 
@@ -180,7 +178,7 @@ bool BezugsbetreuungZuordnung::setList(const QModelIndex &index)
 void BezugsbetreuungZuordnung::on_buttonBox_accepted()
 {
     if (this->saveMapping())
-	this->close();
+        this->close();
     else
         QMessageBox::critical(this,tr("Fehlschlag"),tr("Speichern der neuen Zuordnung hat leider nicht geklappt"));
 }

@@ -35,19 +35,12 @@ public:
 
 private slots:
     void on_FixierungBescheid_currentIndexChanged(int index);
-
     void on_FixierungAktiv_currentIndexChanged(int index);
-
     void on_BettGitterBescheid_currentIndexChanged(int index);
-
     void on_BettGitterAktiv_currentIndexChanged(int index);
-
     void on_PsychoAktiv_currentIndexChanged(int index);
-
     void on_PsychoBescheid_currentIndexChanged(int index);
-
     void on_PatientenAktiv_currentIndexChanged(int index);
-
     void on_PatientenBescheid_currentIndexChanged(int index);
 
 private:

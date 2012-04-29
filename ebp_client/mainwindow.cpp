@@ -290,7 +290,6 @@ QWidget *MainWindow::getContentWidget(int ContentTyp)
             }
         }
     }
-    //this->ContentWidgetList.replace(ContentTyp,result);
     return result;
 }
 /**

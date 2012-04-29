@@ -186,7 +186,6 @@ void Projekt::init()
         }
 
         maDialog = NULL;
-
         maDialog = new ChooseMaDialog(ebp::Mitarbeiter::loadAll(curContext.curConnection),"Mitarbeiter wählen:",this);
         QObject::connect(maDialog,SIGNAL(chosen(QSharedPointer<ebp::Mitarbeiter>)),this, SLOT(setChosenMa(QSharedPointer<ebp::Mitarbeiter>)));
     }

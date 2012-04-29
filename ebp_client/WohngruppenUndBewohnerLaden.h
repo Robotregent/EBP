@@ -18,7 +18,6 @@ QList < QSharedPointer <ebp::Wohngruppe> > loadAllGroups(QSharedPointer<ebp::con
 QList < QSharedPointer <ebp::Bewohner> > loadAllBewohner(QSharedPointer<ebp::connection> aPointerToAConnection, QList < QSharedPointer <ebp::Wohngruppe> >allGroups )
 {
 	QList < QSharedPointer <ebp::Bewohner> > result= QList < QSharedPointer <ebp::Bewohner> >();
-	//return curGroup->loadBewohner(aPointerToAConnection);
 	foreach (QSharedPointer <ebp::Wohngruppe> wg, allGroups )
 	{
 	    result.append(wg->loadBewohner(aPointerToAConnection));
