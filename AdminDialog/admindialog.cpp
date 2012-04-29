@@ -125,11 +125,12 @@ void AdminDialog::on_button_MA_speichern_clicked()
                 bg->update(this->PointerToConnection);
             }
             if(ma->update(this->PointerToConnection))
+            {
                 QMessageBox::information(this,tr("Mitarbeiter erfolgreich angelegt"),tr("Mitarbeiter erfolgreich angelegt"));
+                this->model->addMitarbeiter(ma);
+            }
             else
                 QMessageBox::critical(this,tr("Fehler"),tr("Mitarbeiter konnte nicht angelegt werden"));
-            this->model->addMitarbeiter(ma);
-            QMessageBox::information(this,tr("Mitarbeiter erfolgreich angelegt"),tr("Mitarbeiter erfolgreich angelegt"));
         }
         else
         {
@@ -295,12 +296,12 @@ void AdminDialog::setBWidget()
 {
     if(!this->BewohnerItems.isEmpty())
     {
-	foreach (CostumListWidget<Bewohner> *i,this->BewohnerItems)
-	{
-	    this->ui->B_list->removeItemWidget(i);
-	    delete i;
-	}
-	this->BewohnerItems.clear();
+        foreach (CostumListWidget<Bewohner> *i,this->BewohnerItems)
+        {
+            this->ui->B_list->removeItemWidget(i);
+            delete i;
+        }
+        this->BewohnerItems.clear();
     }
     QList < QSharedPointer<Bewohner> > bList = ebp::Bewohner::loadAll(this->PointerToConnection);
     this->BewohnerItems.clear();
@@ -313,8 +314,10 @@ void AdminDialog::setBWidget()
     {
         i->setFlags(i->flags()|Qt::ItemIsUserCheckable);
         i->setCheckState(Qt::Unchecked);
+        i->setText(i->text().leftJustified(12,' ')+"\t\t"+i->getCitem()->wohngruppe()->name());
         this->ui->B_list->addItem(i);
     }
+    this->ui->Bewohnernummer->setValue(Bewohner::getStatistik(this->PointerToConnection).max_nummer+1);
 }
 
 void AdminDialog::on_passwortLineEdit_returnPressed()
@@ -455,15 +458,17 @@ void AdminDialog::on_button_B_speichern_clicked()
         tmpBew->seit(QDate::currentDate());
 
         if(tmpBew->update(PointerToConnection))
+        {
             QMessageBox::information(this,tr("Erfolg"),tr("Bewohner erfolgreich angelegt"));
+            tmpBew->reload(this->PointerToConnection);
+        }
         else
             QMessageBox::critical(this,tr("Fehler"),tr("Bewohner konnte nicht angelegt werden"));
         //Masken leeren
         this->ui->vornameLineEdit->clear();
         this->ui->nachnameLineEdit->clear();
 
-        this->ui->Bewohnernummer->cleanText();
-        this->ui->Bewohnernummer->clear();
+        this->ui->Bewohnernummer->setValue(Bewohner::getStatistik(this->PointerToConnection).max_nummer+1);
     }
     else
     {
