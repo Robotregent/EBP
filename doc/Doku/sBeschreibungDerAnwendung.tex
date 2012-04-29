@@ -145,7 +145,7 @@ Der \EBP \textit{Client} besitzt eine widgetbasierende GUI die aus folgenden Ele
 	\FloatBarrier
 	\item Leistungsträger\mbox{}\\
 	\noindent
-	Ein Unterpunkt von 'Person'. Durch den Button in der links, oberen Ecke können Angabemasken für Leistungsträger hinzugefügt werden. Diese beinhalten sowohl den Leistungsträger an sich, als auch Kontaktdaten eines Ansprechspartners.
+	Ein Unterpunkt von 'Person'. Durch den Button in der links, oberen Ecke können Angabemasken für Leistungsträger hinzugefügt werden. Diese beinhalten sowohl den Leistungsträger an sich, als auch Kontaktdaten eines Ansprechpartners.
 	\begin{figure*}[h!]
 		\begin{center}
 			\includegraphics[keepaspectratio=true, width=0.85\textwidth]{pics/client_leistungstraeger.png}
@@ -157,7 +157,7 @@ Der \EBP \textit{Client} besitzt eine widgetbasierende GUI die aus folgenden Ele
 	\newpage
 	\item Projekt\mbox{}\\
 	\noindent
-	Hier werden Projekte mit Zielen, Betreuern und einer Beschreibung für den Bewohner angelegt.\\Am unterem Rand ist eine Möglichkeit zum einfachem kopieren von ausgewählten Textteilen in die Betreungsplanung eines auswählbaren Bewohners gegeben.
+	Hier werden Projekte mit Zielen, Betreuern und einer Beschreibung für den Bewohner angelegt.\\Am unterem Rand ist eine Möglichkeit zum einfachem kopieren von ausgewählten Textteilen in die Betreuungsplanung eines auswählbaren Bewohners gegeben.
 	\begin{figure*}[h!]
 		\begin{center}
 			\includegraphics[keepaspectratio=true, width=0.85\textwidth]{pics/client_projekt.png}
@@ -179,9 +179,9 @@ Der \EBP \textit{Client} besitzt eine widgetbasierende GUI die aus folgenden Ele
 	\end{figure*}
 	\FloatBarrier
 	\newpage
-	\item Betreungsplanung\mbox{}\\
+	\item Betreuungsplanung\mbox{}\\
 	\noindent
-	in der Betreungsplanung werden einzelne Fähigkeiten oder Umstände des Bewohners beschrieben, sowohl der momentane Zustand als auch mögliche Ziele die der Bewohner erreichen soll.
+	in der Betreuungsplanung werden einzelne Fähigkeiten oder Umstände des Bewohners beschrieben, sowohl der momentane Zustand als auch mögliche Ziele die der Bewohner erreichen soll.
 	\begin{figure*}[h!]
 		\begin{center}
 			\includegraphics[keepaspectratio=true, width=0.85\textwidth]{pics/client_lebensfuehrung.png}
@@ -192,7 +192,7 @@ Der \EBP \textit{Client} besitzt eine widgetbasierende GUI die aus folgenden Ele
 \end{itemize}
 \newpage
 \subsubsection{Wohngruppen bezogene Menüs}
-In den wohngruppen bezogenen Menüs können Ereignisse sowie Abwesenheiten sowohl eingetragen, als auch über Zeit filterbar eingesehen werden.
+In den Wohngruppen bezogenen Menüs können Ereignisse sowie Abwesenheiten sowohl eingetragen, als auch über Zeit filterbar eingesehen werden.
 \begin{itemize}
 	\item Gruppenbuch\mbox{}\\
 	\noindent
@@ -208,7 +208,7 @@ In den wohngruppen bezogenen Menüs können Ereignisse sowie Abwesenheiten sowoh
 	\newpage
 	\item Meldeliste\mbox{}\\
 	\noindent
-	In der Meldeliste werden alle Bewohner der Wohngruppe die zu dem ausgewählten Tag bereits in der Wohngruppe waren angezeigt. Standardmäßig sind alle Bewohner als 'Anwesend' eingetragen. Es ist nur möglich Bewohner als abwesend zu markieren, wenn ein Grund angegeben wird.\\Es ist möglich die Abwesenheiten der Bewohner in einem auswählbaren Zeitbereich zu exportieren. Dieser Export ist sowohl im CSV-Format (zur weiterverarbeitung in anderen Programmen, z.B. Excel) als auch in From einer Textdatei die in einer druckbaren Formatierung möglich.
+	In der Meldeliste werden alle Bewohner der Wohngruppe die zu dem ausgewählten Tag bereits in der Wohngruppe waren angezeigt. Standardmäßig sind alle Bewohner als 'Anwesend' eingetragen. Es ist nur möglich Bewohner als abwesend zu markieren, wenn ein Grund angegeben wird.\\Es ist möglich die Abwesenheiten der Bewohner in einem auswählbaren Zeitbereich zu exportieren. Dieser Export ist sowohl im CSV-Format (zur Weiterverarbeitung in anderen Programmen, z.B. Excel) als auch in Form einer Textdatei die in einer druckbaren Formatierung möglich.
 	\begin{figure*}[h]
 		\begin{center}
 			\includegraphics[keepaspectratio=true, width=0.85\textwidth]{pics/client_meldeliste.png}
@@ -220,15 +220,15 @@ In den wohngruppen bezogenen Menüs können Ereignisse sowie Abwesenheiten sowoh
 \end{itemize}
 \newpage
 \subsection{Lokalisierung}
-Sowohl der AdminDialog als auch die \EBP sind koplett lokalisierbar. Qt stellt dafür einen einfachen Mechanismus zur Verfügung. Jeder zu
-lokalisierende String wird dabei von einem Makro umschlossen. Mit Hilfe des Qt Linguist können diese Strings zu einem Wörterbuch zusammengefasst und
-übersetzt werden. Für die \EBP war im Plichtenheft angedacht, ein englisches und eine deutsches Wörterbuch zur Verfügung zu stellen. In den
+Sowohl der \textit{AdminDialog} als auch die \EBP sind komplett lokalisierbar. \textit{Qt} stellt dafür einen einfachen Mechanismus zur Verfügung. Jeder zu
+lokalisierende String wird dabei von einem Makro umschlossen. Mit Hilfe des \textit{Qt} Linguist können diese Strings zu einem Wörterbuch zusammengefasst und
+übersetzt werden. Für die \EBP war im Pflichtenheft angedacht, ein englisches und eine deutsches Wörterbuch zur Verfügung zu stellen. In den
 Gesprächen zur Anforderungsdefinition mit Herrn Zimmer zeichnete sich ein anderer Lokalisierungsbedarf an die \EBP ab.\\
 Die Fachkräfte in der Altenhilfe und der Behindertenhilfe haben ihre eigene Fachsprache im täglichen Umgang mit ihren Klienten. So liegt der Fokus in
-der Altenhilfe eher auf pflegerischen Tätigkeiten, wohingegen in der Behindertenhilfe pädagogische Ziele und Maßnahmen im Fordergrund stehen. Ein
+der Altenhilfe eher auf pflegerischen Tätigkeiten, wohingegen in der Behindertenhilfe pädagogische Ziele und Maßnahmen im Vordergrund stehen. Ein
 Klient wird in der Altenhilfe eher als Patient bezeichnet, in der Behindertenhilfe spricht man häufiger von einem Bewohner. Um diesen Umstand zu
 berücksichtigen, wurden keine Wörterbücher für Englisch und Deutsch erstellt, sondern Wörterbücher für die Altenhilfe und für die Behindertenhilfe.\\
-Wird der Client oder der AdminDialog ohne Parameter gestartet, wird das Wörterbuch der Behindertenhilfe geladen. Um die Lokalisierung der Altenhilfe
+Wird der Client oder der \textit{AdminDialog} ohne Parameter gestartet, wird das Wörterbuch der Behindertenhilfe geladen. Um die Lokalisierung der Altenhilfe
 zu aktivieren, muss der entsprechenden Anwendung der Parameter ``-a'' übergeben werden.
 
 \newpage
@@ -237,16 +237,16 @@ zu aktivieren, muss der entsprechenden Anwendung der Parameter ``-a'' übergeben
 \subsubsection{Abhängigkeiten}
 \paragraph{Zur Laufzeit:}
 \begin{itemize}
-	\item \textbf{odb} - ODB Laufzeitbibliothek
-	\item \textbf{odb-mysql} - MySQL Backend für ODB
-	\item \textbf{odb-qt} - QT integration für ODB
-	\item \textbf{qt} - QT Framework
+	\item \textbf{odb} - \textit{ODB} Laufzeitbibliothek
+	\item \textbf{odb-mysql} - \textit{MySQL} Backend für \textit{ODB}
+	\item \textbf{odb-qt} - \textit{Qt} integration für \textit{ODB}
+	\item \textbf{qt} - \textit{Qt} Framework
 \end{itemize}
 \paragraph{Zur Compilezeit:}
 \begin{itemize}
 	\item \textbf{CMake} - Buildsystem
 	\item \textbf{ODB Toolchain} - Enthält den Precompiler
-	\item \textbf{GCC} - GNU Compiler Collection
+	\item \textbf{GCC} - \textit{GNU} Compiler Collection
 \end{itemize}
 \subsubsection{Kompilieren der Quellen}
 Die komplette Anwendung kann im Wurzelverzeichnis des Projekts gebaut werden:\\
@@ -260,7 +260,7 @@ $ make
 \end{lstlisting}
 der eignetliche Kompiliervorgang gestartet.\\
 \subsubsection{Vorbereiten der Datenbank}
-Um die Datenbank zu initialisieren befindet sich ein Shell-Script im EBPdb Verzeichnis:\\
+Um die Datenbank zu initialisieren befindet sich ein Shell-Script im \textit{EBPdb} Verzeichnis:\\
 \begin{lstlisting}
 $ ./initDB.sh -u root -p "DATENBAKNAME"
 \end{lstlisting}
