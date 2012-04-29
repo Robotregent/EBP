@@ -126,3 +126,19 @@ bool Dokumentation::saveContent()
     }
     return result;
 }
+
+void Dokumentation::on_hilfebedarfComboBox_currentIndexChanged(int index)
+{
+    Q_UNUSED(index)
+    pendingChanges = true;
+}
+bool Dokumentation::hasPendingChanges()
+{
+    bool result = pendingChanges;
+    if (this->ui->Erlaeuterungen->document()->isUndoAvailable())
+        result = true;
+    if (this->ui->Ziele->document()->isUndoAvailable())
+        result = true;
+
+    return result;
+}

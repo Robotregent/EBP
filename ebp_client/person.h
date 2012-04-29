@@ -23,8 +23,8 @@ class person : public QWidget, public SaveContentInterface
 
 public:
     explicit person(const SessionContext &context, QWidget *parent = 0);
-
     bool saveContent();							    ///< Speichern den Inhalts
+    bool hasPendingChanges();
 
 signals:
 

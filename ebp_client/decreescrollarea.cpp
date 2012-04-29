@@ -14,7 +14,6 @@ DecreeScrollArea::DecreeScrollArea(const SessionContext &context,QWidget *parent
     ui(new Ui::DecreeScrollArea)
 {
     ui->setupUi(this);
-    qDebug() << "Verfügung";
     if (con.curBewohner!=NULL)
     {
         this->voidDate.setDate(2000,1,1);
@@ -38,8 +37,6 @@ void DecreeScrollArea::getCurrentVerfuegungen()
     entryCount=bewohner_verfuegungen.count();
     for(int i = 0; i <entryCount; i++)
     {
-
-
         switch(bewohner_verfuegungen.at(i)->typ())
             {
             case ebp::Verfuegung::Fixierung:
@@ -63,7 +60,6 @@ void DecreeScrollArea::initField()
     if (con.curBewohner!=NULL)
     {
 
-    //    if (~(Fixierung.isNull()))
         if (this->Fixierung!=NULL)
         {
             ui->FixierungAktiv->setCurrentIndex(Fixierung->aktiv());
@@ -78,7 +74,6 @@ void DecreeScrollArea::initField()
             }
         }
 
-        //if (~(Bettgitter.isNull()))
         if (this->Bettgitter!=NULL)
         {
             ui->BettGitterAktiv->setCurrentIndex(Bettgitter->aktiv());
@@ -93,7 +88,6 @@ void DecreeScrollArea::initField()
             }
         }
 
-        //if (~(Psychopharmaka.isNull()))
         if(this->Psychopharmaka!=NULL)
         {
             ui->PsychoAktiv->setCurrentIndex(Psychopharmaka->aktiv());
@@ -108,7 +102,6 @@ void DecreeScrollArea::initField()
             }
         }
 
-        //if (~(Patientenverfuegung.isNull()))
         if(this->Patientenverfuegung!=NULL)
         {
             ui->PatientenAktiv->setCurrentIndex(Patientenverfuegung->aktiv());
@@ -135,7 +128,6 @@ bool DecreeScrollArea::saveContent()
 
         if (ui->FixierungAktiv->currentIndex()==1)
         {
-            //if (Fixierung.isNull())
             if (this->Fixierung==NULL)
             {
                 createVerfuegung(ebp::Verfuegung::Fixierung);
@@ -150,17 +142,14 @@ bool DecreeScrollArea::saveContent()
         }
         else
         {
-            //if (~(Fixierung.isNull()))
             if (this->Fixierung!=NULL)
             {
                 Fixierung->remove(con.curConnection);
-          //      bewohner_verfuegungen.clear();
                 Fixierung.clear();
             }
         }
         if (ui->BettGitterAktiv->currentIndex()==1)
         {
-            //if (Bettgitter.isNull())
             if (this->Bettgitter==NULL)
             {
                 createVerfuegung(ebp::Verfuegung::Bettgitter);
@@ -175,17 +164,14 @@ bool DecreeScrollArea::saveContent()
         }
         else
         {
-            //if (~(Bettgitter.isNull()))
             if (this->Bettgitter!=NULL)
             {
                 Bettgitter->remove(con.curConnection);
-            //    bewohner_verfuegungen.clear();
                 Bettgitter.clear();
             }
         }
         if (ui->PsychoAktiv->currentIndex()==1)
         {
-           //if (Psychopharmaka.isNull())
             if(this->Psychopharmaka==NULL)
             {
                 createVerfuegung(ebp::Verfuegung::Psychopharmaka);
@@ -200,17 +186,16 @@ bool DecreeScrollArea::saveContent()
         }
         else
         {
-            //if (~(Psychopharmaka.isNull()))
             if(this->Psychopharmaka!=NULL)
             {
                 Psychopharmaka->remove(con.curConnection);
-            //    bewohner_verfuegungen.clear();
+
                 Psychopharmaka.clear();
             }
         }
         if (ui->PatientenAktiv->currentIndex()==1)
         {
-            //if (Patientenverfuegung.isNull())
+
             if(this->Patientenverfuegung==NULL)
             {
                 createVerfuegung(ebp::Verfuegung::Patientenverfuegung);
@@ -225,17 +210,15 @@ bool DecreeScrollArea::saveContent()
         }
         else
         {
-            //if (~(Patientenverfuegung.isNull()))
+
             if(this->Patientenverfuegung!=NULL)
             {
                 Patientenverfuegung->remove(con.curConnection);
-            //    Patientenverfuegung->update(con.curConnection);
-            //    bewohner_verfuegungen.clear();
+
                 Patientenverfuegung.clear();
             }
         }
         con.curConnection->flushCache();
-        //clearAll();
         return true;
     }
     return false;
@@ -271,3 +254,64 @@ void DecreeScrollArea::createVerfuegung(ebp::Verfuegung::Typ verfuegungTyp)
     }
 }
 
+bool DecreeScrollArea::hasPendingChanges()
+{
+    bool result = pendingChanges;
+    if(this->ui->PatientenReason->document()->isUndoAvailable())
+        result=true;
+    if(this->ui->PsychoReason->document()->isUndoAvailable())
+        result=true;
+    if(this->ui->FixierungReason->document()->isUndoAvailable())
+        result=true;
+    if(this->ui->BettGitterReason->document()->isUndoAvailable())
+        result=true;
+    return result;
+}
+
+void DecreeScrollArea::on_FixierungBescheid_currentIndexChanged(int index)
+{
+    Q_UNUSED(index)
+    pendingChanges=true;
+}
+
+void DecreeScrollArea::on_FixierungAktiv_currentIndexChanged(int index)
+{
+    Q_UNUSED(index)
+    pendingChanges=true;
+}
+
+void DecreeScrollArea::on_BettGitterBescheid_currentIndexChanged(int index)
+{
+    Q_UNUSED(index)
+    pendingChanges=true;
+}
+
+void DecreeScrollArea::on_BettGitterAktiv_currentIndexChanged(int index)
+{
+    Q_UNUSED(index)
+    pendingChanges=true;
+}
+
+void DecreeScrollArea::on_PsychoAktiv_currentIndexChanged(int index)
+{
+    Q_UNUSED(index)
+    pendingChanges=true;
+}
+
+void DecreeScrollArea::on_PsychoBescheid_currentIndexChanged(int index)
+{
+    Q_UNUSED(index)
+    pendingChanges=true;
+}
+
+void DecreeScrollArea::on_PatientenAktiv_currentIndexChanged(int index)
+{
+    Q_UNUSED(index)
+    pendingChanges=true;
+}
+
+void DecreeScrollArea::on_PatientenBescheid_currentIndexChanged(int index)
+{
+    Q_UNUSED(index)
+    pendingChanges=true;
+}

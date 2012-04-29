@@ -56,11 +56,11 @@ void TextTransferAgent::on_pushButton_clicked()
 {
     foreach(TextTransferInterface *interface, textInterfaces)
     {
-	TextTransferInformation info =interface->getSelectedText();
-	if (!info.isEmpty)
-	{
+        TextTransferInformation info =interface->getSelectedText();
+        if (!info.isEmpty)
+        {
             bool erfolg = true;
-	    QString textfragment = dokus.at(this->ui->PlanungsBox->currentIndex())->erlaeuterungen();
+            QString textfragment = dokus.at(this->ui->PlanungsBox->currentIndex())->erlaeuterungen();
             textfragment += "<p>"+info.information + "</p>";
 
             QString d = info.textTransferFragment.toPlainText();
@@ -68,7 +68,7 @@ void TextTransferAgent::on_pushButton_clicked()
             d="<p>"+d+"</p>";
             textfragment.append(d);
 
-	    dokus.at(this->ui->PlanungsBox->currentIndex())->erlaeuterungen(textfragment);
+            dokus.at(this->ui->PlanungsBox->currentIndex())->erlaeuterungen(textfragment);
             if (dokus.at(this->ui->PlanungsBox->currentIndex())->update(_context.curConnection))
                 erfolg = true;
 
@@ -76,7 +76,7 @@ void TextTransferAgent::on_pushButton_clicked()
                 QMessageBox::information(this,tr("Texttransfer"),tr("Erfolgreich kopiert!"));
             else
                 QMessageBox::information(this,tr("Texttransfer"),tr("Text konnte nicht kopiert werden!"));
-	}
+        }
     }
 }
 void TextTransferAgent::registerNewInterface(TextTransferInterface *newInterface)

@@ -53,6 +53,7 @@ MainWindow::MainWindow(QWidget *parent) :
   */
 void MainWindow::validLogin(QSharedPointer<ebp::Mitarbeiter> newMitarbeiter, QSharedPointer<ebp::connection> newConnection)
 {
+    hasLogout = false;
     thisSession.curConnection=newConnection;
     thisSession.curMitarbeiter=newMitarbeiter;
 
@@ -61,7 +62,6 @@ void MainWindow::validLogin(QSharedPointer<ebp::Mitarbeiter> newMitarbeiter, QSh
     this->create_TextTransferDock();
     this->create_sidemenu();
     this->creat_InfoWidget();
-
     this->create_actions();
 
     this->setCurBewohner(thisSession.curBewohner);
@@ -81,8 +81,6 @@ void MainWindow::create_sidemenu()
 
     this->connect(this->side_menu->getClientMenu(),SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),SLOT(itemChanged(QTreeWidgetItem*,QTreeWidgetItem*)));
     this->connect(this->side_menu->getGroupMenu(),SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),SLOT(itemChanged(QTreeWidgetItem*,QTreeWidgetItem*)));
-    this->connect(this->side_menu->getClientMenu(),SIGNAL(itemActivated(QTreeWidgetItem*,int)),SLOT(itemActivated(QTreeWidgetItem*,int)));
-    this->connect(this->side_menu->getGroupMenu(),SIGNAL(itemActivated(QTreeWidgetItem*,int)),SLOT(itemActivated(QTreeWidgetItem*,int)));
 
     this->connect(this->side_menu,SIGNAL(currentChanged(int)),SLOT(tabChanged(int)));
 
@@ -128,11 +126,11 @@ TextTransferAgent *MainWindow::setTextTransferAgent(TextTransferInterface *inter
 {
     TextTransferAgent *result;
     if(this->TextTransferDock->widget()!=NULL)
-	delete this->TextTransferDock->widget();
+        delete this->TextTransferDock->widget();
 
     QList<TextTransferInterface *> interfaceList;
     if (interface!=NULL)
-	interfaceList.append(interface);
+        interfaceList.append(interface);
     result=new TextTransferAgent(interfaceList,thisSession, this);
     this->TextTransferDock->setWidget(result);
     this->TextTransferDock->setVisible(true);
@@ -144,56 +142,56 @@ TextTransferAgent *MainWindow::setTextTransferAgent(TextTransferInterface *inter
 void MainWindow::set_content(QTreeWidgetItem *current)
 {
     if(current==NULL)
-	return;
+        return;
 
     if(this->TextTransferDock!=NULL)
-	this->TextTransferDock->setVisible(false);
+        this->TextTransferDock->setVisible(false);
 
     switch(current->type())
     {
     case 2000:
-	this->setCentralWidget(this->getContentWidget(MainWindow::PersonWidget));
-	break;
+        this->setCentralWidget(this->getContentWidget(MainWindow::PersonWidget));
+        break;
     case 2001:
         this->setCentralWidget(this->getContentWidget(MainWindow::BetreuungWidget));
         break;
     case 2002:
-	this->setCentralWidget(this->getContentWidget(MainWindow::DecreeScrollWidget));
-	break;
+        this->setCentralWidget(this->getContentWidget(MainWindow::DecreeScrollWidget));
+        break;
     case 2010:
-	this->setCentralWidget(this->getContentWidget(MainWindow::ProjektWidget));
+        this->setCentralWidget(this->getContentWidget(MainWindow::ProjektWidget));
         break;
     case 2020:
-    	this->setCentralWidget(this->getContentWidget(MainWindow::BProtokollWidget));
-	break;
+        this->setCentralWidget(this->getContentWidget(MainWindow::BProtokollWidget));
+        break;
     case 2003:
         this->setCentralWidget(this->getContentWidget(MainWindow::Leistungstraeger));
         break;
     case 2300:
     case 2310:
     case 2311:
-	this->setCentralWidget(this->getContentWidget(MainWindow::DocumentationEinkaufenWidget));
-	break;
+        this->setCentralWidget(this->getContentWidget(MainWindow::DocumentationEinkaufenWidget));
+        break;
     case 2312:
-	this->setCentralWidget(this->getContentWidget(MainWindow::DocumentationWaschpflegeWidget));
-	break;
+        this->setCentralWidget(this->getContentWidget(MainWindow::DocumentationWaschpflegeWidget));
+        break;
     case 2320:
     case 2321:
-	this->setCentralWidget(this->getContentWidget(MainWindow::DocumentationKoerperpflegeWidget));
-	break;
+        this->setCentralWidget(this->getContentWidget(MainWindow::DocumentationKoerperpflegeWidget));
+        break;
     case 2322:
-	this->setCentralWidget(this->getContentWidget(MainWindow::DocumentationAufstehenWidget));
-	break;
+        this->setCentralWidget(this->getContentWidget(MainWindow::DocumentationAufstehenWidget));
+        break;
     case 2330:
     case 2331:
-	this->setCentralWidget(this->getContentWidget(MainWindow::DocumentationPartnerschaftenWidget));
-	break;
+        this->setCentralWidget(this->getContentWidget(MainWindow::DocumentationPartnerschaftenWidget));
+        break;
     case 2332:
-	this->setCentralWidget(this->getContentWidget(MainWindow::DocumentationFreundschaftenWidget));
-	break;
+        this->setCentralWidget(this->getContentWidget(MainWindow::DocumentationFreundschaftenWidget));
+        break;
     case 3000:
-	this->setCentralWidget(this->getContentWidget(MainWindow::EreignisWidget));
-	break;
+        this->setCentralWidget(this->getContentWidget(MainWindow::EreignisWidget));
+        break;
     case 3010:
         this->setCentralWidget(this->getContentWidget(MainWindow::MeldeListeWidget));
         break;
@@ -220,79 +218,78 @@ QWidget *MainWindow::getContentWidget(int ContentTyp)
     QWidget *result = this->ContentWidgetList.at(ContentTyp);
     if (result!=NULL)
     {
-	return result;
+        return result;
     }
     else
     {
-	if (thisSession.curBewohner.isNull()&&(ContentTyp!=MainWindow::LoginWidget))
-	{
-	    //Defaulttyp, wenn Bewohner leer ist
-	    result=new person(this->thisSession,this);
-	}
-	else
-	{
-	    switch (ContentTyp)
-	    {
-	    case MainWindow::PersonWidget:
-		result=new person(this->thisSession,this);
-		break;
-	    case MainWindow::LoginWidget:
-		result=new LoginForm(this);
-		QObject::connect((LoginForm *)result,SIGNAL(validLogin(QSharedPointer<ebp::Mitarbeiter>,QSharedPointer<ebp::connection>)),SLOT(validLogin(QSharedPointer<ebp::Mitarbeiter>,QSharedPointer<ebp::connection>)));
-		break;
-	    case MainWindow::DecreeScrollWidget:
-		result= new DecreeScrollArea(this->thisSession,this);
-		break;
-	    case MainWindow::BetreuungWidget:
-		result = new Betreuung(this->thisSession,this);
-		break;
-	    case MainWindow::BProtokollWidget:
-		{
-		    result = new BewohnerProtokoll(thisSession,this);
-		    this->setTextTransferAgent(dynamic_cast<TextTransferInterface*>(result));
-		    break;
-		}
-	    case MainWindow::Leistungstraeger:
+        if (thisSession.curBewohner.isNull()&&(ContentTyp!=MainWindow::LoginWidget))
+        {
+            //Defaulttyp, wenn Bewohner leer ist
+            result=new person(this->thisSession,this);
+        }
+        else
+        {
+            switch (ContentTyp)
+            {
+            case MainWindow::PersonWidget:
+                result=new person(this->thisSession,this);
+                break;
+            case MainWindow::LoginWidget:
+                result=new LoginForm(this);
+                QObject::connect((LoginForm *)result,SIGNAL(validLogin(QSharedPointer<ebp::Mitarbeiter>,QSharedPointer<ebp::connection>)),SLOT(validLogin(QSharedPointer<ebp::Mitarbeiter>,QSharedPointer<ebp::connection>)));
+                break;
+            case MainWindow::DecreeScrollWidget:
+                result= new DecreeScrollArea(this->thisSession,this);
+                break;
+            case MainWindow::BetreuungWidget:
+                result = new Betreuung(this->thisSession,this);
+                break;
+            case MainWindow::BProtokollWidget:
+            {
+                result = new BewohnerProtokoll(thisSession,this);
+                this->setTextTransferAgent(dynamic_cast<TextTransferInterface*>(result));
+                break;
+            }
+            case MainWindow::Leistungstraeger:
                 result = new LeistungstraegerArea(this->thisSession,this);
-		break;
-	    case MainWindow::MeldeListeWidget:
+                break;
+            case MainWindow::MeldeListeWidget:
                 result = new MeldeListe(this->thisSession,this);
-		break;
-	    case MainWindow::EreignisWidget:
-		{
-		    TextTransferAgent *agent=setTextTransferAgent(NULL);
-		    result = new Ereignis(thisSession,agent,this);
-		    break;
-		}
-	    case MainWindow::ProjektWidget:
-		{
-		    result = new Projekt(thisSession,this);
-		    this->setTextTransferAgent(dynamic_cast<TextTransferInterface*>(result));
-		    break;
-		}
-	    case MainWindow::DocumentationEinkaufenWidget:
-		result = new Dokumentation(thisSession,ebp::Dokumentation::einkaufen,this);
-		break;
-	    case MainWindow::DocumentationAufstehenWidget:
-		result = new Dokumentation(thisSession,ebp::Dokumentation::aufstehenUndZuBettgehen,this);
-		break;
-	    case MainWindow::DocumentationFreundschaftenWidget:
-		result = new Dokumentation(thisSession,ebp::Dokumentation::freundschaften,this);
-		break;
-	    case MainWindow::DocumentationKoerperpflegeWidget:
-		result = new Dokumentation(thisSession,ebp::Dokumentation::koerperpflege,this);
-		break;
-	    case MainWindow::DocumentationPartnerschaftenWidget:
-		result = new Dokumentation(thisSession,ebp::Dokumentation::partnerschaften,this);
-		break;
-	    case MainWindow::DocumentationWaschpflegeWidget:
-		result = new Dokumentation(thisSession,ebp::Dokumentation::waeschepflege,this);
-		break;
+                break;
+            case MainWindow::EreignisWidget:
+            {
+                TextTransferAgent *agent=setTextTransferAgent(NULL);
+                result = new Ereignis(thisSession,agent,this);
+                break;
+            }
+            case MainWindow::ProjektWidget:
+            {
+                result = new Projekt(thisSession,this);
+                this->setTextTransferAgent(dynamic_cast<TextTransferInterface*>(result));
+                break;
+            }
+            case MainWindow::DocumentationEinkaufenWidget:
+                result = new Dokumentation(thisSession,ebp::Dokumentation::einkaufen,this);
+                break;
+            case MainWindow::DocumentationAufstehenWidget:
+                result = new Dokumentation(thisSession,ebp::Dokumentation::aufstehenUndZuBettgehen,this);
+                break;
+            case MainWindow::DocumentationFreundschaftenWidget:
+                result = new Dokumentation(thisSession,ebp::Dokumentation::freundschaften,this);
+                break;
+            case MainWindow::DocumentationKoerperpflegeWidget:
+                result = new Dokumentation(thisSession,ebp::Dokumentation::koerperpflege,this);
+                break;
+            case MainWindow::DocumentationPartnerschaftenWidget:
+                result = new Dokumentation(thisSession,ebp::Dokumentation::partnerschaften,this);
+                break;
+            case MainWindow::DocumentationWaschpflegeWidget:
+                result = new Dokumentation(thisSession,ebp::Dokumentation::waeschepflege,this);
+                break;
 
-	    }
-	}
+            }
+        }
     }
-
     //this->ContentWidgetList.replace(ContentTyp,result);
     return result;
 }
@@ -341,6 +338,8 @@ void MainWindow::create_actions()
   */
 void MainWindow::logout()
 {
+    hasLogout = true;
+
     thisSession.allBewohner.clear();
     thisSession.allGroups.clear();
     thisSession.curBewohner.clear();
@@ -368,31 +367,44 @@ void MainWindow::logout()
 
     foreach (QToolBar *t, toolBars)
     {
-	this->removeToolBar(t);
-	delete t;
+        this->removeToolBar(t);
+        delete t;
     }
     toolBars.clear();
 
     this->setCentralWidget(this->getContentWidget(MainWindow::LoginWidget));
+
+
 }
 
 /**
   * \brief Slot für die SaveAction
   */
-void MainWindow::saveCurrentContent()
+void MainWindow::saveCurrentContent(bool pending)
 {
-    qDebug()<<"SaveSlot";
     try
     {
         QWidget *ptrToCast = this->centralWidget();
         SaveContentInterface *saveInterface =dynamic_cast<SaveContentInterface*>(ptrToCast);
         if(saveInterface!=0)
-	{
-	    if(saveInterface->saveContent())
-                QMessageBox::information(this,tr("Speichern der Änderung"),tr("Erfolgreich gespeichert"));
-	    else
-                QMessageBox::information(this,tr("Speichern der Änderung"),tr("Speichern fehlgeschlagen"));
-	}
+        {
+            if(pending)
+            {
+                if(saveInterface->hasPendingChanges())
+                {
+                    if(QMessageBox::question(this,"Ausstehende Änderungen","Es gibt noch ausstehende Änderungen. Wollen SIe diese speichern?","Ja","Nein")!=0)
+                        return;
+                }
+                else
+                {
+                    return;
+                }
+            }
+            if(saveInterface->saveContent())
+                    QMessageBox::information(this,tr("Speichern der Änderung"),tr("Erfolgreich gespeichert"));
+            else
+                    QMessageBox::information(this,tr("Speichern der Änderung"),tr("Speichern fehlgeschlagen"));
+        }
     }
     catch (std::exception& ex)
     {
@@ -422,11 +434,11 @@ void MainWindow::writeSettings()
 
     if (!this->thisSession.curBewohner.isNull())
     {
-	settings.setValue("lastBewohner",this->thisSession.curBewohner->name());
+        settings.setValue("lastBewohner",this->thisSession.curBewohner->name());
     }
     if (!this->thisSession.curWohngruppe.isNull())
     {
-	settings.setValue("lastWohngruppe",this->thisSession.curWohngruppe->name());
+        settings.setValue("lastWohngruppe",this->thisSession.curWohngruppe->name());
     }
 }
 /**
@@ -448,7 +460,6 @@ void MainWindow::readSettings()
 void MainWindow::closeEvent(QCloseEvent *event)
 {
     this->writeSettings();
-    //qDebug() << QApplication::applicationDirPath();
     QMainWindow::closeEvent(event);
 }
 
@@ -487,22 +498,22 @@ void MainWindow::loadWohnguppeUndBewohner()
     if(!this->thisSession.curWohngruppe.isNull())
     {
 
-	this->thisSession.allBewohner=ebp::loadAllBewohner(this->thisSession.curConnection,this->thisSession.allGroups);
+        this->thisSession.allBewohner=ebp::loadAllBewohner(this->thisSession.curConnection,this->thisSession.allGroups);
 
         //Aktuellen Bewohner setzen
-	this->thisSession.curBewohner.isNull();
+        this->thisSession.curBewohner.isNull();
 
-	if (!thisSession.allBewohner.isEmpty())
+        if (!thisSession.allBewohner.isEmpty())
         {
-	    thisSession.curBewohner = thisSession.allBewohner.first();
+            thisSession.curBewohner = thisSession.allBewohner.first();
             QString lastB = settings.value("lastBewohner",QVariant("NULL")).toString();
             if (lastB != "NULL")
             {
-		foreach(QSharedPointer <ebp::Bewohner> bw , thisSession.allBewohner)
+                foreach(QSharedPointer <ebp::Bewohner> bw , thisSession.allBewohner)
                 {
                     if (bw->name()==lastB)
                     {
-			thisSession.curBewohner = bw;
+                        thisSession.curBewohner = bw;
                         continue;
                     }
                 }
@@ -524,11 +535,11 @@ void MainWindow::loadWohnguppeUndBewohner()
 void MainWindow::setCurBewohnerAndWohngruppeInfo()
 {
     if (!this->thisSession.curBewohner.isNull())
-	this->_infoFrame->setCurBewohner(this->thisSession.curBewohner->name());
+        this->_infoFrame->setCurBewohner(this->thisSession.curBewohner->name());
     else
         this->_infoFrame->setCurBewohner(tr("Keine Informationen verfügbar"));
     if(!this->thisSession.curWohngruppe.isNull())
-	this->_infoFrame->setCurWohngruppe(this->thisSession.curWohngruppe->name());
+        this->_infoFrame->setCurWohngruppe(this->thisSession.curWohngruppe->name());
     else
         this->_infoFrame->setCurWohngruppe(tr("Keine Informationen verfügbar"));
 }
@@ -540,18 +551,18 @@ void MainWindow::setCurBewohner(QSharedPointer<ebp::Bewohner> chosenBw)
     thisSession.curBewohner = chosenBw;
     if(!chosenBw.isNull())
     {
-	// Änderungen dürfen nur gespeichert werden, wenn Mitarbeiter die Betreuungsberechtigung hat
-	this->savePermission=false;
-	QSharedPointer<ebp::Mitarbeiter> betreuuer=thisSession.curBewohner->bezugsbetreuer();
+        // Änderungen dürfen nur gespeichert werden, wenn Mitarbeiter die Betreuungsberechtigung hat
+        this->savePermission=false;
+        QSharedPointer<ebp::Mitarbeiter> betreuuer=thisSession.curBewohner->bezugsbetreuer();
 
-	if(!betreuuer.isNull())
-	{
-	    if (betreuuer->login()==thisSession.curMitarbeiter->login())
-		this->savePermission=true;
-	}
+        if(!betreuuer.isNull())
+        {
+            if (betreuuer->login()==thisSession.curMitarbeiter->login())
+            this->savePermission=true;
+        }
 
-	this->setCurBewohnerAndWohngruppeInfo();
-	set_content(this->side_menu->getClientMenu()->currentItem());
+        this->setCurBewohnerAndWohngruppeInfo();
+        set_content(this->side_menu->getClientMenu()->currentItem());
     }
 }
 /**
@@ -562,20 +573,19 @@ void MainWindow::setCurWohngruppe(QSharedPointer<ebp::Wohngruppe> chosenWg)
     thisSession.curWohngruppe = chosenWg;
     this->setCurBewohnerAndWohngruppeInfo();
 }
-/**
-  * \brief Slot der ausgelöst wird, wenn der gewählte Eintrag im Navigationsbaum sich ändert
-  */
-void MainWindow::itemActivated(QTreeWidgetItem *item, int column)
-{
-    Q_UNUSED(column)
-    set_content(item);
-}
+
 /**
   * \brief Slot der ausgelöst wird, wenn der gewählte Eintrag im Navigationsbaum sich ändert
   */
 void MainWindow::itemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
-    Q_UNUSED(previous)
+    // Noch Änderungen?
+    if(!hasLogout)
+    {
+        if((previous->type()<3000)||previous->type()==3010)
+            saveCurrentContent(true);
+    }
+    // Neue Maske
     set_content(current);
 }
 /**
@@ -585,15 +595,15 @@ void MainWindow::tabChanged(int index)
 {
     if (this->side_menu!=NULL)
     {
-	switch ( index )
-	{
-	case 0:
-	    set_content(this->side_menu->getClientMenu()->currentItem());
-	    break;
-	case 1:
-	    set_content(this->side_menu->getGroupMenu()->currentItem());
-	    break;
-	}
+        switch ( index )
+        {
+        case 0:
+            set_content(this->side_menu->getClientMenu()->currentItem());
+            break;
+        case 1:
+            set_content(this->side_menu->getGroupMenu()->currentItem());
+            break;
+        }
     }
 
 }

@@ -21,8 +21,8 @@ Projekt::~Projekt()
 {
     if ( maDialog != NULL)
     {
-	maDialog->disconnect(this);
-	delete maDialog;
+        maDialog->disconnect(this);
+        delete maDialog;
     }
     delete ui;
 }
@@ -33,31 +33,28 @@ Projekt::~Projekt()
 void Projekt::on_pushButton_clicked()
 {
     QString name = this->ui->NewProjektLineEdit->text() ;
-
+    pendingChanges = true;
     if (!name.isEmpty() && !name.isNull())
     {
-	QSharedPointer< ebp::Projekt > project = QSharedPointer< ebp::Projekt >(new ebp::Projekt( name,"","",QDate::currentDate(),QDate::currentDate()));
-	project->create(curContext.curConnection);
-	ebp::Projekt::linkBewohner(project,curContext.curBewohner);
-	if(project->update(curContext.curConnection))
-	{
-	    qDebug()<< "Neues Projekt erfolgreich angelegt";
-	    projects.append(project);
+        QSharedPointer< ebp::Projekt > project = QSharedPointer< ebp::Projekt >(new ebp::Projekt( name,"","",QDate::currentDate(),QDate::currentDate()));
+        project->create(curContext.curConnection);
+        ebp::Projekt::linkBewohner(project,curContext.curBewohner);
+        if(project->update(curContext.curConnection))
+        {
+            qDebug()<< "Neues Projekt erfolgreich angelegt";
+            projects.append(project);
 
-	    new CustomListWidgetItem<ebp::Projekt>(project,this->ui->listWidget);
+            new CustomListWidgetItem<ebp::Projekt>(project,this->ui->listWidget);
 
-	    this->ui->listWidget->setCurrentRow(this->ui->listWidget->count()-1);
+            this->ui->listWidget->setCurrentRow(this->ui->listWidget->count()-1);
 
             this->ui->beginnDateEdit->setDate(QDate::currentDate());
             this->ui->endeDateEdit->setDate(QDate::currentDate());
-	}
-	else
-	    qDebug()<< "Neues Projekt anlegen fehlgeschlagen";
+        }
+        else
+            qDebug()<< "Neues Projekt anlegen fehlgeschlagen";
 
-
-
-
-	this->ui->NewProjektLineEdit->clear();
+        this->ui->NewProjektLineEdit->clear();
     }
 
 
@@ -67,9 +64,7 @@ void Projekt::on_pushButton_clicked()
   */
 void Projekt::on_pushButton_2_clicked()
 {
-
     maDialog->show();
-
 }
 /**
   * \brief Implementiert das TextTransferInterface und gibt den selektierten Text zurück.
@@ -81,16 +76,16 @@ TextTransferInformation Projekt::getSelectedText()
 
     if(this->ui->zieleEdit->textCursor().hasSelection())
     {
-        result.information ="\n"+ QDateTime::currentDateTime().toString("ddd MMMM d yy")+ tr(" Projektziele:");
+        result.information ="\n"+ QDateTime::currentDateTime().toString(Qt::SystemLocaleShortDate)+ tr(" Projektziele:");
         result.textTransferFragment= this->ui->zieleEdit->textCursor().selection();
-	result.isEmpty = false;
+        result.isEmpty = false;
 
     }
     else if (this->ui->beschreibungEdit->textCursor().hasSelection())
     {
-        result.information = "\n"+ QDateTime::currentDateTime().toString("ddd MMMM d yy")+ tr(" Projektbeschreibung:");
-	result.textTransferFragment = this->ui->beschreibungEdit->textCursor().selection();
-	result.isEmpty = false;
+        result.information = "\n"+ QDateTime::currentDateTime().toString(Qt::SystemLocaleShortDate)+ tr(" Projektbeschreibung:");
+        result.textTransferFragment = this->ui->beschreibungEdit->textCursor().selection();
+        result.isEmpty = false;
     }
     return result;
 }
@@ -99,6 +94,7 @@ void Projekt::setChosenMa(QSharedPointer<ebp::Mitarbeiter> chosenMa)
 {
     this->potentiallyNewMa = chosenMa;
     this->ui->betreuenderMitarbeiterLineEdit->setText(chosenMa->name());
+    pendingChanges = true;
 }
 
 void Projekt::setProjekt()
@@ -107,7 +103,7 @@ void Projekt::setProjekt()
 
     QList < QSharedPointer < ebp::Mitarbeiter > > list = this->curProject->loadVerantwortliche(this->curContext.curConnection);
     if (list.count()>0)
-	maName = list.first()->name();
+        maName = list.first()->name();
 
     this->ui->betreuenderMitarbeiterLineEdit->setText(maName);
 
@@ -124,8 +120,8 @@ void Projekt::on_listWidget_currentRowChanged(int currentRow)
 {
     if (projects.count()>=(currentRow))
     {
-	this->curProject = this->projects.at(currentRow);
-	this->setProjekt();
+        this->curProject = this->projects.at(currentRow);
+        this->setProjekt();
     }
 }
 
@@ -164,30 +160,51 @@ void Projekt::init()
 
     if(!this->curContext.curBewohner.isNull())
     {
-	bool editable = false;
-	if(!curContext.curBewohner->bezugsbetreuer().isNull())
-	    if(curContext.curBewohner->bezugsbetreuer()->login()== curContext.curMitarbeiter->login())
-		editable = true;
+        bool editable = false;
+        if(!curContext.curBewohner->bezugsbetreuer().isNull())
+            if(curContext.curBewohner->bezugsbetreuer()->login()== curContext.curMitarbeiter->login())
+                editable = true;
 
-	this->ui->pushButton->setEnabled(editable);
-	this->ui->pushButton_2->setEnabled(editable);
+        this->ui->pushButton->setEnabled(editable);
+        this->ui->pushButton_2->setEnabled(editable);
 
-	projects =  this->curContext.curBewohner->loadProjekte(curContext.curConnection);
-	foreach (QSharedPointer< ebp::Projekt> p, projects)
-	{
-	    new CustomListWidgetItem<ebp::Projekt>(p,this->ui->listWidget);
-	}
+        projects =  this->curContext.curBewohner->loadProjekte(curContext.curConnection);
+        foreach (QSharedPointer< ebp::Projekt> p, projects)
+        {
+            new CustomListWidgetItem<ebp::Projekt>(p,this->ui->listWidget);
+        }
 
-	if (projects.count()>0)
-	{
-	    curProject=projects.first();
-	    setProjekt();
-	}
+        if (projects.count()>0)
+        {
+            curProject=projects.first();
+            setProjekt();
+        }
 
-	maDialog = NULL;
+        maDialog = NULL;
 
-	maDialog = new ChooseMaDialog(ebp::Mitarbeiter::loadAll(curContext.curConnection),"Mitarbeiter wählen:",this);
-	QObject::connect(maDialog,SIGNAL(chosen(QSharedPointer<ebp::Mitarbeiter>)),this, SLOT(setChosenMa(QSharedPointer<ebp::Mitarbeiter>)));
+        maDialog = new ChooseMaDialog(ebp::Mitarbeiter::loadAll(curContext.curConnection),"Mitarbeiter wählen:",this);
+        QObject::connect(maDialog,SIGNAL(chosen(QSharedPointer<ebp::Mitarbeiter>)),this, SLOT(setChosenMa(QSharedPointer<ebp::Mitarbeiter>)));
     }
+    pendingChanges = false;
+}
+bool Projekt::hasPendingChanges()
+{
+    bool result = pendingChanges;
+    if (this->ui->beschreibungEdit->document()->isUndoAvailable())
+        result = true;
 
+    if (this->ui->zieleEdit->document()->isUndoAvailable())
+        result = true;
+
+    return result;
+}
+void Projekt::on_beginnDateEdit_dateChanged(const QDate &date)
+{
+    Q_UNUSED(date)
+    pendingChanges = true;
+}
+void Projekt::on_endeDateEdit_dateChanged(const QDate &date)
+{
+    Q_UNUSED(date)
+    pendingChanges = true;
 }

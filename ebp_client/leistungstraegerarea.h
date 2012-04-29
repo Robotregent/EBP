@@ -29,6 +29,7 @@ public:
     explicit LeistungstraegerArea(SessionContext &_context,QWidget *parent = 0);
     ~LeistungstraegerArea();
     bool saveContent();				///< Speichern den Inhalts
+    bool hasPendingChanges();
 
 private:
     Ui::LeistungstraegerArea *ui;

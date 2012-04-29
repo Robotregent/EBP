@@ -76,54 +76,107 @@ bool Betreuung::saveContent()
     bool result = false;
     if ( !conntext.curBewohner.isNull())
     {
-	QSharedPointer< ebp::Betreuung > b = conntext.curBewohner->betreuung();
+        QSharedPointer< ebp::Betreuung > b = conntext.curBewohner->betreuung();
 
-	if(!b.isNull())
-	{
-	    b->vorname(this->ui->vornameLineEdit->text());
+        if(!b.isNull())
+        {
+            b->vorname(this->ui->vornameLineEdit->text());
 
-	    b->nachname(this->ui->nameLineEdit->text());
+            b->nachname(this->ui->nameLineEdit->text());
 
-	    b->email(this->ui->eMailLineEdit->text());
+            b->email(this->ui->eMailLineEdit->text());
 
-	    b->fax(this->ui->faxLineEdit->text());
+            b->fax(this->ui->faxLineEdit->text());
 
-	    b->ort(this->ui->ortLineEdit->text());
+            b->ort(this->ui->ortLineEdit->text());
 
-	    b->plz(this->ui->pLZLineEdit->text());
+            b->plz(this->ui->pLZLineEdit->text());
 
-	    b->telefon(this->ui->telefonLineEdit->text());
+            b->telefon(this->ui->telefonLineEdit->text());
 
-	    b->strasse(this->ui->straELineEdit->text());
+            b->strasse(this->ui->straELineEdit->text());
 
-	    b->verein(this->ui->vereinVerbandLineEdit->text());
+            b->verein(this->ui->vereinVerbandLineEdit->text());
 
-	    if(this->ui->aufentahltsbestimmungComboBox->currentIndex()==0)
-		b->aufenthaltsbestimmung(false);
-	    else
-		b->aufenthaltsbestimmung(true);
+            if(this->ui->aufentahltsbestimmungComboBox->currentIndex()==0)
+                b->aufenthaltsbestimmung(false);
+            else
+                b->aufenthaltsbestimmung(true);
 
-	    if(this->ui->gesundheitsfRsorgeComboBox->currentIndex()==0)
-		b->gesundheitsfuersorge(false);
-	    else
-		b->gesundheitsfuersorge(true);
+            if(this->ui->gesundheitsfRsorgeComboBox->currentIndex()==0)
+                b->gesundheitsfuersorge(false);
+            else
+                b->gesundheitsfuersorge(true);
 
-	    if(this->ui->vermGensfRsorgeComboBox->currentIndex()==0)
-		b->vermoegensfuersorge(false);
-	    else
-		b->vermoegensfuersorge(true);
+            if(this->ui->vermGensfRsorgeComboBox->currentIndex()==0)
+                b->vermoegensfuersorge(false);
+            else
+                b->vermoegensfuersorge(true);
 
-	    if(b->update(conntext.curConnection))
-	    {
-		//QMessageBox::information(this,"Betreuung","Erfolgreich gespeichert");
-		result = true;
-	    }
-	    else
-	    {
-		//QMessageBox::information(this,"Betreuung","Speichern fehlgeschlagen");
-		result = false;
-	    }
-	}
+            if(b->update(conntext.curConnection))
+            {
+                //QMessageBox::information(this,"Betreuung","Erfolgreich gespeichert");
+                result = true;
+            }
+            else
+            {
+                //QMessageBox::information(this,"Betreuung","Speichern fehlgeschlagen");
+                result = false;
+            }
+        }
     }
     return result;
+}
+bool Betreuung::hasPendingChanges()
+{
+    bool result = pendingChanges;
+
+    if(!result)
+    {
+        if(this->ui->vornameLineEdit->isUndoAvailable())
+            result=true;
+
+        if(this->ui->nameLineEdit->isUndoAvailable())
+            result=true;
+
+        if(this->ui->eMailLineEdit->isUndoAvailable())
+            result=true;
+
+        if(this->ui->faxLineEdit->isUndoAvailable())
+            result=true;
+
+        if(this->ui->ortLineEdit->isUndoAvailable())
+            result=true;
+
+        if(this->ui->pLZLineEdit->isUndoAvailable())
+            result=true;
+
+        if(this->ui->telefonLineEdit->isUndoAvailable())
+            result=true;
+
+        if(this->ui->straELineEdit->isUndoAvailable())
+            result=true;
+
+        if(this->ui->vereinVerbandLineEdit->isUndoAvailable())
+            result=true;
+    }
+    return result;
+}
+
+void Betreuung::on_gesundheitsfRsorgeComboBox_currentIndexChanged(int index)
+{
+    Q_UNUSED(index)
+    pendingChanges = true;
+}
+
+void Betreuung::on_vermGensfRsorgeComboBox_currentIndexChanged(int index)
+{
+    Q_UNUSED(index)
+    pendingChanges = true;
+}
+
+void Betreuung::on_aufentahltsbestimmungComboBox_currentIndexChanged(int index)
+{
+    Q_UNUSED(index)
+    pendingChanges = true;
 }

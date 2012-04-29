@@ -15,7 +15,7 @@ LeistungstraegerBox::LeistungstraegerBox(SessionContext &_context, QWidget *pare
 {
     ui->setupUi(this);
     if (leistungstraeger.isNull())
-	createLeistungstraeger();
+        createLeistungstraeger();
 
     this->initField();
 }
@@ -72,8 +72,8 @@ void LeistungstraegerBox::createLeistungstraeger()
     if(context.curBewohner!=NULL)
     {
         leistungstraeger = QSharedPointer<ebp::Leistungstraeger>(new ebp::Leistungstraeger(tr("Neuer Leistungsträger")));
-	leistungstraeger->create(context.curConnection);
-	ebp::Leistungstraeger::linkBewohner(leistungstraeger,context.curBewohner);
-	leistungstraeger->update(this->context.curConnection);
+        leistungstraeger->create(context.curConnection);
+        ebp::Leistungstraeger::linkBewohner(leistungstraeger,context.curBewohner);
+        leistungstraeger->update(this->context.curConnection);
     }
 }

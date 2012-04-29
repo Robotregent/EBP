@@ -21,8 +21,8 @@ BewohnerProtokoll::~BewohnerProtokoll()
 {
     if(this->maDialog!=NULL)
     {
-	maDialog->disconnect(this);
-	delete maDialog;
+        maDialog->disconnect(this);
+        delete maDialog;
     }
 
     delete ui;
@@ -31,7 +31,6 @@ BewohnerProtokoll::~BewohnerProtokoll()
 void BewohnerProtokoll::on_addTeilnehmer_clicked()
 {
     this->maDialog->show();
-
 }
 
 TextTransferInformation BewohnerProtokoll::getSelectedText()
@@ -43,7 +42,7 @@ TextTransferInformation BewohnerProtokoll::getSelectedText()
         result.isEmpty = true;
         if (this->ui->ProtokollText->textCursor().hasSelection())
         {
-            result.information = "\n"+ QDateTime::currentDateTime().toString("ddd MMMM d yy")+tr(" Protokoll vom ")+curProtokoll->datum().toString()+":\n";
+            result.information = "\n"+ QDateTime::currentDateTime().toString(Qt::SystemLocaleShortDate)+tr(" Protokoll vom ")+curProtokoll->datum().toString(Qt::SystemLocaleShortDate)+":\n";
             result.textTransferFragment = this->ui->ProtokollText->textCursor().selection();
             result.isEmpty = false;
         }
@@ -57,17 +56,14 @@ TextTransferInformation BewohnerProtokoll::getSelectedText()
 bool BewohnerProtokoll::saveContent()
 {
     bool result = false;
-
     if (!curProtokoll.isNull())
     {
         curProtokoll->inhalt(this->ui->ProtokollText->toHtml());
+        sync();
 
-	sync();
-
-	if (curProtokoll->update(context.curConnection))
-	    result = true;
+        if (curProtokoll->update(context.curConnection))
+            result = true;
     }
-
     return result;
 }
 void BewohnerProtokoll::initHeader()
@@ -90,37 +86,38 @@ void BewohnerProtokoll::init()
 
     if (!context.curBewohner.isNull())
     {
-	bool editable = false;
+        bool editable = false;
 
-	if(!context.curBewohner->bezugsbetreuer().isNull())
-	    if(context.curBewohner->bezugsbetreuer()->login()== context.curMitarbeiter->login())
-		editable = true;
+        if(!context.curBewohner->bezugsbetreuer().isNull())
+            if(context.curBewohner->bezugsbetreuer()->login()== context.curMitarbeiter->login())
+                editable = true;
 
         this->ui->NewProtokollDatum->setDate(QDate::currentDate());
 
-	this->ui->NewProtokollButton->setEnabled(editable);
-	this->ui->addTeilnehmer->setEnabled(editable);
+        this->ui->NewProtokollButton->setEnabled(editable);
+        this->ui->addTeilnehmer->setEnabled(editable);
 
 
-	context.curBewohner->reload(context.curConnection);
+        context.curBewohner->reload(context.curConnection);
 
-	protokolle = context.curBewohner->loadProtokolle(context.curConnection);
+        protokolle = context.curBewohner->loadProtokolle(context.curConnection);
 
-	if (protokolle.count()>0)
-	{
-	    foreach ( const QSharedPointer<ebp::Protokoll> p , protokolle)
-	    {
-		QListWidgetItem *item = new QListWidgetItem(p->datum().toString(),this->ui->ProtokollListe);
-		Q_UNUSED(item);
-	    }
+        if (protokolle.count()>0)
+        {
+            foreach ( const QSharedPointer<ebp::Protokoll> p , protokolle)
+            {
+                QListWidgetItem *item = new QListWidgetItem(p->datum().toString(),this->ui->ProtokollListe);
+                Q_UNUSED(item);
+            }
 
-	    curProtokoll =protokolle.first();
-	    schreiber = curProtokoll->loadSchreiber(context.curConnection);
-	    teilnehmer = curProtokoll->loadTeilnehmer(context.curConnection);
+            curProtokoll =protokolle.first();
+            schreiber = curProtokoll->loadSchreiber(context.curConnection);
+            teilnehmer = curProtokoll->loadTeilnehmer(context.curConnection);
 
-	    fillFields();
-	}
+            fillFields();
+        }
     }
+    pendingChanges = false;
 }
 
 void BewohnerProtokoll::chosenMitarbeiter(QSharedPointer<ebp::Mitarbeiter> chosenMa)
@@ -136,7 +133,7 @@ void BewohnerProtokoll::chosenMitarbeiter(QSharedPointer<ebp::Mitarbeiter> chose
     CustomTableWidgetItem<ebp::Mitarbeiter> *item = new CustomTableWidgetItem<ebp::Mitarbeiter>(chosenMa);
     this->ui->tableWidget->setItem(this->ui->tableWidget->rowCount()-1,1,item);
 
-
+    pendingChanges = true;
 }
 void BewohnerProtokoll::fillFields()
 {
@@ -146,14 +143,14 @@ void BewohnerProtokoll::fillFields()
 
     for (int i = 0; i < rows;i++ )
     {
-	this->ui->tableWidget->removeRow(0);
+        this->ui->tableWidget->removeRow(0);
     }
 
     if(schreiber.count()>0)
-	fillParticipants(schreiber,Qt::Checked);
+        fillParticipants(schreiber,Qt::Checked);
 
     if(teilnehmer.count()>0)
-	fillParticipants(teilnehmer,Qt::Unchecked);
+        fillParticipants(teilnehmer,Qt::Unchecked);
 }
 
 void BewohnerProtokoll::fillParticipants(QList< QSharedPointer < ebp::Mitarbeiter > > ma, Qt::CheckState state)
@@ -162,14 +159,14 @@ void BewohnerProtokoll::fillParticipants(QList< QSharedPointer < ebp::Mitarbeite
     CustomTableWidgetItem<ebp::Mitarbeiter> *item;
     foreach (QSharedPointer < ebp::Mitarbeiter > m , ma)
     {
-	this->ui->tableWidget->insertRow(this->ui->tableWidget->rowCount());
-	tmp = new QTableWidgetItem(tr(""));
-	tmp->setFlags(tmp->flags()|Qt::ItemIsUserCheckable);
-	tmp->setCheckState(state);
-	this->ui->tableWidget->setItem(this->ui->tableWidget->rowCount()-1,0,tmp);
+        this->ui->tableWidget->insertRow(this->ui->tableWidget->rowCount());
+        tmp = new QTableWidgetItem(tr(""));
+        tmp->setFlags(tmp->flags()|Qt::ItemIsUserCheckable);
+        tmp->setCheckState(state);
+        this->ui->tableWidget->setItem(this->ui->tableWidget->rowCount()-1,0,tmp);
 
-	item = new CustomTableWidgetItem<ebp::Mitarbeiter>(m);
-	this->ui->tableWidget->setItem(this->ui->tableWidget->rowCount()-1,1,item);
+        item = new CustomTableWidgetItem<ebp::Mitarbeiter>(m);
+        this->ui->tableWidget->setItem(this->ui->tableWidget->rowCount()-1,1,item);
     }
 }
 
@@ -177,31 +174,32 @@ void BewohnerProtokoll::on_ProtokollListe_currentRowChanged(int currentRow)
 {
     if (currentRow < protokolle.count())
     {
-	curProtokoll = protokolle.at(currentRow);
+        curProtokoll = protokolle.at(currentRow);
 
-	schreiber = curProtokoll->loadSchreiber(context.curConnection);
-	teilnehmer = curProtokoll->loadTeilnehmer(context.curConnection);
+        schreiber = curProtokoll->loadSchreiber(context.curConnection);
+        teilnehmer = curProtokoll->loadTeilnehmer(context.curConnection);
 
-	fillFields();
+        fillFields();
     }
 }
 
 void BewohnerProtokoll::on_NewProtokollButton_clicked()
 {
     QDateTime date = this->ui->NewProtokollDatum->dateTime();
+    pendingChanges = true;
 
     QSharedPointer< ebp::Protokoll > p = QSharedPointer<ebp::Protokoll>(new ebp::Protokoll(" ",date));
 
     if (p->create(context.curConnection))
     {
-	ebp::Protokoll::linkBewohner(p,context.curBewohner);
-	p->update(context.curConnection);
-	context.curBewohner->reload(context.curConnection);
+        ebp::Protokoll::linkBewohner(p,context.curBewohner);
+        p->update(context.curConnection);
+        context.curBewohner->reload(context.curConnection);
 
-	protokolle.append(p);
+        protokolle.append(p);
 
-	QListWidgetItem *item = new QListWidgetItem(date.toString(),this->ui->ProtokollListe);
-	Q_UNUSED(item);
+        QListWidgetItem *item = new QListWidgetItem(date.toString(),this->ui->ProtokollListe);
+        Q_UNUSED(item);
 
         this->ui->ProtokollListe->setCurrentRow(this->ui->ProtokollListe->count()-1);
 
@@ -213,28 +211,28 @@ void BewohnerProtokoll::syncSchreiber(QSharedPointer<ebp::Mitarbeiter> s)
 {
     foreach ( const QSharedPointer<ebp::Mitarbeiter> ma, schreiber)
     {
-	if (ma->login()==s->login())
-	    return;
+        if (ma->login()==s->login())
+            return;
     }
     ebp::Protokoll::linkSchreiber(curProtokoll,s);
     foreach ( const QSharedPointer<ebp::Mitarbeiter> ma, teilnehmer)
     {
-	if (ma->login()==s->login())
-	    ebp::Protokoll::unlinkTeilnehmer(curProtokoll,s);
+        if (ma->login()==s->login())
+            ebp::Protokoll::unlinkTeilnehmer(curProtokoll,s);
     }
 }
 void BewohnerProtokoll::syncTeilnehmer(QSharedPointer<ebp::Mitarbeiter> t)
 {
     foreach ( const QSharedPointer<ebp::Mitarbeiter> ma, teilnehmer)
     {
-	if (ma->login()==t->login())
-	    return;
+        if (ma->login()==t->login())
+            return;
     }
     ebp::Protokoll::linkTeilnehmer(curProtokoll,t);
     foreach ( const QSharedPointer<ebp::Mitarbeiter> ma, schreiber)
     {
-	if (ma->login()==t->login())
-	    ebp::Protokoll::unlinkSchreiber(curProtokoll,t);
+        if (ma->login()==t->login())
+            ebp::Protokoll::unlinkSchreiber(curProtokoll,t);
     }
 }
 void BewohnerProtokoll::sync()
@@ -243,17 +241,26 @@ void BewohnerProtokoll::sync()
     CustomTableWidgetItem<ebp::Mitarbeiter> *curMa;
     for (int i = 0 ; i < this->ui->tableWidget->rowCount(); i++)
     {
-	curFlag = this->ui->tableWidget->item(i,0);
-	curMa =(CustomTableWidgetItem<ebp::Mitarbeiter> *) this->ui->tableWidget->item(i,1);
-	if (curFlag->checkState()==Qt::Checked)
-	{
-	    //Schreiber
-	    syncSchreiber(curMa->getCitem());
-	}
-	else
-	{
-	    //Teilnehmer
-	    syncTeilnehmer(curMa->getCitem());
-	}
+        curFlag = this->ui->tableWidget->item(i,0);
+        curMa =(CustomTableWidgetItem<ebp::Mitarbeiter> *) this->ui->tableWidget->item(i,1);
+        if (curFlag->checkState()==Qt::Checked)
+        {
+            //Schreiber
+            syncSchreiber(curMa->getCitem());
+        }
+        else
+        {
+            //Teilnehmer
+            syncTeilnehmer(curMa->getCitem());
+        }
     }
+}
+bool BewohnerProtokoll::hasPendingChanges()
+{
+    bool result = pendingChanges;
+
+    if (this->ui->ProtokollText->document()->isUndoAvailable())
+        result = true;
+
+    return result;
 }

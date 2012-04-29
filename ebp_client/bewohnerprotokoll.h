@@ -23,14 +23,13 @@ public:
     explicit BewohnerProtokoll(SessionContext &_conntext, QWidget *parent = 0);
     TextTransferInformation getSelectedText();	///< Gibt selektierten Text unde Metainformationen für den Texttransfer zurück
     bool saveContent();	    ///< Speichern den Inhalts
+    bool hasPendingChanges();
     ~BewohnerProtokoll();
 
 private slots:
     void on_addTeilnehmer_clicked();
     void chosenMitarbeiter(QSharedPointer< ebp::Mitarbeiter > chosenMa);
-
     void on_ProtokollListe_currentRowChanged(int currentRow);
-
     void on_NewProtokollButton_clicked();
 
 private:

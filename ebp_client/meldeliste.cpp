@@ -286,6 +286,7 @@ bool MeldeListe::dateLessThan(const QSharedPointer<ebp::Abwesenheit>s1, const QS
 
 void MeldeListe::stateChanged(int row, int col)
 {
+    pendingChanges = true;
     if (col == 1) //check if Anwesend field
     {
         QTableWidgetItem *item = this->ui->tableWidget->item(row,col);
@@ -314,4 +315,8 @@ void MeldeListe::createAbwesenheit(QSharedPointer <ebp::Bewohner> abwBewohner,QS
     bewohner_abwesenheit.append(tmpAbwesenheit);
     tmpAbwesenheit->update(this->curContext.curConnection);
     tempB->reload(curContext.curConnection);
+}
+bool MeldeListe::hasPendingChanges()
+{
+    return pendingChanges;
 }

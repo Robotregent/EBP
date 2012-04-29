@@ -20,6 +20,10 @@ public:
     explicit Dokumentation(SessionContext &context, ebp::Dokumentation::Typ typ, QWidget *parent = 0);
     ~Dokumentation();
     bool saveContent();					///< Speichern den Inhalts
+    bool hasPendingChanges();
+
+private slots:
+    void on_hilfebedarfComboBox_currentIndexChanged(int index);
 
 private:
     Ui::Dokumentation *ui;

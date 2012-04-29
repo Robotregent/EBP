@@ -18,7 +18,15 @@ public:
     explicit Betreuung(SessionContext &_context,QWidget *parent = 0);
     ~Betreuung();
     bool saveContent();	///< Speichert den Inhalts
+    bool hasPendingChanges();
 
+
+private slots:
+    void on_gesundheitsfRsorgeComboBox_currentIndexChanged(int index);
+
+    void on_vermGensfRsorgeComboBox_currentIndexChanged(int index);
+
+    void on_aufentahltsbestimmungComboBox_currentIndexChanged(int index);
 
 private:
     Ui::Betreuung *ui;

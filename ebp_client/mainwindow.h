@@ -45,6 +45,7 @@ private:
     ChooseBwDialog *bwDialog;
     ChooseWgDialog *wgDialog;
     QAction *saveAction;
+    bool hasLogout;
     enum ContentWidgets { LoginWidget = 0, PersonWidget = 1 , DecreeScrollWidget = 2,  BetreuungWidget = 3, BProtokollWidget = 4,
 			  Leistungstraeger=5, MeldeListeWidget=6, EreignisWidget = 7,ProjektWidget = 8, DocumentationEinkaufenWidget = 9, DocumentationWaschpflegeWidget = 10,
 			  DocumentationKoerperpflegeWidget = 11, DocumentationAufstehenWidget = 12, DocumentationPartnerschaftenWidget = 13, DocumentationFreundschaftenWidget = 14,
@@ -55,8 +56,7 @@ private:
 
 private slots:
     void itemChanged( QTreeWidgetItem * current, QTreeWidgetItem * previous );
-    void itemActivated( QTreeWidgetItem * item, int column);
-    void saveCurrentContent();
+    void saveCurrentContent(bool pending = false);
     void logout();
     void setCurWohngruppe(QSharedPointer< ebp::Wohngruppe > chosenWg);
     void setCurBewohner(QSharedPointer< ebp::Bewohner > chosenBw);

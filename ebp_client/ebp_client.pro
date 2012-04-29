@@ -84,7 +84,8 @@ else:unix:!macx:!symbian: LIBS += -L$$PWD/../EBPdb/ -lEBPdb
 INCLUDEPATH += $$PWD/../
 DEPENDPATH += $$PWD/../
 
-TRANSLATIONS = ebp_client_Behindertenhilfe.ts \
-	       ebp_client_Altenhilfe.ts
+CODECFORTR = UTF-8
+CODECFORSRC = UTF-8
 
-CODECFORTR      = ISO-8859-5
+TRANSLATIONS = ebp_client_Behindertenhilfe.ts \
+               ebp_client_Altenhilfe.ts

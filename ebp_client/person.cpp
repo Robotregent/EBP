@@ -22,7 +22,7 @@ person::person(const SessionContext &context, QWidget *parent) :
 
     for (int i = 0 ; i<person::countOfLineEdits ; i++)
     {
-	this->person_edit.append(this->CreatePersonEdit(i));
+        this->person_edit.append(this->CreatePersonEdit(i));
     }
 
     LayoutLeft->addRow(tr("Anrede"),this->person_edit.at(person::title));
@@ -53,16 +53,17 @@ QWidget *person::CreatePersonEdit(int type)
     switch (type)
     {
     case person::comments:
-	result = new QTextEdit(this);
-	break;
+        result = new QTextEdit(this);
+        ((QTextEdit *)result)->setUndoRedoEnabled(true);
+        break;
     case person::dateOfBirth:
     case person::residence:
-	result = new QDateEdit(this);
+        result = new QDateEdit(this);
         ((QDateEdit *)result)->setCalendarPopup(true);
-	break;
+        break;
     default:
-	result = new QLineEdit(this);
-	break;
+        result = new QLineEdit(this);
+        break;
     }
     return result;
 }
@@ -81,8 +82,6 @@ void person::initField()
         ((QLineEdit *)this->person_edit.at(person::familyState))->setText(con.curBewohner->familienstatus());
         ((QDateEdit *)this->person_edit.at(person::residence))->setDate(con.curBewohner->seit());
         ((QTextEdit *)this->person_edit.at(person::comments))->setText(con.curBewohner->anmerkung());
-
-
     }
 
 }
@@ -115,5 +114,37 @@ bool person::saveContent()
         else
             result = false;
     }
+    return result;
+}
+bool person::hasPendingChanges()
+{
+    bool result = pendingChanges;
+
+    if(!con.curBewohner.isNull())
+    {
+        if(((QLineEdit *)this->person_edit.at(person::title))->isUndoAvailable())
+            result=true;
+        if(((QLineEdit *)this->person_edit.at(person::forename))->isUndoAvailable())
+            result=true;
+        if(((QLineEdit *)this->person_edit.at(person::name))->isUndoAvailable())
+            result=true;
+        if(((QLineEdit *)this->person_edit.at(person::birthplace))->isUndoAvailable())
+            result=true;
+
+        if(((QDateEdit *)this->person_edit.at(person::dateOfBirth))->date() !=this->con.curBewohner->geburtsdatum())
+            result=true;
+        if(((QDateEdit *)this->person_edit.at(person::residence))->date()!=con.curBewohner->seit())
+            result=true;
+
+        if(((QLineEdit *)this->person_edit.at(person::citizenship))->isUndoAvailable())
+            result=true;
+        if(((QLineEdit *)this->person_edit.at(person::confession))->isUndoAvailable())
+            result=true;
+        if(((QLineEdit *)this->person_edit.at(person::familyState))->isUndoAvailable())
+            result=true;
+        if(((QTextEdit *)this->person_edit.at(person::comments))->document()->isUndoAvailable())
+            result=true;
+    }
+
     return result;
 }

@@ -29,8 +29,26 @@ public:
     explicit DecreeScrollArea(const SessionContext &context,QWidget *parent = 0);
     ~DecreeScrollArea();
     bool saveContent();			    ///< Speichern den Inhalts
+    bool hasPendingChanges();
     enum enumTypes{Fix, Bet, Psy, Pat};
 
+
+private slots:
+    void on_FixierungBescheid_currentIndexChanged(int index);
+
+    void on_FixierungAktiv_currentIndexChanged(int index);
+
+    void on_BettGitterBescheid_currentIndexChanged(int index);
+
+    void on_BettGitterAktiv_currentIndexChanged(int index);
+
+    void on_PsychoAktiv_currentIndexChanged(int index);
+
+    void on_PsychoBescheid_currentIndexChanged(int index);
+
+    void on_PatientenAktiv_currentIndexChanged(int index);
+
+    void on_PatientenBescheid_currentIndexChanged(int index);
 
 private:
     Ui::DecreeScrollArea *ui;
