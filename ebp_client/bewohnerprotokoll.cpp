@@ -106,7 +106,7 @@ void BewohnerProtokoll::init()
         {
             foreach ( const QSharedPointer<ebp::Protokoll> p , protokolle)
             {
-                QListWidgetItem *item = new QListWidgetItem(p->datum().toString(),this->ui->ProtokollListe);
+                QListWidgetItem *item = new QListWidgetItem(p->datum().toString(Qt::SystemLocaleShortDate),this->ui->ProtokollListe);
                 Q_UNUSED(item);
             }
 
@@ -174,19 +174,25 @@ void BewohnerProtokoll::on_ProtokollListe_currentRowChanged(int currentRow)
 {
     if (currentRow < protokolle.count())
     {
+        if(this->hasPendingChanges())
+        {
+            if(QMessageBox::question(this,"Ausstehende Änderungen","Es gibt noch ausstehende Änderungen. Wollen SIe diese speichern?","Ja","Nein")==0)
+                this->saveContent();
+        }
         curProtokoll = protokolle.at(currentRow);
 
         schreiber = curProtokoll->loadSchreiber(context.curConnection);
         teilnehmer = curProtokoll->loadTeilnehmer(context.curConnection);
 
         fillFields();
+        pendingChanges = false;
     }
 }
 
 void BewohnerProtokoll::on_NewProtokollButton_clicked()
 {
     QDateTime date = this->ui->NewProtokollDatum->dateTime();
-    pendingChanges = true;
+
 
     QSharedPointer< ebp::Protokoll > p = QSharedPointer<ebp::Protokoll>(new ebp::Protokoll(" ",date));
 
@@ -202,7 +208,7 @@ void BewohnerProtokoll::on_NewProtokollButton_clicked()
         Q_UNUSED(item);
 
         this->ui->ProtokollListe->setCurrentRow(this->ui->ProtokollListe->count()-1);
-
+        pendingChanges = true;
     }
     this->ui->NewProtokollDatum->setDate(QDate::currentDate());
 }

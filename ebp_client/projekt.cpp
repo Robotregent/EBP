@@ -33,7 +33,7 @@ Projekt::~Projekt()
 void Projekt::on_pushButton_clicked()
 {
     QString name = this->ui->NewProjektLineEdit->text() ;
-    pendingChanges = true;
+
     if (!name.isEmpty() && !name.isNull())
     {
         QSharedPointer< ebp::Projekt > project = QSharedPointer< ebp::Projekt >(new ebp::Projekt( name,"","",QDate::currentDate(),QDate::currentDate()));
@@ -41,7 +41,6 @@ void Projekt::on_pushButton_clicked()
         ebp::Projekt::linkBewohner(project,curContext.curBewohner);
         if(project->update(curContext.curConnection))
         {
-            qDebug()<< "Neues Projekt erfolgreich angelegt";
             projects.append(project);
 
             new CustomListWidgetItem<ebp::Projekt>(project,this->ui->listWidget);
@@ -50,9 +49,8 @@ void Projekt::on_pushButton_clicked()
 
             this->ui->beginnDateEdit->setDate(QDate::currentDate());
             this->ui->endeDateEdit->setDate(QDate::currentDate());
+            pendingChanges = true;
         }
-        else
-            qDebug()<< "Neues Projekt anlegen fehlgeschlagen";
 
         this->ui->NewProjektLineEdit->clear();
     }
@@ -114,12 +112,19 @@ void Projekt::setProjekt()
     this->ui->zieleEdit->setHtml(this->curProject->ziele());
 
     this->ui->beschreibungEdit->setHtml(this->curProject->beschreibung());
+    pendingChanges = false;
 }
 
 void Projekt::on_listWidget_currentRowChanged(int currentRow)
 {
     if (projects.count()>=(currentRow))
     {
+        if(this->hasPendingChanges())
+        {
+            if(QMessageBox::question(this,"Ausstehende Änderungen","Es gibt noch ausstehende Änderungen. Wollen SIe diese speichern?","Ja","Nein")==0)
+                this->saveContent();
+        }
+        pendingChanges = false;
         this->curProject = this->projects.at(currentRow);
         this->setProjekt();
     }
