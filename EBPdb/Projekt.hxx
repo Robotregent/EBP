@@ -23,6 +23,7 @@ namespace ebp
 	class connection;
 
 	#pragma db object
+	/// Projekte
 	class Projekt : public databaseObject<Projekt>
 	{
 		Q_DECLARE_TR_FUNCTIONS( Projekt )

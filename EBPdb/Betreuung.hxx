@@ -21,6 +21,7 @@ namespace ebp
 	class connection;
 
 	#pragma db object
+	/// Betreuungen
 	class Betreuung : public databaseObject<Betreuung>
 	{
 		Q_DECLARE_TR_FUNCTIONS( Betreuung )

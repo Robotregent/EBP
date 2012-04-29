@@ -23,6 +23,7 @@ namespace ebp
 	class connection;
 
 	#pragma db object
+	/// Bewohnerereignisse
 	class Bewohnerereignis : public databaseObject<Bewohnerereignis>
 	{
 		Q_DECLARE_TR_FUNCTIONS( Bewohnerereignis )

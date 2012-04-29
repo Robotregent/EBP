@@ -30,6 +30,7 @@ namespace ebp
 	class connection;
 
 	#pragma db object
+	/// Mitarbeiterklasse
 	class Mitarbeiter : public databaseObject<Mitarbeiter>
 	{
 		Q_DECLARE_TR_FUNCTIONS( Mitarbeiter )

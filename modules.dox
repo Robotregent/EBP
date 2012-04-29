@@ -2,5 +2,6 @@
  * \addtogroup libEBPdb libEBPdb
  * @{
  * \namespace ebp
+ * Enthält alle Fachklassen.
  * @}
  */

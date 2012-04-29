@@ -330,9 +330,9 @@ Aufgaben automatisiert werden, stellt \textit{Qt} eine beschränkte API für Use
 Drittanbieter für Tools und Frameworks zum automatisierten Testen von User Interfaces, wie z.B. \textit{TestComplete} von \textit{Smart Bear}. Diese Tests sind
 allerdings äußerst aufwendig zu konfigurieren und zu pflegen.\\
 
-Es wurden daher in erster Linie die libEBPdb mit Hilfe von automatisierten Unit-Tests getestet. Es sollte eine Testumgebung entworfen werden, die es
-dem Entwickler ermöglicht nach einer Änderung im Quellcode mit Hilfe eines einzelnen Befehls überprüfen zu können, ob die libEBPdb als Gesamtheit noch
-korrekt ausgeführt wird. Dazu wurde die Testumgebung mit Hilfe des Testtools CTest, ein Teil von CMake, in das Buildsystem integriert. Als Framework
+Es wurden daher in erster Linie die \textit{libEBPdb} mit Hilfe von automatisierten Unit-Tests getestet. Es sollte eine Testumgebung entworfen werden, die es
+dem Entwickler ermöglicht nach einer Änderung im Quellcode mit Hilfe eines einzelnen Befehls überprüfen zu können, ob die \textit{libEBPdb} als Gesamtheit noch
+korrekt ausgeführt wird. Dazu wurde die Testumgebung mit Hilfe des Testtools \textit{CTest}, ein Teil von \textit{CMake}, in das Buildsystem integriert. Als Framework
 für die eigentlichen Unit-Tests kommt die \textit{QTestLib}, ein Teil von \textit{Qt}, zum Einsatz. \textit{QTestLib} bietet diverse Makros, die ein errechnetes Ergebnis mit dem
 erwarteten Wert vergleichen und ein abweichendes Verhalten protokollieren. Dies ist die grundlegende Vorgehensweise bei einem Unit-Test. So
 vergleicht der folgende Aufruf des Macros \textit{QCOMPARE} den Rückgabewert einer Methode der Klasse \textit{ebp::Wohngruppe} mit dem erwarteten Wert. Im Fehlerfall
@@ -342,21 +342,21 @@ QCOMPARE(wohngruppenEreignisList.at(i)->zeitpunkt(),QDateTime(QDate(2012,4,1),QT
 \end{lstlisting}
 Die Testumgebung besteht aus drei aufeinander aufbauenden Testmodulen:
 \begin{description}
- \item [fill\textunderscore test] Testet das Erstellen aller Klassen aus der \textit{libEBPdb}. Dabei werden von jeder Klasse mehrere Instanzen erzeugt, die
+ \item [fill\textunderscore test] - Testet das Erstellen aller Klassen aus der \textit{libEBPdb}. Dabei werden von jeder Klasse mehrere Instanzen erzeugt, die
 Datenfelder befüllt und die Relationen zwischen den Objekten gebildet. Das Ergebnis nach einem erfolgreichen Testlauf ist eine vollständig mit
 Testdaten befüllte Datenbank.
- \item [use\textunderscore test] Dieser Test prüft das Auslesen der Datenbankfelder und das Laden der Beziehungen zwischen den Datenbankobjekten. Die
+ \item [use\textunderscore test] - Dieser Test prüft das Auslesen der Datenbankfelder und das Laden der Beziehungen zwischen den Datenbankobjekten. Die
 Werte werden dabei mit den Initialisierungswerten aus dem fill\textunderscore test verglichen.
- \item [remove\textunderscore test] Hier wird zuerst das korrekte Löschen der erstellten Relationen geprüft und im Anschluß das Löschen der Objekte
+ \item [remove\textunderscore test] - Hier wird zuerst das korrekte Löschen der erstellten Relationen geprüft und im Anschluß das Löschen der Objekte
 selbst von der Datenbank. Nach einem erfolgreichen Testlauf ist die Datenbank wieder leer.
 \end{description}
 Das folgende Kommando startet einen Testlauf aller drei Testmodule:
 \begin{lstlisting}
 $ make test ARGS="-V"
 \end{lstlisting}
-Die Testmodule können auch eingeschränkt unabhängig voneinander eingesetzt werden. So setzten use\textunderscore test und remove\textunderscore test
-einen erfolgreichen Durchlauf des Moduls fill\textunderscore test voraus. Ist dies gegeben können die Tests auch unabhängig voneinander laufen.
-Schlägt beispielsweise der use\textunderscore test fehl, kann er nach einem Durchlauf des Moduls fill\textunderscore test beliebig oft einzeln
+Die Testmodule können auch eingeschränkt unabhängig voneinander eingesetzt werden. So setzten \textit{use\textunderscore test} und \textit{remove\textunderscore test}
+einen erfolgreichen Durchlauf des Moduls \textit{fill\textunderscore test} voraus. Ist dies gegeben können die Tests auch unabhängig voneinander laufen.
+Schlägt beispielsweise der \textit{use\textunderscore test} fehl, kann er nach einem Durchlauf des Moduls \textit{fill\textunderscore test} beliebig oft einzeln
 aufgerufen werden.
 
 \newpage

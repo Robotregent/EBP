@@ -16,6 +16,7 @@ namespace ebp
 {
 	class Mitarbeiter;
 
+	/// Verbindung zur Datenbank
 	class connection
 	{
 		Q_DECLARE_TR_FUNCTIONS( connection )
@@ -30,7 +31,7 @@ namespace ebp
 		);
 		~connection();
 
-		bool establish( const QString & password );
+		bool establish( const QString & password );	///< Verbindung herstellen
 		bool isEstablished() const { return db; }
 		void flushCache();
 		const QString & user() const { return dbUser; }

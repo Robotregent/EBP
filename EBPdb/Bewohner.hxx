@@ -38,6 +38,7 @@ namespace ebp
 	class connection;
 
 	#pragma db object
+	/// Bewohnerklasse
 	class Bewohner : public databaseObject<Bewohner>
 	{
 		Q_DECLARE_TR_FUNCTIONS( Bewohner )
@@ -201,6 +202,7 @@ namespace ebp
 	};
 
 	#pragma db view object(Bewohner)
+	/// Statistik aller Bewohnerobjekte
 	class BewohnerStatistik
 	{
 	public:

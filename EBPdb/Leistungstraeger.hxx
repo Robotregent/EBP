@@ -22,6 +22,7 @@ namespace ebp
 	class connection;
 
 	#pragma db object
+	/// Leistungstraegerklasse
 	class Leistungstraeger : public databaseObject<Leistungstraeger>
 	{
 		Q_DECLARE_TR_FUNCTIONS( Leistungstraeger )
