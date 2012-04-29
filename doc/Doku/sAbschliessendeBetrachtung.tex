@@ -8,3 +8,20 @@
 		Da bei der Instanzierung einer Templateklasse die komplette Implementierung bekannt sein muss,
 		kann es zu Problemen kommen wenn zwei Template Klassen die Methoden der jeweiligen anderen Klasse verwenden wollen.
 \end{itemize}
+\subsection{Fehlender Controller auf den Masken}
+Der reine Model/View Ansatz von Qt ist in sehr vielen Fällen sicher ausreichend, aber vor allem das Speicherkonzept hätte von einem dezidierten
+Controller profitiert. Wie die Usability-Tests gezeigt haben, erwarten die User mehr Rückmeldung als wir anfangs erwartet hatten. Als Reaktion auf
+die Ergebnisse der Usability-Tests wurde nachträglich eine Rückfrage an den User eingebaut. Damit wird prüft, ob ausstehende Änderungen vor
+einem Wechsel der Maske gespeichert werden sollen. Die Logik für diese Rückfrage sollte korrekter Weise in einen Controller gekapselt werden. 
+
+\subsection{Weitere Epics}
+Aus den Gesprächen mit Herrn Zimmer ergaben sich noch weitere Funktionen, in der Sprache von \textit{Scrum} Epic genannt, die in folgenden
+Iterationen Implementiert werden sollten:
+\begin{description}
+ \item[Kalendermodul] Dieses Modul soll auf Wohngruppenebene eingeordnet werden und zur Planung des Ablaufs einer Wohngruppe/Station dienen.
+Kalenderfunktionen, wie Serientermine und Ressourcenplanung sollen Teil des Moduls sein.
+ \item[Medikationsplan] Jedem Bewohner soll ein Medikationsplan zugeordnet werden. Dort werdensowohl die Menge und Art der Medikation, wie auch der
+verabreichende Mitarbeiter und das Datum der Medikamentengabe protokolliert.
+\end{description}
+
+ 
