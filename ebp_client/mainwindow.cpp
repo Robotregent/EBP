@@ -73,7 +73,7 @@ void MainWindow::create_sidemenu()
 {
 
     this->dock_side_menu = new QDockWidget(tr("Navigation"),this);
-    this->dock_side_menu->setAllowedAreas(Qt::AllDockWidgetAreas);
+    this->dock_side_menu->setAllowedAreas(Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea);
     this->side_menu= new SideMenu(this);
     this->dock_side_menu->setWidget(this->side_menu);
     this->dock_side_menu->setObjectName("Navigation");
@@ -94,7 +94,7 @@ void MainWindow::create_sidemenu()
 void MainWindow::creat_InfoWidget()
 {
     InfoDockWidget =new QDockWidget(tr("Information zu aktueller Auswahl"),this);
-    InfoDockWidget->setAllowedAreas(Qt::AllDockWidgetAreas);
+    InfoDockWidget->setAllowedAreas(Qt::TopDockWidgetArea);
     this->_infoFrame = new InfoFrame(this->bwDialog,this->wgDialog,this);
     InfoDockWidget->setWidget(this->_infoFrame);
     InfoDockWidget->setObjectName("Information");
@@ -107,7 +107,7 @@ void MainWindow::create_TextTransferDock()
 {
     this->TextTransferDock = new QDockWidget(this);
     this->TextTransferDock->setVisible(false);
-    this->TextTransferDock->setAllowedAreas(Qt::AllDockWidgetAreas);
+    this->TextTransferDock->setAllowedAreas(Qt::BottomDockWidgetArea);
     this->TextTransferDock->setObjectName("TextTransferAgent");
     this->addDockWidget(Qt::BottomDockWidgetArea,this->TextTransferDock);
 }

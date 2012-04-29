@@ -7,7 +7,9 @@
 namespace Ui {
     class ChooseEmployee;
 }
-
+/**
+  * PopUp Dialog, um einen Mitarbeiter zum löschen auszuwählen.
+  */
 class ChooseEmployee : public QDialog
 {
     Q_OBJECT
@@ -19,7 +21,6 @@ public:
 private slots:
 
     void on_ButtonAbort_clicked();
-
     void on_ButtonErase_clicked();
 
 private:

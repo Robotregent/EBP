@@ -250,11 +250,9 @@ void DecreeScrollArea::createVerfuegung(ebp::Verfuegung::Typ verfuegungTyp)
         QSharedPointer<ebp::Bewohner> tempB = con.allBewohner.at(con.allBewohner.indexOf(con.curBewohner));
 
         ebp::Verfuegung::linkBewohner(tmpVerfuegung,tempB);
-        //bewohner_verfuegungen.clear();
         tmpVerfuegung->update(this->con.curConnection);
         con.curBewohner->update((this->con.curConnection));
         bewohner_verfuegungen.append(tmpVerfuegung);
-        QMessageBox::about(this, tr("Erfolg"),tr("Verfuegung wurde erfolgreich angelegt"));
         switch(verfuegungTyp)
         {
         case ebp::Verfuegung::Fixierung:

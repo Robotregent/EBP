@@ -98,6 +98,7 @@ void BewohnerDeleteDialog::setItemList(QList<CostumListWidget<ebp::Bewohner> *> 
     itemList = _itemList;
     foreach (CostumListWidget<ebp::Bewohner> *i,this->itemList)
     {
+        i->setText(i->text().leftJustified(12,' ')+"\t\t"+i->getCitem()->wohngruppe()->name());
         this->ui->listWidget->addItem(i);
     }
 }
