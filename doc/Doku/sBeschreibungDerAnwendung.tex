@@ -5,7 +5,7 @@
 Im \textit{Admindialog} können Administratoren Bewohner, Wohngruppen/-heime und Mitarbeiter verwalten.
 \begin{figure*}[h]
 	\begin{center}
-		\includegraphics[keepaspectratio=true, width=0.85\textwidth]{pics/admin3.png}
+		\includegraphics[keepaspectratio=true, width=0.8\textwidth]{pics/admin3.png}
 		\caption{Wohngruppe}
 		\label{Admindialog Wohngruppe}
 		\caption{Graphen eines Interfaces}
@@ -21,7 +21,7 @@ Hier werden Wohngruppen erstellt, diese dienen als Gruppierung für sowohl Bewoh
 Bewohner werden mit einer Bewohnernummer, Vor-/Nachnamen und ihrer Wohngruppe  erstellt. 
 \begin{figure*}[h]
 	\begin{center}
-		\includegraphics[keepaspectratio=true, width=0.85\textwidth]{pics/admin2.png}
+		\includegraphics[keepaspectratio=true, width=0.8\textwidth]{pics/admin2.png}
 		\caption{Bewohner}
 		\label{Admindialog Bewohner}
 		\caption{Graphen eines Interfaces}
@@ -37,7 +37,7 @@ Restliche Informationen werden im Client von zugewiesenen Bezugsbetreuern ausgef
 Mitarbeiter werden mit Login sowie einigen persönlichen Daten, Name und Kontaktmöglichkeiten, sowie ihrer Berechtigung erstellt. Es ist darauf zu achten das jedem Mitarbeiter beim erstellen mindestens eine Wohngruppe zugeordnet werden muss, die er betreut. Er kann allerdings natürlich auch für mehrere Wohngruppen zuständig sein und auch der Bezugsbetreuer für Bewohner sein.
 \begin{figure*}[h]
 	\begin{center}
-		\includegraphics[keepaspectratio=true, width=0.85\textwidth]{pics/admin1.png}
+		\includegraphics[keepaspectratio=true, width=0.8\textwidth]{pics/admin1.png}
 		\caption{Mitarbeiter}
 		\label{Admindialog Mitarbeiter}
 	\end{center}
@@ -65,7 +65,7 @@ Der \EBP \textit{Client} besitzt eine widgetbasierende GUI die aus folgenden Ele
 	Hier der momentan ausgewählte Bewohner und dessen Wohngruppe angezeigt, zum ändern öffnet sich, bei Auswahl des jeweiligen Buttons, ein Popup mit allen Wohngruppen für die der Mitarbeiter berechtigt ist, bzw. alle Bewohner der jeweiligen Wohngruppe.
 	\begin{figure*}[h]
 		\begin{center}
-			\includegraphics[keepaspectratio=true, width=0.85\textwidth]{pics/client_info.png}
+			\includegraphics[keepaspectratio=true, width=0.8\textwidth]{pics/client_info.png}
 			\caption{Informationswidget}
 			%\label{Bewohner- und Stationswidget}
 		\end{center}
@@ -88,7 +88,7 @@ Der \EBP \textit{Client} besitzt eine widgetbasierende GUI die aus folgenden Ele
 	Das eigentliche Hauptfenster dient zur Ein-/Ausgabe von Daten und bezieht sich immer auf den im Informationswidget ausgewählten Bewohner, bzw die ausgewählte Wohngruppe. Um hier eingegebene Daten zu sichern muss der Speichern-Knopf in der Menüleiste betätigt werden.\\
 	\begin{figure*}[h]
 		\begin{center}
-			\includegraphics[keepaspectratio=true, width=0.85\textwidth]{pics/client_main.png}
+			\includegraphics[keepaspectratio=true, width=0.8\textwidth]{pics/client_main.png}
 			\caption{Hauptfenster}
 			%\label{Hauptfenster}
 		\end{center}
@@ -100,7 +100,7 @@ Der \EBP \textit{Client} besitzt eine widgetbasierende GUI die aus folgenden Ele
 	Dieses Interface das in mehreren Menüpunkten am unterem Rand des Hautfensters integriert ist, ermöglicht einfaches kopieren von markierten Textteilen in die Betreungsplanung eines, durch Dropdown-Menü auswählbaren, Bewohners.
 	\begin{figure*}[h]
 		\begin{center}
-			\includegraphics[keepaspectratio=true, width=0.85\textwidth]{pics/client_texttransfer.png}
+			\includegraphics[keepaspectratio=true, width=0.8\textwidth]{pics/client_texttransfer.png}
 			\caption{Texttransfer Interface}
 		\end{center}
 	\end{figure*}
@@ -114,7 +114,7 @@ Der \EBP \textit{Client} besitzt eine widgetbasierende GUI die aus folgenden Ele
 	Hier können persönliche Daten des Bewohners eingesehen und geändert werden.
 	\begin{figure*}[h]
 		\begin{center}
-			\includegraphics[keepaspectratio=true, width=0.85\textwidth]{pics/client_person.png}
+			\includegraphics[keepaspectratio=true, width=0.77\textwidth]{pics/client_person.png}
 			\caption{Person}
 			%\label{Hauptfenster}
 		\end{center}
@@ -125,13 +125,12 @@ Der \EBP \textit{Client} besitzt eine widgetbasierende GUI die aus folgenden Ele
 	Ein Unterpunkt von 'Person'. Hier sind Angaben über den gesetzlichen Betreuer des Bewohners.
 	\begin{figure*}[h]
 		\begin{center}
-			\includegraphics[keepaspectratio=true, width=0.85\textwidth]{pics/client_betreuung.png}
+			\includegraphics[keepaspectratio=true, width=0.77\textwidth]{pics/client_betreuung.png}
 			\caption{Gesetzliche Betreuung}
 			%\label{Hauptfenster}
 		\end{center}
 	\end{figure*}
 	\FloatBarrier
-	\newpage
 	\item Verfügungen\mbox{}\\
 	\noindent
 	Ein Unterpunkt von 'Person'. Eventuelle Verfügungen gegen den Patienten, ihre Dauer und Begründung sind hier dokumentiert.
@@ -143,6 +142,7 @@ Der \EBP \textit{Client} besitzt eine widgetbasierende GUI die aus folgenden Ele
 		\end{center}
 	\end{figure*}
 	\FloatBarrier
+	\newpage
 	\item Leistungsträger\mbox{}\\
 	\noindent
 	Ein Unterpunkt von 'Person'. Durch den Button in der links, oberen Ecke können Angabemasken für Leistungsträger hinzugefügt werden. Diese beinhalten sowohl den Leistungsträger an sich, als auch Kontaktdaten eines Ansprechpartners.
@@ -160,7 +160,7 @@ Der \EBP \textit{Client} besitzt eine widgetbasierende GUI die aus folgenden Ele
 	Hier werden Projekte mit Zielen, Betreuern und einer Beschreibung für den Bewohner angelegt.\\Am unterem Rand ist eine Möglichkeit zum einfachem kopieren von ausgewählten Textteilen in die Betreuungsplanung eines auswählbaren Bewohners gegeben.
 	\begin{figure*}[h!]
 		\begin{center}
-			\includegraphics[keepaspectratio=true, width=0.85\textwidth]{pics/client_projekt.png}
+			\includegraphics[keepaspectratio=true, width=0.8\textwidth]{pics/client_projekt.png}
 			\caption{Projekt}
 			%\label{Hauptfenster}
 		\end{center}
@@ -172,7 +172,7 @@ Der \EBP \textit{Client} besitzt eine widgetbasierende GUI die aus folgenden Ele
 	Um Mitarbeiterbesprechungen, die einen Bewohner betreffen, einfacher anderen betroffenen Mitarbeitern zugänglich zu machen, können hier Protokolle, durch Datum und Uhrzeit markiert, mit einer Liste der Teilnehmer sowie einer Markierung für den Schriftführer angelegt werden.\\Am unterem Rand ist das Texttransfer Interface integriert.
 	\begin{figure*}[h!]
 		\begin{center}
-			\includegraphics[keepaspectratio=true, width=0.85\textwidth]{pics/client_protokoll.png}
+			\includegraphics[keepaspectratio=true, width=0.8\textwidth]{pics/client_protokoll.png}
 			\caption{Protokoll}
 			%\label{Hauptfenster}
 		\end{center}
@@ -184,7 +184,7 @@ Der \EBP \textit{Client} besitzt eine widgetbasierende GUI die aus folgenden Ele
 	in der Betreuungsplanung werden einzelne Fähigkeiten oder Umstände des Bewohners beschrieben, sowohl der momentane Zustand als auch mögliche Ziele die der Bewohner erreichen soll.
 	\begin{figure*}[h!]
 		\begin{center}
-			\includegraphics[keepaspectratio=true, width=0.85\textwidth]{pics/client_lebensfuehrung.png}
+			\includegraphics[keepaspectratio=true, width=0.8\textwidth]{pics/client_lebensfuehrung.png}
 			\caption{Betreungsplanung: Unterpunkt Einkaufen}
 			%\label{Hauptfenster}
 		\end{center}
