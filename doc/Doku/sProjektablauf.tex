@@ -22,12 +22,15 @@
 
 \subsubsection{Ausgangssituation und Zielsetzung}
 \label{subsubsec:ziel}
-Das Ziel ist es, eine Applikation zu entwickeln, die es Einrichtungen der Behinderten- und Altenhilfe ermöglicht,
+Das Ziel war es, eine Applikation zu entwickeln, die es Einrichtungen der Behinderten- und Altenhilfe ermöglicht,
 die langfristige Betreuungsplanung mit der Tagesdokumentation zu verknüpfen. Es sollen Ereignisse aus dem Tagesgeschehen,
 die in der Tagesdokumentation der Wohngruppe / des Pflegeheims erfasst werden,
 der Betreuungsplanung des betroffenen Bewohners zugeordnet werden können.
-Damit soll doppelter Dokumentationsaufwand verhindert werden. Durch die elektronische Form der Dokumentation soll eine konsistente Form der Dokumentation erreicht werden. 
-Die Software soll sowohl in stationären und ambulanten Einrichtungen der Behindertenhilfe und Altenhilfe eingesetzt werden können. Dazu muss die Beschreibung der Betreuungsplanung modular austauschbar sein. Die hier umgesetzte Version ist für den Einsatz in der Behindertenhilfe in Baden Württemberg geeignet. 
+Damit soll doppelter Dokumentationsaufwand verhindert werden. Durch die elektronische Form der Dokumentation soll eine konsistente Form der
+Dokumentation erreicht werden. 
+Die Software soll sowohl in stationären und ambulanten Einrichtungen der Behindertenhilfe wie auch in der Altenhilfe eingesetzt werden können. Dazu
+muss die Beschreibung der Betreuungsplanung modular austauschbar sein. Die hier umgesetzte Version ist für den Einsatz in der Behindertenhilfe in
+Baden Württemberg geeignet. 
 Diese Einschränkung ergibt sich aus der Implementierung der Betreuungsplanung. Diese Version orientiert sich an dem bisher in Baden Württemberg
 geltenden Standard, dem Metzler-Verfahren.
 Die Software soll vorwiegend von pädagogischen Fachkräften benutzt werden. Entsprechend den individuellen Arbeitsabläufen in den 
@@ -37,7 +40,8 @@ Die fachlichen Anforderungen an die \EBP wurden gemeinsam mit Herrn Martin Zimme
 Bernkastel-Wittlich) erarbeitet und ausformuliert. Ergebnis dieser Arbeit sind die folgenden User Stories.
 
 \subsubsection{User Stories}
-User Stories sind ein Ansatz aus der Agilen Softwareentwicklung, um die Anforderungen verschiedener User an die Software zu definieren. Die
+User Stories sind ein Ansatz aus der agilen Softwareentwicklung und dienen dazu, die Anforderungen verschiedener User an die Software zu definieren.
+Die
 Formulierung einer User Story erfolgt nach folgendem Template \cite{Wikipedia_User_Story}:
 \begin{lstlisting}
 As a <role>, I want <goal/desire> so that <benefit>
@@ -47,14 +51,15 @@ Oder in der verkürzten Form:
 As a <role>, I want <goal/desire>
 \end{lstlisting}
 User Stories, die thematisch im Zusammenhang stehen werden unter einem Epic zusammengefasst. Die Sprache sollte bei der Formulierung
- von Epic und User Stories aus der Lebenswelt des Kunden stammen. Die Anforderungen an die \EBP wurden in folgende Epic und User Stories aufgeteilt:
+ von Epic und User Stories aus der Lebenswelt des Kunden stammen. Die Anforderungen an die \EBP wurden in folgende Epics und User Stories aufgeteilt:
 \newline
 
 \begin{longtable}{| p{0.25\textwidth}|p{0.05\textwidth}|p{0.7\textwidth} | }
   \hline
  \textbf{Epic} & \textbf{Nr.} & \textbf{User Story} \\
   \hline
-\multirow{4}{0.25\textwidth}{Die persönlichen Daten eines Klienten sollen digital verwaltet werden} & 1 & Als Pflegekraft kann ich die Kontaktdaten eines Klienten anzeigen lassen und auch bearbeiten.  \\
+\multirow{4}{0.25\textwidth}{Die persönlichen Daten eines Klienten sollen digital verwaltet werden.} & 1 & Als Pflegekraft kann ich die Kontaktdaten
+eines Klienten anzeigen lassen und auch bearbeiten.  \\
   \cline{2 -3}
 & 2 & Als Pflegekraft kann ich Informationen über die Leistungsträger der Klienten in meinem Verantwortungsbereich anzeigen lassen und
 auch bearbeiten.\\
@@ -70,9 +75,10 @@ Maßnahmen richterlich angeordnet werden, um Rechtssicherheit bei meiner Arbeit 
 
 \begin{longtable}{| p{0.25\textwidth}|p{0.05\textwidth}|p{0.7\textwidth} | }
   \hline
-\multirow{3}{0.25\textwidth}{Für jeden Klienten können mehrere Projekte organisiert werden, die eine pädagogische Zielsetzung haben} & 5 & Als für ein Projekte verantwortlicher Mitarbeiter kann ich neue Projekte anlegen \\
+\multirow{3}{0.25\textwidth}{Für jeden Klienten können mehrere Projekte organisiert werden, die eine pädagogische Zielsetzung haben.} & 5 & Als für
+ein Projekte verantwortlicher Mitarbeiter kann ich neue Projekte anlegen.\\
  \cline{2 - 3}
-  & 6 & Als für ein Projekte verantwortlicher Mitarbeiter kann ich pädagogische Ziele für ein Projekt definieren \\
+  & 6 & Als für ein Projekte verantwortlicher Mitarbeiter kann ich pädagogische Ziele für ein Projekt definieren.\\
    \cline{2 - 3}
   & 7 & Als Pflegekraft kann ich Textfragmente aus der Zielsetzung oder der Projektbeschreibung in einen bestimmten
 Bereich der Betreuungsdokumentation übertragen, um den Fortschritt und die Zielerreichung der Langzeitplanung einfach dokumentieren zu können.\\
@@ -81,7 +87,7 @@ Bereich der Betreuungsdokumentation übertragen, um den Fortschritt und die Ziel
 \cline{2 - 3}
  & 9  & Bei jedem Protokoll sind die Teilnehmer und das Protokolldatum ersichtlich. \\
 \cline{2 - 3}
-& 10 & Ein oder mehrere Teilnehmer können als Protokollant markiert werden \\
+& 10 & Ein oder mehrere Teilnehmer können als Protokollant markiert werden.\\
 \cline{2 - 3}
 & 11 & Als Pflegekraft kann ich Textfragmente aus dem Protokolltext in einen bestimmten
 Bereich der Betreuungsdokumentation übertragen, um den Fortschritt und die Zielerreichung der Langzeitplanung einfach dokumentieren zu können.\\
@@ -108,26 +114,39 @@ lückenlose Kommunikation mit meinen Kollegen zu gewährleisten.\\
 & 17 & Als Pflegekraft kann ich Textfragmente aus einem Ereignis in einen bestimmten
   Bereich der Betreuungsdokumentation übertragen, um den Fortschritt und die Zielerreichung der Langzeitplanung einfach dokumentieren zu können.\\
  \hline
- Die Abwesenheit eines Klienten von der Wohngruppe über einen Zeitraum größer gleich einem Tag muss zur Abrechnung mit dem Leistungsträger
+ Die Abwesenheit eines Klienten von der Wohngruppe über einen Zeitraum größer oder gleich einem Tag, muss zur Abrechnung mit dem Leistungsträger
 dokumentiert werden. & 18 & Als Pflegekraft kann ich die Abwesenheit eines Klienten mit der \EBP dokumentieren, um eine der Verwaltung eine einfache
 Abrechnung zu ermöglichen.\\
  \hline
 \end{longtable}
 
 \subsubsection{Gesetzliche Rahmenbedingungen}
-Der gesetzliche Rahmen für die \EBP besteht aus den Vorgaben des Heimgesetzes und denen des SGB X bzw. XI. Im SGB XI §112 ff und dem Heimgesetz §13 sind die Normen zur Qualitätssicherung in Pflegeheimen definiert. Diese sehen eine umfangreiche und lückenlose Dokumentation vor. Aus diesen strengen Vorgaben ergibt sich für die \EBP die Anforderung, dass angelegte Projekte, Protokolle und Einträge ins Gruppenbuch nicht wieder gelöscht werden können. Diesen Anforderungen stehen die Normen des SGB X gegenüber. In §67 SGB X ist der Umgang mit Sozialdaten definiert. Um diesem Spannungsfeld gerecht zu werden können Mitarbeiter in der \EBP nur die Daten einsehen, die von Betreuten aus ihrem Zuständigkeitsbereich stammen.
+Der gesetzliche Rahmen für die \EBP besteht aus den Vorgaben des Heimgesetzes und denen des SGB X bzw. XI. Im SGB XI §112 ff und dem Heimgesetz §13
+sind die Normen zur Qualitätssicherung in Pflegeheimen definiert. Diese sehen eine umfangreiche und lückenlose Dokumentation vor. Aus diesen strengen
+Vorgaben ergibt sich für die \EBP die Anforderung, dass angelegte Projekte, Protokolle und Einträge ins Gruppenbuch nicht wieder gelöscht werden
+können. Diesen Anforderungen stehen die Normen des SGB X gegenüber. In §67 SGB X ist der Umgang mit Sozialdaten definiert. Um diesem Spannungsfeld
+gerecht zu werden können Mitarbeiter in der \EBP nur die Daten einsehen, die von Betreuten aus ihrem Zuständigkeitsbereich stammen.
 \subsubsection{Qualitätssicherung zur Einhaltung der Anforderungsdefinitionen}
-Um die Benutzbarkeit sicher zu stellen wurden eine Reihe von Usability-Tests durchgeführt. KRUG beschreibt den Stellenwert von Usability-Tests sehr treffend: \\
-''Wenn Sie an einer Seite auch nur einige Wochen gearbeitet haben, können Sie sie nicht mehr unbedarft betrachten. Sie wissen zu viel. Der einzige Weg, um herauszufinden, ob sie wirklich funktioniert, sind Tests\cite[S. 133]{Usability}.'' \\
+Um die Benutzbarkeit der Anwendung durch die User sicher zu stellen wurden eine Reihe von Usability-Tests durchgeführt. KRUG beschreibt den
+Stellenwert von Usability-Tests sehr treffend: \\
+''Wenn Sie an einer Seite auch nur einige Wochen gearbeitet haben, können Sie sie nicht mehr unbedarft betrachten. Sie wissen zu viel. Der einzige
+Weg, um herauszufinden, ob sie wirklich funktioniert, sind Tests\cite[S. 133]{Usability}.'' \\
 \noindent
-Dies gilt natürlich nicht nur für Websites sondern auch für das Erstellen jeder anderen grafischen Oberfläche. Angelehnt an den agilen Entwicklungsprozess war auch der Usability-Test Prozess mehrstufig.
+Dies gilt natürlich nicht nur für Websites sondern auch für das Erstellen jeder anderen grafischen Oberfläche. Angelehnt an den agilen
+Entwicklungsprozess war auch der Testprozess der Usability mehrstufig.
 
 \paragraph*{Ablauf}
 \begin{description}
 
-        \item[Phase 1] Nach der grundlegenden Gestaltung der grafischen Oberfläche ohne funktionale Logik wurden \textit{Tests zum Kapieren} mit verschiedenen Testpersonen durchgeführt. Diese \textit{Tests zum Kapieren} sollen feststellen, ob der Nutzer die Bedienkonzepte, wie z.B. die Navigation, und Absichten der Anwendung versteht\cite[Vgl. S. 144]{Usability}.
+        \item[Phase 1] Nach der grundlegenden Gestaltung der grafischen Oberfläche ohne funktionale Logik wurden \textit{Tests zum Kapieren}
+mit verschiedenen Testpersonen durchgeführt. Diese \textit{Tests zum Kapieren} sollen feststellen, ob der Nutzer die Bedienkonzepte, wie z.B. die
+Navigation, und die Absichten der Anwendung versteht\cite[Vgl. S. 144]{Usability}.
 
-        \item[Phase 2] In dieser Phase des Testprozesses waren die getesteten Masken vollständig implementiert und wurden an Hand von \textit{Schlüsselaufgaben} getestet. ''Tests mit bedeuten, dass Sie den Usern eine Aufgabe stellen und dann beobachten, wie gut sie zurechtkommen\cite[Vgl. S. 144]{Usability}.'' Die \textit{Schlüsselaufgaben} wurden so definiert, dass mit ihrer Überprüfung gleichzeitig die Umsetzung der User Stories überprüft wurde. Damit erfolgte durch die Usability-Tests auch eine Überprüfung des Erfüllungsgrads der Anforderungsdefinitionen. Folgende Schlüssel-aufgaben wurden für die entsprechenden User Stories (Siehe Nummer) definiert:
+        \item[Phase 2] In dieser Phase des Testprozesses waren die getesteten Masken vollständig implementiert und wurden an Hand von
+\textit{Schlüsselaufgaben} getestet. ''Tests mit Schlüsselaufgaben bedeuten, dass Sie den Usern eine Aufgabe stellen und dann beobachten, wie gut sie
+zurechtkommen\cite[Vgl. S. 144]{Usability}.'' Die \textit{Schlüsselaufgaben} wurden so definiert, dass mit ihrer Überprüfung gleichzeitig die
+Umsetzung der User Stories überprüft wurde. Damit erfolgte durch die Usability-Tests auch eine Überprüfung des Erfüllungsgrads der
+Anforderungsdefinitionen. Folgende Schlüssel-aufgaben wurden für die entsprechenden User Stories (siehe Nummer) definiert:
 
         \begin{enumerate}
 		\item Finde das Geburtsdatum von Waldemar Fried heraus. 
@@ -155,15 +174,21 @@ Dies gilt natürlich nicht nur für Websites sondern auch für das Erstellen jed
 \paragraph*{Ergebnisse}
 \begin{description}
 
-\item[Phase 1:] Inkonsistente Namensgebung und fehlende Funktionen, wie eine Logoutfunktion, wurden aufgedeckt. Das grundlegende Navigationskonzept in Form des Baummenüs wurde geprüft und von den Probanden als verständlich empfunden. Die Dockingfunktion des Navigationsmenüs und des Informationswidgets wurden eingeschränkt, da die völlige Freiheit der Platzierung der Widgets die Probanden stark verunsichert hatte. 
+\item[Phase 1:] Inkonsistente Namensgebung und fehlende Funktionen, wie eine Logoutfunktion, wurden aufgedeckt. Das grundlegende Navigationskonzept
+in Form des Baummenüs wurde geprüft und von den Probanden als verständlich empfunden. Die Dockingfunktion des Navigationsmenüs und des
+Informationswidgets wurden beschränkt, da die völlige Freiheit der Platzierung der Widgets die Probanden stark verunsichert hatte. 
 
 \item[Phase 2:] In dieser Phase wurde die Stellen offen gelegt, an denen den Usern das Bedienkonzept nicht deutlich wurde.
-Als Ergebnis wurde zum Beispiel beim \textit{TextTransfer} ein Hilfebutton eingefügt, der eine kleines PopUp mit kurzer Hilfestellung anzeigt.
-Häufige Problemstellungen waren auch falsche oder uneinheitliche Benennungen von Menüpunkten und Inhalt. Diese Fehler waren sehr dankbar, da leicht zu beheben und verdeutlichen noch einmal den Stellenwert von Usability Tests. Das Konzept, dass \EBP immer einen aktiven Bewohner und eine aktive Wohngruppe hat, war die größte Hürde für die User.
+Als Ergebnis wurde zum Beispiel beim \textit{TextTransfer} ein Hilfebutton eingefügt, der eine kleines PopUp mit kurzer Hilfestellung anzeigt. Auch
+die Beschriftung wurde mehrmals geändert und immer wieder geprüft.
+Häufige Problemstellungen waren auch falsche oder uneinheitliche Benennungen von Menüpunkten und Inhalt. Diese Fehler waren sehr dankbar, da leicht
+zu beheben und verdeutlichen noch einmal den Stellenwert von Usability-Tests. Das Konzept, dass die \EBP immer einen aktiven Bewohner und eine aktive
+Wohngruppe hat, war die größte Hürde für die User.
 Die Informationen über die aktuell aktive Wohngruppe und den aktiven Bewohner werden in einem Informationswidget im oberen Bereich der Anwendung visualisiert (siehe dazu Kapitel \ref{sec:beschreibung}). Dort können die aktiven Elemente auch geändert werden. Bei jedem Test wurde das Bedienkonzept erst klar, als der User das Infowidget eindeckte und seine Funktionen  ausprobierte. In allen Fällen war das 
 Konzept nach kurzem Experimentieren klar. Eine Verbesserung der Bedienbarkeit sollte jedoch an diesem Widget ansetzten.\\
 Eine weitere Schwierigkeit für die meisten Probanden war das Speicherkonzept. Die Probanden waren oft verunsichert, ob ihre Änderungen schon
-gespeichert wurden. Eine Rückfrage wie ``Wollen Sie Änderungen speichern?'' beim Wechseln der Masken wäre eine deutliche Verbesserung der Usability. 
+gespeichert wurden. Die Rückfrage ``Wollen Sie Änderungen speichern?'' beim Wechseln der Masken hat eine deutliche Verbesserung der Usability
+erzeugt.\\
 Eine häufige Erwartungshaltung war es, dass sich der Speicherbutton am rechten unteren Ende der Maske befindet. Dies kann nicht bei allen Masken
 realisiert werden. Bei Masken mit einem Scrollbereich und beliebig viel Inhalt, wie die ''Leistungsträger'' Maske, müsste der Button an einer anderen
 Stelle positioniert werden. Ein wechselndes Verhalten wäre für die Usability aber noch störender. Aus diesem Grund ist der Speicherbutton an einer

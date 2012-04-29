@@ -9,8 +9,6 @@ Das Projekt ist in folgende Module aufgeteilt:
 	\item \textbf{Unit-Tests} - Automatisierte Tests der Bibliothek
 \end{itemize}
 
-\newpage
-
 \subsection{Das QT-Framework}
 \subsubsection{Grafische Oberfläche}\mbox{}\\
 Die GUI wurde in grafischer Weise mit den bei \textit{Qt} mitgelieferten Tools erstellt.\\Diese Tools sind:
@@ -25,8 +23,9 @@ Der von \textit{UIC} generierte Code enthält das im \textit{QT-Designer} erstel
 	\item Eine Mitgliedsfunktion setupUi() die den Widgetbaum auf dem Parent-Widget erstellt.
 	\item Eine Mitgliedsfunktion retranslateUi() die das Übersetzen von String-Eigenschaften in der GUI übernimmt.
 \end{itemize}
-Es gibt nun mehrere Möglichkeiten die generierte C++-Header Datei in der Anwendung zu verwenden.Diese sind als Direct Approach, Single Inheritance Approach und als Multiple Inheritance Approach bekannt.
-\newpage
+Es gibt nun mehrere Möglichkeiten die generierte C++-Header Datei in der Anwendung zu verwenden. Diese sind als Direct Approach, Single Inheritance
+Approach und als Multiple Inheritance Approach bekannt.
+
 \paragraph{Direct Approach}\mbox{}\\
 Hier wird die generierte C++-Header Datei in einer cpp Datei inkludiert und die setupUi()-Methode auf ein standard \textit{QWidget} angewendet, welches dann das, in der vom \textit{UIC} generierten Header Datei beschriebenes, \textit{U}ser \textit{I}nterface (UI) enthält.\\Beispielcode:
 \begin{lstlisting}
@@ -112,7 +111,8 @@ Wenn der Mitgliedspointer verwendet wird, ist es möglich das UI-Objekt nur zu d
 \end{lstlisting}
 \newpage
 \paragraph{Multiple Inheritance Approach}\mbox{}\\
-Hier wird sowohl von der UI als auch von \textit{QWidget} abgeleitet, was den Vorteil hat, das die Widgets in der UI auf die selbe weise addressiert werden können, wie von Hand erstellte Widgets, daher ohne das ui prefix.
+Hier wird sowohl von der UI als auch von \textit{QWidget} abgeleitet, was den Vorteil hat, dass die Widgets in der UI auf dieselbe Weise adressiert
+werden können, wie von Hand erstellte Widgets. Sie brauchen daher kein ui Präfix.
 \begin{lstlisting}
  musteranwendung.h
 
@@ -136,29 +136,31 @@ class MusterForm : public QWidget, private Ui::MusterForm
      setupUi(this);
  }
 \end{lstlisting}
-Über die \textit{QtUiLoader}-Klasse können die .ui-Files zur Laufzeit bearbeitet werden um dynamisch generierte Oberflächen zu erzeugen, dies haben wir jedoch in \EBP nicht verwendet.\\
-\cite{QT_UIC} 
+Über die \textit{QtUiLoader}-Klasse können die .ui-Files zur Laufzeit bearbeitet werden um dynamisch generierte Oberflächen zu erzeugen, dies haben
+wir jedoch in \EBP nicht verwendet\cite{QT_UIC}.\\ 
 \newpage
 \subsubsection{Das Meta-Objekt System}\mbox{}\\
 Das \textit{M}eta-\textit{O}bjekt \textit{S}ystem (MOS) ist eine C++-Erweiterung von \textit{Qt} die folgende zusätzliche Features bietet:
 \begin{itemize}
 	\item den Signal und Slot-Mechanismus für inter-Objekt Kommunikation\\[\baselineskip]
-Beschrieben im Observermodel.
+Beschrieben im Observermodel, Kapitel \ref{subsubsec:observer}.
 	\item Typ-Informationen zur Laufzeit\\[\baselineskip]
 z.B. gibt \textit{QObject::className()} den Klassenname als String zur Laufzeit zurück, ohne native Laufzeit Typ Informationen (RTTI - \textit{R}un\textit{T}ime \textit{T}ype \textit{I}nformation) Support durch den C++ Compiler zu benötigen.
 	\item das dynamische Eigenschaftssystem\\[\baselineskip]
 z.B. \textit{QObject:setProperty()} setzt dynamisch Eigenschaften durch den Namen.
 \end{itemize}
-Es basiert auf 3 Dinge:
+Es basiert auf 3 Dinge\cite{QT_MOC}:
 \begin{itemize}
 	\item die \textit{QObject} Klasse\\[\baselineskip]
 Eine Basisklasse für Objekte die das MOS verwenden können
 	\item das \textit{Q\_OBJECT} Macro\\[\baselineskip]
 Muss im Private Teil der Klassendefinition sein. Es deklariert Features des MOS, z.B. Signals und Slots
 	\item den \textit{M}eta-\textit{O}bjekt \textit{C}ompiler\\[\baselineskip]
-Liest C++ Dateien und erstellt für jede Klassendeklaration die das \textit{Q\_OBJECT} Makro enthält eine zusätzliche C++ Source Datei die den Meta Objekt Code für diese Klassen enthält. Die so erstellte Source Datei wird entweder inkludiert oder, üblicherweise, kompiliert und mit der Implementation der Klasse gelinkt.
+Liest C++ Dateien und erstellt für jede Klassendeklaration die das \textit{Q\_OBJECT} Makro enthält eine zusätzliche C++ Source Datei die den Meta
+Objekt Code für diese Klassen enthält. Die so erstellte Source Datei wird entweder inkludiert oder, üblicherweise, kompiliert und mit der
+Implementation der Klasse gelinkt.
 \end{itemize}
-\cite{QT_MOC}
+
 \newpage
 \subsection{Buildsystem}
 Da das Projekt \textit{Qt} als einen zentralen Bestandteil verwendet, ist es naheliegend das \textit{Qt}-eigene Buildsystem \textit{QMake} einzusetzen. Insbesondere die Verwendung von \textit{QMake} innerhalb des \textit{QtCreator}s kann die Entwicklung einfacher Anwendungen erleichtern.\\
@@ -185,7 +187,9 @@ Folgende ORM-Systeme wurden in Betracht gezogen\\
 \end{itemize}
 Alle Systeme bieten eine \textit{Qt} Integration, die die Schnittstelle zwischen GUI und Persistenzschicht vereinfachen.
 Ebenso unterstützen alle Systeme mehrere Datenbankbackends.
-Letztendlich fiel die Entscheidung auf \textit{ODB}, da diese Bibliothek (unter anderem durch Caching) die beste Performance verspricht.
+Letztendlich fiel die Entscheidung auf \textit{ODB}
+(\href{http://www.codesynthesis.com/products/odb/}{www.codesynthesis.com/products/odb/}), da diese Bibliothek (unter anderem durch
+Caching) die beste Performance verspricht.
 Außerdem lassen sich Klassen mit geringem Aufwand persistent machen.
 
 \newpage
@@ -307,7 +311,7 @@ bewohner->update( connection );
 \end{lstlisting}
 Dabei geht eine Verknüpfung immer von einer der Klassen aus - die andere ist das ''inverse`` Gegenstück.
 Um die Verknüpfung persistent zu machen, muss immer die ''update``-Methode der Klasse verwendet werden, von der die Verknüpfung ausgeht.\\
-Angelegte verknüpfungen lassen sich mit den verschiedenen ''load``-Methoden wieder laden:\\
+Angelegte Verknüpfungen lassen sich mit den verschiedenen ''load``-Methoden wieder laden:\\
 \begin{lstlisting}
 QList< QSharedPointer<ebp::Projekt> > projekte = bewohner->loadProjekte( connection );
 \end{lstlisting}
@@ -434,6 +438,7 @@ Abbildung \ref{strukturiert} zeigt die Kommunikationswege eines Texttransfers zw
 	\label{strukturiert}
 \end{figure*}
 \subsubsection{Observer Pattern - Signal Slot Konzept}
+\label{subsubsec:observer}
 Ein klassisches Konzept zur Kommunikation zwischen Objekten stellen \textit{Events} und \textit{Eventhandler} dar. Dieses Konzept ist allerdings nicht typsicher und unflexibel, da es für ein \textit{Events} auch nur einen \textit{Eventhandler} geben kann\cite[S. 32]{Qt4}. \textit{Qt} hingegen nutzt zur Kommunikation zwischen Objekten das \textit{Signal Slot Konzept}, das wie ein Observer Pattern aufgebaut ist. GAMMA beschreibt das Observer Pattern wie folgt: \\
 "Define a one-to-many dependency between objects so that when one object changes state, all its dependents are notified and updated automatically\cite[S. 293]{Entwurfsmuster}."\\
 \textit{Qt} realisiert dies, indem Funktionen einer Klasse durch das Schlüsselwort \textit{Slot} gekennzeichnet werden können. Diese \textit{Slots} werden mit einem \textit{Signal} verbunden und sind damit als \textit{Observer} zu betrachten. Das \textit{Subject} ist ein Funktionsprototyp, der durch das Schlüsselwort \textit{Signal} gekennzeichnet wird. Dieser Prototyp wird nicht implementiert. GAMMA beschreibt diese Beziehung folgendermaßen:\\
