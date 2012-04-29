@@ -21,6 +21,7 @@ namespace ebp
 	class connection;
 
 	#pragma db object
+	/// Abwesenheiten
 	class Abwesenheit : public databaseObject<Abwesenheit>
 	{
 		Q_DECLARE_TR_FUNCTIONS( Abwesenheit )

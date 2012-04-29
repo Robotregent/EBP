@@ -21,6 +21,7 @@ namespace ebp
 	class connection;
 
 	#pragma db object
+	/// Dokumentationen
 	class Dokumentation : public databaseObject<Dokumentation>
 	{
 		Q_DECLARE_TR_FUNCTIONS( Dokumentation )

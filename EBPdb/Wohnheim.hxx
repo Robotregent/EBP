@@ -20,6 +20,7 @@ namespace ebp
 	class connection;
 
 	#pragma db object
+	/// Wohnheime
 	class Wohnheim : public databaseObject<Wohnheim>
 	{
 		Q_DECLARE_TR_FUNCTIONS( Wohnheim )

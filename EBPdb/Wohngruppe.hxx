@@ -26,6 +26,7 @@ namespace ebp
 	class connection;
 
 	#pragma db object
+	/// Wohngruppen
 	class Wohngruppe : public databaseObject<Wohngruppe>
 	{
 		Q_DECLARE_TR_FUNCTIONS( Wohngruppe )

@@ -23,6 +23,7 @@ namespace ebp
 	class connection;
 
 	#pragma db object
+	/// Protokollierung
 	class Protokoll : public databaseObject<Protokoll>
 	{
 		Q_DECLARE_TR_FUNCTIONS( Protokoll )
@@ -40,11 +41,11 @@ namespace ebp
 
 		bool hasPermission( const QSharedPointer<ebp::connection> & connection ) const;
 
-		const QString & inhalt() const { return inhalt_; }
-		void inhalt( const QString & inhalt ) { inhalt_ = inhalt; }
+		const QString & inhalt() const { return inhalt_; }		///< Inhalt des Protokolls lesen
+		void inhalt( const QString & inhalt ) { inhalt_ = inhalt; }	///< Inhalt des Protokolls schreiben
 
-		const QDateTime & datum() const { return datum_; }
-		void datum( const QDateTime & datum ) { datum_ = datum; }
+		const QDateTime & datum() const { return datum_; }		///< Erstellungsdatum lesen
+		void datum( const QDateTime & datum ) { datum_ = datum; }	///< Erstellungsdatum schreiben
 
 		const QSharedPointer<Bewohner> & bewohner() const { return bewohner_; }
 		DATABASEOBJECT_DECLARE_LINK( Protokoll, Bewohner, Bewohner )

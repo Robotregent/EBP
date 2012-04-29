@@ -499,7 +499,6 @@ void MainWindow::loadWohnguppeUndBewohner()
     {
 
         this->thisSession.allBewohner=ebp::loadAllBewohner(this->thisSession.curConnection,this->thisSession.allGroups);
-
         //Aktuellen Bewohner setzen
         this->thisSession.curBewohner.isNull();
 

@@ -21,6 +21,7 @@ namespace ebp
 	class connection;
 
 	#pragma db object
+	/// Verfuegungen
 	class Verfuegung : public databaseObject<Verfuegung>
 	{
 		Q_DECLARE_TR_FUNCTIONS( Verfuegung )

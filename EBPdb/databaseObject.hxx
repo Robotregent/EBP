@@ -182,6 +182,7 @@ namespace ebp
 {
 	class connection;
 
+	/// Interfacedefinition für persistente Objekte
 	class databaseObjectIFace
 	{
 		public:
@@ -191,6 +192,7 @@ namespace ebp
 			virtual bool reload( const QSharedPointer<ebp::connection> & connection ) = 0;
 	};
 
+	/// Basisklasse aller persistenten Objekte
 	template< class T > class databaseObject : public databaseObjectIFace
 	{
 		Q_DECLARE_TR_FUNCTIONS( databaseObject )
