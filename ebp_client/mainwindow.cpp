@@ -580,8 +580,15 @@ void MainWindow::itemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous
     // Noch Änderungen?
     if(!hasLogout)
     {
-        if((previous->type()<3000)||previous->type()==3010)
+        if((previous->type()<3000))
+        {
+            if(savePermission)
+                saveCurrentContent(true);
+        }
+        else if (previous->type()==3010)
+        {
             saveCurrentContent(true);
+        }
     }
     // Neue Maske
     set_content(current);
