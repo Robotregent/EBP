@@ -391,8 +391,8 @@ void MainWindow::saveCurrentContent(bool pending)
             {
                 if(saveInterface->hasPendingChanges())
                 {
-                    if(QMessageBox::question(this,"Ausstehende Änderungen","Es gibt noch ausstehende Änderungen. Wollen SIe diese speichern?","Ja","Nein")!=0)
-                        return;
+                    saveInterface->saveContent();
+                    return;
                 }
                 else
                 {
