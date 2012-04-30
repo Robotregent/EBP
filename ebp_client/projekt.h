@@ -40,6 +40,7 @@ private:
     QList< QSharedPointer < ebp::Projekt > > projects;
     QSharedPointer < ebp::Projekt > curProject;
     QSharedPointer < ebp::Mitarbeiter > potentiallyNewMa;
+    bool editable;
     void setProjekt();
     ChooseMaDialog *maDialog;
     void init();

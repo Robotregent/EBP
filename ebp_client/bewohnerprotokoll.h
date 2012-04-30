@@ -35,6 +35,7 @@ private slots:
 private:
     Ui::BewohnerProtokoll *ui;
     SessionContext &context;
+    bool editable;
     void init();
     void initHeader();    
     void syncSchreiber(QSharedPointer <ebp::Mitarbeiter> s);

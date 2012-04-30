@@ -112,6 +112,7 @@ void Projekt::setProjekt()
     this->ui->zieleEdit->setHtml(this->curProject->ziele());
 
     this->ui->beschreibungEdit->setHtml(this->curProject->beschreibung());
+
     pendingChanges = false;
 }
 
@@ -121,7 +122,7 @@ void Projekt::on_listWidget_currentRowChanged(int currentRow)
     {
         if(this->hasPendingChanges())
         {
-            if(QMessageBox::question(this,"Ausstehende Änderungen","Es gibt noch ausstehende Änderungen. Wollen SIe diese speichern?","Ja","Nein")==0)
+            if(editable)
                 this->saveContent();
         }
         pendingChanges = false;
@@ -165,7 +166,7 @@ void Projekt::init()
 
     if(!this->curContext.curBewohner.isNull())
     {
-        bool editable = false;
+        editable = false;
         if(!curContext.curBewohner->bezugsbetreuer().isNull())
             if(curContext.curBewohner->bezugsbetreuer()->login()== curContext.curMitarbeiter->login())
                 editable = true;

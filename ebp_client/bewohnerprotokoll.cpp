@@ -86,7 +86,7 @@ void BewohnerProtokoll::init()
 
     if (!context.curBewohner.isNull())
     {
-        bool editable = false;
+        editable = false;
 
         if(!context.curBewohner->bezugsbetreuer().isNull())
             if(context.curBewohner->bezugsbetreuer()->login()== context.curMitarbeiter->login())
@@ -176,7 +176,7 @@ void BewohnerProtokoll::on_ProtokollListe_currentRowChanged(int currentRow)
     {
         if(this->hasPendingChanges())
         {
-            if(QMessageBox::question(this,"Ausstehende Änderungen","Es gibt noch ausstehende Änderungen. Wollen SIe diese speichern?","Ja","Nein")==0)
+            if(editable)
                 this->saveContent();
         }
         curProtokoll = protokolle.at(currentRow);
