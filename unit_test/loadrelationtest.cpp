@@ -275,6 +275,5 @@ void LoadRelationTest::loadBetreuung()
 void LoadRelationTest::cleanupTestCase()
 {
     aConnection.clear();
-    //QVERIFY(aConnection.isNull());
 }
 

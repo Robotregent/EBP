@@ -5,7 +5,9 @@
 #include <QtTest/QtTest>
 #include "AutoTest.h"
 #include <EBPdb/connection.hxx>
-
+/**
+  * \brief Testet das Löschen der Relationen zwischen Datenbankobjekte
+  */
 class UnlinkTest : public QObject
 {
     Q_OBJECT

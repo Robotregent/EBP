@@ -5,7 +5,9 @@
 #include <QtTest/QtTest>
 #include <EBPdb/connection.hxx>
 #include "AutoTest.h"
-
+/**
+  * \brief Testet das Löschen von Datenbankobjekte
+  */
 class RemoveTest : public QObject
 {
     Q_OBJECT

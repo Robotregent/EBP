@@ -4,6 +4,9 @@
 #include <QObject>
 #include <QtTest/QtTest>
 #include <EBPdb/connection.hxx>
+/**
+  * \brief Testet das Befüllen der Datenbankfelder
+  */
 class FillFieldsTest : public QObject
 {
     Q_OBJECT

@@ -25,7 +25,6 @@ void CreateTest::mitarbeiterTest()
                                                                 "Mr Test"+QVariant(rand() % 100000 + 1).toString()
 							    ));
 	QVERIFY(!aMitarbeiter.isNull());
-        //QVERIFY(aMitarbeiter->updatePassword(aConnection,"test_password"));
         QVERIFY(aMitarbeiter->create(aConnection,"test_password"));
 
     }

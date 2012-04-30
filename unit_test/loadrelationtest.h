@@ -5,7 +5,9 @@
 #include <QtTest/QtTest>
 #include <EBPdb/connection.hxx>
 #include "AutoTest.h"
-
+/**
+  * \brief Testet das Laden der Relationen zwischen Datenbankobjekten
+  */
 class LoadRelationTest : public QObject
 {
     Q_OBJECT

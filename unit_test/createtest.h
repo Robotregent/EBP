@@ -7,7 +7,9 @@
 #include <QtTest/QtTest>
 #include <EBPdb/connection.hxx>
 
-
+/**
+  * \brief Testet das Erstellen der Datenbankobjekte
+  */
 class CreateTest : public QObject
 {
     Q_OBJECT

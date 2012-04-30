@@ -7,6 +7,9 @@
 #include <QtTest/QtTest>
 #include <EBPdb/connection.hxx>
 
+/**
+  * \brief Testet das Erstellen der Relationen zwischen Datenbankobjekte
+  */
 class LinkTest : public QObject
 {
     Q_OBJECT
