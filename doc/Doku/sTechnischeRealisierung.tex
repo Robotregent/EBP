@@ -469,6 +469,7 @@ Durch dieses Konzept der losen Kopplung könnten bei Bedarf weitere \textit{Slot
 Das Entwurfsmuster Model/View oder auch Model/View/Controller ist ein klassisches Entwurfsmuster der Softwareentwicklung und beschreibt, wie die Datenhaltung, die Visualisierung der Daten und die Interaktion mit dem Benutzer in verschiedenen Komponenten realisiert wird. Ziel dieses Entwurfsmusters ist es, flexiblen und wiederverwendbaren Programmcode zu entwickeln.
 Das Framework \textit{Qt} bietet die Variante des Model/View Entwurfsmusters an. Dabei werden Der Controller und der View in der selben Komponente realisiert. Dies vereinfacht die Handhabung, ermöglicht aber immernoch ein Trennen der Datenhaltung und der Visualisierung der Daten \cite[Vgl.]{QtModelView}.
 \textit{Qt} bietet Abstrakte Klassen für ein Table-, List- oder Treemodel an, um grundlegende Funktionalitäten für die entsprechenden Views vorzugeben. Sind diese Ansätze nicht flexibel genug, kann \textit{QAbstractItemModel} implementiert werden. Um die Mitarbeiterobjekte in einem Tableview darstellen zu können, wurde ein einfaches Model mit Hilfe von \textit{QAbstractTableModel} implementiert:
+\newpage
 \begin{lstlisting}
 class EmployeeTableModel : public QAbstractTableModel
 {
