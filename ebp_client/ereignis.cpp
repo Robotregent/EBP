@@ -16,7 +16,6 @@ Ereignis::Ereignis(SessionContext _context, TextTransferAgent *agent,QWidget *pa
     pufferLayout->setSpacing(0);
     puffer->setLayout(pufferLayout);
     this->ui->scrollArea->setWidget(puffer);
-    context.curWohngruppe->reload(context.curConnection);
     this->ui->dateTimeEdit->setDate(QDate::currentDate());
 
     initEreignisse();

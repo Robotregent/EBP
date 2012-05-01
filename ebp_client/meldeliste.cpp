@@ -41,7 +41,7 @@ MeldeListe::~MeldeListe()
 
 void MeldeListe::createList()
 {
-    curContext.curWohngruppe->reload(curContext.curConnection);
+
     curWgBewohner = curContext.curWohngruppe->loadBewohner(curContext.curConnection);
     for (int i = 0; i < curWgBewohner.length(); i++)
     {
