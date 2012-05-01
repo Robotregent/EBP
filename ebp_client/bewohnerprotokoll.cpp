@@ -62,7 +62,10 @@ bool BewohnerProtokoll::saveContent()
         sync();
 
         if (curProtokoll->update(context.curConnection))
+        {
             result = true;
+            context.curBewohner->reload(context.curConnection);
+        }
     }
     return result;
 }
@@ -98,7 +101,7 @@ void BewohnerProtokoll::init()
         this->ui->addTeilnehmer->setEnabled(editable);
 
 
-        context.curBewohner->reload(context.curConnection);
+        //context.curBewohner->reload(context.curConnection);
 
         protokolle = context.curBewohner->loadProtokolle(context.curConnection);
 

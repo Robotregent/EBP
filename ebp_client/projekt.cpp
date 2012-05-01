@@ -12,8 +12,6 @@ Projekt::Projekt(SessionContext &_curContext, QWidget *parent) :
     ui->setupUi(this);
     this->ui->alleProjekteLabel->setMinimumHeight(this->ui->betreuenderMitarbeiterLabel->height());
 
-    curContext.curBewohner->reload(curContext.curConnection);
-
     init();
 }
 
@@ -157,7 +155,10 @@ bool Projekt::saveContent()
         this->curProject->beschreibung(this->ui->beschreibungEdit->toHtml());
 
         if (this->curProject->update(curContext.curConnection) )
+        {
             result = true;
+            curContext.curBewohner->reload(curContext.curConnection);
+        }
     }
     return result;
 }

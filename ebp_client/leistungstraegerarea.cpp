@@ -21,7 +21,6 @@ LeistungstraegerArea::LeistungstraegerArea(SessionContext &_context,QWidget *par
 
     if(!context.curBewohner.isNull())
     {
-        context.curBewohner->reload(context.curConnection);
         this->leistungstraeger = context.curBewohner->loadLeistungstraeger(context.curConnection);
     }
 
@@ -90,6 +89,8 @@ bool LeistungstraegerArea::saveContent()
         if(!b->saveContent())
             result = false;
     }
+    if(result)
+        context.curBewohner->reload(context.curConnection);
     return result;
 }
 bool LeistungstraegerArea::hasPendingChanges()

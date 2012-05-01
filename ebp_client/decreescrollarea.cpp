@@ -31,7 +31,6 @@ DecreeScrollArea::~DecreeScrollArea()
 void DecreeScrollArea::getCurrentVerfuegungen()
 {
     int entryCount;
-    con.curBewohner->reload(con.curConnection);
     this->bewohner_verfuegungen=con.curBewohner->loadVerfuegungen(con.curConnection);
 
     entryCount=bewohner_verfuegungen.count();
@@ -219,6 +218,7 @@ bool DecreeScrollArea::saveContent()
             }
         }
         con.curConnection->flushCache();
+        con.curBewohner->reload(con.curConnection);
         return true;
     }
     return false;

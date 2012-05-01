@@ -21,8 +21,7 @@ void Betreuung::init()
 {
     if ( !conntext.curBewohner.isNull())
     {
-	if(conntext.curBewohner->reload(conntext.curConnection))
-	{
+
 	    QSharedPointer< ebp::Betreuung > b = conntext.curBewohner->betreuung();
 
 	    if(!b.isNull())
@@ -60,9 +59,7 @@ void Betreuung::init()
 		else
 		    this->ui->vermGensfRsorgeComboBox->setCurrentIndex(0);
 	    }
-	}
-	else
-	    qDebug()<<"reload fehlgeschlagen";
+
     }
     else
 	qDebug()<<"Kein Bewohner";
@@ -115,6 +112,7 @@ bool Betreuung::saveContent()
             if(b->update(conntext.curConnection))
             {
                 result = true;
+                conntext.curBewohner->reload(conntext.curConnection);
             }
             else
             {
